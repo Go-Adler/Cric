@@ -4,6 +4,7 @@ import { UserController } from './user.controller';
 const router = express.Router();
 const userController = new UserController();
 
-router.get('/login', userController.login);
+router.get('', () => console.log(7777777))
+router.get('login', userController.login);
 
 export { router as userRoutes };

@@ -1,6 +1,8 @@
 import express, { Application, Request, Response } from 'express'
+import morgan from 'morgan'
+import cors from 'cors'
 
-import { userRoutes } from './modules/user/inteface/user.routes'
+import { userRoutes } from './modules/user/interface/user.routes'
 
 export class ServerApp {
   private app: Application
@@ -13,18 +15,24 @@ export class ServerApp {
   }
 
   private initializeMiddlewares() {
+    this.app.use(cors())
+    this.app.use(morgan('dev'))
     this.app.use(express.json())
   }
 
   private initializeRoutes() {
-    this.app.use('/user', userRoutes)
+    this.app.use('/user', (req, res) => {
+      res.json({message: 'successs'})
+    } ,userRoutes)
   }
 
 
   private initializeErrorHandling() {
     this.app.use((err: Error, _req: Request, res: Response) => {
+      console.log('hi');
+      
       console.error('Error:', err.message)
-      res.status(500).json({ error: 'Internal Server Error' })
+      res.sendStatus(200).json({ error: 'Internal Server Error' })
     })
   }
 
