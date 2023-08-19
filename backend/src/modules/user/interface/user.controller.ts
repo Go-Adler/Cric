@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 
-export class UserController {
+export class SignUpController {
   login(req: Request, res: Response) {
+    console.log(req.body);
     
-    const { username, password } = req.body;
+    const { userName, password } = req.body;
 
-    if (username === 'demo' && password === 'password') {
+    if (userName === 'goadler' && password === 'Amg4w4i-') {
       res.status(200).json({ message: 'Login successful!' });
     } else {
       res.status(401).json({ message: 'Invalid credentials' });

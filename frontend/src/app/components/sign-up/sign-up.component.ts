@@ -4,9 +4,11 @@ import {
   Validators,
   FormGroup,
   AbstractControl,
+  ValidatorFn
 } from '@angular/forms';
 
 import { SignUpService } from './sign-up.service';
+import { SignUpDataService } from '../../services/signup-data.service'
 
 @Component({
   selector: 'app-sign-up',
@@ -49,12 +51,16 @@ export class SignUpComponent implements OnInit {
         ],
       },
       {
-        validator: this.passwordMatchValidator,
+        validator: this.passwordMatchValidator as ValidatorFn,
       }
     );
   }
 
-  constructor(private fb: FormBuilder, private signUpService: SignUpService) {}
+  constructor(
+    private fb: FormBuilder,
+    private signUpService: SignUpService,
+    private signUpDataService: SignUpDataService
+  ) {}
 
   passwordMatchValidator(control: AbstractControl) {
     const password = control.get('password');
@@ -70,6 +76,8 @@ export class SignUpComponent implements OnInit {
   onSubmit() {
     const formData = { ...this.signUpForm.value };
     delete formData.confirmPassword;
+
+    this.signUpDataService.setSignUpData(formData)
 
     this.signUpService.signUp(formData).subscribe(
       (response) => {

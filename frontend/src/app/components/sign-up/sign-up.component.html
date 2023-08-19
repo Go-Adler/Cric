@@ -85,9 +85,9 @@
           <mat-form-field hideRequiredMarker="true">
             <mat-label>Gender</mat-label>
             <mat-select formControlName="gender">
-              <mat-option value="one">Male</mat-option>
-              <mat-option value="two">Female</mat-option>
-              <mat-option value="two">Other</mat-option>
+              <mat-option value="male">Male</mat-option>
+              <mat-option value="female">Female</mat-option>
+              <mat-option value="other">Other</mat-option>
             </mat-select>
             <mat-error
               *ngIf="(signUpForm.get('gender')?.invalid && (signUpForm.get('gender')?.dirty || signUpForm.get('gender')?.touched)) && (signUpForm.get('gender')?.errors?.['required'])"

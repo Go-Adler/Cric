@@ -16,6 +16,6 @@ export class SignUpService {
   }
 
   signUp(userData: User): Observable<SignUpResponse> {
-    return this.http.post<SignUpResponse>(`${this.API_URL}/user`, userData)
+    return this.http.post<SignUpResponse>(`${this.API_URL}/user/sign-up`, userData)
   }
 }
