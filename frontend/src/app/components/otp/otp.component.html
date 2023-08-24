@@ -1,0 +1,46 @@
+<div class="pt-5 otpArea d-flex justify-content-center align-items-center">
+  <div class="container mt-5 d-flex flex-column" *ngIf="!verified">
+    <div class="row d-flex justify-content-center mb-4">
+      <div class="col-8 col-xl-6 d-flex justify-content-center fw-medium"><span class="fs-4">Enter OTP to continue</span>
+      </div>
+    </div>
+    <form action="" [formGroup]="OTP_Form" (ngSubmit)="onSubmit()" class="d-flex flex-column gap-2">
+
+      <!-- OTP -->
+      <div class="row d-flex justify-content-center">
+        <div class="col-8 col-xl-6 d-flex flex-column p-0">
+          <p class="m-0">
+            <mat-form-field appearance="fill" hideRequiredMarker="true">
+              <mat-label>OTP</mat-label>
+              <input matInput formControlName="OTP" type="number" (input)="onInput()">
+              <mat-error
+                *ngIf="(OTP_Form.get('OTP')?.invalid && (OTP_Form.get('OTP')?.dirty || OTP_Form.get('OTP')?.touched)) && (OTP_Form.get('OTP')?.errors?.['required'])"
+                class="p-0">OTP cannot be empty</mat-error>
+              <mat-error
+                *ngIf="(OTP_Form.get('OTP')?.invalid && (OTP_Form.get('OTP')?.dirty || OTP_Form.get('OTP')?.touched)) && (OTP_Form.get('OTP')?.errors?.['pattern'])">Please
+                input OTP in the correct format</mat-error>
+              <mat-error
+              *ngIf="otpInvalid">Wrong otp try again</mat-error>
+              <mat-hint
+              *ngIf="otpInvalid">Wrong otp try again</mat-hint>
+            </mat-form-field>
+          </p>
+        </div>
+      </div>
+
+
+      <!-- Submit -->
+      <div class="row d-flex justify-content-center">
+        <div class="col-8 col-xl-6 p-0">
+          <button mat-raised-button type="submit" [disabled]="!OTP_Form.valid" [ngStyle]="{'opacity': (!OTP_Form.valid) ? '0.5' : '1'}">Continue</button>
+        </div>
+      </div> 
+    </form>
+  </div>
+  <div *ngIf="verified" class="d-flex flex-column align-items-center container">
+    <div class="row d-flex gap-4 align-items-center">
+      <span class="fs-3 d-flex justify-content-center gap-2 align-items-end">Verification success <i class="fa-regular fa-thumbs-up"></i></span>
+      <button mat-raised-button class="continueButton" routerLink="/user/log-in">Continue to login</button>
+    </div>
+  </div>
+</div>

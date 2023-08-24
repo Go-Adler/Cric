@@ -1,9 +1,15 @@
-$cricBlue: rgb(26, 41, 56);
+$cricBlue: rgb(26, 41, 56, 0.8);
 
 nav {
-  background-color: $cricBlue;
+  background: $cricBlue;
+  backdrop-filter: blur(10px); 
   color: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000; 
 }
+
 
 .profilePicture {
   border-radius: 50%;

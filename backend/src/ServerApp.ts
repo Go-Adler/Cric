@@ -2,9 +2,9 @@ import express, { Application, Request, Response } from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 
-import { userRoutes } from './modules/user/interface/user.routes'
+import { userRoutes } from './modules/user/interface/routes/user.routes'
 import { adminRoutes } from './modules/admin/interface/admin.routes'
-
+import { mongo} from './config/database'
 
 // Define the ServerApp class
 export class ServerApp {
@@ -16,6 +16,7 @@ export class ServerApp {
     this.initializeMiddlewares()
     this.initializeRoutes()
     this.initializeErrorHandling()
+    mongo()
   }
 
    // Set up middlewares
@@ -36,10 +37,9 @@ export class ServerApp {
   });
   }
 
-
   private initializeErrorHandling() {
     this.app.use((err: Error, _req: Request, res: Response) => {
-      console.log('hi');
+      console.log('reaching here');
       
       console.error('Error:', err.message)
       res.status(500).json({ error: 'Internal Server Error' })

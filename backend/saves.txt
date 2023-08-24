@@ -1,0 +1,73 @@
+  // async login(username: string, password: string) {
+  //   const user = await this.userDataAccess.getUserByUserName(username);
+
+  //   if (!user) {
+  //     throw new Error('User not found');
+  //   }
+
+  //   const isPasswordValid = await bcrypt.compare(password, user.password);
+  //   if (!isPasswordValid) {
+  //     throw new Error('Invalid password');
+  //   }
+
+  //   return user;
+  // }
+
+  // generateAuthToken(userId: string) {
+  //   const token = jwt.sign({ userId }, 'your-secret-key', { expiresIn: '1h' });
+  //   return token;
+  // }
+
+  // async getUserProfile(userId: string) {
+  //   const userProfile = await this.userDataAccess.getUserById(userId);
+
+  //   if (!userProfile) {
+  //     throw new Error('User not found');
+  //   }
+
+  //   // Customize what profile information to return
+  //   return {
+  //     id: userProfile._id,
+  //     username: userProfile.username,
+  //     email: userProfile.email,
+  //     // ... other profile information
+  //   };
+  // }
+}
+
+
+import sgMail from '@sendgrid/mail';
+
+export class EmailService {
+  private sendgridApiKey: string;
+
+  constructor(apiKey: string) {
+    this.sendgridApiKey = apiKey;
+    sgMail.setApiKey(this.sendgridApiKey);
+  }
+
+  async sendOTPVerificationEmail(recipient: string, OTP: number) {
+    try {
+      const message = {
+        to: recipient,
+        from: "gokul_adler@outlook.com",
+        subject: "CricApp OTP",
+        text: `OTP ${OTP}`,
+        html: `<!DOCTYPE html>
+        <!-- ... (your HTML template) ... -->
+        `,
+      };
+      await sgMail.send(message);
+      return true;
+    } catch (error) {
+      console.error(`Error in sending OTP verification email: ${error.message}`);
+      throw new Error(`Error in sending OTP verification email: ${error}`);
+    }
+  }
+}
+
+// Usage
+const sendgridApiKey: string = process.env.SENDGRID_API_KEY!;
+const emailService = new EmailService(sendgridApiKey);
+
+// Call the method to send the OTP email

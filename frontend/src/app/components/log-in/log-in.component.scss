@@ -1,0 +1,20 @@
+$cricBlue: #1A2938;
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-form-field input {
+  font-weight: 500;
+}
+
+[mat-raised-button] {
+  width: 100%;
+  background-color: $cricBlue !important;
+  color: white !important;
+  
+}
+
+.loginArea {
+  height: 60vh;
+}

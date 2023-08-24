@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 
 import { SignUpService } from './sign-up.service';
-import { SignUpDataService } from '../../services/signup-data.service'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-sign-up',
@@ -19,6 +19,13 @@ export class SignUpComponent implements OnInit {
   signUpForm!: FormGroup;
   hide: boolean = true;
   confirmHide: boolean = true;
+  errorMessage!: string
+
+  constructor(
+    private fb: FormBuilder,
+    private signUpService: SignUpService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.signUpForm = this.fb.group(
@@ -56,12 +63,6 @@ export class SignUpComponent implements OnInit {
     );
   }
 
-  constructor(
-    private fb: FormBuilder,
-    private signUpService: SignUpService,
-    private signUpDataService: SignUpDataService
-  ) {}
-
   passwordMatchValidator(control: AbstractControl) {
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');
@@ -74,17 +75,22 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit() {
+    this.errorMessage = ''
+    
     const formData = { ...this.signUpForm.value };
     delete formData.confirmPassword;
 
-    this.signUpDataService.setSignUpData(formData)
 
     this.signUpService.signUp(formData).subscribe(
       (response) => {
-        console.log(response);
+        if (response.error) {
+          this.errorMessage = response.error
+        } else {
+          this.router.navigate(['/user/sign-up-otp'])
+        }
       },
       (error) => {
-        console.log(error.message);
+        this.errorMessage = error.error.message
       }
     );
   }

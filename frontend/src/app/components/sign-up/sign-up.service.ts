@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 
-import { User, SignUpResponse } from '../../models/user.model'
+import { messageResponse } from 'src/app/models/responses/message.model'
 import { ConfigService } from '../../services/config.service'
+import { User } from 'src/app/models/user.model'
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class SignUpService {
     this.API_URL = configService.getAPI_BaseURL()
   }
 
-  signUp(userData: User): Observable<SignUpResponse> {
-    return this.http.post<SignUpResponse>(`${this.API_URL}/user/sign-up`, userData)
+  signUp(userData: User): Observable<messageResponse> {
+
+    return this.http.post<messageResponse>(`${this.API_URL}/user/sign-up`, userData)
   }
 }

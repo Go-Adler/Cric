@@ -1,11 +1,8 @@
 export interface User {
   name: string,
   userName: string,
+  email: string,
   phone: string,
   gender: string,
   password: string
-}
-
-export interface SignUpResponse {
-  message: string
 }
