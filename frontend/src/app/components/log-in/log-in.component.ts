@@ -12,6 +12,8 @@ import { loginService } from './log-in.service'
 export class LogInComponent implements OnInit {
   logInForm!: FormGroup;
   hide: boolean = true;
+  errorMessage:string = ''
+  isLogging: boolean = false
 
   constructor(
     private fb: FormBuilder,
@@ -35,13 +37,25 @@ export class LogInComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isLogging = true
+    this.errorMessage = ''
     const { email, password } = this.logInForm.value
     
     this.logInService.login(email, password).subscribe(
       (response) => {
-        const token = response.token;
-        localStorage.setItem('token', token)
-        this.router.navigate(['/user/home'])
+        this.isLogging = false
+        console.log(response, 42);
+        
+        if (response.userNotExisting) {
+            this.errorMessage = 'User not existing'
+        } else {
+          const token = response.token;
+          localStorage.setItem('token', token)
+          console.log(token, 44);
+          
+          this.router.navigate(['/user/home'])
+        }
+       
       },
       (errorResponse) => {
         console.log(errorResponse);

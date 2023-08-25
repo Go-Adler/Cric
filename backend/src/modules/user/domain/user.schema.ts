@@ -27,10 +27,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  verified: {
+  isVerified: {
     type: Boolean,
     default: false,
-  }
+  },
+  otp: {
+    type: Number
+  },
 });
 
-export const UserEntity = mongoose.model('User', userSchema);
+export const UserEntity = mongoose.model('Users', userSchema);

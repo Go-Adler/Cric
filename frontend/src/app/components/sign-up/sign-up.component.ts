@@ -20,6 +20,7 @@ export class SignUpComponent implements OnInit {
   hide: boolean = true;
   confirmHide: boolean = true;
   errorMessage!: string
+  isSigningUp: boolean = false
 
   constructor(
     private fb: FormBuilder,
@@ -75,6 +76,7 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isSigningUp = true
     this.errorMessage = ''
     
     const formData = { ...this.signUpForm.value };
@@ -83,6 +85,7 @@ export class SignUpComponent implements OnInit {
 
     this.signUpService.signUp(formData).subscribe(
       (response) => {
+        this.isSigningUp = false
         if (response.error) {
           this.errorMessage = response.error
         } else {

@@ -48,6 +48,6 @@ export class UserDataAccess {
   // get user password with email
   async getUserPasswordByEmail(email: string) {
     const user = await UserEntity.findOne({ email });
-    return user?.password || false
+    return user?.password || ''
   }
 }

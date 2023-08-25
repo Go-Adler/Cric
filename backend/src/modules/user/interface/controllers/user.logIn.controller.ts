@@ -19,6 +19,10 @@ export class UserLoginController {
     const { email, password } = req.body
     
     try {
+      const isUserExisting = await this.userExistingUseCase.userExistingLogIn(email)
+      if(!isUserExisting) {
+        return res.json({userNotExisting: true})
+      }
       const user = await this.userLogInUseCase.userLogIn(email, password);
 
       const token = this.tokenUseCase.generateToken(email);

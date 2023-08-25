@@ -5,4 +5,5 @@ export interface I_LoginResponse {
     id: string;
     name: string;
   };
+  userNotExisting?: boolean;
 }

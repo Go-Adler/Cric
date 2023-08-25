@@ -1,24 +1,24 @@
-import { UserTempDataAccess } from "../../data/user.temp.dataAccess"
+import { UserOtpDataAccess } from '../../data/user.otpAccess';
 import { generateOTP } from '../../../../utils/generateOTP.utils';
 import { EmailService } from '../../../../services/email.service';
 
 export class SendOTP_UseCase {
-  private userTempDataAccess: UserTempDataAccess
   private emailService: EmailService
+  private userOtpDataAccess: UserOtpDataAccess
 
   constructor() {
-    this.userTempDataAccess = new UserTempDataAccess()
     this.emailService = new EmailService()
+    this.userOtpDataAccess = new UserOtpDataAccess()
   }
 
   async sendOTP(email: string) {
     try {
 
-      const OTP = generateOTP()
-      await this.emailService.sendOTPVerificationEmail(email, OTP);
-      console.log(OTP);
-      await this.userTempDataAccess.createOTP_Data(email, OTP)
-
+      const otp = generateOTP()
+      console.log(otp, 'otp');
+      
+      // await this.emailService.sendOTPVerificationEmail(email, otp);
+      await this.userOtpDataAccess.addOtp(email, otp)
       return true
     } catch (error) {
       throw error

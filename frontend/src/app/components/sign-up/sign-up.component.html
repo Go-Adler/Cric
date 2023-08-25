@@ -5,7 +5,7 @@
       </div>
     </div>
     <form action="" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-      <div class="w-100 d-flex justify-content-center errorMessage fs-6 mb-1">{{errorMessage}}</div>
+      <div *ngIf="errorMessage" class="w-100 d-flex justify-content-center gap-2 errorMessage fs-6 mb-1"><span>{{errorMessage}}.</span><a routerLink="/user/log-in" class="logIn"> Log in?</a> </div>
       <!-- Name -->
       <div class="row d-flex justify-content-center">
         <div class="col-8 col-xl-6 d-flex flex-column p-0">
@@ -139,9 +139,14 @@
       <div class="row d-flex justify-content-center">
         <div class="col-8 col-xl-6 p-0">
           <button mat-raised-button type="submit" [disabled]="!signUpForm.valid"
-            [ngStyle]="{'opacity': (!signUpForm.valid) ? '0.5' : '1'}">Sign Up</button>
+            [ngStyle]="{'opacity': (!signUpForm.valid) ? '0.5' : '1'}">{{isSigningUp ? 'Signing up.. ' : 'Sign up'}}</button>
         </div>
       </div>
+
+      <span class="row-fluid d-flex justify-content-center mt-2 gap-1">
+        <span class="col-auto d-flex justify-content-end m-0 p-0">Already have an account?</span>
+        <a class="col-auto d-flex justify-content-start m-0 p-0" routerLink="/user/log-in">Log in</a>
+      </span>
     </form>
   </div>
 </div>

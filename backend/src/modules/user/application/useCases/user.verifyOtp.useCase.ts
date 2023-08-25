@@ -1,17 +1,17 @@
-import { UserTempDataAccess } from '../../data/user.temp.dataAccess'
+import { UserOtpDataAccess } from '../../data/user.otpAccess'
 import { InvalidOtpError } from '../../../../shared/errors/invalidOtp.error'
 
 export class UserVerifyOtpUseCase {
-  private userTempDataAccess: UserTempDataAccess
+  private userOtpDataAccess: UserOtpDataAccess
 
   constructor() {
-    this.userTempDataAccess = new UserTempDataAccess()
+    this.userOtpDataAccess = new UserOtpDataAccess()
   }
 
   verifyOtp = async (email: string, otp: number) => {
     try {
       // Check if the otp matches
-      const OTP = await this.userTempDataAccess.getOTP_ByEmail(email)
+      const OTP = await this.userOtpDataAccess.getOtp(email)
       
       if (OTP !== otp) {
         throw new InvalidOtpError('Incorrect otp')
