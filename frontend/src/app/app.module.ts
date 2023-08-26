@@ -49,6 +49,7 @@ import { ErrorComponent } from './components/error/error.component'
     MatSelectModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {
