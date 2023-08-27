@@ -1,26 +1,50 @@
-// import { Request, Response, NextFunction } from 'express';
-// import jwt from 'jsonwebtoken';
+import { Request, Response, NextFunction } from 'express';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
-// interface RequestType extends Request {
-//   user: { userId: string}
-// }
+// Extend the Request interface to include a user property for decoded JWT payload
+declare module 'express' {
+  interface Request {
+    user?: JwtPayload
+  }
+}
 
-// export class AuthMiddleware {
-//   static verifyToken(req: RequestType, res: Response, next: NextFunction) {
-//     const token = req.header('Authorization')?.replace('Bearer ', '');
+export class JwtMiddleware {
+  // Middleware function to verify JWT token
+  verifyJwt = (req: Request, res: Response, next: NextFunction) => {
+    const secretKey: string = process.env.JWT_SECRET_KEY!;
 
-//     if (!token) {
-//       return res.status(401).json({ message: 'Token missing' });
-//     }
+    // Extract the Authorization header
+    const authHeader = req.header('Authorization');
 
-//     const secretKey = process.env.SECRET_KEY!
+    // Check if Authorization header is missing
+    if (!authHeader) {
+      return res
+        .status(401)
+        .json({ message: 'Access denied. No token provided.' });
+    }
 
-//     try {
-//       const decoded = jwt.verify(token, secretKey); 
-//       req.user = { userId: decoded.userId };
-//       next(); 
-//     } catch (error) {
-//       return res.status(401).json({ message: 'Token invalid' });
-//     }
-//   }
-// }
+    // Extract token from the Authorization header
+    const token = authHeader.split(' ')[1];
+
+    // Check if token is missing
+    if (!token) {
+      return res
+        .status(401)
+        .json({ message: 'Access denied. No token provided.' });
+    }
+
+    try {
+      // Verify the token using the provided secret key
+      const decoded = jwt.verify(token, secretKey) as JwtPayload
+      
+      // Attach the decoded user information to the request object
+      req.user = decoded;
+
+      // Proceed to the next middleware
+      next();
+    } catch (error) {
+      // Handle token verification errors
+      return res.status(403).json({ message: 'Invalid token.' });
+    }
+  };
+}

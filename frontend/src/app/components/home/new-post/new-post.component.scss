@@ -1,0 +1,24 @@
+$cricBlue: #1A2938;
+
+.newPostArea {
+  margin: 10px;
+  padding: 15px;
+  border-bottom: 1px solid rgba(190, 190, 190, 0.486);
+}
+
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.imagePostArea {
+  padding-top: 0px !important; 
+  padding-bottom: 0px !important;
+}
+
+.postButton {
+  background-color: $cricBlue;
+  color: white !important;
+}

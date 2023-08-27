@@ -1,0 +1,17 @@
+<div class="newPostArea d-flex align-items-start">
+  <div class="d-flex align-items-center">
+    <img src="https://pbs.twimg.com/profile_images/1498070100393754625/C2V-fbll_400x400.jpg" alt="Profile Image"
+      class="profile-image mr-3">
+  </div>
+  <div class="d-flex flex-column gap-2 w-100">
+    <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+      <div class="">
+        <textarea formControlName="postText" name="" id="" class="form-control" rows="3" placeholder="What is happening?"></textarea>
+      </div>
+      <div class="d-flex justify-content-between imagePostArea">
+        <mat-icon class="cursor">image</mat-icon>
+        <button type="submit" mat-button class="postButton">{{isPosting ? 'Posting...' : 'Post'}}</button>
+      </div>
+    </form>
+  </div>
+</div>

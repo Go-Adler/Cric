@@ -22,7 +22,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { OtpComponent } from './components/otp/otp.component';
 import { TokenInterceptor } from './services/auth.interceptor';
-import { ErrorComponent } from './components/error/error.component'
+import { ErrorComponent } from './components/error/error.component';
+import { PostComponent } from './components/home/post/post.component';
+import { NewPostComponent } from './components/home/new-post/new-post.component'
 
 
 @NgModule({
@@ -34,6 +36,8 @@ import { ErrorComponent } from './components/error/error.component'
     HomeComponent,
     OtpComponent,
     ErrorComponent,
+    PostComponent,
+    NewPostComponent,
   ],
   imports: [
     BrowserModule,

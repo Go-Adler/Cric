@@ -6,17 +6,21 @@ import { SignUpComponent} from './components/sign-up/sign-up.component'
 import { OtpComponent } from './components/otp/otp.component'
 import { LogInComponent } from './components/log-in/log-in.component'
 import { ErrorComponent } from './components/error/error.component'
-import { authGuard } from './guards/auth.guard'
+import { logInGuard } from './guards/logIn.guard'
+import { logOutGuard } from './guards/logOut.guard'
 
 const routes: Routes = [
   { 
     path: 'user/home',
     component: HomeComponent,
-    canActivate: [authGuard]
+    canActivate: [logInGuard]
   },
   { path: 'user/sign-up', component: SignUpComponent },
   { path: 'user/sign-up-otp', component: OtpComponent},
-  { path: 'user/log-in', component: LogInComponent},
+  { path: 'user/log-in', 
+    component: LogInComponent,
+    canActivate: [logOutGuard]
+  },
   { path: 'user/error', component: ErrorComponent}
 ];
 
