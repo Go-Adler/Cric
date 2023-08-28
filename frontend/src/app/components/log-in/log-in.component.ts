@@ -44,8 +44,6 @@ export class LogInComponent implements OnInit {
     this.logInService.login(email, password).subscribe(
       (response) => {
         this.isLogging = false
-        console.log(response, 42);
-        
         if (response.userNotExisting) {
             this.errorMessage = 'User not existing'
         } else {

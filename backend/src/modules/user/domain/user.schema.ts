@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { postSchema } from './user.postSchema';
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -34,6 +35,10 @@ const userSchema = new mongoose.Schema({
   otp: {
     type: Number
   },
+  posts: {
+    type: [postSchema],
+    default: []
+  }
 });
 
 export const UserEntity = mongoose.model('Users', userSchema);

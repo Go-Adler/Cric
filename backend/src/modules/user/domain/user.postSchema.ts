@@ -1,31 +1,27 @@
-const tweetSchema = {
-  user: {
-    profilePicture: String,
-    displayName: String,
-    username: String,
-  },
+import mongoose from 'mongoose'
+
+export const postSchema = new mongoose.Schema({
   content: {
     text: String,
     hashtags: [String],
     mentions: [String],
     links: [String],
-    multimedia: [String], // URLs to images, videos, etc.
+    multimedia: [String],
   },
   actions: {
     likes: Number,
-    retweets: Number,
+    rePosts: Number,
     replies: Number,
-    quoteTweets: Number,
+    quotePosts: Number,
   },
   engagement: {
     liked: Boolean,
-    retweeted: Boolean,
+    rePosted: Boolean,
   },
   metrics: {
     timestamp: Date,
   },
   additionalInfo: {
-    source: String,
     visibility: String,
   },
-};
+})

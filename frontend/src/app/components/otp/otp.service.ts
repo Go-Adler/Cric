@@ -4,7 +4,6 @@ import { Observable } from "rxjs";
 
 import { ConfigService } from "src/app/services/config.service";
 import { messageResponse } from "src/app/models/responses/message.model";
-import { User } from "src/app/models/user.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +15,8 @@ export class OTP_Service {
     this.API_URL = configService.getAPI_BaseURL()
   }
 
-  verifyOTP(otp: string, userData: User): Observable<messageResponse> {
-    const OTP_Data = { otp, userData }
+  verifyOTP(otp: string, email: string): Observable<messageResponse> {
+    const OTP_Data = { otp, email }
 
     return this.http.post<messageResponse>(`${this.API_URL}/user/sign-up-otp`, OTP_Data)
   }

@@ -39,9 +39,9 @@ export class OtpComponent implements OnInit {
   onSubmit() {
     const { OTP } = this.OTP_Form.value
 
-    const userData = this.signUpDataService.getSignUpData()
+    const email = this.signUpDataService.getSignUpData()
 
-    this.otpService.verifyOTP(OTP, userData).subscribe(
+    this.otpService.verifyOTP(OTP, email).subscribe(
       (response) => {
         this.verified = true
       },

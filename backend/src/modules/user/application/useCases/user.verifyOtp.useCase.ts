@@ -12,6 +12,10 @@ export class UserVerifyOtpUseCase {
     try {
       // Check if the otp matches
       const OTP = await this.userOtpDataAccess.getOtp(email)
+      console.log(OTP, 155);
+      
+      console.log(otp, OTP, 16);
+      
       
       if (OTP !== otp) {
         throw new InvalidOtpError('Incorrect otp')

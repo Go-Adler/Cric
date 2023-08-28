@@ -3,10 +3,7 @@ import { UserEntity } from './../domain/user.schema';
 export class UserDataAccess {
   // Create a new user
   async createUser(name: string, userName: string, gender:string, email:string, phone: string, password: string) {
-    const newUser = await UserEntity.create({ name, userName, gender, email, phone, password });
-    console.log(newUser, 7);
-    return newUser;
-    return
+    await UserEntity.create({ name, userName, gender, email, phone, password });
   }
 
   // get user deta with user name

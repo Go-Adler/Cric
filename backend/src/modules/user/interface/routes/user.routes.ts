@@ -1,23 +1,24 @@
-import express from 'express';
+import express from 'express'
 
-import { UserSignUpController } from '../controllers/user.signUp.controller';
-import { UserSignUpOtpController } from '../controllers/user.signUpOtp.controller';
+import { UserSignUpController } from '../controllers/user.signUp.controller'
+import { UserSignUpOtpController } from '../controllers/user.signUpOtp.controller'
 import { UserLoginController } from '../controllers/user.logIn.controller'
+import { UserNewPostController } from '../controllers/user.newPost.controller'
 import { JwtMiddleware } from '../middleware/auth.middleware'
 
-const router = express.Router();
+const { userSignUp } = new UserSignUpController()
+const { verifyOtp } = new UserSignUpOtpController()
+const { userLogin } = new UserLoginController()
+const { verifyJwt } = new JwtMiddleware()
+const { userNewPost } = new UserNewPostController()
 
-const signUpController = new UserSignUpController();
-const userSignUpOtpController = new UserSignUpOtpController()
-const userLoginController = new UserLoginController()
-const jwtMiddleware = new JwtMiddleware()
+const router = express.Router()
 
-router.get('/test', jwtMiddleware.verifyJwt, userLoginController.userLogin)
- 
-router.post('/sign-up', signUpController.userSignUp)
-router.post('/sign-up-otp', userSignUpOtpController.verifyOtp)
-router.post('/log-in', userLoginController.userLogin)
-router.post('/post', jwtMiddleware.verifyJwt, )
+router.get('/test', verifyJwt, userLogin)
 
+router.post('/sign-up', userSignUp)
+router.post('/sign-up-otp', verifyOtp)
+router.post('/log-in', userLogin)
+router.post('/post', verifyJwt, userNewPost)
 
-export { router as userRoutes };
+export { router as userRoutes }

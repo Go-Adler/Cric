@@ -4,11 +4,12 @@ import {
   Validators,
   FormGroup,
   AbstractControl,
-  ValidatorFn
+  ValidatorFn,
 } from '@angular/forms';
 
 import { SignUpService } from './sign-up.service';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
+import { SignUpDataService } from 'src/app/services/signup-data.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -19,13 +20,14 @@ export class SignUpComponent implements OnInit {
   signUpForm!: FormGroup;
   hide: boolean = true;
   confirmHide: boolean = true;
-  errorMessage!: string
-  isSigningUp: boolean = false
+  errorMessage!: string;
+  isSigningUp: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private signUpService: SignUpService,
-    private router: Router
+    private router: Router,
+    private signUpDataService: SignUpDataService
   ) {}
 
   ngOnInit(): void {
@@ -76,24 +78,24 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit() {
-    this.isSigningUp = true
-    this.errorMessage = ''
-    
+    this.isSigningUp = true;
+    this.errorMessage = '';
+
     const formData = { ...this.signUpForm.value };
     delete formData.confirmPassword;
-
-
+    
+    this.signUpDataService.setSignUpData(formData.email)
     this.signUpService.signUp(formData).subscribe(
       (response) => {
-        this.isSigningUp = false
+        this.isSigningUp = false;
         if (response.error) {
-          this.errorMessage = response.error
+          this.errorMessage = response.error;
         } else {
-          this.router.navigate(['/user/sign-up-otp'])
+          this.router.navigate(['/user/sign-up-otp']);
         }
       },
       (error) => {
-        this.errorMessage = error.error.message
+        this.errorMessage = error.error.message;
       }
     );
   }

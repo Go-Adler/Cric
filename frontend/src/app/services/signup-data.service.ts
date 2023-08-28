@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core'
-import { User } from '../models/user.model'
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignUpDataService {
-  private signUpData: User = {} as User
+  private signUpData!: string
 
-  setSignUpData(userData: User): void {
+  setSignUpData(userData: string): void {
     this.signUpData = userData
   }
 
-  getSignUpData(): User {
+  getSignUpData(): string {
     return this.signUpData
   }
 
   clearSignUpData(): void {
-    this.signUpData = {} as User
+    this.signUpData = ''
   }
 }

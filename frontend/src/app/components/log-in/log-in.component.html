@@ -5,7 +5,7 @@
       </div>
     </div>
     <form action="" [formGroup]="logInForm" (ngSubmit)="onSubmit()">
-      <div *ngIf="errorMessage" class="w-100 d-flex justify-content-center gap-2 errorMessage fs-6 mb-1"><span>{{errorMessage}}.</span><a routerLink="/user/log-in" class="logIn"> Sign up?</a> </div>
+      <div *ngIf="errorMessage" class="w-100 d-flex justify-content-center gap-2 errorMessage fs-6 mb-1"><span>{{errorMessage}}.</span><a routerLink="/user/sign-up" class="logIn"> Sign up?</a> </div>
 
       <!-- Email -->
       <div class="row d-flex justify-content-center">

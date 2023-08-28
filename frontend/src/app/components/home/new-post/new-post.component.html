@@ -4,13 +4,14 @@
       class="profile-image mr-3">
   </div>
   <div class="d-flex flex-column gap-2 w-100">
-    <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="d-flex flex-column gap-3">
       <div class="">
-        <textarea formControlName="postText" name="" id="" class="form-control" rows="3" placeholder="What is happening?"></textarea>
+        <textarea formControlName="text" name="" id="" class="form-control" rows="3" placeholder="What is happening?"></textarea>
       </div>
       <div class="d-flex justify-content-between imagePostArea">
         <mat-icon class="cursor">image</mat-icon>
-        <button type="submit" mat-button class="postButton">{{isPosting ? 'Posting...' : 'Post'}}</button>
+        <button *ngIf="!postSuccess" type="submit" mat-button class="postButton">{{isPosting ? 'Posting...' : 'Post'}}</button>
+        <button *ngIf="postSuccess" type="submit" mat-button class="postSuccessButton">Post success <i class="fa-solid fa-check"></i></button>
       </div>
     </form>
   </div>

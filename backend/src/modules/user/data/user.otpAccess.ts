@@ -15,6 +15,8 @@ export class UserOtpDataAccess {
 
   getOtp = async (email: string) => {
     try {
+      console.log(email, 18);
+      
       const user = await UserEntity.findOne({ email }).select('otp')
       console.log(user?.otp, 19);
       

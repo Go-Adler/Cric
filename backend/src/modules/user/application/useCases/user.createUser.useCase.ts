@@ -5,6 +5,7 @@ import { PasswordManager } from "../../../../utils/bcrypt.utils"
 export class CreateUserUseCase {
   private userDataAccess: UserDataAccess
   private passwordManager: PasswordManager
+  
   constructor() {
     this.userDataAccess = new UserDataAccess()
     this.passwordManager = new PasswordManager()

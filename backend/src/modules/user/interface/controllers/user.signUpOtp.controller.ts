@@ -1,8 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express'
 
-import { InvalidOtpError } from '../../../../shared/errors/invalidOtp.error';
-import { UserVerifyOtpUseCase } from '../../application/useCases/user.verifyOtp.useCase';
-import { CreateUserUseCase } from '../../application/useCases/user.createUser.useCase';
+import { InvalidOtpError } from '../../../../shared/errors/invalidOtp.error'
+import { UserVerifyOtpUseCase } from '../../application/useCases/user.verifyOtp.useCase'
 
 export class UserSignUpOtpController {
   private userVerifyOtpUseCase: UserVerifyOtpUseCase
@@ -12,21 +11,19 @@ export class UserSignUpOtpController {
   }
 
   verifyOtp = async (req: Request, res: Response, next: NextFunction) => {
-    const { userData, otp } = req.body;
-    const { email } = userData
-
+    const { email, otp } = req.body
     try {
       await this.userVerifyOtpUseCase.verifyOtp(email, otp)
-      
-      return res.status(200).json({ message: 'OTP verification successful' });
+
+      return res.status(200).json({ message: 'OTP verification successful' })
     } catch (error: any) {
-      console.log(error.stack);
-      
+      console.log(error.stack)
+
       if (error instanceof InvalidOtpError) {
-        return res.status(401).json({ messages: 'Invalid OTP' });
+        return res.status(401).json({ messages: 'Invalid OTP' })
       }
-      
-      return next(error);
+
+      return next(error)
     }
   }
 }
