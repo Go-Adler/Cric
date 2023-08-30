@@ -18,12 +18,15 @@ export class UserNewPostController {
     const text = req.body
 
     try {
-      const postData = { content: text }
+      const timestamp = new Date()
+      const postData = { content: text, metrics: {timestamp} }
+      console.log(postData, 23);
+      
 
       this.createPostUseCase.createPost(email, postData)
       const posts = this.userPostDataAccess.getUserPosts(email)
 
-      res.json({message: 'Post created successfully', posts})
+      res.json({ message: 'Post created successfully', posts })
     } catch (error) {
       return next(error)
     }

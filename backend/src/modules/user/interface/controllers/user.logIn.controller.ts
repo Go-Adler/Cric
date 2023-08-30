@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { UserExistingUseCase } from '../../application/useCases/user.existing.useCase'
 import { UserLoginUseCase } from '../../application/useCases/user.logIn.useCase'
-import { WrongPasswordError } from '../../../../shared/errors/wrongPassword.error'
 import { TokenUseCase } from '../../application/useCases/user.token.useCase';
 import { UserPostDataAccess } from '../../data/user.postDataAccess';
 
@@ -26,15 +25,18 @@ export class UserLoginController {
       if(!isUserExisting) {
         return res.json({userNotExisting: true})
       }
-      const user = await this.userLogInUseCase.userLogIn(email, password);
-
+      await this.userLogInUseCase.userLogIn(email, password);
+      console.log(29, 29);
+      
+      await this.userLogInUseCase.isVerified(email)
       const token = this.tokenUseCase.generateToken(email);
-      const posts = this.userPostDataAccess.getUserPosts(email)
 
       res.json({ message: 'Verification success', token });
-    } catch (error) {
-      if (error instanceof WrongPasswordError) {
-        return res.status(409).json({ message: error.message });
+    } catch (error: any) {
+      if (error.message === 'InvalidPassword') {
+        return res.json({wrongPassword: true})
+      } else if (error.message === 'NotVerified') {
+        return res.json({notVerified: true})
       }
       return next(error);
     }

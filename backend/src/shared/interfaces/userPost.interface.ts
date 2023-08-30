@@ -36,6 +36,14 @@ export interface PostDocumentComplete extends Document {
 
 export interface PostDocument {
   content: {
-    text: string
-  }
+    text: string;
+    hashtags: string[];
+    mentions: string[];
+    links: string[];
+    multimedia: string[];
+  };
+  metrics: {
+    timestamp: Date;
+  };
+  _id?: string; 
 }

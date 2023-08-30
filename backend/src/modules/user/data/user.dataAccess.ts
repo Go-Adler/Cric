@@ -47,4 +47,10 @@ export class UserDataAccess {
     const user = await UserEntity.findOne({ email });
     return user?.password || ''
   }
+
+  // get user password with email
+  async isVerified(email: string) {
+    const { isVerified } = await UserEntity.findOne({ email }).select<{ isVerified: boolean }>('isVerified');
+    return isVerified
+  }
 }

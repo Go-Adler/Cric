@@ -10,6 +10,11 @@ import { logInGuard } from './guards/logIn.guard'
 import { logOutGuard } from './guards/logOut.guard'
 
 const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'user/log-in',
+    pathMatch: 'full'
+  },
   { 
     path: 'user/home',
     component: HomeComponent,
@@ -17,6 +22,7 @@ const routes: Routes = [
   },
   { path: 'user/sign-up', component: SignUpComponent },
   { path: 'user/sign-up-otp', component: OtpComponent},
+  { path: 'user/verify-otp', component: OtpComponent},
   { path: 'user/log-in', 
     component: LogInComponent,
     canActivate: [logOutGuard]

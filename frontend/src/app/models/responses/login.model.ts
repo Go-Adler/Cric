@@ -6,4 +6,6 @@ export interface I_LoginResponse {
     name: string;
   };
   userNotExisting?: boolean;
+  wrongPassword?: boolean
+  notVerified?: boolean
 }

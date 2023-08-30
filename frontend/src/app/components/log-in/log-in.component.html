@@ -4,8 +4,9 @@
       <div class="col-8 col-xl-6 d-flex justify-content-center fw-medium"><span class="fs-3">Log in to continue</span>
       </div>
     </div>
-    <form action="" [formGroup]="logInForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="logInForm" (ngSubmit)="onSubmit()">
       <div *ngIf="errorMessage" class="w-100 d-flex justify-content-center gap-2 errorMessage fs-6 mb-1"><span>{{errorMessage}}.</span><a routerLink="/user/sign-up" class="logIn"> Sign up?</a> </div>
+      <div *ngIf="wrongPassword" class="w-100 d-flex justify-content-center gap-2 errorMessage fs-6 mb-1"><span>{{wrongPassword}}.</span><a routerLink="/user/forgot-password" class="logIn"> Forgot password?</a> </div>
 
       <!-- Email -->
       <div class="row d-flex justify-content-center">

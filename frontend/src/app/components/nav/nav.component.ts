@@ -29,6 +29,8 @@ export class NavComponent {
   }
 
   logOut(): void {
+    console.log('Clicked logout');
+    
     this.logOutService.logOut();
     this.router.navigate(['/user/log-in']);
   }

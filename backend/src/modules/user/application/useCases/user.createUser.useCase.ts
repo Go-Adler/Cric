@@ -1,23 +1,33 @@
-import { UserDataAccess } from "../../data/user.dataAccess"
-import { I_User } from "../../../../shared/interfaces/user.interface"
-import { PasswordManager } from "../../../../utils/bcrypt.utils"
+// Import the required modules
+import { UserDataAccess } from "../../data/user.dataAccess";
+import { I_User } from "../../../../shared/interfaces/user.interface";
+import { PasswordManager } from "../../../../utils/bcrypt.utils";
 
+// Define a class for the user creation use case
 export class CreateUserUseCase {
-  private userDataAccess: UserDataAccess
-  private passwordManager: PasswordManager
+  // Declare private properties for data access and password management
+  private userDataAccess: UserDataAccess;
+  private passwordManager: PasswordManager;
   
+  // Define a constructor that initializes the properties
   constructor() {
-    this.userDataAccess = new UserDataAccess()
-    this.passwordManager = new PasswordManager()
+    // Initialize the data access and password management instances
+    this.userDataAccess = new UserDataAccess();
+    this.passwordManager = new PasswordManager();
   }
 
-  createUser = async (userData: I_User) => {
-    const {name, userName, email, gender, phone} = userData
-    let { password } = userData
-
-    password = await this.passwordManager.hashPassword(password)
+  // Define an async function that takes a user data object and returns a promise of a boolean value
+  createUser = async (userData: I_User): Promise<boolean> => {
+    // Destructure the user data object into variables for easier access
+    const { name, userName, email, gender, phone } = userData;
     
-
-    await this.userDataAccess.createUser(name, userName, gender, email, phone, password)
+    // Hash the user password using the password manager utility
+    const passwordHash = await this.passwordManager.hashPassword(userData.password);
+    
+    // Call the data access method to create a user in the database
+    await this.userDataAccess.createUser(name, userName, gender, email, phone, passwordHash);
+    
+    // Return true to indicate successful user creation
+    return true;
   }
 }

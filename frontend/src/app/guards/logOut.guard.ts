@@ -6,8 +6,7 @@ export const logOutGuard: CanActivateFn = (route, state) => {
   
   if(token) {
     const router = new Router()
-    router.navigate(['/user/home'])
-    return false
+    return router.createUrlTree(['/user/home'])
   } else {
     return true
   }

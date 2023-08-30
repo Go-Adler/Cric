@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { loginService } from './log-in.service'
+import { loginService } from './log-in.service';
 
 @Component({
   selector: 'app-log-in',
@@ -12,8 +12,9 @@ import { loginService } from './log-in.service'
 export class LogInComponent implements OnInit {
   logInForm!: FormGroup;
   hide: boolean = true;
-  errorMessage:string = ''
-  isLogging: boolean = false
+  errorMessage: string = '';
+  wrongPassword: string = '';
+  isLogging: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -37,28 +38,31 @@ export class LogInComponent implements OnInit {
   }
 
   onSubmit() {
-    this.isLogging = true
-    this.errorMessage = ''
-    const { email, password } = this.logInForm.value
-    
+    console.log('form submitted');
+
+    this.isLogging = true;
+    this.errorMessage = '';
+    this.wrongPassword = '';
+    const { email, password } = this.logInForm.value;
+
     this.logInService.login(email, password).subscribe(
       (response) => {
-        this.isLogging = false
+        this.isLogging = false;
         if (response.userNotExisting) {
-            this.errorMessage = 'User not existing'
+          this.errorMessage = 'User not existing';
+        } else if (response.wrongPassword) {
+          this.wrongPassword = 'Wrong password';
+        } else if (response.notVerified) {
+          this.router.navigate(['user/verify-otp'])
         } else {
           const token = response.token;
-          localStorage.setItem('token', token)
-          console.log(token, 44);
-          
-          this.router.navigate(['/user/home'])
+          localStorage.setItem('token', token);
+          this.router.navigate(['user/home']);
         }
-       
       },
       (errorResponse) => {
         console.log(errorResponse);
-        
       }
-    )
+    );
   }
 }

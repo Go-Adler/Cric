@@ -22,3 +22,10 @@ mat-form-field input {
 .continueButton {
   background-color: rgb(32, 161, 43) !important;
 }
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
