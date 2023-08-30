@@ -26,7 +26,6 @@ export class UserLoginUseCase {
   }
 
   isVerified = async (email: string) => {
-    const isVerified= await this.userDataAccess.isVerified(email)
-    if (!isVerified) throw new Error('NotVerified')
+    return await this.userDataAccess.isVerified(email)
   } 
 }

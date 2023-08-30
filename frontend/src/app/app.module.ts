@@ -25,6 +25,7 @@ import { TokenInterceptor } from './services/auth.interceptor';
 import { ErrorComponent } from './components/error/error.component';
 import { PostComponent } from './components/home/post/post.component';
 import { NewPostComponent } from './components/home/new-post/new-post.component'
+import { LogoutInterceptor } from './services/auth.noToken.interceptor'
 
 
 @NgModule({
@@ -61,6 +62,11 @@ import { NewPostComponent } from './components/home/new-post/new-post.component'
       useClass: TokenInterceptor,
       multi: true,
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LogoutInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
 })

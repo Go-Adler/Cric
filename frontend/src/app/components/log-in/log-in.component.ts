@@ -48,6 +48,10 @@ export class LogInComponent implements OnInit {
     this.logInService.login(email, password).subscribe(
       (response) => {
         this.isLogging = false;
+        if (response.token) {
+          const token = response.token;
+          localStorage.setItem('token', token);
+        }
         if (response.userNotExisting) {
           this.errorMessage = 'User not existing';
         } else if (response.wrongPassword) {
@@ -55,8 +59,6 @@ export class LogInComponent implements OnInit {
         } else if (response.notVerified) {
           this.router.navigate(['user/verify-otp'])
         } else {
-          const token = response.token;
-          localStorage.setItem('token', token);
           this.router.navigate(['user/home']);
         }
       },

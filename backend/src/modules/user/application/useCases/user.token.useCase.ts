@@ -1,10 +1,12 @@
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'
 
 export class TokenUseCase {
-  generateToken(email: string): string {
-    const secretKey = process.env.JWT_SECRET_KEY!; 
+  generateToken(email: string, isVerified: boolean): string {
+    const secretKey = process.env.JWT_SECRET_KEY!
 
-    const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
-    return token;
+    const token = jwt.sign({ email, isVerified }, secretKey, {
+      expiresIn: '1h',
+    })
+    return token
   }
 }
