@@ -3,7 +3,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 
 import { userRoutes } from './modules/user/interface/routes/user.routes'
-import { adminRoutes } from './modules/admin/interface/admin.routes'
+import { adminRoutes } from './modules/admin/interface/routes/admin.routes'
 import { mongo} from './config/database'
 
 // Define the ServerApp class

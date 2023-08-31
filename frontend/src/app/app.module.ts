@@ -8,7 +8,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './components/nav/nav.component';
@@ -24,9 +23,15 @@ import { OtpComponent } from './components/otp/otp.component';
 import { TokenInterceptor } from './services/auth.interceptor';
 import { ErrorComponent } from './components/error/error.component';
 import { PostComponent } from './components/home/post/post.component';
-import { NewPostComponent } from './components/home/new-post/new-post.component'
-import { LogoutInterceptor } from './services/auth.noToken.interceptor'
-
+import { NewPostComponent } from './components/home/new-post/new-post.component';
+import { LogoutInterceptor } from './services/auth.noToken.interceptor';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { AdminHomeComponent } from './components/admin-home/admin-home.component';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { AdminNavComponent } from './components/admin-nav/admin-nav.component';
+import { UsersComponent } from './components/users/users.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +44,12 @@ import { LogoutInterceptor } from './services/auth.noToken.interceptor'
     ErrorComponent,
     PostComponent,
     NewPostComponent,
+    UserProfileComponent,
+    AdminHomeComponent,
+    AdminLoginComponent,
+    AdminNavComponent,
+    UsersComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +65,8 @@ import { LogoutInterceptor } from './services/auth.noToken.interceptor'
     MatSelectModule,
     ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {
@@ -65,8 +77,8 @@ import { LogoutInterceptor } from './services/auth.noToken.interceptor'
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LogoutInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })

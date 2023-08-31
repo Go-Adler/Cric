@@ -46,10 +46,13 @@ export class JwtMiddleware {
 
       // Attach the decoded user information to the request object
       req.user = decoded
-      const { isVerified } = decoded.isVerified
+      const { isVerified } = decoded
+      
       const { email } = decoded
 
+      
       if (!isVerified) {
+        
         await this.sendOtpUseCase.sendOTP(email)
 
         const token = this.tokenUseCase.generateToken(email, false)

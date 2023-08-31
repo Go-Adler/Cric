@@ -1,4 +1,4 @@
-<nav class="container-fluid mt-0">
+<nav class="container-fluid mt-0 adminNav">
   <div class="row">
     <div class="col-4 d-flex align-items-center">
       <div class="row p-2 pl-md-2 pl-xl-4">
@@ -11,11 +11,11 @@
       <div class="row-fluid gap-2 d-flex justify-content-end">
         <a class="col-2 p-0 d-flex gap-2 align-items-center justify-content-center" routerLink="/user/home">
           <i class="fa-solid fa-house fs-5"></i>
-          <span class="d-none d-xl-block">Home</span>
+          <span class="d-none d-xl-block">Home - Admin</span>
         </a>
-        <div class="col-2 p-0 d-flex gap-2 align-items-center justify-content-center">
-          <i class="fa-regular fa-bell fs-5"></i>
-          <span class="d-none d-xl-block">Notifications</span>
+        <div class="col-2 p-0 d-flex gap-2 align-items-center justify-content-center" routerLink="/admin/users">
+          <i class="fa-solid fa-users fs-5"></i>
+          <span class="d-none d-xl-block">Users</span>
         </div>
         <div class="col-2 p-0 d-flex gap-2 align-items-center justify-content-center">
           <i class="fa-regular fa-message fs-5"></i>

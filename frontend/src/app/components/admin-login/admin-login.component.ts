@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-
-import { loginService } from './log-in.service';
+import { loginService } from '../log-in/log-in.service';
 
 @Component({
-  selector: 'app-log-in',
-  templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.scss'],
+  selector: 'app-admin-login',
+  templateUrl: './admin-login.component.html',
+  styleUrls: ['./admin-login.component.scss']
 })
-export class LogInComponent implements OnInit {
+export class AdminLoginComponent {
   logInForm!: FormGroup;
   hide: boolean = true;
   errorMessage: string = '';
@@ -38,6 +37,8 @@ export class LogInComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('form submitted');
+
     this.isLogging = true;
     this.errorMessage = '';
     this.wrongPassword = '';
@@ -51,13 +52,13 @@ export class LogInComponent implements OnInit {
           localStorage.setItem('token', token);
         }
         if (response.userNotExisting) {
-          this.errorMessage = 'User not existing';
+          this.errorMessage = 'Admin not existing';
         } else if (response.wrongPassword) {
           this.wrongPassword = 'Wrong password';
         } else if (response.notVerified) {
           this.router.navigate(['user/verify-otp'])
         } else {
-          this.router.navigate(['user/home']);
+          this.router.navigate(['admin/home']);
         }
       },
       (errorResponse) => {

@@ -1,12 +1,15 @@
 <div class="pt-5 loginArea d-flex justify-content-center align-items-center">
   <div class="container mt-5 d-flex flex-column">
     <div class="row d-flex justify-content-center mb-4">
-      <div class="col-8 col-xl-6 d-flex justify-content-center fw-medium"><span class="fs-3">Log in to continue</span>
+      <div class="col-8 col-xl-6 d-flex justify-content-center fw-medium"><span class="fs-3">Admin, please log in to
+          continue</span>
       </div>
     </div>
     <form [formGroup]="logInForm" (ngSubmit)="onSubmit()">
-      <div *ngIf="errorMessage" class="w-100 d-flex justify-content-center gap-2 errorMessage fs-6 mb-1"><span>{{errorMessage}}.</span><a routerLink="/user/sign-up" class="logIn"> Sign up?</a> </div>
-      <div *ngIf="wrongPassword" class="w-100 d-flex justify-content-center gap-2 errorMessage fs-6 mb-1"><span>{{wrongPassword}}.</span><a routerLink="/user/forgot-password" class="logIn"> Forgot password?</a> </div>
+      <div *ngIf="errorMessage" class="w-100 d-flex justify-content-center gap-2 errorMessage fs-6 mb-1">
+        <span>{{errorMessage}}.</span></div>
+      <div *ngIf="wrongPassword" class="w-100 d-flex justify-content-center gap-2 errorMessage fs-6 mb-1">
+        <span>{{wrongPassword}}.</span><a routerLink="/user/forgot-password" class="logIn"> Forgot password?</a> </div>
 
       <!-- Email -->
       <div class="row d-flex justify-content-center">
@@ -28,7 +31,7 @@
 
       <!-- Password -->
       <div class="row d-flex justify-content-center">
-        <div class="col-8 col-xl-6 d-flex justify-content-center p-0  flex-col items-end">
+        <div class="col-8 col-xl-6 d-flex justify-content-center p-0">
           <mat-form-field hideRequiredMarker="true">
             <mat-label>Password</mat-label>
             <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
@@ -43,21 +46,18 @@
               *ngIf="(logInForm.get('password')?.invalid && (logInForm.get('password')?.dirty || logInForm.get('password')?.touched)) && (logInForm.get('password')?.errors?.['pattern'])">The
               input password does not seem to be in the correct format</mat-error>
           </mat-form-field>
-          <a routerLink="/user/forgot-password" class="mb-2 forgotPassword">Forgot password?</a>
         </div>
       </div>
 
       <!-- Submit -->
       <div class="row d-flex justify-content-center">
         <div class="col-8 col-xl-6 p-0">
-          <button mat-raised-button type="submit" [disabled]="!logInForm.valid" [ngStyle]="{'opacity': (!logInForm.valid) ? '0.5' : '1'}"> {{ isLogging ? 'Logging In...' : 'Log In' }}</button>
+          <button mat-raised-button type="submit" [disabled]="!logInForm.valid"
+            [ngStyle]="{'opacity': (!logInForm.valid) ? '0.5' : '1'}"> {{ isLogging ? 'Logging In...' : 'Log In'
+            }}</button>
         </div>
-      </div> 
+      </div>
 
-      <span class="row-fluid d-flex justify-content-center mt-2 gap-1">
-        <span class="col-auto d-flex justify-content-end m-0 p-0">Don't have an account?</span>
-        <a class="col-auto d-flex justify-content-start m-0 p-0" routerLink="/user/sign-up">Sign up!</a>
-      </span>
     </form>
   </div>
 </div>

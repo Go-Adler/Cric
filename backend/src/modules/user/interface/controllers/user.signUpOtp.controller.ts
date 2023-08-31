@@ -3,12 +3,15 @@ import { Request, Response, NextFunction } from 'express'
 import { InvalidOtpError } from '../../../../shared/errors/invalidOtp.error'
 import { UserVerifyOtpUseCase } from '../../application/useCases/user.verifyOtp.useCase'
 import { I_UserDecoded } from '../../../../shared/interfaces/userDecoded.interface'
+import { TokenUseCase } from '../../application/useCases/user.token.useCase'
 
 export class UserSignUpOtpController {
   private userVerifyOtpUseCase: UserVerifyOtpUseCase
+  private tokenUseCase: TokenUseCase
 
   constructor() {
     this.userVerifyOtpUseCase = new UserVerifyOtpUseCase()
+    this.tokenUseCase = new TokenUseCase()
   }
 
   verifyOtp = async (req: Request, res: Response, next: NextFunction) => {
@@ -16,8 +19,9 @@ export class UserSignUpOtpController {
     const { email } = req.user as I_UserDecoded
     try {
       await this.userVerifyOtpUseCase.verifyOtp(email, otp)
-
-      return res.status(200).json({ message: 'OTP verification successful' })
+      const token = this.tokenUseCase.generateToken(email, true)
+      console.log(token, 23);
+      return res.status(200).json({ message: 'OTP verification successful', token })
     } catch (error: any) {
       console.log(error.stack)
 

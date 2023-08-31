@@ -11,7 +11,7 @@ export class SendOTP_UseCase {
     this.userOtpDataAccess = new UserOtpDataAccess()
   }
 
-  async sendOTP(email: string) {
+  sendOTP = async (email: string) => {
     try {
 
       const otp = generateOTP()
