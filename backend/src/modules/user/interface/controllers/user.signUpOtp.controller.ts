@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 
 import { InvalidOtpError } from '../../../../shared/errors/invalidOtp.error'
 import { UserVerifyOtpUseCase } from '../../application/useCases/user.verifyOtp.useCase'
+import { I_UserDecoded } from '../../../../shared/interfaces/userDecoded.interface'
 
 export class UserSignUpOtpController {
   private userVerifyOtpUseCase: UserVerifyOtpUseCase
@@ -11,7 +12,8 @@ export class UserSignUpOtpController {
   }
 
   verifyOtp = async (req: Request, res: Response, next: NextFunction) => {
-    const { email, otp } = req.body
+    const { otp } = req.body
+    const { email } = req.user as I_UserDecoded
     try {
       await this.userVerifyOtpUseCase.verifyOtp(email, otp)
 

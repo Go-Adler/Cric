@@ -10,7 +10,7 @@ import { JwtMiddleware } from '../middleware/auth.middleware'
 const { userSignUp } = new UserSignUpController()
 const { verifyOtp } = new UserSignUpOtpController()
 const { userLogin } = new UserLoginController()
-const { verifyJwt } = new JwtMiddleware()
+const { verifyJwt, verifyJwtForOtp } = new JwtMiddleware()
 const { userNewPost } = new UserNewPostController()
 const { getUserPosts } = new GetUserPostsController()
 
@@ -20,7 +20,7 @@ router.get('/test', verifyJwt, userLogin)
 router.get('/posts', verifyJwt, getUserPosts)
 
 router.post('/sign-up', userSignUp)
-router.post('/sign-up-otp', verifyOtp)
+router.post('/sign-up-otp', verifyJwtForOtp, verifyOtp)
 router.post('/log-in', userLogin)
 router.post('/post', verifyJwt, userNewPost)
 

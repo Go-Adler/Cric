@@ -23,15 +23,18 @@ export class LogoutInterceptor implements HttpInterceptor {
       tap(
         (event) => {
           if (event instanceof HttpResponse) {
+            
             const responseBody = event.body;
+            if(responseBody.token) {
+              const token = responseBody.token
+              localStorage.setItem('token', token)
+            }
             if (responseBody.invalidToken) {
               this.logOutService.logOut();
               this.router.navigate(['/user/log-in']);
             }
 
             if (responseBody.notVerified) {
-              const token = responseBody.token;
-              localStorage.setItem('token', token);
 
               this.router.navigate(['/user/verify-otp']);
             }

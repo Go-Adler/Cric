@@ -53,4 +53,8 @@ export class UserDataAccess {
     const { isVerified } = await UserEntity.findOne({ email }).select<{ isVerified: boolean }>('isVerified');
     return isVerified
   }
+
+  async verifyUser(email: string) {
+    await UserEntity.findOneAndUpdate({ email }, { isVerified: true})
+  }
 }
