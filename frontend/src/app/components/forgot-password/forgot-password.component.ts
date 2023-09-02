@@ -42,8 +42,7 @@ export class ForgotPasswordComponent {
         if (response.userNotExisting) {
           this.errorMessage = 'User not existing';
         } else {
-          console.log('everything fine')
-          // this.router.navigate(['user/home']);
+          this.router.navigate(['user/verify-otp']);
         }
       },
       (errorResponse) => {

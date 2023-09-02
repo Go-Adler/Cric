@@ -20,8 +20,7 @@ export class UserSignUpOtpController {
     try {
       await this.userVerifyOtpUseCase.verifyOtp(email, otp)
       const token = this.tokenUseCase.generateToken(email, true)
-      console.log(token, 23);
-      return res.status(200).json({ message: 'OTP verification successful', token })
+      return res.status(200).json({ message: 'OTP verification successful', token, otpVerified: true })
     } catch (error: any) {
       console.log(error.stack)
 

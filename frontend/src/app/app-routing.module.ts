@@ -13,6 +13,7 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 import { UsersComponent } from './components/users/users.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component'
+import { PostComponent } from './components/post/post.component'
 
 const routes: Routes = [
   {
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'user/verify-otp', component: OtpComponent },
   { path: 'admin/users', component: UsersComponent },
   { path: 'user/forgot-password', component: ForgotPasswordComponent },
+  { path: 'user/post/:id', component: PostComponent },
   {
     path: 'user/log-in',
     component: LogInComponent,

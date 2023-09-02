@@ -20,4 +20,10 @@ export class OTP_Service {
 
     return this.http.post<messageResponse>(`${this.API_URL}/user/sign-up-otp`, OTP_Data)
   }
+
+  changePassword(password: string): Observable<messageResponse> {
+    const passwordData = { password }
+
+    return this.http.post<messageResponse>(`${this.API_URL}/user/changePassword`, passwordData)
+  }
 }

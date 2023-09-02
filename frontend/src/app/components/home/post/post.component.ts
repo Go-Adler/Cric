@@ -1,16 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PostService } from '../home.post.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss'],
 })
-export class PostComponent implements OnInit {
+export class PostComponent {
   posts: any;
   spinner: boolean = true
 
-  constructor(private postService: PostService) {}
+  constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
     this.postService.getPosts().subscribe(
@@ -20,4 +21,12 @@ export class PostComponent implements OnInit {
       }
     )
   }
+
+  navigateToPost(postId: string) {
+    console.log('clicked');
+    
+    this.router.navigate(['/user/post', postId]);
+  }
+
 }
+

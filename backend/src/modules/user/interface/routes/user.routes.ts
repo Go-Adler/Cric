@@ -7,6 +7,7 @@ import { UserNewPostController } from '../controllers/user.newPost.controller'
 import { GetUserPostsController } from '../controllers/user.getPosts.controller'
 import { JwtMiddleware } from '../middleware/auth.middleware'
 import { UserForgotPasswordController } from '../controllers/user.forgotPassword.controller'
+import { UserChangePasswordController } from '../controllers/user.changePassword.controller'
 
 const { userSignUp } = new UserSignUpController()
 const { verifyOtp } = new UserSignUpOtpController()
@@ -15,6 +16,8 @@ const { verifyJwt, verifyJwtForOtp } = new JwtMiddleware()
 const { userNewPost } = new UserNewPostController()
 const { getUserPosts } = new GetUserPostsController()
 const { forgotPassword } = new UserForgotPasswordController()
+const { changePassword } = new UserChangePasswordController()
+
 
 const router = express.Router()
 
@@ -26,6 +29,7 @@ router.post('/sign-up-otp', verifyJwtForOtp, verifyOtp)
 router.post('/log-in', userLogin)
 router.post('/post', verifyJwt, userNewPost)
 router.post('/forgot-password',  forgotPassword)
+router.post('/changePassword', verifyJwtForOtp, changePassword)
 
 
 export { router as userRoutes }

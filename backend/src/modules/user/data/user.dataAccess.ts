@@ -57,4 +57,9 @@ export class UserDataAccess {
   async verifyUser(email: string) {
     await UserEntity.findOneAndUpdate({ email }, { isVerified: true})
   }
+
+
+  async changePassword(email: string, password: string) {
+    await UserEntity.findOneAndUpdate({ email }, { password })
+  }
 }

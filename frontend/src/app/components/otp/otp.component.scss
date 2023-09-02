@@ -29,3 +29,28 @@ input[type="number"]::-webkit-inner-spin-button {
   margin: 0;
 }
 
+$cricBlue: #1A2938;
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-form-field input {
+  font-weight: 500;
+}
+
+[mat-raised-button] {
+  width: 100%;
+  background-color: $cricBlue !important;
+  color: white !important;
+  
+}
+
+.errorMessage {
+  color: rgb(223, 64, 64)
+}
+
+.logIn {
+  color: white !important;
+  text-decoration: underline;
+}

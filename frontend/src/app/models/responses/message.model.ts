@@ -1,4 +1,6 @@
 export interface messageResponse {
   message?: string,
-  error?: string
+  error?: string,
+  otpVerified?: boolean
+  changePassword?: boolean
 }
