@@ -33,7 +33,6 @@ import { AdminNavComponent } from './components/admin-nav/admin-nav.component';
 import { UsersComponent } from './components/users/users.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { CommentComponent } from './components/comment/comment.component';
-import { TestComponentComponent } from './test-component/test-component.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +52,6 @@ import { TestComponentComponent } from './test-component/test-component.componen
     UsersComponent,
     ForgotPasswordComponent,
     CommentComponent,
-    TestComponentComponent,
   ],
   imports: [
     BrowserModule,

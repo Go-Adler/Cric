@@ -20,7 +20,10 @@ export class LogInComponent implements OnInit {
     private fb: FormBuilder,
     private logInService: loginService,
     private router: Router
-  ) {}
+  ) {
+    console.log('reached, log in component');
+    
+  }
 
   ngOnInit(): void {
     this.logInForm = this.fb.group({

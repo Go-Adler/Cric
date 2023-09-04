@@ -47,12 +47,10 @@ export class JwtMiddleware {
       // Attach the decoded user information to the request object
       req.user = decoded
       const { isVerified } = decoded
-      
+
       const { email } = decoded
 
-      
       if (!isVerified) {
-        
         await this.sendOtpUseCase.sendOTP(email)
 
         const token = this.tokenUseCase.generateToken(email, false)
@@ -68,7 +66,6 @@ export class JwtMiddleware {
 
   verifyJwtForOtp = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      
       const secretKey: string = process.env.JWT_SECRET_KEY!
 
       // Extract the Authorization header
@@ -102,5 +99,21 @@ export class JwtMiddleware {
       return res.json({ invalidToken: true })
     }
   }
+
+  verifyToken = async (req: Request, res: Response) => {
+   try {
+    const { token } = req.body
+    const secretKey: string = process.env.JWT_SECRET_KEY!
+
+    jwt.verify(token, secretKey) as JwtPayload
+    res.json({validToken: true})
+   } catch(error: any) {
+    
+    if (error.message === 'jwt malformed') {
+      
+      res.json({invalidToken: true})
+    }
+   }
+    
+  }
 }
- 
