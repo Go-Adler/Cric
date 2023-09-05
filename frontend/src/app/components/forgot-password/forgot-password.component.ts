@@ -46,7 +46,6 @@ export class ForgotPasswordComponent {
         }
       },
       (errorResponse) => {
-        console.log(errorResponse);
       }
     );
   }

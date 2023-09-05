@@ -33,6 +33,7 @@ import { AdminNavComponent } from './components/admin-nav/admin-nav.component';
 import { UsersComponent } from './components/users/users.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { CommentComponent } from './components/comment/comment.component';
+import { CubeComponent } from './cube/cube.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { CommentComponent } from './components/comment/comment.component';
     UsersComponent,
     ForgotPasswordComponent,
     CommentComponent,
+    CubeComponent,
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,6 @@ export class PostComponent {
   ngOnInit() {
     this.route.params.subscribe(params => {
       const postId = +params['id'];
-      console.log(postId, 15);
       
       // this.dataService.getPostById(postId).subscribe(post => {
       //   this.post = post;

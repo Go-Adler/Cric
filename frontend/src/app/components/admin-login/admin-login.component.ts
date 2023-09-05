@@ -37,8 +37,6 @@ export class AdminLoginComponent {
   }
 
   onSubmit() {
-    console.log('form submitted');
-
     this.isLogging = true;
     this.errorMessage = '';
     this.wrongPassword = '';
@@ -62,7 +60,6 @@ export class AdminLoginComponent {
         }
       },
       (errorResponse) => {
-        console.log(errorResponse);
       }
     );
   }

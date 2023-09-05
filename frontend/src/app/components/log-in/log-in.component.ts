@@ -20,10 +20,7 @@ export class LogInComponent implements OnInit {
     private fb: FormBuilder,
     private logInService: loginService,
     private router: Router
-  ) {
-    console.log('reached, log in component');
-    
-  }
+  ) {}
 
   ngOnInit(): void {
     this.logInForm = this.fb.group({
@@ -58,13 +55,12 @@ export class LogInComponent implements OnInit {
         } else if (response.wrongPassword) {
           this.wrongPassword = 'Wrong password';
         } else if (response.notVerified) {
-          this.router.navigate(['user/verify-otp'])
+          this.router.navigate(['user/verify-otp']);
         } else {
           this.router.navigate(['user/home']);
         }
       },
       (errorResponse) => {
-        console.log(errorResponse);
       }
     );
   }

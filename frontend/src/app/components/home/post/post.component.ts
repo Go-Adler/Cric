@@ -9,24 +9,18 @@ import { Router } from '@angular/router';
 })
 export class PostComponent {
   posts: any;
-  spinner: boolean = true
+  spinner: boolean = true;
 
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
-    this.postService.getPosts().subscribe(
-      data => {
-        this.spinner = false
-        this.posts = data.posts
-      }
-    )
+    this.postService.getPosts().subscribe((data) => {
+      this.spinner = false;
+      this.posts = data.posts;
+    });
   }
 
   navigateToPost(postId: string) {
-    console.log('clicked');
-    
     this.router.navigate(['/user/post', postId]);
   }
-
 }
-

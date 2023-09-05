@@ -24,8 +24,10 @@
     "@ngrx/entity": "^16.2.0",
     "@ngrx/store": "^16.2.0",
     "@ngrx/store-devtools": "^16.2.0",
+    "@types/three": "^0.155.1",
     "material-design-icons": "^3.0.1",
     "rxjs": "~7.8.0",
+    "three": "^0.156.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
   },

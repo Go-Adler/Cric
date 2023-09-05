@@ -1,25 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, ValidatorFn, AbstractControl } from '@angular/forms';
+import {
+  FormBuilder,
+  Validators,
+  FormGroup,
+  ValidatorFn,
+  AbstractControl,
+} from '@angular/forms';
 
 import { OTP_Service } from './otp.service';
 import { SignUpDataService } from 'src/app/services/signup-data.service';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-otp',
   templateUrl: './otp.component.html',
   styleUrls: ['./otp.component.scss'],
 })
-export class  OtpComponent implements OnInit {
+export class OtpComponent implements OnInit {
   signUpForm!: FormGroup;
   OTP_Form!: FormGroup;
   otpInvalid: boolean = false;
   verified: boolean = false;
-  hide: boolean = true
-  confirmHide: boolean = true
-  resetPassword: boolean = false
-  isSigningUp: boolean = false
-  passwordChanged: boolean = false
+  hide: boolean = true;
+  confirmHide: boolean = true;
+  resetPassword: boolean = false;
+  isSigningUp: boolean = false;
+  passwordChanged: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -82,11 +88,10 @@ export class  OtpComponent implements OnInit {
 
     this.otpService.verifyOTP(OTP, email).subscribe(
       (response) => {
-        const routeParams = window.location.href
-        console.log(routeParams, 86666666);
-        
+        const routeParams = window.location.href;
+
         if (response.otpVerified) {
-          this.resetPassword = true
+          this.resetPassword = true;
         } else {
           this.verified = true;
         }
@@ -99,18 +104,15 @@ export class  OtpComponent implements OnInit {
     );
   }
 
-  submitPassword( ) {
-    this.isSigningUp = true
-    const { password } = this.signUpForm.value
-    this.otpService.changePassword(password).subscribe(
-      response => {
-        if(response.changePassword) {
-          this.resetPassword = false
-          this.passwordChanged = true
-          localStorage.clear()
-        }
+  submitPassword() {
+    this.isSigningUp = true;
+    const { password } = this.signUpForm.value;
+    this.otpService.changePassword(password).subscribe((response) => {
+      if (response.changePassword) {
+        this.resetPassword = false;
+        this.passwordChanged = true;
+        localStorage.clear();
       }
-    )
-    
+    });
   }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GuardService } from 'src/app/guards/guard.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,15 +7,5 @@ import { GuardService } from 'src/app/guards/guard.service'
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
- constructor(private guardService: GuardService) {
-  const token = localStorage.getItem('token')
-  guardService.verifyToken(token || 'token').subscribe(
-    response => {
-      console.log(response);
-      
-    }
-  )
- }
-
-
+  constructor(private router: Router) {}
 }

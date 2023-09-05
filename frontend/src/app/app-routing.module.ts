@@ -6,14 +6,15 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { OtpComponent } from './components/otp/otp.component';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { ErrorComponent } from './components/error/error.component';
-import { logInGuard } from './guards/logIn.guard';
-import { logOutGuard } from './guards/logOut.guard';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 import { UsersComponent } from './components/users/users.component';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component'
-import { PostComponent } from './components/post/post.component'
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { PostComponent } from './components/post/post.component';
+import { LogInGuard } from './guards/logIn.guard';
+import { AuthGuard } from './guards/auth.guard';
+
 
 const routes: Routes = [
   {
@@ -21,30 +22,52 @@ const routes: Routes = [
     redirectTo: 'user/log-in',
     pathMatch: 'full',
   },
+
   {
     path: 'user/home',
     component: HomeComponent,
-    canActivate: [logInGuard],
+    canActivate: [AuthGuard],
   },
-  {
-    path: 'user/profile',
-    component: UserProfileComponent,
-    canActivate: [logInGuard],
-  },
-  { path: 'user/sign-up', component: SignUpComponent },
-  { path: 'user/sign-up-otp', component: OtpComponent },
-  { path: 'user/verify-otp', component: OtpComponent },
-  { path: 'admin/users', component: UsersComponent },
+
+  { path: 'user/post/:id', component: PostComponent, canActivate: [AuthGuard] },
+
   { path: 'user/forgot-password', component: ForgotPasswordComponent },
-  { path: 'user/post/:id', component: PostComponent },
   {
     path: 'user/log-in',
     component: LogInComponent,
-    canActivate: [logOutGuard],
+    canActivate: [LogInGuard],
   },
+  { path: 'user/error', component: ErrorComponent },
+
+  {
+    path: 'user/profile',
+    component: UserProfileComponent,
+    canActivate: [AuthGuard],
+  },
+
+  {
+    path: 'user/sign-up',
+    component: SignUpComponent,
+    canActivate: [LogInGuard],
+  },
+
+  {
+    path: 'user/sign-up-otp',
+    component: OtpComponent,
+    canActivate: [LogInGuard],
+  },
+
+  {
+    path: 'user/verify-otp',
+    component: OtpComponent,
+    canActivate: [LogInGuard],
+  },
+
+  //Admin
+  { path: 'admin/users', component: UsersComponent },
+
   { path: 'admin/home', component: AdminHomeComponent },
   { path: 'admin/log-in', component: AdminLoginComponent },
-  { path: 'user/error', component: ErrorComponent },
 ];
 
 @NgModule({

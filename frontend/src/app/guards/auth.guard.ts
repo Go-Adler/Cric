@@ -1,4 +1,4 @@
-import { inject } from '@angular/core';
+import { inject } from '@angular/core'
 import {
   ActivatedRouteSnapshot,
   CanActivateFn,
@@ -6,17 +6,18 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 
-export const LogInGuard: CanActivateFn = (
+export const AuthGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
   const token = localStorage.getItem('token');
-  const router = inject(Router);
+  const router = inject(Router)
+
   if (token) {
-    router.navigateByUrl('/user/home');
+    return true;
+  } else {
+    router.navigateByUrl('/user/log-in');
 
     return false;
-  } else {
-    return true;
   }
 };

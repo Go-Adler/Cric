@@ -15,7 +15,8 @@ export class NewPostComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private newPostService: NewPostService
+    private newPostService: NewPostService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
