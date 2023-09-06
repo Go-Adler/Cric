@@ -5,7 +5,6 @@ import { EmailService } from '../../../../services/email.service';
 export class SendOTP_UseCase {
   private emailService: EmailService
   private userOtpDataAccess: UserOtpDataAccess
-
   constructor() {
     this.emailService = new EmailService()
     this.userOtpDataAccess = new UserOtpDataAccess()
@@ -19,7 +18,8 @@ export class SendOTP_UseCase {
       await this.emailService.sendOTPVerificationEmail(email, otp);
       await this.userOtpDataAccess.addOtp(email, otp)
       return true
-    } catch (error) {
+    } catch (error: any) {
+      console.log(error.message, 23);
       throw error
     }
   }
