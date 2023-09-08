@@ -12,7 +12,6 @@ export class SendOTP_UseCase {
 
   sendOTP = async (email: string) => {
     try {
-
       const otp = generateOTP()
       console.log(otp, 'otp');
       await this.emailService.sendOTPVerificationEmail(email, otp);

@@ -14,6 +14,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { PostComponent } from './components/post/post.component';
 import { LogInGuard } from './guards/logIn.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { SportsComponent } from './components/sports/sports.component'
 
 
 const routes: Routes = [
@@ -42,6 +43,12 @@ const routes: Routes = [
   {
     path: 'user/profile',
     component: UserProfileComponent,
+    canActivate: [AuthGuard],
+  },
+
+  {
+    path: 'user/sports',
+    component: SportsComponent,
     canActivate: [AuthGuard],
   },
 

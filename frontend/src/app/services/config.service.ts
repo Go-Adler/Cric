@@ -10,4 +10,5 @@ export class ConfigService {
   getAPI_BaseURL(): string {
     return this.API_BaseURL
   }
+
 }

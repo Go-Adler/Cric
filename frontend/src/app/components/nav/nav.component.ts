@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, DoCheck } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { LogOutService } from '../log-in/log-out.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -16,9 +17,21 @@ import { Router } from '@angular/router';
     ]),
   ],
 })
-export class NavComponent {
-  constructor(private logOutService: LogOutService, private router: Router) {}
+export class NavComponent implements DoCheck {
+  profilePicture: string = 'https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/Default/DefaultProfilePicture.png'
+  isLogin: boolean = false
+  
+  constructor(
+    private logOutService: LogOutService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
+
   profileAreaActive = false;
+
+  ngDoCheck(): void {
+    this.isLogin = this.authService.isLogin();
+  }
 
   showProfile() {
     this.profileAreaActive = true;
@@ -29,7 +42,6 @@ export class NavComponent {
   }
 
   logOut(): void {
-    
     this.logOutService.logOut();
     this.router.navigate(['/user/log-in']);
   }

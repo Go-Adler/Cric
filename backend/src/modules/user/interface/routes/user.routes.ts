@@ -29,6 +29,7 @@ router.post('/verify-token', verifyToken)
 router.post('/sign-up-otp', verifyJwtForOtp, verifyOtp)
 router.post('/log-in', userLogin)
 router.post('/post', verifyJwt, userNewPost)
+router.post('/post', verifyJwt, userNewPost)
 router.post('/forgot-password',  forgotPassword)
 router.post('/changePassword', verifyJwtForOtp, changePassword)
 

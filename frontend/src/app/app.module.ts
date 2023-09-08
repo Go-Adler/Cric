@@ -34,6 +34,7 @@ import { UsersComponent } from './components/users/users.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { CubeComponent } from './cube/cube.component';
+import { SportsComponent } from './components/sports/sports.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { CubeComponent } from './cube/cube.component';
     ForgotPasswordComponent,
     CommentComponent,
     CubeComponent,
+    SportsComponent,
   ],
   imports: [
     BrowserModule,

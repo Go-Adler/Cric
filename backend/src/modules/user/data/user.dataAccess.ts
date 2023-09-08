@@ -24,6 +24,12 @@ export class UserDataAccess {
     return user;
   }
 
+  // get user id with email
+  async getUserIdWithEmail(email: string) {
+    const userId = await UserEntity.findOne({ email }).select('_id');
+    return userId;
+  }
+
   // check email already exist
   async checkUserByEmail(email: string) {
     const user = await UserEntity.findOne({ email });
@@ -57,7 +63,6 @@ export class UserDataAccess {
   async verifyUser(email: string) {
     await UserEntity.findOneAndUpdate({ email }, { isVerified: true})
   }
-
 
   async changePassword(email: string, password: string) {
     await UserEntity.findOneAndUpdate({ email }, { password })

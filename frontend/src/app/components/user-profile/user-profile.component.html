@@ -3,8 +3,11 @@
     <div class="imageArea col">
       <div class="row d-flex justify-content-end">
         <div class="col-6">
-          <img class="img-fluid" src="https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/GokulKrishDP.png" alt="">
-
+          <img class="img-fluid" [src]="profilePicture" alt="">
+          <span class="d-flex items-center mt-2 gap-2 profilePictureEditArea" [style.cursor]="'pointer'">
+            <i class="fa-solid fa-pen-to-square d-flex"></i>
+            <span class="m-0">Add profile picture</span>
+          </span>
         </div>
       </div>
     </div>
