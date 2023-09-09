@@ -25,7 +25,7 @@ export class UserLoginUseCase {
     if (comparePasswords === false) throw new Error('InvalidPassword')
 
     // Get user id
-    const userId = this.userDataAccess.getUserIdWithEmail(email)
+    const userId = await this.userDataAccess.getUserIdWithEmail(email)
 
     return userId
   }

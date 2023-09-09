@@ -17,8 +17,6 @@ export class UserPostDataAccess {
     // Sort the posts array in descending order based on the 'timestamp' field
     posts.sort((a: any, b: any) => b.metrics.timestamp - a.metrics.timestamp)
 
-    console.log(posts)
-
     // Return the sorted 'posts' array from the retrieved user document
     return posts
   }

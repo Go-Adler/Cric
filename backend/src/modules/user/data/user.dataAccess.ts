@@ -27,6 +27,8 @@ export class UserDataAccess {
   // get user id with email
   async getUserIdWithEmail(email: string) {
     const userId = await UserEntity.findOne({ email }).select('_id');
+    console.log(userId, 30);
+    
     return userId;
   }
 

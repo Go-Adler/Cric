@@ -13,8 +13,6 @@ export class GetUserPostsController {
     const { email } = req.user as JwtPayload
 
     try {
-      console.log('get user post controller works  16');
-      
       const posts = await this.getUserPostsUseCase.getUserPosts(email)
       res.json({posts})
     } catch (error) {
