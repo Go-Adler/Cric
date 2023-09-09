@@ -28,12 +28,10 @@ export class UserLoginController {
         return res.json({ userNotExisting: true })
       }
       const userId = await this.userLogInUseCase.userLogIn(email, password)
+
       const isVerified = await this.userLogInUseCase.isVerified(email)
 
-      console.log(userId, 33);
-      
-
-      const token = this.tokenUseCase.generateToken(email, isVerified)
+      const token = this.tokenUseCase.generateToken(userId, email, isVerified)
 
       if (isVerified) res.json({ message: 'Verification success', token })
       else {
