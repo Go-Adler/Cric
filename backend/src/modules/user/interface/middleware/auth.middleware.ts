@@ -56,7 +56,7 @@ export class JwtMiddleware {
         const token = this.tokenUseCase.generateToken(email, false)
         return res.json({ notVerified: true, token })
       }
-      // Proceed to the next middleware
+      // Proceed to the next middleware 
       next()
     } catch (error) {
       // Handle token verification errors

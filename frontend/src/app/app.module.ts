@@ -36,6 +36,9 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { CommentComponent } from './components/comment/comment.component';
 import { CubeComponent } from './cube/cube.component';
 import { SportsComponent } from './components/sports/sports.component';
+import {MatCardModule} from '@angular/material/card';
+import { MatCommonModule } from '@angular/material/core';
+import { UpdateProfilePictureComponent } from './components/user-profile/update-profile-picture/update-profile-picture.component'
 
 @NgModule({
   declarations: [
@@ -57,6 +60,7 @@ import { SportsComponent } from './components/sports/sports.component';
     CommentComponent,
     CubeComponent,
     SportsComponent,
+    UpdateProfilePictureComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,7 +78,9 @@ import { SportsComponent } from './components/sports/sports.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
-    ImageCropperModule
+    ImageCropperModule,
+    MatCommonModule,
+    MatCardModule
   ],
   providers: [
     {

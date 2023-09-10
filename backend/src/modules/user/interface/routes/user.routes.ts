@@ -1,4 +1,5 @@
 import express from 'express'
+import multer from 'multer'
 
 import { UserSignUpController } from '../controllers/user.signUp.controller'
 import { UserSignUpOtpController } from '../controllers/user.signUpOtp.controller'
@@ -20,13 +21,29 @@ const { forgotPassword } = new UserForgotPasswordController()
 const { changePassword } = new UserChangePasswordController()
 const { userProfilePicture } = new UserDataController()
 
+
+
 const router = express.Router()
+
+
+// Set up multer to handle file uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // Define the destination folder where files will be stored
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); // Use the original file name for storage
+  },
+});
+
+const upload = multer({ storage: storage });
 
 router.get('/test', verifyJwt, userLogin)
 router.get('/posts', verifyJwt, getUserPosts)
 router.get('/profile-picture', verifyJwt, userProfilePicture)
 
 router.post('/sign-up', userSignUp)
+router.post('/upload', upload.single('croppedImage'))
 router.post('/verify-token', verifyToken)
 router.post('/sign-up-otp', verifyJwtForOtp, verifyOtp)
 router.post('/log-in', userLogin)
