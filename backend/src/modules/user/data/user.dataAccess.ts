@@ -62,7 +62,8 @@ export class UserDataAccess {
   async getUserIdWithEmail(email: string) {
     try {
       const userId = await UserEntity.findOne({ email }).select('_id')
-      if (userId) return userId.toString()
+
+      if (userId) return userId._id.toString()
     } catch (e: any) {
       // handle the error here
       console.error('Error in getUserIdWithEmail:', e.message)
@@ -144,4 +145,15 @@ export class UserDataAccess {
       console.log(e.message)
     }
   }
+
+    // get profile picture with id
+    async getUserProfilePictureWithId(id: string) {
+      try {
+        const userProfilePicture = await UserEntity.findById(id).select('profilePicture')
+        return userProfilePicture?.profilePicture
+      } catch (e: any) {
+        // handle the error here
+        console.log(e.message)
+      }
+    }
 }

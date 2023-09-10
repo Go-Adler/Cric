@@ -2,17 +2,17 @@
   <div class="row">
     <div class="imageArea col">
       <div class="row d-flex justify-content-end">
-        <div class="col-6">
+        <div class="col-7">
           <img class="img-fluid" [src]="profilePicture" alt="">
-          <span class="d-flex items-center mt-2 gap-2 profilePictureEditArea" [style.cursor]="'pointer'">
+          <span class="d-flex items-center mt-2 gap-2 profilePictureEditArea" [style.cursor]="'pointer'" (click)="changeProfilePicture()">
             <i class="fa-solid fa-pen-to-square d-flex"></i>
-            <span class="m-0">Add profile picture</span>
+            <span class="m-0" >Add profile picture</span>
           </span>
         </div>
       </div>
     </div>
     <div class="textArea col d-flex flex-column justify-content-center gap-2">
-      <span class="flex">
+      <span class="flex flex-column gap-2">
         <span class="fs-3 tracking-wider">Gokul</span>
         <span class="fs-2 font-medium tracking-wider">Krishna</span>
       </span>
@@ -28,4 +28,24 @@
       </span>
     </div>
   </div>
+  <div class="changeProfilePictureArea bg-black/60 d-flex row-fluid flex-column align-items-center justify-content-center" *ngIf="addProfilePicture">
+    <button (click)="closeChangeProfilePicture()">Close</button>
+    <form action="" class="flex flex-column items-center justify-center">
+      <span [style.cursor]="'pointer'" (click)="clickInput()">
+        <mat-icon class="text-3xl">add_photo_alternate</mat-icon>
+      </span>
+      <input
+        hidden
+        type="file"
+        #fileInput
+        accept="image/*" 
+        (change)="onFileSelected($event)" 
+      />
+      <div class="col-md-6 selectedImageArea" *ngIf="selectedImage">
+        <img [src]="selectedImage" alt="Selected Image" class="img-fluid selectedImage w-100"  />
+      </div>
+    </form>
+  </div>
+  
 </div>
+

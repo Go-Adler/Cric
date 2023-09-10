@@ -18,18 +18,19 @@ const { userNewPost } = new UserNewPostController()
 const { getUserPosts } = new GetUserPostsController()
 const { forgotPassword } = new UserForgotPasswordController()
 const { changePassword } = new UserChangePasswordController()
+const { userProfilePicture } = new UserDataController()
 
 const router = express.Router()
 
 router.get('/test', verifyJwt, userLogin)
 router.get('/posts', verifyJwt, getUserPosts)
+router.get('/profile-picture', verifyJwt, userProfilePicture)
 
 router.post('/sign-up', userSignUp)
 router.post('/verify-token', verifyToken)
 router.post('/sign-up-otp', verifyJwtForOtp, verifyOtp)
 router.post('/log-in', userLogin)
 router.post('/post', verifyJwt, userNewPost)
-router.post('/profile-picture', verifyJwt, userNewPost)
 router.post('/forgot-password',  forgotPassword)
 router.post('/changePassword', verifyJwtForOtp, changePassword)
 

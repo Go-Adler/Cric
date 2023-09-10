@@ -30,7 +30,7 @@ export class UserLoginUseCase {
       // Get user id
       const userId = await this.userDataAccess.getUserIdWithEmail(email)
 
-      return userId ?? ''
+      return userId
     } catch (error) {
       // Handle the error here, you can log it or perform any necessary actions.
       console.error('Error in userLogIn:', error)

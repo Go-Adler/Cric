@@ -1,7 +1,34 @@
+$cricBlue: #1A2938;
+
 .profileArea {
-  margin-top: 70px;
+  padding: 70px;
 }
 
 .profilePictureEditArea:hover {
   color: rgb(46, 61, 189);
+}
+
+.changeProfilePictureArea {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  position: fixed;
+}
+
+.changeProfilePictureArea form {
+  width: 100%;
+  height: 100%;
+}
+
+mat-icon {
+  width: auto;
+  height: auto;
+}
+
+.selectedImageArea {
+  background-color: $cricBlue;
+}
+
+.selectedImage {
+  background-color: red;
 }

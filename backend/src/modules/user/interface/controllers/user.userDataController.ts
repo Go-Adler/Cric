@@ -1,26 +1,28 @@
 import { Request, Response, NextFunction } from 'express'
 
-import { UserPostDataAccess } from '../../data/user.postDataAccess'
 import { JwtPayload } from 'jsonwebtoken'
+import { GetUserDataUseCase } from '../../application/useCases/user.getData.useCase'
 
 export class UserDataController {
-  private userPostDataAccess: UserPostDataAccess
+  private userDataUseCase: GetUserDataUseCase
 
   constructor() {
-    this.userPostDataAccess = new UserPostDataAccess()
+    this.userDataUseCase = new GetUserDataUseCase()
   }
 
-  userNewPost = async (req: Request, res: Response, next: NextFunction) => {
-    const { email } = req.user as JwtPayload
-    const text = req.body
+  userProfilePicture = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    console.log(14)
 
+    const { userId } = req.user as JwtPayload
     try {
-      const timestamp = new Date()
-      const postData = { content: text, metrics: {timestamp} }
+      const userProfilePicture =
+        await this.userDataUseCase.getUserProfilePicture(userId)
 
-      const posts = this.userPostDataAccess.getUserPosts(email)
-
-      res.json({ message: 'Post created successfully', posts })
+      res.json({ message: 'post fetched successfully', userProfilePicture })
     } catch (error) {
       return next(error)
     }

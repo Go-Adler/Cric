@@ -25,7 +25,7 @@ export class UserLoginController {
       if (!isUserExisting) {
         return res.json({ userNotExisting: true })
       }
-      const userId = await this.userLogInUseCase.userLogIn(email, password)
+      let userId = await this.userLogInUseCase.userLogIn(email, password)
 
       let isVerified = await this.userLogInUseCase.isVerified(email)
       isVerified = !!isVerified
