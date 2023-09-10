@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/services/user.service'
+import { ImageCroppedEvent } from 'ngx-image-cropper'
 
 @Component({
   selector: 'app-user-profile',
@@ -10,6 +11,9 @@ export class UserProfileComponent implements OnInit {
   profilePicture: string = 'https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/Default/DefaultProfilePicture.png'
   addProfilePicture: boolean = false
   selectedImage: string | undefined;
+  imageChangedEvent = '';
+  croppedImage: any = ''
+
 
   @ViewChild('fileInput') fileInputRef!: ElementRef;
 
@@ -38,18 +42,12 @@ export class UserProfileComponent implements OnInit {
     this.fileInputRef.nativeElement.click();
   }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      if (file.type.startsWith('image/')) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.selectedImage = e.target.result; 
-        };
-        reader.readAsDataURL(file);
-      } else {
-        alert('Please select an image file.');
-      }
-    }
+  onFileSelected(event: any): void {
+    this.imageChangedEvent = event;
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+    // event.blob can be used to upload the cropped image
   }
 }

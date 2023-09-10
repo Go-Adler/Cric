@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
+import { ImageCropperModule } from 'ngx-image-cropper';
 import { AppComponent } from './app.component';
 import { NavComponent } from './components/nav/nav.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -73,6 +74,7 @@ import { SportsComponent } from './components/sports/sports.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
+    ImageCropperModule
   ],
   providers: [
     {

@@ -1,8 +1,7 @@
-import { Component, DoCheck } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { LogOutService } from '../log-in/log-out.service';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -18,30 +17,25 @@ import { UserService } from 'src/app/services/user.service';
     ]),
   ],
 })
-export class NavComponent implements DoCheck {
+export class NavComponent implements OnInit {
   profilePicture: string = 'https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/Default/DefaultProfilePicture.png'
-  isLogin: boolean = false
   
   constructor(
     private logOutService: LogOutService,
     private router: Router,
-    private authService: AuthService,
     private profilePictureService: UserService
   ) {}
 
   profileAreaActive = false;
 
   ngOnInit(): void {
+
     this.profilePictureService.getProfilePicture().subscribe(
       response => {
-        
        if (response.userProfilePicture) this.profilePicture = response.userProfilePicture
       }
     )
-  }
-
-  ngDoCheck(): void {
-    this.isLogin = this.authService.isLogin();
+   
   }
 
   showProfile() {
