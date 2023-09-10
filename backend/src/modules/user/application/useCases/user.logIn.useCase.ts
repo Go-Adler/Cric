@@ -40,7 +40,8 @@ export class UserLoginUseCase {
 
   isVerified = async (email: string) => {
     try {
-      return await this.userDataAccess.isVerified(email)
+      const isVerified = this.userDataAccess.isVerified(email)
+      return isVerified
     } catch (error) {
       // Handle the error here, you can log it or perform any necessary actions.
       console.error('Error in isVerified:', error)

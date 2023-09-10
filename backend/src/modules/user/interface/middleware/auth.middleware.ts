@@ -44,6 +44,9 @@ export class JwtMiddleware {
       // Verify the token using the provided secret key
       const decoded = jwt.verify(token, secretKey) as JwtPayload
 
+      console.log(decoded, 47);
+      
+
       // Attach the decoded user information to the request object
       req.user = decoded
       const { isVerified } = decoded

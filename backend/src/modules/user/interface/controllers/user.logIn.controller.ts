@@ -19,19 +19,18 @@ export class UserLoginController {
 
   userLogin = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body
-
     try {
-      const isUserExisting = await this.userExistingUseCase.userExistingLogIn(
-        email
-      )
+      const isUserExisting = await this.userExistingUseCase.userExistingLogIn(email)
+
       if (!isUserExisting) {
         return res.json({ userNotExisting: true })
       }
       const userId = await this.userLogInUseCase.userLogIn(email, password)
 
-      const isVerified = await this.userLogInUseCase.isVerified(email)
+      let isVerified = await this.userLogInUseCase.isVerified(email)
+      isVerified = !!isVerified
 
-      const token = this.tokenUseCase.generateToken(userId, email, isVerified)
+      const token = this.tokenUseCase.generateToken(email, isVerified, userId)
 
       if (isVerified) res.json({ message: 'Verification success', token })
       else {
