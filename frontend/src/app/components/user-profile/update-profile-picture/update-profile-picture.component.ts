@@ -2,7 +2,6 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Input,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -18,24 +17,24 @@ export class UpdateProfilePictureComponent {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   uploadingImage: any = '';
-  isSubmitDisabled: boolean = true
+  isSubmitDisabled: boolean = true;
 
   @Output() closeComponentStatusEvent = new EventEmitter<boolean>();
   @ViewChild('fileInput') fileInputRef!: ElementRef;
 
   constructor(
     private sanitizer: DomSanitizer,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
   ) {} 
 
   closeChangeProfilePicture() {
-    this.isSubmitDisabled = true
+    this.isSubmitDisabled = true;
     this.closeComponentStatusEvent.emit(false);
   }
 
   onFileSelected(event: any): void {
     this.imageChangedEvent = event;
-    this.isSubmitDisabled = false
+    this.isSubmitDisabled = false;
   }
 
   clickInput() {
@@ -52,26 +51,32 @@ export class UpdateProfilePictureComponent {
   }
 
   imageLoaded(image?: any) {
+    // You can add logic here if needed
   }
 
   cropperReady() {
+    // You can add logic here if needed
   }
 
   loadImageFailed() {
+    // You can add logic here if needed
   }
 
   submitPicture() {
     const formData = new FormData();
-    formData.append('croppedImage', this.uploadingImage.blob, this.uploadingImage.name);
+    formData.append('file', this.uploadingImage.blob, this.uploadingImage.name);
 
-    this.httpClient.post('http://localhost:3000/user/upload', formData).subscribe(
+    // Replace 'your_cloud_name' with your actual Cloudinary cloud name
+    this.httpClient.post(`https://api.cloudinary.com/v1_1/dprjb18ng/upload`, formData).subscribe(
       (response) => {
         // Handle the server's response here
         console.log('Image upload successful', response);
+        // Provide user feedback here if needed
       },
       (error) => {
         // Handle any errors that occur during the upload
         console.error('Image upload failed', error);
+        // Provide user feedback here if needed
       }
     );
   }

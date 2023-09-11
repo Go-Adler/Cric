@@ -39,6 +39,7 @@ import { SportsComponent } from './components/sports/sports.component';
 import {MatCardModule} from '@angular/material/card';
 import { MatCommonModule } from '@angular/material/core';
 import { UpdateProfilePictureComponent } from './components/user-profile/update-profile-picture/update-profile-picture.component'
+import { CloudinaryInterceptor } from './services/cloudinary.interceptor'
 
 @NgModule({
   declarations: [
@@ -80,7 +81,7 @@ import { UpdateProfilePictureComponent } from './components/user-profile/update-
     MatProgressSpinnerModule,
     ImageCropperModule,
     MatCommonModule,
-    MatCardModule
+    MatCardModule,
   ],
   providers: [
     {
@@ -91,6 +92,11 @@ import { UpdateProfilePictureComponent } from './components/user-profile/update-
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LogoutInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CloudinaryInterceptor,
       multi: true,
     },
   ],
