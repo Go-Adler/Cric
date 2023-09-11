@@ -8,6 +8,7 @@ import {
 import { DomSanitizer } from '@angular/platform-browser'
 import { HttpClient } from '@angular/common/http'
 
+
 @Component({
   selector: 'app-update-profile-picture',
   templateUrl: './update-profile-picture.component.html',

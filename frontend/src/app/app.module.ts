@@ -39,7 +39,9 @@ import { SportsComponent } from './components/sports/sports.component';
 import {MatCardModule} from '@angular/material/card';
 import { MatCommonModule } from '@angular/material/core';
 import { UpdateProfilePictureComponent } from './components/user-profile/update-profile-picture/update-profile-picture.component'
-import { CloudinaryInterceptor } from './services/cloudinary.interceptor'
+import { CloudinaryInterceptor } from './services/cloudinary.interceptor';
+import { TestFormCloudinaryComponent } from './components/user-profile/test-form-cloudinary/test-form-cloudinary.component'
+
 
 @NgModule({
   declarations: [
@@ -62,6 +64,7 @@ import { CloudinaryInterceptor } from './services/cloudinary.interceptor'
     CubeComponent,
     SportsComponent,
     UpdateProfilePictureComponent,
+    TestFormCloudinaryComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,6 +85,7 @@ import { CloudinaryInterceptor } from './services/cloudinary.interceptor'
     ImageCropperModule,
     MatCommonModule,
     MatCardModule,
+    
   ],
   providers: [
     {

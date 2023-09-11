@@ -1,8 +1,5 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import { DomSanitizer } from '@angular/platform-browser';
-import { userProfileService } from './user-profile.service';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-profile',
@@ -12,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class UserProfileComponent implements OnInit {
   profilePicture: string =
     'https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/Default/DefaultProfilePicture.png';
-  addProfilePicture: boolean = true;
+  addProfilePicture: boolean = false;
   selectedImage: string | undefined;
 
   constructor(private profilePictureService: UserService) {}

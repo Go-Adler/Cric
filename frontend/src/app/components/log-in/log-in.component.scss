@@ -2,6 +2,7 @@ $cricBlue: #1A2938;
 
 mat-form-field {
   width: 100%;
+  padding: 0px !important;
 }
 
 mat-form-field input {
@@ -12,11 +13,14 @@ mat-form-field input {
   width: 100%;
   background-color: $cricBlue !important;
   color: white !important;
-  
+  height: 40px !important;
 }
 
 .loginArea {
-  height: 60vh;
+  height: 100%;
+  background: linear-gradient(45deg, $cricBlue, #000000, $cricBlue);
+  animation: gradient 10s linear infinite;
+  background-size: 400% 400%;
 }
 
 .errorMessage {
@@ -34,4 +38,14 @@ mat-form-field input {
 
 .forgotPassword:hover {
   color: rgb(255, 255, 255);
+}
+
+
+@keyframes gradient {
+  0% {
+      background-position: 0% 50%;
+  }
+  100% {
+      background-position: 100% 50%;
+  }
 }
