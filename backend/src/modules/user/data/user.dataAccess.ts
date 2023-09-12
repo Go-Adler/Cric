@@ -20,8 +20,8 @@ export class UserDataAccess {
         password,
       })
     } catch (e: any) {
-      // handle the error here
       console.log(e.message)
+      throw new Error(e.message)
     }
   }
 
@@ -31,8 +31,8 @@ export class UserDataAccess {
       const user = await UserEntity.findOne({ userName })
       return user
     } catch (e: any) {
-      // handle the error here
       console.log(e.message)
+      throw new Error(e.message)
     }
   }
 
@@ -42,8 +42,8 @@ export class UserDataAccess {
       const user = await UserEntity.findOne({ userName })
       return user ? true : false
     } catch (e: any) {
-      // handle the error here
       console.log(e.message)
+      throw new Error(e.message)
     }
   }
 
@@ -53,8 +53,19 @@ export class UserDataAccess {
       const user = await UserEntity.findOne({ email })
       return user
     } catch (e: any) {
-      // handle the error here
       console.log(e.message)
+      throw new Error(e.message)
+    }
+  }
+
+  // get user name with email
+  async getNameById(email: string) {
+    try {
+      const user = await UserEntity.findOne({ email })
+      return user
+    } catch (e: any) {
+      console.log(e.message)
+      throw new Error(e.message)
     }
   }
 
@@ -65,9 +76,8 @@ export class UserDataAccess {
 
       if (userId) return userId._id.toString()
     } catch (e: any) {
-      // handle the error here
-      console.error('Error in getUserIdWithEmail:', e.message)
-      throw e // Re-throw the error to let the caller handle it.
+      console.log(e.message)
+      throw new Error(e.message)
     }
   }
 
@@ -77,8 +87,8 @@ export class UserDataAccess {
       const user = await UserEntity.findOne({ email })
       return user ? true : false
     } catch (e: any) {
-      // handle the error here
       console.log(e.message)
+      throw new Error(e.message)
     }
   }
 
@@ -88,8 +98,8 @@ export class UserDataAccess {
       const user = await UserEntity.findOne({ phone })
       return user
     } catch (e: any) {
-      // handle the error here
       console.log(e.message)
+      throw new Error(e.message)
     }
   }
 
@@ -99,8 +109,8 @@ export class UserDataAccess {
       const user = await UserEntity.findOne({ phone })
       return user ? true : false
     } catch (e: any) {
-      // handle the error here
       console.log(e.message)
+      throw new Error(e.message)
     }
   }
 
@@ -110,8 +120,8 @@ export class UserDataAccess {
       const user = await UserEntity.findOne({ email })
       return user?.password || ''
     } catch (e: any) {
-      // handle the error here
       console.log(e.message)
+      throw new Error(e.message)
     }
   }
 
@@ -123,8 +133,8 @@ export class UserDataAccess {
       }>('isVerified')
       return isVerified
     } catch (e: any) {
-      // handle the error here
       console.log(e.message)
+      throw new Error(e.message)
     }
   }
 
@@ -132,8 +142,8 @@ export class UserDataAccess {
     try {
       await UserEntity.findOneAndUpdate({ email }, { isVerified: true })
     } catch (e: any) {
-      // handle the error here
       console.log(e.message)
+      throw new Error(e.message)
     }
   }
 
@@ -141,8 +151,8 @@ export class UserDataAccess {
     try {
       await UserEntity.findOneAndUpdate({ email }, { password })
     } catch (e: any) {
-      // handle the error here
       console.log(e.message)
+      throw new Error(e.message)
     }
   }
 
@@ -152,8 +162,8 @@ export class UserDataAccess {
         const userProfilePicture = await UserEntity.findById(id).select('profilePicture')
         return userProfilePicture?.profilePicture
       } catch (e: any) {
-        // handle the error here
         console.log(e.message)
+        throw new Error(e.message)
       }
     }
 }

@@ -7,7 +7,12 @@ export class GetUserDataUseCase {
     this.userDataAccess = new UserDataAccess()
   }
 
-  getUserProfilePicture = async (userId: string): Promise<any> => {
+  getProfilePicture = async (userId: string): Promise<any> => {
+    const userProfilePicture = await this.userDataAccess.getUserProfilePictureWithId(userId)
+    return userProfilePicture
+  }
+
+  getName = async (userId: string): Promise<any> => {
     const userProfilePicture = await this.userDataAccess.getUserProfilePictureWithId(userId)
     return userProfilePicture
   }

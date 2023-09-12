@@ -5,7 +5,7 @@
     <div class="tweet" *ngFor="let post of posts">
         <div class="d-flex align-items-center postArea"  (click)="navigateToPost(post._id)">
 
-            <img src="https://pbs.twimg.com/profile_images/1498070100393754625/C2V-fbll_400x400.jpg" alt="Profile Image"
+            <img [src]="profilePicture" alt="Profile Image"
                 class="profile-image mr-3">
             <div class="">
                 <div class="username">John Doe</div>

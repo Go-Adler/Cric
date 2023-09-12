@@ -1,3 +1,5 @@
-export interface I_UserProfilePicture {
-  userProfilePicture: string
+export interface I_UserBasicInfo {
+  profilePicture: string,
+  name: string,
+  userName: string
 }

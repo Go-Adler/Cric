@@ -8,17 +8,16 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UserProfileComponent implements OnInit {
   profilePicture: string =
-    'https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/Default/DefaultProfilePicture.png';
+    '';
   addProfilePicture: boolean = false;
   selectedImage: string | undefined;
 
-  constructor(private profilePictureService: UserService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.profilePictureService.getProfilePicture().subscribe((response) => {
-      if (response.userProfilePicture)
-        this.profilePicture = response.userProfilePicture;
-    });
+    this.userService.profilePicture$.subscribe(profilePicture => {
+      this.profilePicture = profilePicture
+    })
   }
 
   changeProfilePicture() {

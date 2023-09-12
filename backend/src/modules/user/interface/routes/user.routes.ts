@@ -19,7 +19,7 @@ const { userNewPost } = new UserNewPostController()
 const { getUserPosts } = new GetUserPostsController()
 const { forgotPassword } = new UserForgotPasswordController()
 const { changePassword } = new UserChangePasswordController()
-const { userProfilePicture } = new UserDataController()
+const { userBasicInfo } = new UserDataController()
 
 
 
@@ -40,7 +40,7 @@ const upload = multer({ storage: storage });
 
 router.get('/test', verifyJwt, userLogin)
 router.get('/posts', verifyJwt, getUserPosts)
-router.get('/profile-picture', verifyJwt, userProfilePicture)
+router.get('/basic-info', verifyJwt, userBasicInfo)
 
 router.post('/sign-up', userSignUp)
 router.post('/upload', upload.single('croppedImage'))

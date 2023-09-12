@@ -61,7 +61,9 @@ export class LogInComponent implements OnInit {
         } else if (response.notVerified) {
           this.router.navigate(['user/verify-otp']);
         } else {
-          this.userService.getProfilePicture()
+          console.log('login succesful');
+          
+          this.userService.getUserBasicInfo()
           this.authService.setLoginStatus(true);
           this.router.navigate(['user/home']);
         }

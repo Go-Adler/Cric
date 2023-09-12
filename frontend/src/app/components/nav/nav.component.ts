@@ -18,24 +18,20 @@ import { UserService } from 'src/app/services/user.service';
   ],
 })
 export class NavComponent implements OnInit {
-  profilePicture: string = 'https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/Default/DefaultProfilePicture.png'
+  profilePicture: string = ''
   
   constructor(
     private logOutService: LogOutService,
     private router: Router,
-    private profilePictureService: UserService
+    private userService: UserService
   ) {}
 
   profileAreaActive = false;
 
   ngOnInit(): void {
-
-    this.profilePictureService.getProfilePicture().subscribe(
-      response => {
-       if (response.userProfilePicture) this.profilePicture = response.userProfilePicture
-      }
-    )
-   
+   this.userService.profilePicture$.subscribe( profilePicture => {
+    this.profilePicture = profilePicture    
+   }) 
   }
 
   showProfile() {
