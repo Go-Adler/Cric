@@ -1,17 +1,23 @@
-<div class="pt-5 loginArea d-flex flex-col justify-content-center align-items-center">
+<div class="pt-32 loginArea d-flex flex-col gap-4 align-items-center">
+  <!-- logo -->
   <img class="img-fluid w-28 md:w-44" src="https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/NameAndLogo+(1).png" alt="">
-  <div class="container d-flex flex-column mt-40">
+
+  <!-- login area -->
+  <div class="container d-flex flex-column">
+    <!-- login title -->
     <div class="row d-flex justify-content-center mb-4">
       <div class="col-8 col-xl-6 d-flex justify-content-center fw-medium"><span class="fs-3">Log in to continue</span>
       </div>
     </div>
+
+    <!-- form -->
     <form [formGroup]="logInForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-1">
       <div *ngIf="errorMessage" class="w-100 d-flex justify-content-center gap-2 errorMessage fs-6 mb-1"><span>{{errorMessage}}.</span><a routerLink="/user/sign-up" class="logIn"> Sign up?</a> </div>
       <div *ngIf="wrongPassword" class="w-100 d-flex justify-content-center gap-2 errorMessage fs-6 mb-1"><span>{{wrongPassword}}.</span><a routerLink="/user/forgot-password" class="logIn"> Forgot password?</a> </div>
 
       <!-- Email -->
       <div class="row d-flex justify-content-center">
-        <div class="col-8 col-xl-6 d-flex flex-column p-0">
+        <div class="col-8 col-xl-4 d-flex flex-column p-0">
           <p class="m-0">
             <mat-form-field appearance="fill" hideRequiredMarker="true">
               <mat-label>Email</mat-label>
@@ -29,7 +35,7 @@
 
       <!-- Password -->
       <div class="row d-flex justify-content-center">
-        <div class="col-8 col-xl-6 d-flex justify-content-center p-0  flex-col items-end">
+        <div class="col-8 col-xl-4 d-flex justify-content-center p-0  flex-col items-end">
           <mat-form-field hideRequiredMarker="true" class="areaa">
             <mat-label>Password</mat-label>
             <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
@@ -41,8 +47,7 @@
               *ngIf="(logInForm.get('password')?.invalid && (logInForm.get('password')?.dirty || logInForm.get('password')?.touched)) && (logInForm.get('password')?.errors?.['required'])"
               class="p-0">Password cannot be empty</mat-error>
             <mat-error
-              *ngIf="(logInForm.get('password')?.invalid && (logInForm.get('password')?.dirty || logInForm.get('password')?.touched)) && (logInForm.get('password')?.errors?.['pattern'])">The
-              input password does not seem to be in the correct format</mat-error>
+              *ngIf="(logInForm.get('password')?.invalid && (logInForm.get('password')?.dirty || logInForm.get('password')?.touched)) && (logInForm.get('password')?.errors?.['pattern'])">The password not in the correct format.</mat-error>
           </mat-form-field>
           <a routerLink="/user/forgot-password" class="mb-2 forgotPassword">Forgot password?</a>
         </div>
@@ -50,7 +55,7 @@
 
       <!-- Submit -->
       <div class="row d-flex justify-content-center">
-        <div class="col-8 col-xl-6 p-0">
+        <div class="col-8 col-xl-4 p-0">
           <button mat-raised-button type="submit" [disabled]="!logInForm.valid" [ngStyle]="{'opacity': (!logInForm.valid) ? '0.5' : '1'}"> {{ isLogging ? 'Logging In...' : 'Log In' }}</button>
         </div>
       </div> 
