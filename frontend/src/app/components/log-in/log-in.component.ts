@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { loginService } from './log-in.service';
 import { AuthService } from 'src/app/services/auth.service'
+import { UserService } from 'src/app/services/user.service'
 
 @Component({
   selector: 'app-log-in',
@@ -21,7 +22,8 @@ export class LogInComponent implements OnInit {
     private fb: FormBuilder,
     private logInService: loginService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +61,7 @@ export class LogInComponent implements OnInit {
         } else if (response.notVerified) {
           this.router.navigate(['user/verify-otp']);
         } else {
+          this.userService.getProfilePicture()
           this.authService.setLoginStatus(true);
           this.router.navigate(['user/home']);
         }

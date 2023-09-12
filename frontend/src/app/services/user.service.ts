@@ -9,16 +9,24 @@ import { I_UserProfilePicture } from "../models/responses/userResponses"
   providedIn: "root"
 })
 export class UserService implements OnInit{
+  private profilePicture: string = 'https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/Default/DefaultProfilePicture.png'
   API_URL!: string
 
   constructor(private configService: ConfigService, private http: HttpClient) {
     this.API_URL = this.configService.getAPI_BaseURL()
   }
 
+  getFetchedProfilePicture(): string {
+    return this.profilePicture
+  }
+
+
+
   ngOnInit(): void {
   }
 
-  getProfilePicture(): Observable<I_UserProfilePicture> {
-    return this.http.get<I_UserProfilePicture>(`${this.API_URL}/user/profile-picture`)
+  getProfilePicture() {
+    const fetchedProfilePicture = this.http.get<I_UserProfilePicture>(`${this.API_URL}/user/profile-picture`)
+    this.profilePicture = fetchedProfilePicture.userProfilePicture
   }
 }

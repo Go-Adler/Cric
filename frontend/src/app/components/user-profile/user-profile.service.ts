@@ -8,7 +8,7 @@ import { ConfigService } from 'src/app/services/config.service';
 @Injectable({
   providedIn: 'root',
 })
-export class userProfileService {
+export class UserProfileService {
   API_URL!: string;
 
   constructor(private configService: ConfigService, private http: HttpClient) {

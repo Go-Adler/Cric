@@ -2,7 +2,7 @@
   <div class="row p-1">
     <div class="col-4 d-flex align-items-center">
       <div class="row p-2 pl-md-2 pl-xl-4">
-        <div class="col-8 col-md-4 col-xl-2 p-0 d-flex justify-content-start">
+        <div class="col-8 col-md-4 col-xl-2 p-0 d-flex justify-content-start" routerLink="/user/home">
           <img class="img-fluid" src="https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/NameAndLogo+(1).png" alt="">
         </div>
       </div>
@@ -10,7 +10,7 @@
     <div class="col-8 d-flex justify-content-end pe-2">
       <div class="row-fluid gap-2 d-flex justify-content-end">
         <!-- Home tab -->
-        <div [title]="'Home'" [style.cursor]="'pointer'" class="col-2 p-0 d-flex gap-2 align-items-center justify-content-center" routerLink="/user/home">
+        <div [title]="'Home'" [style.cursor]="'pointer'" class="col-2 p-0 hidden md:flex gap-2 align-items-center justify-content-center" routerLink="/user/home">
           <span class="material-symbols-outlined">
             cottage
           </span>
