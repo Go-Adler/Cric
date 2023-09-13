@@ -13,11 +13,14 @@ export class UserDataController {
   userBasicInfo = async (req: Request, res: Response, next: NextFunction) => {
     const { userId } = req.user as JwtPayload
     try {
-      const profilePicture = await this.userDataUseCase.getUserProfilePicture(userId)
+      const profilePicture = await this.userDataUseCase.getProfilePicture(
+        userId
+      )
       const name = await this.userDataUseCase.getName(userId)
-      await this.res.json({
-        message: 'post fetched successfully',
+      res.json({
         profilePicture,
+        name,
+        message: 'user info fetched success',
       })
     } catch (error) {
       return next(error)

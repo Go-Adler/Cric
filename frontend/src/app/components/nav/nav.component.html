@@ -37,14 +37,14 @@
           <span class="d-none d-xl-block">Messages</span>
         </div>
 
-        <div [style.cursor]="'pointer'" class="col-2 p-1 p-xl-2 d-flex align-items-center" (mouseenter)="showProfile()"
+        <div [style.cursor]="'pointer'" class="col-2 col-xl-2 p-1 p-xl-2 d-flex align-items-center justify-content-center" (mouseenter)="showProfile()"
           (mouseleave)="hideProfile()" [matMenuTriggerFor]="menu">
-          <div class="row-fluid d-flex align-items-center gap-2">
-            <div class="col-12 col-md-4 col-xl-4 p-0">
+          <div class="row d-flex align-items-center justify-content-center">
+            <div class="col-5 col-md-3 col-xl-2 p-0">
               <img class="img-fluid profilePicture"
                 [src]="profilePicture" alt="">
             </div>
-            <span class="d-none d-xl-block">Gokulkrishna</span>
+            <span class="d-none d-xl-block col-xl-auto">{{name}}</span>
           </div>
         </div>
         <mat-menu #menu="matMenu">

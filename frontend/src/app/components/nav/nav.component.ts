@@ -19,6 +19,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class NavComponent implements OnInit {
   profilePicture: string = ''
+  name: string = ''
   
   constructor(
     private logOutService: LogOutService,
@@ -32,6 +33,10 @@ export class NavComponent implements OnInit {
    this.userService.profilePicture$.subscribe( profilePicture => {
     this.profilePicture = profilePicture    
    }) 
+
+   this.userService.name$.subscribe( name => {
+    this.name = name
+   })
   }
 
   showProfile() {

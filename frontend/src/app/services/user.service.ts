@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { ConfigService } from "./config.service"
 import { BehaviorSubject, Observable } from "rxjs"
 import { I_UserBasicInfo } from "../models/responses/userResponses"
@@ -28,10 +28,8 @@ export class UserService {
     this.http.get<I_UserBasicInfo>(`${this.API_URL}/user/basic-info`)
     .subscribe(
       response => {
-       if (response.profilePicture)  {
-        this.profilePicture.next(response.profilePicture)
-        this.name.next(response.name)
-       }
+        if (response.profilePicture) this.profilePicture.next(response.profilePicture)
+        if (response.name) this.name.next(response.name)
       }
     )
   }

@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 import { postSchema } from './user.postSchema';
+import { I_User } from '../../../shared/interfaces/user.interface'
+
+
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -44,4 +47,4 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-export const UserEntity = mongoose.model('Users', userSchema);
+export const UserEntity = mongoose.model<I_User>('Users', userSchema);

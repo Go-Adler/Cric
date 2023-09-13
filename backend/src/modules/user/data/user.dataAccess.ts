@@ -59,10 +59,10 @@ export class UserDataAccess {
   }
 
   // get user name with email
-  async getNameById(email: string) {
+  async getNameById(userId: string) {
     try {
-      const user = await UserEntity.findOne({ email })
-      return user
+      const user = await UserEntity.findById(userId, { _id: 0, name: 1 })
+      return user?.name ?? "User not found"
     } catch (e: any) {
       console.log(e.message)
       throw new Error(e.message)

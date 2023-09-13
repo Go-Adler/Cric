@@ -13,7 +13,7 @@ export class GetUserDataUseCase {
   }
 
   getName = async (userId: string): Promise<any> => {
-    const userProfilePicture = await this.userDataAccess.getUserProfilePictureWithId(userId)
+    const userProfilePicture = await this.userDataAccess.getNameById(userId)
     return userProfilePicture
   }
 }
