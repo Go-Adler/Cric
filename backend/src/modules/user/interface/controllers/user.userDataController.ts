@@ -16,10 +16,12 @@ export class UserDataController {
       const profilePicture = await this.userDataUseCase.getProfilePicture(
         userId
       )
+      const userName = await this.userDataUseCase.getUserName(userId)
       const name = await this.userDataUseCase.getName(userId)
       res.json({
         profilePicture,
         name,
+        userName,
         message: 'user info fetched success',
       })
     } catch (error) {

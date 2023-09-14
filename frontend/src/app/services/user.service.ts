@@ -10,13 +10,19 @@ import { I_UserBasicInfo } from "../models/responses/userResponses"
 })
 export class UserService {
   private defaultProfilePicture = 'https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/Default/DefaultProfilePicture.png'
-  private defaultName = 'User Name'
+  private defaultName = ''
+  private defaultUserName = 'userName'
+
 
   private profilePicture = new BehaviorSubject<string>(this.defaultProfilePicture);
   private name = new BehaviorSubject<string>(this.defaultName)
+  private userName = new BehaviorSubject<string>(this.defaultUserName)
+
 
   name$: Observable<string> = this.name.asObservable();
   profilePicture$: Observable<string> = this.profilePicture.asObservable();
+  userName$: Observable<string> = this.userName.asObservable();
+
 
   private API_URL!: string
 
@@ -30,6 +36,7 @@ export class UserService {
       response => {
         if (response.profilePicture) this.profilePicture.next(response.profilePicture)
         if (response.name) this.name.next(response.name)
+        if (response.userName) this.userName.next(response.userName)
       }
     )
   }

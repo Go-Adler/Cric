@@ -58,11 +58,22 @@ export class UserDataAccess {
     }
   }
 
-  // get user name with email
+  // get name with _id
   async getNameById(userId: string) {
     try {
       const user = await UserEntity.findById(userId, { _id: 0, name: 1 })
       return user?.name ?? "User not found"
+    } catch (e: any) {
+      console.log(e.message)
+      throw new Error(e.message)
+    }
+  }
+
+   // get userName with _id
+   async getUserNameById(userId: string) {
+    try {
+      const user = await UserEntity.findById(userId, { _id: 0, userName: 1 })
+      return user?.userName ?? "User not found"
     } catch (e: any) {
       console.log(e.message)
       throw new Error(e.message)

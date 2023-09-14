@@ -1,24 +1,40 @@
 <div class="d-flex flex-column gap-1">
     <span class="d-flex justify-content-center" *ngIf="spinner"><mat-spinner diameter="30"
             color="primary"></mat-spinner></span>
-    <mat-card class="text-black p-1" *ngFor="let post of posts">
-        <div class="d-flex align-items-center row-fluid">
-            <img [src]="profilePicture" alt="Profile Image" class="col-1 bg-info">
-            <div class="">
-                <div class="text-xs">{{name}}</div>
-                <div class="text-xs">2h ago</div>
+        <!-- card -->
+        <mat-card class="text-black p-1 p-md-2 container mb-2" *ngFor="let post of posts;">
+
+            <!-- card-title -->
+            <div class="d-flex align-items-center row-fluid">
+                <div class="col-2 col-md-1 p-0 me-md-2">
+                    <div class="row-fluid flex">
+                        <img [src]="profilePicture" alt="Profile Image" class="col-8 col-md-12  p-0 img-fluid roundPicture">
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <span class="flex gap-1">
+                        <div class="text-sm font-medium">{{name}}</div>
+                        <span class="text-stone-500 text-sm">@{{userName}}</span>
+                    </span>
+                    <span class="flex items-center mx-1 text-stone-500">.</span>
+                    <div class="text-xs items-center flex text-stone-500">2h ago</div>
+                </div>
             </div>
-        </div>
-        <div class="text-xs">
-            {{post.content.text}},
-        </div>
-        <img src="https://pbs.twimg.com/media/F4B2GszXcAAOWNh?format=jpg&name=medium" alt="Post Image"
-            class="-">
-        <div class="interaction-icons p-3">
-            <div class="comment text-xs d-flex gap-2"><i class="fa-regular fa-heart"></i> 15</div>
-            <div class="comment text-xs d-flex gap-2"><i class="fa-regular fa-comment"></i> 15</div>
-            <div class="comment text-xs d-flex gap-2"><i class="fa-regular fa-bookmark"></i>15</div>
-            <div class="comment text-xs d-flex gap-2"><i class="fa-solid fa-up-right-from-square"></i></div>
-        </div>
-    </mat-card>
+
+            <!--  content -->
+            <span class="p-1 break-words">
+                {{post.content.text}}
+            </span>
+
+            <!-- image -->
+            <img src="https://pbs.twimg.com/media/F4B2GszXcAAOWNh?format=jpg&name=medium" alt="Post Image" class="">
+
+            <!-- reactions -->
+            <div class="p-3 flex justify-between">
+                <div class="text-sm d-flex gap-2"><i class="fa-regular fa-heart"></i> 15</div>
+                <div class="text-sm d-flex gap-2"><i class="fa-regular fa-comment"></i> 15</div>
+                <div class="text-sm d-flex gap-2"><i class="fa-regular fa-bookmark"></i>15</div>
+                <div class="text-sm d-flex gap-2"><i class="fa-solid fa-up-right-from-square"></i>15</div>
+            </div>
+        </mat-card>
 </div>

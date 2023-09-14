@@ -16,4 +16,9 @@ export class GetUserDataUseCase {
     const userProfilePicture = await this.userDataAccess.getNameById(userId)
     return userProfilePicture
   }
+
+  getUserName = async (userId: string): Promise<any> => {
+    const userName = await this.userDataAccess.getUserNameById(userId)
+    return userName
+  }
 }

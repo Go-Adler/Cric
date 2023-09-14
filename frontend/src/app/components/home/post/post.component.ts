@@ -8,11 +8,13 @@ import { UserService } from 'src/app/services/user.service'
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss'],
 })
-export class PostComponent {
+export class  PostComponent {
   posts: any;
   spinner: boolean = true;
   profilePicture: string = ''
   name: string = ''
+  userName: string = ''
+  postContent: string = ''
 
 
   constructor(
@@ -31,9 +33,18 @@ export class PostComponent {
     this.userService.name$.subscribe( name => {
       this.name = name
     })
+
+    // get user name
+    this.userService.userName$.subscribe( userName => {
+      this.userName = userName
+    })
+    
+    // get posts
     this.postService.getPosts().subscribe((data) => {
       this.spinner = false;
       this.posts = data.posts;
+      console.log(this.posts, 46);
+      
     });
   }
 
