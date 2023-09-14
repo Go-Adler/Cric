@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NewPostService } from './new-post.service';
 import { UserService } from 'src/app/services/user.service'
+import { SuccessPost } from 'src/app/models/post.model'
 
 @Component({
   selector: 'app-new-post',
@@ -16,10 +16,11 @@ export class NewPostComponent implements OnInit {
   profilePicture: string = ''
   name: string = ''
 
+  @Output() newPostEvent = new EventEmitter<SuccessPost>();
+
   constructor(
     private fb: FormBuilder,
     private newPostService: NewPostService,
-    private router: Router,
     private userService: UserService
     
   ) {}
@@ -49,6 +50,7 @@ export class NewPostComponent implements OnInit {
       this.isPosting = false;
       this.postSuccess = true;
       this.postForm.reset();
+      this.newPostEvent.emit(response.postData)
 
       setTimeout(() => {
         this.postSuccess = false;

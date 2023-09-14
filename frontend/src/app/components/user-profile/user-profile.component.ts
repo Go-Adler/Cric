@@ -7,14 +7,15 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
-  profilePicture: string =
-    '';
-  addProfilePicture: boolean = false;
+  profilePicture: string = '';
+  addProfilePicture: boolean = true;
   selectedImage: string | undefined;
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
+    this.userService.getUserBasicInfo()  // remove later - helpful for development gokul
+
     this.userService.profilePicture$.subscribe(profilePicture => {
       this.profilePicture = profilePicture
     })

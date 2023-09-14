@@ -7,5 +7,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
+  newPostData: any
   constructor(private router: Router) {}
+
+  newPostSuccess(postData: any) {
+    this.newPostData = postData
+  }
 }

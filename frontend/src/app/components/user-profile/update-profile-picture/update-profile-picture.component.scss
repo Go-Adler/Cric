@@ -2,7 +2,7 @@ $cricBlue: #1A2938;
 
 .changeProfilePictureArea {
   height: 100%;
-  width: 100%;
+  width: 100vw;
   top: 0;
   left: 0;
   position: fixed;
@@ -20,15 +20,6 @@ mat-icon {
 
 .selectedImage {
   background-color: red;
-}
-
-.squareImageContainer {
-  width: 200px; /* Adjust the width to your desired size */
-  height: 200px; /* Make sure it matches the width to create a square */
-  overflow: hidden; /* Hide any overflowing content */
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .selectedImage {

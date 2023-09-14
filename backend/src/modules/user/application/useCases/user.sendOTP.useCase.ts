@@ -14,7 +14,7 @@ export class SendOTP_UseCase {
     try {
       const otp = generateOTP()
       console.log(otp, 'otp');
-      await this.emailService.sendOTPVerificationEmail(email, otp);
+      // await this.emailService.sendOTPVerificationEmail(email, otp); // reminderGo - need to enable after sendgrid fixing
       await this.userOtpDataAccess.addOtp(email, otp)
       return true
     } catch (error: any) {

@@ -1,31 +1,31 @@
-<div class="profileArea d-flex container justify-content-center">
+<div class="profileArea d-flex container justify-content-center mt-20 container items-center">
   <!-- profile area -->
   <div class="row">
-    <div class="imageArea col">
+    <div class="col">
       <div class="row d-flex justify-content-end">
-        <div class="col-7">
+        <div class="col-7 p-0">
           <img class="img-fluid" [src]="profilePicture" alt="">
           <span class="d-flex items-center mt-2 gap-2 profilePictureEditArea" [style.cursor]="'pointer'"
             (click)="changeProfilePicture()">
-            <i class="fa-solid fa-pen-to-square d-flex"></i>
-            <span class="m-0">Add profile picture</span>
+            <i class="fa-solid fa-pen-to-square d-flex text-xs"></i>
+            <span class="text-xs m-0">Add picture</span>
           </span>
         </div>
       </div>
     </div>
-    <div class="textArea col d-flex flex-column justify-content-center gap-2">
-      <span class="flex flex-column gap-2">
-        <span class="fs-3 tracking-wider">Gokul</span>
-        <span class="fs-2 font-medium tracking-wider">Krishna</span>
+    <div class=" col d-flex flex-column justify-content-center ">
+      <span class="flex flex-column justify-center">
+        <span class="text-base m-0">Gokul</span>
+        <span class="text-lg m-0">Krishna</span>
       </span>
-      <span class="flex gap-4">
+      <span class="flex flex-column">
         <span class="flex gap-2">
-          <span>Nationality</span>
-          <span class="fi fi-in"></span>
+          <span class="text-xs">Nationality</span>
+          <span class="fi fi-in text-xs"></span>
         </span>
         <span class="flex gap-1">
-          <span>25</span>
-          <span>yrs</span>
+          <span class="text-xs">25</span>
+          <span class="text-xs">yrs</span>
         </span>
       </span>
     </div>

@@ -22,9 +22,8 @@ export class UserNewPostController {
       const postData = { content: text, metrics: {timestamp} }
 
       this.createPostUseCase.createPost(email, postData)
-      const posts = this.userPostDataAccess.getUserPosts(email)
 
-      res.json({ message: 'Post created successfully', posts })
+      res.json({ message: 'Post created successfully', postData })
     } catch (error) {
       return next(error)
     }
