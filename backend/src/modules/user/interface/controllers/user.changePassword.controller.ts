@@ -21,11 +21,11 @@ export class UserChangePasswordController {
   changePassword = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { password } = req.body
-      const { email } = req.user as I_UserDecoded
+      const { userId } = req.user as I_UserDecoded
       const passwordHash = await this.passwordManager.hashPassword(password);
-      await this.changePasswordUseCase.changePassword(email, passwordHash)
+      await this.changePasswordUseCase.changePassword(userId, passwordHash)
 
-      const token = this.tokenUseCase.generateToken(email, true)
+      const token = this.tokenUseCase.generateTokenWithUserId(userId, true)
       return res
         .status(200)
         .json({

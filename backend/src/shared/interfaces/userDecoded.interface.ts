@@ -1,4 +1,6 @@
+import { Types } from "mongoose"
+
 export interface I_UserDecoded {
-  email: string,
+  userId: Types.ObjectId,
   isVerified: boolean
 }

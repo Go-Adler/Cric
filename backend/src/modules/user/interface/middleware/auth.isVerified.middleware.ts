@@ -10,7 +10,7 @@ declare module 'express' {
   }
 }
 
-export class JwtMiddleware {
+export class isVerified {
   private tokenUseCase: TokenUseCase
   private sendOtpUseCase: SendOTP_UseCase
   constructor() {
@@ -18,7 +18,7 @@ export class JwtMiddleware {
     this.sendOtpUseCase = new SendOTP_UseCase()
   }
   // Middleware function to verify JWT token
-  verifyJwt = async (req: Request, res: Response, next: NextFunction) => {
+  isVerified = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const secretKey: string = process.env.JWT_SECRET_KEY!
 

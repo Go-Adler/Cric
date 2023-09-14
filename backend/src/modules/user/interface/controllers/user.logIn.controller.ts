@@ -25,18 +25,23 @@ export class UserLoginController {
       if (!isUserExisting) {
         return res.json({ userNotExisting: true })
       }
-      let userId = await this.userLogInUseCase.userLogIn(email, password)
+      const userId = await this.userLogInUseCase.userLogIn(email, password)
 
       let isVerified = await this.userLogInUseCase.isVerified(email)
       isVerified = !!isVerified
 
-      const token = this.tokenUseCase.generateToken(email, isVerified, userId)
+      
+      
+      if (userId) {
+        const token = this.tokenUseCase.generateTokenWithUserId(userId, isVerified)
+        if (isVerified) res.json({ message: 'Verification success', token })
+        else {
+          await this.sendOtpUseCase.sendOTP(email)
+          res.json({ notVerified: true, token })
+        }
+      } 
 
-      if (isVerified) res.json({ message: 'Verification success', token })
-      else {
-        await this.sendOtpUseCase.sendOTP(email)
-        res.json({ notVerified: true, token })
-      }
+      
     } catch (error: any) {
       if (error.message === 'InvalidPassword') {
         return res.json({ wrongPassword: true })

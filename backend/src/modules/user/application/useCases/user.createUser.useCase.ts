@@ -2,6 +2,7 @@
 import { UserDataAccess } from "../../data/user.dataAccess";
 import { I_User } from "../../../../shared/interfaces/user.interface";
 import { PasswordManager } from "../../../../utils/bcrypt.utils";
+import { Types } from "mongoose"
 
 // Define a class for the user creation use case
 export class CreateUserUseCase {
@@ -17,7 +18,7 @@ export class CreateUserUseCase {
   }
 
   // Define an async function that takes a user data object and returns a promise of a boolean value
-  createUser = async (userData: I_User): Promise<boolean> => {
+  createUser = async (userData: I_User): Promise<Types.ObjectId> => {
     // Destructure the user data object into variables for easier access
     const { name, userName, email, gender, phone } = userData;
     
@@ -25,9 +26,9 @@ export class CreateUserUseCase {
     const passwordHash = await this.passwordManager.hashPassword(userData.password);
     
     // Call the data access method to create a user in the database
-    await this.userDataAccess.createUser(name, userName, gender, email, phone, passwordHash);
+    const userId = await this.userDataAccess.createUser(name, userName, gender, email, phone, passwordHash);
     
     // Return true to indicate successful user creation
-    return true;
+    return userId;
   }
 }

@@ -13,8 +13,8 @@ export class SendOTP_UseCase {
   sendOTP = async (email: string) => {
     try {
       const otp = generateOTP()
-      console.log(otp, 'otp');
-      // await this.emailService.sendOTPVerificationEmail(email, otp); // reminderGo - need to enable after sendgrid fixing
+      console.log(otp, 'otp', 16);
+      // await this.emailService.sendOTPVerificationEmail(email, otp); // rememberGo - need to enable after sendgrid fixing
       await this.userOtpDataAccess.addOtp(email, otp)
       return true
     } catch (error: any) {

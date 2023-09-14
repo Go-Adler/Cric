@@ -5,7 +5,7 @@ import { UserVerifyOtpUseCase } from '../../application/useCases/user.verifyOtp.
 import { I_UserDecoded } from '../../../../shared/interfaces/userDecoded.interface'
 import { TokenUseCase } from '../../application/useCases/user.token.useCase'
 
-export class UserSignUpOtpController {
+export class UserAutherizationController {
   private userVerifyOtpUseCase: UserVerifyOtpUseCase
   private tokenUseCase: TokenUseCase
 
@@ -14,13 +14,13 @@ export class UserSignUpOtpController {
     this.tokenUseCase = new TokenUseCase()
   }
 
-  verifyOtp = async (req: Request, res: Response, next: NextFunction) => {
+  verifyForgotPasswordOtp = async (req: Request, res: Response, next: NextFunction) => {
     const { otp } = req.body
     const { userId } = req.user as I_UserDecoded
     try {
       await this.userVerifyOtpUseCase.verifyOtp(userId, otp)
-      const token = this.tokenUseCase.generateTokenWithUserId(userId, true)
-      return res.status(200).json({ message: 'OTP verification successful', token, otpVerified: true })
+      // const token = this.tokenUseCase.generateTokenWithEmail(email, true)
+      // return res.status(200).json({ message: 'OTP verification successful', token, otpVerified: true })
     } catch (error: any) {
       console.log(error.stack)
 

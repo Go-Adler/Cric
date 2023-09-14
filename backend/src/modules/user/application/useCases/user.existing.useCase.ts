@@ -39,7 +39,7 @@ export class UserExistingUseCase {
 
   async userExistingLogIn(email: string) {
     // Check if the user existing
-    const existingEmail = await this.userDataAccess.checkUserByEmail(email)
-    return existingEmail ? true : false
+    const userId = await this.userDataAccess.checkUserByEmail(email)
+    return userId
   }
 }

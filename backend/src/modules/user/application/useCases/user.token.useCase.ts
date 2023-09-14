@@ -1,10 +1,11 @@
 import jwt from 'jsonwebtoken'
+import { Types } from 'mongoose'
 
 export class TokenUseCase {
-  generateToken(email: string, isVerified: boolean, userId: string = 'Default User'): string {
+  generateTokenWithUserId(userId: Types.ObjectId, isVerified?: boolean): string {
     const secretKey = process.env.JWT_SECRET_KEY!
 
-    const token = jwt.sign({userId, email, isVerified }, secretKey, {
+    const token = jwt.sign({ isVerified,  userId}, secretKey, {
       expiresIn: '1h',
     })
     return token

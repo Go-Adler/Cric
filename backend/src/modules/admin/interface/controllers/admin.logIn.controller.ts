@@ -21,15 +21,15 @@ export class AdminLoginController {
     const { email, password } = req.body
 
     try {
-      const isUserExisting = await this.userExistingUseCase.userExistingLogIn(
+      const userId = await this.userExistingUseCase.userExistingLogIn(
         email
       )
-      if (!isUserExisting) {
+      if (!userId) {
         return res.json({ userNotExisting: true })
       }
       await this.userLogInUseCase.userLogIn(email, password)
 
-      const token = this.tokenUseCase.generateToken(email, true)
+      const token = this.tokenUseCase.generateTokenWithUserId(userId, true)
 
       res.json({ message: 'Verification success', token })
     } catch (error: any) {

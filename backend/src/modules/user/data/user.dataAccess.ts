@@ -1,3 +1,4 @@
+import { Types } from 'mongoose'
 import { UserEntity } from './../domain/user.schema';
 
 export class UserDataAccess {
@@ -9,9 +10,9 @@ export class UserDataAccess {
     email: string,
     phone: string,
     password: string
-  ) {
+  )  {
     try {
-      await UserEntity.create({
+      const user = await UserEntity.create({
         name,
         userName,
         gender,
@@ -19,6 +20,7 @@ export class UserDataAccess {
         phone,
         password,
       })
+      return user._id
     } catch (e: any) {
       console.log(e.message)
       throw new Error(e.message)
@@ -83,9 +85,8 @@ export class UserDataAccess {
   // get user id with email
   async getUserIdWithEmail(email: string) {
     try {
-      const userId = await UserEntity.findOne({ email }).select('_id')
-
-      if (userId) return userId._id.toString()
+      const user = await UserEntity.findOne({ email })
+      return user?._id
     } catch (e: any) {
       console.log(e.message)
       throw new Error(e.message)
@@ -96,7 +97,7 @@ export class UserDataAccess {
   async checkUserByEmail(email: string) {
     try {
       const user = await UserEntity.findOne({ email })
-      return user ? true : false
+      return user?._id || false
     } catch (e: any) {
       console.log(e.message)
       throw new Error(e.message)
@@ -149,18 +150,18 @@ export class UserDataAccess {
     }
   }
 
-  async verifyUser(email: string) {
+  async verifyUser(userId: Types.ObjectId) {
     try {
-      await UserEntity.findOneAndUpdate({ email }, { isVerified: true })
+      await UserEntity.findByIdAndUpdate(userId, { isVerified: true })
     } catch (e: any) {
       console.log(e.message)
       throw new Error(e.message)
     }
   }
 
-  async changePassword(email: string, password: string) {
+  async changePassword(userId: Types.ObjectId, password: string) {
     try {
-      await UserEntity.findOneAndUpdate({ email }, { password })
+      await UserEntity.findByIdAndUpdate(userId, { password })
     } catch (e: any) {
       console.log(e.message)
       throw new Error(e.message)

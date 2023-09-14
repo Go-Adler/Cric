@@ -1,3 +1,4 @@
+import { Types } from 'mongoose'
 import { UserDataAccess } from '../../data/user.dataAccess'
 
 export class UserChangePasswordUseCase {
@@ -7,9 +8,9 @@ export class UserChangePasswordUseCase {
     this.userDataAccess = new UserDataAccess()
   }
 
-  changePassword = async (email: string, password: string) => {
+  changePassword = async (userId: Types.ObjectId, password: string) => {
     try {
-      await this.userDataAccess.changePassword(email, password)
+      await this.userDataAccess.changePassword(userId, password)
     } catch (error) {
       throw error
     }

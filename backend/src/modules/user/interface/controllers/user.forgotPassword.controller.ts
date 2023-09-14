@@ -24,17 +24,12 @@ export class UserForgotPasswordController {
       if (!isUserExisting) {
         return res.json({ userNotExisting: true })
       }
-      const token = this.tokenUseCase.generateToken(email, true)
+      const forgotToken = this.tokenUseCase.generateTokenWithUserId(email, true)
 
       await this.sendOtpUseCase.sendOTP(email)
 
-      res.json({ otpSent: true , token})
+      res.json({ otpSent: true, forgotToken })
     } catch (error: any) {
-      if (error.message === 'InvalidPassword') {
-        return res.json({ wrongPassword: true })
-      } else if (error.message === 'NotVerified') {
-        return res.json({ notVerified: true })
-      }
       return next(error)
     }
   }

@@ -1,3 +1,4 @@
+import { Types } from 'mongoose'
 import { UserEntity } from './../domain/user.schema';
 
 export class UserOtpDataAccess {
@@ -13,16 +14,12 @@ export class UserOtpDataAccess {
   }
 
 
-  getOtp = async (email: string) => {
+  getOtp = async (userId: Types.ObjectId) => {
     try {
-      console.log(email, 18);
-      
-      const user = await UserEntity.findOne({ email }).select('otp')
-      console.log(user?.otp, 19);
-      
+      const user = await UserEntity.findById(userId, {})
       return user?.otp ?? "";
     } catch (error) {
-      console.error(`Error fetching OTP for ${email}:`, error);
+      console.error(`Error fetching OTP:`, error);
       return "";
     }
   };

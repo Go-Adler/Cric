@@ -21,14 +21,13 @@ export class UserSignUpController {
   userSignUp = async (req: Request, res: Response, next: NextFunction) => {
     const { userName, phone, email } = req.body
     const userData = req.body
-
     try {
       await this.userExistingUseCase.userExisting(userName, phone, email)
-      await this.createUserUseCase.createUser(userData)
+      const userId = await this.createUserUseCase.createUser(userData)
       await this.sendOTP_UseCase.sendOTP(email)
-      const token = this.tokenUseCase.generateToken(email, false)
+      const verifyToken = this.tokenUseCase.generateTokenWithUserId(userId, false)
 
-      return res.status(200).json({ message: 'User sign up successful', token })
+      return res.status(200).json({ message: 'User sign up successful', verifyToken })
     } catch (error) {
       if (error instanceof UserExistingError) {
         return res.status(200).json({ error: error.message })
