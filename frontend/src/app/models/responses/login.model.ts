@@ -9,3 +9,10 @@ export interface I_LoginResponse {
   wrongPassword?: boolean
   notVerified?: boolean
 }
+
+export interface I_ForgotPasswordResponse {
+  forgotToken?: string,
+  otpSent?: boolean
+  userNotExisting?: boolean
+}
+

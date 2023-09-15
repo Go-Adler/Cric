@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   Validators,
@@ -8,7 +8,6 @@ import {
 } from '@angular/forms';
 
 import { OTP_Service } from './otp.service';
-import { SignUpDataService } from 'src/app/services/signup-data.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,7 +15,7 @@ import { Router } from '@angular/router';
   templateUrl: './otp.component.html',
   styleUrls: ['./otp.component.scss'],
 })
-export class OtpComponent implements OnInit {
+export class OtpComponent implements OnInit, OnDestroy {
   signUpForm!: FormGroup;
   OTP_Form!: FormGroup;
   otpInvalid: boolean = false;
@@ -26,11 +25,13 @@ export class OtpComponent implements OnInit {
   resetPassword: boolean = false;
   isSigningUp: boolean = false;
   passwordChanged: boolean = false;
+  timerValue: number = 3;
+  timer: any;
+  isResendEnabled: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private otpService: OTP_Service,
-    private signUpDataService: SignUpDataService,
     private router: Router
   ) {}
 
@@ -64,6 +65,12 @@ export class OtpComponent implements OnInit {
         validator: this.passwordMatchValidator as ValidatorFn,
       }
     );
+
+    this.startTimer();
+  }
+
+  ngOnDestroy(): void {
+    this.stopTimer()
   }
 
   onInput() {
@@ -83,24 +90,14 @@ export class OtpComponent implements OnInit {
 
   onSubmit() {
     const { OTP } = this.OTP_Form.value;
-
-    const email = this.signUpDataService.getSignUpData();
-
-    this.otpService.verifyOTP(OTP, email).subscribe(
+    this.otpService.verificationOTP(OTP).subscribe(
       (response) => {
-        const routeParams = window.location.href;
-
         if (response.otpVerified) {
           this.resetPassword = true;
-        } else {
-          this.verified = true;
+        } else if (response.invalidOtp) {
+          this.otpInvalid = true
         }
       },
-      (errorResponse) => {
-        if (errorResponse.status === 401) {
-          this.otpInvalid = true;
-        }
-      }
     );
   }
 
@@ -111,8 +108,36 @@ export class OtpComponent implements OnInit {
       if (response.changePassword) {
         this.resetPassword = false;
         this.passwordChanged = true;
-        localStorage.clear();
+        localStorage.removeItem('verifyToken')
       }
     });
   }
+
+  startTimer() {
+    this.timer = setInterval(() => {
+      if (this.timerValue > 0) {
+        this.timerValue--; 
+      } else {
+        this.stopTimer();
+        this.isResendEnabled = true; 
+      }
+    }, 1000);
+  }
+
+  stopTimer() {
+    clearInterval(this.timer); // Stop the timer
+  }
+
+  formatTime(seconds: number): string {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}m ${remainingSeconds}s`;
+  }
+
+  resendOtp() {
+    console.log('click');
+    
+    this.otpService.resendOtp()
+  }
+  
 }

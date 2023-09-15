@@ -1,5 +1,5 @@
 <div class="pt-5">
-  <div class="container mt-5 d-flex flex-column">
+  <div class="container mt-5 d-flex flex-column lg:w-6/12">
     <div class="row d-flex justify-content-center mb-4">
       <div class="col-8 col-xl-6 d-flex justify-content-center fw-medium"><span class="fs-3">Sign up to continue</span>
       </div>
@@ -100,7 +100,7 @@
             <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
               [attr.aria-pressed]="hide">
-              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-icon class="text-stone-400">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
             <mat-error
               *ngIf="(signUpForm.get('password')?.invalid && (signUpForm.get('password')?.dirty || signUpForm.get('password')?.touched)) && (signUpForm.get('password')?.errors?.['required'])"
@@ -120,7 +120,7 @@
             <input matInput [type]="confirmHide ? 'password' : 'text'" formControlName="confirmPassword">
             <button mat-icon-button matSuffix (click)="confirmHide = !confirmHide"
               [attr.aria-label]="'confirmHide password'" [attr.aria-pressed]="confirmHide">
-              <mat-icon>{{confirmHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-icon class="text-stone-400">{{confirmHide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
             <mat-error
               *ngIf="(signUpForm.get('confirmPassword')?.invalid && (signUpForm.get('confirmPassword')?.dirty || signUpForm.get('confirmPassword')?.touched)) && (signUpForm.get('confirmPassword')?.errors?.['required'])"

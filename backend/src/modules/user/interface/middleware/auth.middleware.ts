@@ -64,43 +64,6 @@ export class JwtMiddleware {
     }
   }
 
-  verifyJwtForOtp = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const secretKey: string = process.env.JWT_SECRET_KEY!
-
-      // Extract the Authorization header
-      const authHeader = req.header('Authorization')
-
-      // Check if Authorization header is missing
-      if (!authHeader) {
-        return res
-          .status(401)
-          .json({ message: 'Access denied. No token provided.' })
-      }
-
-      // Extract token from the Authorization header
-      const forgotToken = authHeader.split(' ')[1]
-
-      // Check if token is missing
-      if (!forgotToken) {
-        return res
-          .status(401)
-          .json({ message: 'Access denied. No token provided.' })
-      }
-
-      // Verify the token using the provided secret key
-      const decoded = jwt.verify(forgotToken, secretKey) as JwtPayload
-
-      // Attach the decoded user information to the request object
-      req.user = decoded
-      // Proceed to the next middleware
-      next()
-    } catch (error) {
-      // Handle token verification errors
-      return res.json({ invalidToken: true })
-    }
-  }
-
   verifyToken = async (req: Request, res: Response) => {
    try {
     const { token } = req.body
@@ -116,5 +79,59 @@ export class JwtMiddleware {
     }
    }
     
+  }
+
+  verifyVerifyToken = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const secretKey: string = process.env.JWT_SECRET_KEY!
+
+      // Extract the Authorization header
+      const authHeader = req.header('Authorization')
+
+      console.log(authHeader, 130);
+      
+
+      // Check if Authorization header is missing
+      if (!authHeader) {
+        return res
+          .status(401)
+          .json({ message: 'Access denied. No token provided.' })
+      }
+
+      // Extract token from the Authorization header
+      const verifyToken = authHeader.split(' ')[1]
+
+      console.log(verifyToken, 136);
+      
+
+      // Check if token is missing
+      if (!verifyToken) {
+        return res
+          .status(401)
+          .json({ message: 'Access denied. No token provided.' })
+      }
+      // Verify the token using the provided secret key
+      const decoded = jwt.verify(verifyToken, secretKey) as JwtPayload
+
+      // Attach the decoded user information to the request object
+      req.user = decoded
+      const { isVerified } = decoded
+
+      const { userId } = decoded
+
+      // if (!isVerified) {
+      //   await this.sendOtpUseCase.sendOTP(email)
+
+      //   const token = this.tokenUseCase.generateTokenWithUserId(email, false)
+      //   return res.json({ notVerified: true, token })
+      // }
+      // Proceed to the next middleware 
+      next()
+    } catch (error) {
+      console.log(error, 162);
+      
+      // Handle token verification errors
+      return res.json({ invalidToken: true })
+    }
   }
 }

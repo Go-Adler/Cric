@@ -25,12 +25,12 @@ export class UserChangePasswordController {
       const passwordHash = await this.passwordManager.hashPassword(password);
       await this.changePasswordUseCase.changePassword(userId, passwordHash)
 
-      const token = this.tokenUseCase.generateTokenWithUserId(userId, true)
+      const verifyToken = this.tokenUseCase.generateTokenWithUserId(userId, true)
       return res
         .status(200)
         .json({
           message: 'Password successfully changed',
-          token,
+          verifyToken,
           changePassword: true,
         })
     } catch (error: any) {

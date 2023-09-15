@@ -21,4 +21,9 @@ export class GetUserDataUseCase {
     const userName = await this.userDataAccess.getUserNameById(userId)
     return userName
   }
+
+  getEmail = async (userId: string): Promise<any> => {
+    const email = await this.userDataAccess.getUserNameById(userId)
+    return email
+  }
 }

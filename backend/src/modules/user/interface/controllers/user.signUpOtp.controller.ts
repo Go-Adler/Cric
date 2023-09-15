@@ -19,13 +19,12 @@ export class UserSignUpOtpController {
     const { userId } = req.user as I_UserDecoded
     try {
       await this.userVerifyOtpUseCase.verifyOtp(userId, otp)
-      const token = this.tokenUseCase.generateTokenWithUserId(userId, true)
-      return res.status(200).json({ message: 'OTP verification successful', token, otpVerified: true })
+      return res.status(200).json({ message: 'OTP verification successful', otpVerified: true })
     } catch (error: any) {
       console.log(error.stack)
 
       if (error instanceof InvalidOtpError) {
-        return res.status(401).json({ messages: 'Invalid OTP' })
+        return res.json({ invalidOtp: true })
       }
 
       return next(error)

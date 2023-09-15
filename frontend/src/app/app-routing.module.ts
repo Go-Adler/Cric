@@ -15,6 +15,7 @@ import { PostComponent } from './components/post/post.component';
 import { LogInGuard } from './guards/logIn.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { SportsComponent } from './components/sports/sports.component'
+import { VerifySignUpOtpComponent } from './components/sign-up/verify-sign-up-otp/verify-sign-up-otp.component'
 
 
 const routes: Routes = [
@@ -23,7 +24,10 @@ const routes: Routes = [
     redirectTo: 'user/log-in',
     pathMatch: 'full',
   },
-
+  {
+    path: 'error',
+    component: ErrorComponent
+  },
   {
     path: 'user/home',
     component: HomeComponent,
@@ -60,7 +64,7 @@ const routes: Routes = [
 
   {
     path: 'user/sign-up-otp',
-    component: OtpComponent,
+    component: VerifySignUpOtpComponent,
     canActivate: [LogInGuard],
   },
 

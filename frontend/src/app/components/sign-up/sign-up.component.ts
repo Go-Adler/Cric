@@ -9,7 +9,6 @@ import {
 
 import { SignUpService } from './sign-up.service';
 import { Router } from '@angular/router';
-import { SignUpDataService } from 'src/app/services/signup-data.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -27,7 +26,6 @@ export class SignUpComponent implements OnInit {
     private fb: FormBuilder,
     private signUpService: SignUpService,
     private router: Router,
-    private signUpDataService: SignUpDataService
   ) {}
 
   ngOnInit(): void {
@@ -84,7 +82,6 @@ export class SignUpComponent implements OnInit {
     const formData = { ...this.signUpForm.value };
     delete formData.confirmPassword;
     
-    this.signUpDataService.setSignUpData(formData.email)
     this.signUpService.signUp(formData).subscribe(
       (response) => {
         this.isSigningUp = false;

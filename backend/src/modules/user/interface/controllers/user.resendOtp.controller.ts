@@ -2,25 +2,26 @@ import { Request, Response, NextFunction } from 'express'
 import { UserExistingUseCase } from '../../application/useCases/user.existing.useCase'
 import { SendOTP_UseCase } from '../../application/useCases/user.sendOTP.useCase'
 import { TokenUseCase } from '../../application/useCases/user.token.useCase'
+import { JwtPayload } from 'jsonwebtoken'
+import { GetUserDataUseCase } from '../../application/useCases/user.getData.useCase'
 
 export class UserForgotPasswordController {
-  private userExistingUseCase: UserExistingUseCase
+  private getUserDataUseCase: GetUserDataUseCase
   private sendOtpUseCase: SendOTP_UseCase
   private tokenUseCase: TokenUseCase
 
   constructor() {
-    this.userExistingUseCase = new UserExistingUseCase()
+    this.getUserDataUseCase = new GetUserDataUseCase()
     this.sendOtpUseCase = new SendOTP_UseCase()
     this.tokenUseCase = new TokenUseCase()
   }
 
   forgotPassword = async (req: Request, res: Response, next: NextFunction) => {
-    const { email } = req.body
+    const { userId } = req.user as JwtPayload
 
     try {
-      const userId = await this.userExistingUseCase.userExistingLogIn(
-        email
-      )
+      const email = await this.getUserDataUseCase.getEmail(userId)
+      
       if (!userId) {
         return res.json({ userNotExisting: true })
       }

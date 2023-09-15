@@ -29,6 +29,10 @@ export class LogoutInterceptor implements HttpInterceptor {
               const token = responseBody.token;
               localStorage.setItem('token', token);
             }
+            if (responseBody.verifyToken) {
+              const verifyToken = responseBody.verifyToken;
+              localStorage.setItem('verifyToken', verifyToken);
+            }
             if (responseBody.invalidToken) {
               this.logOutService.logOut();
               if (this.router.url !== '/user/log-in') {

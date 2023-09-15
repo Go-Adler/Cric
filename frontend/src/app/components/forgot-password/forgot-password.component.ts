@@ -35,10 +35,6 @@ export class ForgotPasswordComponent {
     this.forgotPasswordService.forgotPassword(email).subscribe(
       (response) => {
         this.isLogging = false;
-        if (response.token) {
-          const token = response.token;
-          localStorage.setItem('token', token);
-        }
         if (response.userNotExisting) {
           this.errorMessage = 'User not existing';
         } else {

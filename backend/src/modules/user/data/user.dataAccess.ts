@@ -1,5 +1,5 @@
 import { Types } from 'mongoose'
-import { UserEntity } from './../domain/user.schema';
+import { UserEntity } from './../domain/user.schema'
 
 export class UserDataAccess {
   // Create a new user
@@ -10,7 +10,7 @@ export class UserDataAccess {
     email: string,
     phone: string,
     password: string
-  )  {
+  ) {
     try {
       const user = await UserEntity.create({
         name,
@@ -64,18 +64,29 @@ export class UserDataAccess {
   async getNameById(userId: string) {
     try {
       const user = await UserEntity.findById(userId, { _id: 0, name: 1 })
-      return user?.name ?? "User not found"
+      return user?.name ?? 'User not found'
     } catch (e: any) {
       console.log(e.message)
       throw new Error(e.message)
     }
   }
 
-   // get userName with _id
-   async getUserNameById(userId: string) {
+  // get email with _id
+  async getEmailById(userId: Types.ObjectId) {
+    try {
+      const user = await UserEntity.findById(userId, { _id: 0, email: 1 })
+      return user?.email ?? 'User not found'
+    } catch (e: any) {
+      console.log(e.message)
+      throw new Error(e.message)
+    }
+  }
+
+  // get userName with _id
+  async getUserNameById(userId: string) {
     try {
       const user = await UserEntity.findById(userId, { _id: 0, userName: 1 })
-      return user?.userName ?? "User not found"
+      return user?.userName ?? 'User not found'
     } catch (e: any) {
       console.log(e.message)
       throw new Error(e.message)
@@ -168,14 +179,16 @@ export class UserDataAccess {
     }
   }
 
-    // get profile picture with id
-    async getUserProfilePictureWithId(id: string) {
-      try {
-        const userProfilePicture = await UserEntity.findById(id).select('profilePicture')
-        return userProfilePicture?.profilePicture
-      } catch (e: any) {
-        console.log(e.message)
-        throw new Error(e.message)
-      }
+  // get profile picture with id
+  async getUserProfilePictureWithId(id: string) {
+    try {
+      const userProfilePicture = await UserEntity.findById(id).select(
+        'profilePicture'
+      )
+      return userProfilePicture?.profilePicture
+    } catch (e: any) {
+      console.log(e.message)
+      throw new Error(e.message)
     }
+  }
 }

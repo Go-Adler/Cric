@@ -40,7 +40,8 @@ import {MatCardModule} from '@angular/material/card';
 import { MatCommonModule } from '@angular/material/core';
 import { UpdateProfilePictureComponent } from './components/user-profile/update-profile-picture/update-profile-picture.component'
 import { CloudinaryInterceptor } from './services/cloudinary.interceptor';
-import { TestFormCloudinaryComponent } from './components/user-profile/test-form-cloudinary/test-form-cloudinary.component'
+import { TestFormCloudinaryComponent } from './components/user-profile/test-form-cloudinary/test-form-cloudinary.component';
+import { VerifySignUpOtpComponent } from './components/sign-up/verify-sign-up-otp/verify-sign-up-otp.component'
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import { TestFormCloudinaryComponent } from './components/user-profile/test-form
     SportsComponent,
     UpdateProfilePictureComponent,
     TestFormCloudinaryComponent,
+    VerifySignUpOtpComponent,
   ],
   imports: [
     BrowserModule,
