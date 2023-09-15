@@ -41,7 +41,9 @@ import { MatCommonModule } from '@angular/material/core';
 import { UpdateProfilePictureComponent } from './components/user-profile/update-profile-picture/update-profile-picture.component'
 import { CloudinaryInterceptor } from './services/cloudinary.interceptor';
 import { TestFormCloudinaryComponent } from './components/user-profile/test-form-cloudinary/test-form-cloudinary.component';
-import { VerifySignUpOtpComponent } from './components/sign-up/verify-sign-up-otp/verify-sign-up-otp.component'
+import { VerifySignUpOtpComponent } from './components/sign-up/verify-sign-up-otp/verify-sign-up-otp.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { IPostComponent } from './components/home/post/i-post/i-post.component'
 
 
 @NgModule({
@@ -67,6 +69,8 @@ import { VerifySignUpOtpComponent } from './components/sign-up/verify-sign-up-ot
     UpdateProfilePictureComponent,
     TestFormCloudinaryComponent,
     VerifySignUpOtpComponent,
+    PageNotFoundComponent,
+    IPostComponent,
   ],
   imports: [
     BrowserModule,

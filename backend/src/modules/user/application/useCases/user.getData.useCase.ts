@@ -1,3 +1,4 @@
+import { Types } from "mongoose"
 import { UserDataAccess } from "../../data/user.dataAccess"
 
 export class GetUserDataUseCase {
@@ -22,8 +23,23 @@ export class GetUserDataUseCase {
     return userName
   }
 
-  getEmail = async (userId: string): Promise<any> => {
-    const email = await this.userDataAccess.getUserNameById(userId)
+  getEmail = async (userId: Types.ObjectId): Promise<any> => {
+    const email = await this.userDataAccess.getEmailById(userId)
     return email
+  }
+
+  getAllUsers = async () => {
+    const users = await this.userDataAccess.getUsers()
+    return users
+  }
+
+  blockUser = async (userId: Types.ObjectId) => {
+    const users = await this.userDataAccess.blockUser(userId)
+    return users
+  }
+
+  unblockUser = async (userId: Types.ObjectId) => {
+    const users = await this.userDataAccess.unblockUser(userId)
+    return users
   }
 }

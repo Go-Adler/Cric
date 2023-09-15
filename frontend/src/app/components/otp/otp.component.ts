@@ -25,9 +25,10 @@ export class OtpComponent implements OnInit, OnDestroy {
   resetPassword: boolean = false;
   isSigningUp: boolean = false;
   passwordChanged: boolean = false;
-  timerValue: number = 3;
+  timerValue: number = 5;
   timer: any;
   isResendEnabled: boolean = false;
+  otpResent: boolean = false
 
   constructor(
     private fb: FormBuilder,
@@ -135,9 +136,22 @@ export class OtpComponent implements OnInit, OnDestroy {
   }
 
   resendOtp() {
-    console.log('click');
-    
-    this.otpService.resendOtp()
+    this.otpService.resendOtp().subscribe((response) => {
+      if (response.otpSent) {
+        this.otpResent = true
+        this.resetOtpResent()
+        this.timerValue = 3
+        this.startTimer();
+        this.isResendEnabled = false
+      }
+      
+    })
+  }
+
+  resetOtpResent() {
+    setTimeout(() => {
+      this.otpResent = false
+    }, (3000));
   }
   
 }

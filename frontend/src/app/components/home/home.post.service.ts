@@ -13,7 +13,8 @@ export class PostService {
     this.API_URL = configService.getAPI_BaseURL()
   }
 
-  getPosts(): Observable<any> {
-    return this.http.get<any>(`${this.API_URL}/user/posts`);
+  getPosts(skip: number): Observable<any> {
+    const postData = { skip }
+    return this.http.post<any>(`${this.API_URL}/user/posts`, postData);
   }
 }

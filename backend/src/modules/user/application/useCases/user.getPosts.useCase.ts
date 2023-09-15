@@ -1,3 +1,4 @@
+import { Types } from "mongoose"
 import { UserPostDataAccess } from "../../data/user.postDataAccess"
 
 export class GetUserPostsUseCase {
@@ -7,8 +8,8 @@ export class GetUserPostsUseCase {
     this.userPostDataAccess = new UserPostDataAccess()
   }
 
-  getUserPosts = async (email: string): Promise<any> => {
-    const posts =  await this.userPostDataAccess.getUserPosts(email)
+  getUserPosts = async (userId: Types.ObjectId, skip: number) => {
+    const posts =  await this.userPostDataAccess.getUserPosts(userId, skip)
     return posts
   }
 }

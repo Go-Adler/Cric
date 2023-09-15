@@ -1,5 +1,5 @@
 <app-admin-nav></app-admin-nav>
-<div class="container mt-5">
+<div class="container mt-5 pt-5 h-screen">
   <h2>User List</h2>
   <table class="table">
     <thead>
@@ -11,68 +11,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>John Doe</td>
-        <td>john@example.com</td>
-        <td><span class="badge badge-success">Active</span></td>
+      <tr *ngFor="let user of users; let i = index">
+        <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
+        <td><span class="badge badge-secondary">{{user.isBlocked ? 'Blocked' : 'Active'}}</span></td>
         <td>
-          <button class="btn btn-danger btn-sm">Block</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Jane Smith</td>
-        <td>jane@example.com</td>
-        <td><span class="badge badge-secondary">Blocked</span></td>
-        <td>
-          <button class="btn btn-success btn-sm">Unblock</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Tuff</td>
-        <td>tuff@example.com</td>
-        <td><span class="badge badge-success">Active</span></td>
-        <td>
-          <button class="btn btn-danger btn-sm">Block</button>
-        </td>
-      </tr>
-      <tr>
-        <td>gokul</td>
-        <td>gokul@example.com</td>
-        <td><span class="badge badge-secondary">Blocked</span></td>
-        <td>
-          <button class="btn btn-success btn-sm">Unblock</button>
-        </td>
-      </tr>
-      <tr>
-        <td>John Doe</td>
-        <td>john@example.com</td>
-        <td><span class="badge badge-success">Active</span></td>
-        <td>
-          <button class="btn btn-danger btn-sm">Block</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Jane Smith</td>
-        <td>jane@example.com</td>
-        <td><span class="badge badge-secondary">Blocked</span></td>
-        <td>
-          <button class="btn btn-success btn-sm">Unblock</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Tuff</td>
-        <td>tuff@example.com</td>
-        <td><span class="badge badge-success">Active</span></td>
-        <td>
-          <button class="btn btn-danger btn-sm">Block</button>
-        </td>
-      </tr>
-      <tr>
-        <td>gokul</td>
-        <td>gokul@example.com</td>
-        <td><span class="badge badge-secondary">Blocked</span></td>
-        <td>
-          <button class="btn btn-success btn-sm">Unblock</button>
+          <button (click)="toggleUserBlock(user.isBlocked, user._id, i)" class="btn btn-success btn-sm" [ngClass]="{'blocked': user.isBlocked, 'ublocked': !user.isBlocked}">{{user.isBlocked? 'Unblock': 'Block'}}</button>
         </td>
       </tr>
       <!-- Add more user rows as needed -->

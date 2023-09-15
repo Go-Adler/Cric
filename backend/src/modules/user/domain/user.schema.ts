@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
+import paginate from 'mongoose-paginate-v2';
 import { postSchema } from './user.postSchema';
 import { I_User } from '../../../shared/interfaces/user.interface'
-
-
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -38,6 +37,14 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  isBlocked: {
+    type: Boolean,
+    default: false,
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
   otp: {
     type: Number
   },
@@ -47,4 +54,7 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-export const UserEntity = mongoose.model<I_User>('Users', userSchema);
+userSchema.plugin(paginate);
+
+
+export const UserEntity = mongoose.model<I_User, mongoose.PaginateModel<I_User>>('Users', userSchema);

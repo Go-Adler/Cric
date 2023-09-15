@@ -15,6 +15,10 @@ export class  PostComponent implements OnChanges{
   name: string = ''
   userName: string = ''
   postContent: string = ''
+  fetchingPosts: boolean = false
+  skip: number = 0
+  postsEnd: boolean = false
+  posti: boolean = false
 
   @Input() newPost = ''
 
@@ -41,8 +45,10 @@ export class  PostComponent implements OnChanges{
     })
     
     // get posts
-    this.postService.getPosts().subscribe((data) => {
+    this.postService.getPosts(this.skip).subscribe((data) => {
       this.spinner = false;
+      console.log(data.posts, 47);
+      
       this.posts = data.posts;
     });
   }
@@ -55,5 +61,21 @@ export class  PostComponent implements OnChanges{
     if (!changes['newPost'].firstChange) {
       this.posts.unshift(changes['newPost'].currentValue)
     }
+  }
+
+  loadMore() {
+    this.fetchingPosts = true
+    this.skip += 2
+    this.postService.getPosts(this.skip).subscribe((data) => {
+      this.fetchingPosts = false;
+      const postExists = data.posts[0]
+      if (postExists) this.posts = [...this.posts, ...data.posts]
+      else this.postsEnd = true
+    });
+  }
+
+  selectedPost(postId:  string) {
+    console.log(postId);
+    this.posti = true
   }
 }

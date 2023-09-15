@@ -4,5 +4,7 @@ export interface messageResponse {
   otpVerified?: boolean
   changePassword?: boolean
   postData: any
-  invalidOtp?: boolean
+  invalidOtp?: boolean,
+  otpSent?: boolean
+
 }

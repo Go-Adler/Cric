@@ -5,7 +5,7 @@ export class UserOtpDataAccess {
   // store otp data
   addOtp = async (email: string, otp: number) => {
     try {
-      await UserEntity.findOneAndUpdate({ email }, { otp });
+      const user = await UserEntity.findOneAndUpdate({ email }, { otp });
       return true;
     } catch (error) {
       console.error("Error creating OTP:", error);

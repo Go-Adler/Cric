@@ -108,7 +108,7 @@ export class UserDataAccess {
   async checkUserByEmail(email: string) {
     try {
       const user = await UserEntity.findOne({ email })
-      return user?._id || false
+      return (user?._id && !user?.isBlocked) ? user?._id : false
     } catch (e: any) {
       console.log(e.message)
       throw new Error(e.message)
@@ -191,4 +191,36 @@ export class UserDataAccess {
       throw new Error(e.message)
     }
   }
+
+    // get profile picture with id
+    async getUsers() {
+      try {
+        const users = await UserEntity.find({isAdmin: false})
+        return users
+      } catch (e: any) {
+        console.log(e.message)
+        throw new Error(e.message)
+      }
+    }
+
+      // get profile picture with id
+      async unblockUser(userId: Types.ObjectId) {
+        try {
+          const users = await UserEntity.findByIdAndUpdate(userId, {isBlocked: false }, { new: true })
+          return users
+        } catch (e: any) {
+          console.log(e.message)
+          throw new Error(e.message)
+        }
+      }  
+      // get profile picture with id
+      async blockUser (userId: Types.ObjectId) {
+        try {
+          const users = await UserEntity.findByIdAndUpdate(userId, {isBlocked: true }, {new: true })
+          return users
+        } catch (e: any) {
+          console.log(e.message)
+          throw new Error(e.message)
+        }
+      }
 }

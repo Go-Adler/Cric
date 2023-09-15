@@ -10,8 +10,9 @@ import { JwtMiddleware } from '../middleware/auth.middleware'
 import { UserForgotPasswordController } from '../controllers/user.forgotPassword.controller'
 import { UserChangePasswordController } from '../controllers/user.changePassword.controller'
 import { UserDataController } from '../controllers/user.userDataController'
-import { verify } from 'jsonwebtoken'
+import { UserResendOtpController } from '../controllers/user.resendOtp.controller'
 
+const { resendOtp } = new UserResendOtpController()
 const { userSignUp } = new UserSignUpController()
 const { verifyOtp } = new UserSignUpOtpController()
 const { userLogin } = new UserLoginController()
@@ -39,11 +40,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });  
 
-router.get('/posts', verifyJwt, getUserPosts)
 router.get('/basic-info', verifyJwt, userBasicInfo)
-router.get('/resend-otp', verifyVerifyToken, )
+router.get('/resend-otp', verifyVerifyToken, resendOtp)
 
-
+router.post('/posts', verifyJwt, getUserPosts)
 router.post('/log-in', userLogin)
 router.post('/sign-up', userSignUp)
 router.post('/post', verifyJwt, userNewPost)

@@ -5,6 +5,9 @@
       <div class="col-8 col-xl-6 d-flex justify-content-center fw-medium"><span class="fs-5">Enter OTP to
           change password</span>
       </div>
+      <div *ngIf="otpResent" class="flex text-green-500 items-center gap-1 justify-center">
+        OTP resent successfully <span class="flex items-start mb-1"><mat-icon class="text-lg">check_circle_outline</mat-icon></span>
+      </div>
     </div>
     <form action="" [formGroup]="OTP_Form" (ngSubmit)="onSubmit()" class="d-flex flex-column gap-2">
 
@@ -25,7 +28,7 @@
               <mat-hint *ngIf="otpInvalid">Wrong otp try again</mat-hint>
             </mat-form-field>
           </p>
-          <span class="flex justify-end gap-2"><button [disabled]="!isResendEnabled" (click)="resendOtp()" [ngClass]="{'disabledButton': !isResendEnabled, 'underline': !isResendEnabled }">Resend otp?</button><span class="" *ngIf="!isResendEnabled">({{ formatTime(timerValue) }})</span></span>
+          <span class="flex justify-end gap-2"><button type="button" [disabled]="!isResendEnabled" (click)="resendOtp()" [ngClass]="{'disabledButton': !isResendEnabled, 'underline': !isResendEnabled }">Resend otp?</button><span class="" *ngIf="!isResendEnabled">({{ formatTime(timerValue) }})</span></span>
         </div>
 
       </div>

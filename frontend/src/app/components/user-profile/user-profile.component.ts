@@ -8,7 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UserProfileComponent implements OnInit {
   profilePicture: string = '';
-  addProfilePicture: boolean = true;
+  addProfilePicture: boolean = false;
   selectedImage: string | undefined;
 
   constructor(private userService: UserService) {}

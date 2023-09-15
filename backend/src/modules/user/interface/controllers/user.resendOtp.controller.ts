@@ -1,11 +1,10 @@
 import { Request, Response, NextFunction } from 'express'
-import { UserExistingUseCase } from '../../application/useCases/user.existing.useCase'
 import { SendOTP_UseCase } from '../../application/useCases/user.sendOTP.useCase'
 import { TokenUseCase } from '../../application/useCases/user.token.useCase'
 import { JwtPayload } from 'jsonwebtoken'
 import { GetUserDataUseCase } from '../../application/useCases/user.getData.useCase'
 
-export class UserForgotPasswordController {
+export class UserResendOtpController {
   private getUserDataUseCase: GetUserDataUseCase
   private sendOtpUseCase: SendOTP_UseCase
   private tokenUseCase: TokenUseCase
@@ -16,7 +15,7 @@ export class UserForgotPasswordController {
     this.tokenUseCase = new TokenUseCase()
   }
 
-  forgotPassword = async (req: Request, res: Response, next: NextFunction) => {
+  resendOtp = async (req: Request, res: Response, next: NextFunction) => {
     const { userId } = req.user as JwtPayload
 
     try {

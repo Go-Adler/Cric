@@ -16,6 +16,7 @@ import { LogInGuard } from './guards/logIn.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { SportsComponent } from './components/sports/sports.component'
 import { VerifySignUpOtpComponent } from './components/sign-up/verify-sign-up-otp/verify-sign-up-otp.component'
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component'
 
 
 const routes: Routes = [
@@ -79,6 +80,7 @@ const routes: Routes = [
 
   { path: 'admin/home', component: AdminHomeComponent },
   { path: 'admin/log-in', component: AdminLoginComponent },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({

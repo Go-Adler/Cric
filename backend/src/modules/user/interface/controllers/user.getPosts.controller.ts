@@ -10,10 +10,11 @@ export class GetUserPostsController {
   }
 
   getUserPosts = async (req: Request, res: Response, next: NextFunction) => {
-    const { email } = req.user as JwtPayload
+    const { userId } = req.user as JwtPayload
+    const { skip } = req.body
 
     try {
-      const posts = await this.getUserPostsUseCase.getUserPosts(email)
+      const posts = await this.getUserPostsUseCase.getUserPosts(userId, skip)
       res.json({posts})
     } catch (error) {
       return next(error)

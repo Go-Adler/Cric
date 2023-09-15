@@ -14,14 +14,14 @@ export class UserNewPostController {
   }
 
   userNewPost = async (req: Request, res: Response, next: NextFunction) => {
-    const { email } = req.user as JwtPayload
+    const { userId } = req.user as JwtPayload
     const text = req.body
 
     try {
       const timestamp = new Date()
       const postData = { content: text, metrics: {timestamp} }
 
-      this.createPostUseCase.createPost(email, postData)
+      this.createPostUseCase.createPost(userId, postData)
 
       res.json({ message: 'Post created successfully', postData })
     } catch (error) {

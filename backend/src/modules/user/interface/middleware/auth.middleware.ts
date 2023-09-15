@@ -88,9 +88,6 @@ export class JwtMiddleware {
       // Extract the Authorization header
       const authHeader = req.header('Authorization')
 
-      console.log(authHeader, 130);
-      
-
       // Check if Authorization header is missing
       if (!authHeader) {
         return res
@@ -100,9 +97,6 @@ export class JwtMiddleware {
 
       // Extract token from the Authorization header
       const verifyToken = authHeader.split(' ')[1]
-
-      console.log(verifyToken, 136);
-      
 
       // Check if token is missing
       if (!verifyToken) {

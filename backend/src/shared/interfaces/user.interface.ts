@@ -10,5 +10,7 @@ export interface I_User extends Document {
   password: string;
   isVerified: boolean;
   otp?: number;
+  isAdmin: boolean
   posts: Post[]
+  isBlocked: boolean
 }
