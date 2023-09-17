@@ -43,7 +43,9 @@ import { CloudinaryInterceptor } from './services/cloudinary.interceptor';
 import { TestFormCloudinaryComponent } from './components/user-profile/test-form-cloudinary/test-form-cloudinary.component';
 import { VerifySignUpOtpComponent } from './components/sign-up/verify-sign-up-otp/verify-sign-up-otp.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { IPostComponent } from './components/home/post/i-post/i-post.component'
+import { IPostComponent } from './components/home/post/i-post/i-post.component';
+import { SideNavComponent } from './components/side-nav/side-nav.component';
+import { TopNavComponent } from './components/top-nav/top-nav.component'
 
 
 @NgModule({
@@ -71,6 +73,8 @@ import { IPostComponent } from './components/home/post/i-post/i-post.component'
     VerifySignUpOtpComponent,
     PageNotFoundComponent,
     IPostComponent,
+    SideNavComponent,
+    TopNavComponent,
   ],
   imports: [
     BrowserModule,

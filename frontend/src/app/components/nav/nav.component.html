@@ -1,63 +1,33 @@
-<nav class="container-fluid mt-0">
-  <div class="row p-1">
-    <div class="col-4 d-flex align-items-center">
-      <div class="row p-2 pl-md-2 pl-xl-4">
-        <div class="col-8 col-md-4 col-xl-2 p-0 d-flex justify-content-start" routerLink="/user/home">
-          <img class="img-fluid" src="https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/NameAndLogo+(1).png" alt="">
-        </div>
-      </div>
+<nav class="flex p-2">
+    <!-- Home tab -->
+    <div [title]="'Home'" [style.cursor]="'pointer'"
+      class="w-full flex justify-center items-center" routerLink="/user/home">
+      <span class="material-symbols-rounded text-3xl">
+        home
+      </span>
     </div>
-    <div class="col-8 d-flex justify-content-end pe-2">
-      <div class="row-fluid gap-2 d-flex justify-content-end">
-        <!-- Home tab -->
-        <div [title]="'Home'" [style.cursor]="'pointer'" class="col-2 p-0 hidden md:flex gap-2 align-items-center justify-content-center" routerLink="/user/home">
-          <span class="material-symbols-outlined">
-            cottage
-          </span>
-          <span class="d-none d-xl-block">Home</span>
-        </div>
 
-        <!-- Sports tab -->
-        <div [title]="'Sports'" [style.cursor]="'pointer'" class="col-2 p-0 d-flex gap-2 align-items-center justify-content-center" routerLink="/user/sports">
-          <span class="material-symbols-outlined">
-            sports_volleyball
-          </span>
-          <span class="d-none d-xl-block">Sports</span>
-        </div>
-
-        <!-- Notification tab -->
-        <div [title]="'Notifications'" [style.cursor]="'pointer'" class="col-2 p-0 d-flex gap-2 align-items-center justify-content-center">
-          <i class="fa-regular fa-bell fs-5"></i>
-          <span class="d-none d-xl-block">Notifications</span>
-        </div>
-
-        <!-- Messages tab -->
-        <div [title]="'Messages'" [style.cursor]="'pointer'" class="col-2 p-0 d-flex gap-2 align-items-center justify-content-center">
-          <i class="fa-regular fa-message fs-5"></i>
-          <span class="d-none d-xl-block">Messages</span>
-        </div>
-
-        <div [style.cursor]="'pointer'" class="col-2 col-xl-2 p-1 p-xl-2 d-flex align-items-center justify-content-center" (mouseenter)="showProfile()"
-          (mouseleave)="hideProfile()" [matMenuTriggerFor]="menu">
-          <div class="row d-flex align-items-center justify-content-center">
-            <div class="col-5 col-md-3 col-xl-2 p-0">
-              <img class="img-fluid roundPicture"
-                [src]="profilePicture" alt="">
-            </div>
-            <span class="d-none d-xl-block col-xl-auto">{{name}}</span>
-          </div>
-        </div>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item routerLink="/user/profile">
-            <mat-icon>account_circle</mat-icon>
-            <span>Profile</span>
-          </button>
-          <button mat-menu-item (click)="logOut()">
-            <mat-icon>logout</mat-icon>
-            <span>Log out</span>
-          </button>
-        </mat-menu>
-      </div>
+    <!-- Sports tab -->
+    <div [title]="'Sports'" [style.cursor]="'pointer'"
+      class="w-full flex justify-center items-center" routerLink="/user/sports">
+      <span class="material-symbols-rounded text-3xl">
+        sports_cricket
+        </span>
     </div>
-  </div>
+
+    <!-- Notification tab -->
+    <div [title]="'Notifications'" [style.cursor]="'pointer'"
+      class="w-full flex justify-center items-center">
+      <span class="material-symbols-rounded text-3xl">
+        notifications
+        </span>
+    </div>
+
+    <!-- Messages tab -->
+    <div [title]="'Messages'" [style.cursor]="'pointer'"
+      class="w-full flex justify-center items-center">
+      <span class="material-symbols-rounded text-3xl">
+        chat_bubble
+        </span>
+    </div>
 </nav>
