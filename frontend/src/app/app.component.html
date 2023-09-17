@@ -1,0 +1,25 @@
+<div class="flex justify-center">
+  <div class="h-auto w-full flex justify-center">
+    <!-- side -->
+    <div *ngIf="isLogin" class="w-2/12 hidden md:block">
+      <app-side-nav></app-side-nav>
+    </div>
+
+    <!-- top + router -->
+    <div class="w-full h-auto">
+        <!-- top -->
+        <app-top-nav *ngIf="isLogin"></app-top-nav>
+
+        <!-- router -->
+        <router-outlet></router-outlet>
+    </div>
+
+    <!-- right -->
+    <div *ngIf="isLogin" class="w-2/12 hidden">
+      <div class="bg-warning top-0 sticky h-screen">side</div>
+    </div>
+
+    <!-- botton -->
+    <app-nav *ngIf="isLogin"></app-nav>
+  </div>
+</div>

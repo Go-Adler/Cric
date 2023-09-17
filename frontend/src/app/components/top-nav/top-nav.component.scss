@@ -1,3 +1,12 @@
-.nav {
-  z-index: 1000;
+$cricBlue: rgb(26, 41, 56, 0.8);
+
+nav {
+  background: $cricBlue;
+  backdrop-filter: blur(10px); 
+  color: white;
+  z-index: 1000; 
+}
+
+a {
+  color: inherit;
 }
