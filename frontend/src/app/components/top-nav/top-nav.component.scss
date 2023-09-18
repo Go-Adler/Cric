@@ -1,8 +1,7 @@
 $cricBlue: rgba(0, 0, 0, 0.8);
-$cricBlue: rgb(26, 41, 56, 0.7);
+$cricBlue: rgba(0, 0, 0, 0.7);
 
 nav {
-  background: $cricBlue;
   backdrop-filter: blur(10px); 
   color: white;
   z-index: 1000; 

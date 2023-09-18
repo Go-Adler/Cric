@@ -1,17 +1,17 @@
-<div class="top-0 sticky h-screen flex main border-r">
+<section class="top-0 sticky h-screen flex border-r">
   <!-- <div class="h-full w-full"></div> -->
-  <div class="h-full w-full pt-16 flex flex-column justify-between items-end">
+  <div class="h-full w-full pt-16 flex flex-col justify-between items-end">
     <!-- icons -->
-    <div class="lg:w-10/12 p-2">
+    <div class="lg:w-10/12 p-2 flex flex-col gap-2">
 
-      <div class="flex justify-start rounded-full hover:sideItemArea items-end gap-4 items-end p-3" routerLink="user/home">
-        <span class="material-symbols-rounded text-3xl">
+      <div routerLinkActive="selectedSideItem" class="flex justify-start sideItemArea rounded-full cursor-pointer  items-end gap-4 items-end p-3" routerLink="user/home">
+        <span class="material-symbols-rounded text-3xl ">
           home
         </span>
-        <span class="sideItem text-xl hidden lg:block">Home</span>
+        <span class="sideItem text-xl hidden lg:block ">Home</span>
       </div>
 
-      <div class="flex justify-start hover:sideItemArea items-end gap-4 p-3" routerLink="user/sports">
+      <div routerLinkActive="selectedSideItem" class="flex justify-start sideItemArea rounded-full cursor-pointer  items-end gap-4 p-3" routerLink="user/sports">
         <span class="material-symbols-rounded text-3xl">
           sports_cricket
         </span>
@@ -19,7 +19,7 @@
 
       </div>
 
-      <div class="flex justify-start hover:sideItemArea items-end gap-4 p-3">
+      <div routerLinkActive="selectedSideItem" class="flex justify-start sideItemArea rounded-full cursor-pointer  items-end gap-4 p-3" routerLink="user/notifications">
         <span class="material-symbols-rounded text-3xl">
           notifications
         </span>
@@ -27,14 +27,14 @@
 
       </div>
 
-      <div class="flex justify-start hover:sideItemArea items-end gap-4 p-3">
+      <div routerLinkActive="selectedSideItem" class="flex justify-start sideItemArea rounded-full cursor-pointer  items-end gap-4 p-3" routerLink="user/messages">
         <span class="material-symbols-rounded text-3xl">
           forum
         </span>
         <span class="sideItem text-xl hidden lg:block">Messages</span>
 
       </div>
-      <div class="flex justify-start hover:sideItemArea items-end gap-4 p-3">
+      <div routerLinkActive="selectedSideItem" class="flex justify-start sideItemArea rounded-full cursor-pointer  items-end gap-4 p-3" routerLink="user/friends">
         <span class="material-symbols-rounded text-3xl">
           group
         </span>
@@ -42,7 +42,7 @@
 
 
       </div>
-      <div class="flex justify-start hover:sideItemArea items-end gap-4 p-3">
+      <div routerLinkActive="selectedSideItem" class="flex justify-start sideItemArea rounded-full cursor-pointer  items-end gap-4 p-3" routerLink="user/saved">
         <span class="material-symbols-rounded text-3xl">
           bookmark
         </span>
@@ -51,21 +51,27 @@
 
       </div>
 
-      <div class="flex justify-start hover:sideItemArea items-end gap-4 p-3">
+      <div routerLinkActive="selectedSideItem" class="flex justify-start sideItemArea rounded-full cursor-pointer  items-end gap-4 p-3" routerLink="user/profile">
         <span class="material-symbols-rounded text-3xl">
           person
         </span>
         <span class="sideItem text-xl hidden lg:block">Profile</span>
-
-
       </div>
+
+      <div routerLinkActive="selectedSideItem" class="flex justify-start sideItemArea rounded-full cursor-pointer  items-end gap-4 p-3" routerLink="user/settings">
+        <span class="material-symbols-rounded text-3xl">
+          settings
+        </span>
+        <span class="sideItem text-xl hidden lg:block">Settings</span>
+      </div>
+      
     </div>
 
     <!-- accounts -->
-    <div class="flex justify-center lg:justify-start hover:sideItemArea items-end gap-4 mb-3 w-10/12">
+    <div routerLinkActive="selectedSideItem" class="flex justify-center lg:justify-start sideItemArea rounded-full cursor-pointer  items-end gap-4 mb-3 w-10/12">
       <div class="w-6/12 lg:w-2/12">
         <img [src]="profilePicture" alt="" class="rounded-full">
       </div>
     </div>
   </div>
-</div>
+</section>

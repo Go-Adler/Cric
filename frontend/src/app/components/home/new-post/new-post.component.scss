@@ -1,27 +1,27 @@
-$cricBlue: #1A2938;
+$cricBlue: #1a2938;
 
-.newPostArea {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
+// .newPostArea {
+//   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+// }
 
-.profile-image {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
+// .profile-image {
+//   width: 40px;
+//   height: 40px;
+//   border-radius: 50%;
+//   object-fit: cover;
+// }
 
-.imagePostArea {
-  padding-top: 0px !important;
-  padding-bottom: 0px !important;
-}
+// .imagePostArea {
+//   padding-top: 0px !important;
+//   padding-bottom: 0px !important;
+// }
 
 .postButton {
-  background-color: $cricBlue;
+  background-color: $cricBlue !important;
   color: white !important;
 }
 
-.postSuccessButton {
-  background-color: rgb(8, 92, 8);
-  color: white !important;
-}
+// .postSuccessButton {
+//   background-color: rgb(8, 92, 8);
+//   color: white !important;
+// }
