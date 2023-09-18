@@ -45,7 +45,8 @@ import { VerifySignUpOtpComponent } from './components/sign-up/verify-sign-up-ot
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { IPostComponent } from './components/home/post/i-post/i-post.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
-import { TopNavComponent } from './components/top-nav/top-nav.component'
+import { TopNavComponent } from './components/top-nav/top-nav.component';
+import { RightAreaComponent } from './components/right-area/right-area.component'
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { TopNavComponent } from './components/top-nav/top-nav.component'
     IPostComponent,
     SideNavComponent,
     TopNavComponent,
+    RightAreaComponent,
   ],
   imports: [
     BrowserModule,

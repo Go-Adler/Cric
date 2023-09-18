@@ -1,12 +1,12 @@
 <div class="flex justify-center">
   <div class="h-auto w-full flex justify-center">
     <!-- side -->
-    <div *ngIf="isLogin" class="w-2/12 hidden md:block">
+    <div *ngIf="isLogin" class="w-1/12 hidden md:block lg:w-3/12">
       <app-side-nav></app-side-nav>
     </div>
 
     <!-- top + router -->
-    <div class="w-full h-auto">
+    <div class="w-full  h-auto">
         <!-- top -->
         <app-top-nav *ngIf="isLogin"></app-top-nav>
 
@@ -15,8 +15,8 @@
     </div>
 
     <!-- right -->
-    <div *ngIf="isLogin" class="w-2/12 hidden">
-      <div class="bg-warning top-0 sticky h-screen">side</div>
+    <div *ngIf="isLogin" class="w-5/12 hidden lg:block ">
+      <app-right-area></app-right-area>
     </div>
 
     <!-- botton -->

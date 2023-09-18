@@ -1,48 +1,70 @@
-<div class="bg-warning top-0 sticky h-screen flex">
-  <div class="bg-danger h-full w-full">part1</div>
-  <div class="bg-info h-full w-full mt-12">
-    <div class="bg-green-500">
-      <div class="flex justify-center p-2">
+<div class="top-0 sticky h-screen flex main border-r">
+  <!-- <div class="h-full w-full"></div> -->
+  <div class="h-full w-full pt-16 flex flex-column justify-between items-end">
+    <!-- icons -->
+    <div class="lg:w-10/12 p-2">
+
+      <div class="flex justify-start rounded-full hover:sideItemArea items-end gap-4 items-end p-3" routerLink="user/home">
         <span class="material-symbols-rounded text-3xl">
           home
-          </span>
-    
+        </span>
+        <span class="sideItem text-xl hidden lg:block">Home</span>
       </div>
-      <div class="flex justify-center p-2">
+
+      <div class="flex justify-start hover:sideItemArea items-end gap-4 p-3" routerLink="user/sports">
         <span class="material-symbols-rounded text-3xl">
           sports_cricket
-          </span>
-    
+        </span>
+        <span class="sideItem text-xl hidden lg:block">Sports</span>
+
       </div>
-      <div class="flex justify-center p-2">
+
+      <div class="flex justify-start hover:sideItemArea items-end gap-4 p-3">
         <span class="material-symbols-rounded text-3xl">
           notifications
-          </span>
-    
+        </span>
+        <span class="sideItem text-xl hidden lg:block">Notifications</span>
+
       </div>
-      <div class="flex justify-center p-2">
+
+      <div class="flex justify-start hover:sideItemArea items-end gap-4 p-3">
         <span class="material-symbols-rounded text-3xl">
           forum
-          </span>
-    
+        </span>
+        <span class="sideItem text-xl hidden lg:block">Messages</span>
+
       </div>
-      <div class="flex justify-center p-2">
-        <span class="material-symbols-rounded text-3xl">
-          bookmark
-          </span>
-    
-      </div>
-      <div class="flex justify-center p-2">
-        <span class="material-symbols-rounded text-3xl">
-          person
-          </span>
-    
-      </div>
-      <div class="flex justify-center p-2">
+      <div class="flex justify-start hover:sideItemArea items-end gap-4 p-3">
         <span class="material-symbols-rounded text-3xl">
           group
-          </span>
-    
+        </span>
+        <span class="sideItem text-xl hidden lg:block">Friends</span>
+
+
+      </div>
+      <div class="flex justify-start hover:sideItemArea items-end gap-4 p-3">
+        <span class="material-symbols-rounded text-3xl">
+          bookmark
+        </span>
+        <span class="sideItem text-xl hidden lg:block">Saved</span>
+
+
+      </div>
+
+      <div class="flex justify-start hover:sideItemArea items-end gap-4 p-3">
+        <span class="material-symbols-rounded text-3xl">
+          person
+        </span>
+        <span class="sideItem text-xl hidden lg:block">Profile</span>
+
+
+      </div>
+    </div>
+
+    <!-- accounts -->
+    <div class="flex justify-center lg:justify-start hover:sideItemArea items-end gap-4 mb-3 w-10/12">
+      <div class="w-6/12 lg:w-2/12">
+        <img [src]="profilePicture" alt="" class="rounded-full">
       </div>
     </div>
   </div>

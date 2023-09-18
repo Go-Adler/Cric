@@ -7,7 +7,7 @@ import { UserService } from 'src/app/services/user.service'
   styleUrls: ['./top-nav.component.scss']
 })
 export class TopNavComponent implements OnInit{
-  profilePicture:string = ''
+  profilePicture: string = ''
 
   constructor(
     private userService: UserService
