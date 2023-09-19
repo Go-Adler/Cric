@@ -75,7 +75,6 @@ export class  PostComponent implements OnChanges{
   }
 
   selectedPost(postId:  string) {
-    console.log(postId);
     this.posti = true
   }
 }

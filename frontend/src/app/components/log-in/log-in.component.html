@@ -13,9 +13,9 @@
 
       <!-- form -->
       <form [formGroup]="logInForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-1">
-        <div *ngIf="errorMessage" class="w-100 d-flex justify-content-center gap-2 errorMessage fs-6 mb-1">
+        <div *ngIf="errorMessage" class="w-100 flex justify-center gap-2 errorMessage fs-6 mb-1">
           <span>{{errorMessage}}.</span><a routerLink="/user/sign-up" class="logIn"> Sign up?</a> </div>
-        <div *ngIf="wrongPassword" class="w-100 d-flex justify-content-center gap-2 errorMessage fs-6 mb-1">
+        <div *ngIf="wrongPassword" class="w-100 flex justify-center gap-2 errorMessage fs-6 mb-1">
           <span>{{wrongPassword}}.</span><a routerLink="/user/forgot-password" class="logIn"> Forgot password?</a>
         </div>
 

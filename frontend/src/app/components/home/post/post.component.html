@@ -1,55 +1,57 @@
-<div class="mb-10 mt-3 bg-red-500">
-    <div class="flex flex-col gap-1">
-        <span class="flex justify-center" *ngIf="spinner"><mat-spinner diameter="30"
-                color="primary"></mat-spinner></span>
-            <!-- card -->
-            <mat-card class="text-black p-1 p-md-2 container mb-2 mb-lg-3" *ngFor="let post of posts;" >
-    
-                <!-- card-title -->
-                <div class="d-flex align-items-center row-fluid">
-                    <div class="col-2 col-md-1 p-0 me-md-2">
-                        <div class="row-fluid flex">
-                            <img [src]="profilePicture" alt="Profile Image" class="col-8 col-md-12  p-0 img-fluid roundPicture">
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <span class="flex gap-1">
-                            <div class="text-sm font-medium">{{name}}</div>
-                            <span class="text-stone-500 text-sm">@{{userName}}</span>
-                        </span>
-                        <span class="flex items-center mx-1 text-stone-500">.</span>
-                        <div class="text-xs items-center flex text-stone-500">2h ago</div>
-                    </div>
-                </div>
-    
-                <!--  content -->
-                <span class="p-1 break-words">
-                    {{post.content.text}}
-                </span>
-    
-                <!-- image -->
-                <img src="https://pbs.twimg.com/media/F4B2GszXcAAOWNh?format=jpg&name=medium" alt="Post Image" class="cursor" (click)="selectedPost(post._id)">
-    
-                <!-- reactions -->
-                <div class="p-3 flex justify-between cursor" (click)="selectedPost(post._id)">
-                    <div class="md:text-sm text-sm lg:text-base d-flex gap-2 items-center"><i class="fa-regular fa-heart"></i> 15</div>
-                    <div class="md:text-sm text-sm lg:text-base d-flex gap-2 items-center"><i class="fa-regular fa-comment"></i> 15</div>
-                    <div class="md:text-sm text-sm lg:text-base d-flex gap-2 items-center"><i class="fa-regular fa-bookmark"></i>15</div>
-                    <div class="md:text-sm text-sm lg:text-base d-flex gap-2 items-center"><i class="fa-solid fa-up-right-from-square"></i>15</div>
-                </div>
-            </mat-card>
-            <span *ngIf="posts[0] && !fetchingPosts && !postsEnd" class="flex justify-center items-center flex-column mt-2 text-4xl borderTop cursor" (click)="loadMore()">
-                <i class="fa-solid fa-plus mt-2"></i>
-                <span class="text-xs">load more</span>
+<div class="mb-10 mt-3 pt-10">
+    <span class="flex justify-center" *ngIf="spinner"><mat-spinner diameter="30" color="primary"></mat-spinner></span>
+    <!-- card -->
+    <mat-card class="text-black p-2 mb-6" *ngFor="let post of posts;">
+
+        <!-- card-title -->
+        <div class="flex gap-2">
+            <span class="w-10">
+            <img [src]="profilePicture" alt="" class="rounded-full">
             </span>
-            <span *ngIf="fetchingPosts" class="flex justify-center items-center flex-column mt-2 text-4xl cursor gap-2" (click)="loadMore()">
-                <mat-spinner diameter="30"
-                color="primary"></mat-spinner>
-                <span class="text-xs">loading more posts</span>
+            <span class="flex flex-col">
+                <span class="md:text-base">{{name}}</span>
+                <span class="text-xs md:font-normal">@{{userName}}</span>
             </span>
-            <span *ngIf="postsEnd" class="flex justify-center items-center flex-column mt-2 text-4xl cursor gap-2">
-                <span class="text-xs">No more posts</span>
+            <span class="font-normal text-sm flex flex-col">
+                <span class="md:font-normal md:text-base text-stone-500 flex items-end">2h ago</span>
             </span>
-    </div>
-    <app-i-post *ngIf="this.posti"></app-i-post>
+        </div>
+
+        <!--  content -->
+        <span class="py-2 break-words">
+            {{post.content.text}}
+        </span>
+
+        <!-- image -->
+        <img src="https://pbs.twimg.com/media/F6T1AvUWkAAPclP?format=png&name=small" alt="Post Image" class=""
+            (click)="selectedPost(post._id)">
+
+        <!-- reactions -->
+        <div class="p-3 flex justify-between cursor" (click)="selectedPost(post._id)">
+            <div class="md:text-sm text-sm lg:text-base d-flex gap-2 items-center"><i class="fa-regular fa-heart"></i>
+                15</div>
+            <div class="md:text-sm text-sm lg:text-base d-flex gap-2 items-center"><i class="fa-regular fa-comment"></i>
+                15</div>
+            <div class="md:text-sm text-sm lg:text-base d-flex gap-2 items-center"><i
+                    class="fa-regular fa-bookmark"></i>15</div>
+            <div class="md:text-sm text-sm lg:text-base d-flex gap-2 items-center"><i
+                    class="fa-solid fa-up-right-from-square"></i>15</div>
+        </div>
+    </mat-card>
+
+    <!-- fetch posts -->
+    <span *ngIf="posts[0] && !fetchingPosts && !postsEnd"
+        class="flex justify-center items-center flex-column mt-2 text-4xl borderTop cursor" (click)="loadMore()">
+        <i class="fa-solid fa-plus mt-2"></i>
+        <span class="text-xs">load more</span>
+    </span>
+    <span *ngIf="fetchingPosts" class="flex justify-center items-center flex-column mt-2 text-4xl cursor gap-2"
+        (click)="loadMore()">
+        <mat-spinner diameter="30" color="primary"></mat-spinner>
+        <span class="text-xs">loading more posts</span>
+    </span>
+    <span *ngIf="postsEnd" class="flex justify-center items-center flex-column mt-2 text-4xl cursor gap-2">
+        <span class="text-xs">No more posts</span>
+    </span>
 </div>
+<app-i-post *ngIf="this.posti"></app-i-post>
