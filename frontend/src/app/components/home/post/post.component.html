@@ -8,44 +8,82 @@
             <span class="w-10">
             <img [src]="profilePicture" alt="" class="rounded-full">
             </span>
-            <span class="flex flex-col">
-                <span class="md:text-base">{{name}}</span>
-                <span class="text-xs md:font-normal">@{{userName}}</span>
-            </span>
-            <span class="font-normal text-sm flex flex-col">
-                <span class="md:font-normal md:text-base text-stone-500 flex items-end">2h ago</span>
+            <span class="">
+                <span class="flex items-end gap-2">
+                    <span class="md:text-base flex">{{name}}</span>
+                    <span class="text-xs font-light md:font-normal md:text-base text-stone-500">2h ago</span>
+                </span>
+                <span>
+                    <span class="text-sm font-light">@{{userName}}</span>
+                </span>
             </span>
         </div>
 
         <!--  content -->
-        <span class="py-2 break-words">
+        <span class="py-2 text-sm font-extralight break-words">
             {{post.content.text}}
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas, ipsum.
+            <!-- {{post | json}} -->
         </span>
 
         <!-- image -->
-        <img src="https://pbs.twimg.com/media/F6T1AvUWkAAPclP?format=png&name=small" alt="Post Image" class=""
+        <img src="https://pbs.twimg.com/media/F6TaPnNbUAAFKuM?format=jpg&name=small" alt="Post Image" class="rounded-md"
             (click)="selectedPost(post._id)">
 
         <!-- reactions -->
-        <div class="p-3 flex justify-between cursor" (click)="selectedPost(post._id)">
-            <div class="md:text-sm text-sm lg:text-base d-flex gap-2 items-center"><i class="fa-regular fa-heart"></i>
-                15</div>
-            <div class="md:text-sm text-sm lg:text-base d-flex gap-2 items-center"><i class="fa-regular fa-comment"></i>
-                15</div>
-            <div class="md:text-sm text-sm lg:text-base d-flex gap-2 items-center"><i
-                    class="fa-regular fa-bookmark"></i>15</div>
-            <div class="md:text-sm text-sm lg:text-base d-flex gap-2 items-center"><i
-                    class="fa-solid fa-up-right-from-square"></i>15</div>
+        <div class="md:p-3 pt-2 flex justify-between cursor">
+            <!-- favourite -->
+            <div class="gap-1 flex md:gap-3 justify-center items-center">
+                <span class="text-lg material-symbols-rounded">
+                    favorite
+                </span>
+                <span class="text-sm font-normal"></span>
+            </div>
+
+            <!-- comment -->
+            <div class="gap-1 flex md:gap-3 justify-center items-center">
+                <span class="text-lg material-symbols-rounded">
+                    mode_comment
+                </span>
+                <span class="text-sm font-normal">2</span>
+            </div>
+            
+            <!-- send -->
+            <div class="gap-1 flex md:gap-3 justify-center items-center">
+                <span class="text-lg material-symbols-rounded">
+                    send
+                </span>
+                <span class="text-sm font-normal">01</span>
+            </div>
+
+             <!-- bookmark -->
+             <div class="gap-1 flex md:gap-3 justify-center items-center">
+                <span class="text-lg material-symbols-rounded">
+                    bookmark
+                </span>
+                <span class="text-sm font-normal">01</span>
+            </div>
+
+             <!-- share -->
+             <div class="gap-1 flex md:gap-3 justify-center items-center">
+                <span class="text-lg material-symbols-rounded">
+                    share
+                </span>
+                <span class="text-sm font-normal">01</span>
+            </div>
+
         </div>
     </mat-card>
 
     <!-- fetch posts -->
     <span *ngIf="posts[0] && !fetchingPosts && !postsEnd"
-        class="flex justify-center items-center flex-column mt-2 text-4xl borderTop cursor" (click)="loadMore()">
-        <i class="fa-solid fa-plus mt-2"></i>
-        <span class="text-xs">load more</span>
+        class="flex flex-col gap-1 text-base justify-center items-center p-3 cursor-pointer flex-column mt-2 text-4xl border-t cursor fetchPosts" (click)="loadMore()">
+        <span class="text-lg material-symbols-rounded">
+            add_circle
+        </span>
+        <span class="">load more</span>
     </span>
-    <span *ngIf="fetchingPosts" class="flex justify-center items-center flex-column mt-2 text-4xl cursor gap-2"
+    <span *ngIf="fetchingPosts" class="flex justify-center items-center flex-col mt-2 cursor gap-2"
         (click)="loadMore()">
         <mat-spinner diameter="30" color="primary"></mat-spinner>
         <span class="text-xs">loading more posts</span>
