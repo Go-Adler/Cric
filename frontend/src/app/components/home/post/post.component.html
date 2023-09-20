@@ -9,9 +9,9 @@
             <img [src]="profilePicture" alt="" class="rounded-full">
             </span>
             <span class="">
-                <span class="flex items-end gap-2">
-                    <span class="md:text-base flex">{{name}}</span>
-                    <span class="text-xs font-light md:font-normal md:text-base text-stone-500">2h ago</span>
+                <span class="flex items-center gap-2">
+                    <span class="md:text-base">{{name}}</span>
+                    <span class="text-xs font-light md:font-normal md:text-sm text-stone-500">2h ago</span>
                 </span>
                 <span>
                     <span class="text-sm font-light">@{{userName}}</span>
@@ -26,7 +26,7 @@
         </span>
 
         <!-- image -->
-        <img *ngIf="post.content.multimedia[0]" [src]="post.content.multimedia[0]" alt="Post Image" class="rounded-md"
+        <img *ngIf="post.content?.multimedia[0]" [src]="post.content?.multimedia[0]" alt="Post Image" class="rounded-md"
             (click)="selectedPost(post._id)">
 
         <!-- reactions -->

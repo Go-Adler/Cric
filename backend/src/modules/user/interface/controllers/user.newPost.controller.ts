@@ -21,9 +21,10 @@ export class UserNewPostController {
       const timestamp = new Date()
       const postData = { content: text, metrics: {timestamp} }
 
-      this.createPostUseCase.createPost(userId, postData)
-
-      res.json({ message: 'Post created successfully', postData })
+      const newPost =  await this.createPostUseCase.createPost(userId, postData)
+      console.log(newPost, 25);
+      
+      res.json({ message: 'Post created successfully', postData: newPost })
     } catch (error) {
       return next(error)
     }

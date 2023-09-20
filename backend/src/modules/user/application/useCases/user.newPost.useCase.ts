@@ -10,7 +10,7 @@ export class CreatePostUseCase {
   }
 
   createPost = async (userId: Types.ObjectId, postData: PostDocument) => {
-    const posts = this.userPostDataAccess.createPost(userId, postData)
-    return posts
+    const post = await this.userPostDataAccess.createPost(userId, postData)
+    return post
   }
 }

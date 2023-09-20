@@ -15,6 +15,7 @@ export class NewPostComponent implements OnInit {
   postSuccess: boolean = false;
   profilePicture: string = ''
   name: string = ''
+  selectedImage: string | ArrayBuffer | null | undefined = null;
 
   @Output() newPostEvent = new EventEmitter<SuccessPost>();
 
@@ -39,12 +40,15 @@ export class NewPostComponent implements OnInit {
     })
     this.postForm = this.fb.group({
       text: ['', [Validators.required, Validators.maxLength(100)]],
+      image: ''
     });
   }
 
   onSubmit() {
     this.isPosting = true;
     const postData = this.postForm.value;
+    console.log(postData, 49);
+    
 
     this.newPostService.newPost(postData).subscribe((response) => {
       this.isPosting = false;
@@ -56,5 +60,16 @@ export class NewPostComponent implements OnInit {
         this.postSuccess = false;
       }, 2000);
     });
+  }
+
+  onImageSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.selectedImage = e.target?.result;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 }

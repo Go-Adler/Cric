@@ -6,7 +6,9 @@ export class UserPostDataAccess {
   // Create a new post for a user
   async createPost(userId: Types.ObjectId, postData: PostDocument) {
     // Find the user by their email and push the new post data into the 'posts' array
-    await UserEntity.findByIdAndUpdate(userId, { $push: { posts: postData } })
+    // const newPost = await UserEntity.findByIdAndUpdate(userId, { $push: { posts: postData } }, {new: true})
+    let newPost = await UserEntity.findByIdAndUpdate(userId, { $push: { posts: postData } }, {new: true, projection: { posts: { $slice: -1 } } })
+    return newPost?.posts[0]
   }
 
   // Get posts for a specific user
