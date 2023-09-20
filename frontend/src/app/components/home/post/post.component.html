@@ -1,7 +1,7 @@
 <div class="mb-10 mt-3 pt-10">
     <span class="flex justify-center" *ngIf="spinner"><mat-spinner diameter="30" color="primary"></mat-spinner></span>
     <!-- card -->
-    <mat-card class="text-black p-2 mb-6" *ngFor="let post of posts;">
+    <mat-card class="text-black p-3 mb-6" *ngFor="let post of posts;">
 
         <!-- card-title -->
         <div class="flex gap-2">
@@ -20,14 +20,13 @@
         </div>
 
         <!--  content -->
-        <span class="py-2 text-sm font-extralight break-words">
+        <span class="py-2 text-sm font-normal break-words">
             {{post.content.text}}
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas, ipsum.
             <!-- {{post | json}} -->
         </span>
 
         <!-- image -->
-        <img src="https://pbs.twimg.com/media/F6TaPnNbUAAFKuM?format=jpg&name=small" alt="Post Image" class="rounded-md"
+        <img *ngIf="post.content.multimedia[0]" [src]="post.content.multimedia[0]" alt="Post Image" class="rounded-md"
             (click)="selectedPost(post._id)">
 
         <!-- reactions -->

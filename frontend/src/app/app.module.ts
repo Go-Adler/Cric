@@ -46,7 +46,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { IPostComponent } from './components/home/post/i-post/i-post.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { TopNavComponent } from './components/top-nav/top-nav.component';
-import { RightAreaComponent } from './components/right-area/right-area.component'
+import { RightAreaComponent } from './components/right-area/right-area.component';
+import { MatchInfoComponent } from './components/right-area/match-info/match-info.component'
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { RightAreaComponent } from './components/right-area/right-area.component
     SideNavComponent,
     TopNavComponent,
     RightAreaComponent,
+    MatchInfoComponent,
   ],
   imports: [
     BrowserModule,
