@@ -28,16 +28,17 @@ const { userBasicInfo } = new UserDataController()
 const router = express.Router()
 
 
-// Set up multer to handle file uploads
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Define the destination folder where files will be stored
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname); // Use the original file name for storage
-  },
-});
+// // Set up multer to handle file uploads
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, 'uploads/'); // Define the destination folder where files will be stored
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname); // Use the original file name for storage
+//   },
+// });
 
+const storage = multer.memoryStorage()
 const upload = multer({ storage: storage });  
 
 router.get('/basic-info', verifyJwt, userBasicInfo)
@@ -46,7 +47,7 @@ router.get('/resend-otp', verifyVerifyToken, resendOtp)
 router.post('/posts', verifyJwt, getUserPosts)
 router.post('/log-in', userLogin)
 router.post('/sign-up', userSignUp)
-router.post('/post', verifyJwt, userNewPost)
+router.post('/post', verifyJwt, upload.single('postImage'), userNewPost)
 router.post('/upload', upload.single('croppedImage'))
 router.post('/verification', verifyVerifyToken, verifyOtp)
 router.post('/forgot-password',  forgotPassword)

@@ -9,7 +9,7 @@
         <mat-error *ngIf="postForm.get('text')?.invalid && (postForm.get('text')?.dirty || postForm.get('text')?.touched && postForm.get('text')?.errors?.['maxlength'])">Maximum 100 characters are allowed</mat-error>
       </div>
       <img *ngIf="selectedImage" [src]="selectedImage" alt="Selected Image" class="w-2/4 rounded-md" />
-      <input type="file" formControlName="image" (change)="onImageSelected($event)" accept="image/*" class="hidden" #fileInput>
+      <input type="file" (change)="onImageSelected($event)" accept="image/*" class="hidden" #fileInput>
       <div class="flex justify-between items-end">
         <span class="material-symbols-rounded cursor-pointer" (click)="fileInput.click()">
           image

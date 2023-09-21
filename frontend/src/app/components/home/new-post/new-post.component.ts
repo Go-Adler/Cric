@@ -16,6 +16,7 @@ export class NewPostComponent implements OnInit {
   profilePicture: string = ''
   name: string = ''
   selectedImage: string | ArrayBuffer | null | undefined = null;
+  postImage!: File
 
   @Output() newPostEvent = new EventEmitter<SuccessPost>();
 
@@ -46,11 +47,15 @@ export class NewPostComponent implements OnInit {
 
   onSubmit() {
     this.isPosting = true;
-    const postData = this.postForm.value;
-    console.log(postData, 49);
-    
+    const image = this.postForm.get('image')?.value
+    const text = this.postForm.get('text')?.value
 
-    this.newPostService.newPost(postData).subscribe((response) => {
+    const formData = new FormData()
+
+    formData.append('text', text)
+    formData.append('postImage', image)
+
+    this.newPostService.newPost(formData).subscribe((response) => {
       this.isPosting = false;
       this.postSuccess = true;
       this.postForm.reset();
@@ -63,6 +68,12 @@ export class NewPostComponent implements OnInit {
   }
 
   onImageSelected(event: any) {
+    
+    if (event.target.files.length > 0) {
+      this.postImage = event.target.files[0];
+      this.postForm.get('image')?.setValue(this.postImage);
+    }
+
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();

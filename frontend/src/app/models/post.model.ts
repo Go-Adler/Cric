@@ -1,5 +1,6 @@
 export interface Post {
-  postText: string
+  text: string,
+  image: File
 }
 
 
