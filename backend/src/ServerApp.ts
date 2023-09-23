@@ -45,10 +45,9 @@ export class ServerApp {
       res.status(500).json({ error: 'Internal Server Error' })
     })
   }
-
- 
+  
   public startServer() {
-    const port = process.env.PORT || 3000
+    const port = process.env.PORT
 
     this.app.listen(port, () => {
       console.log(`Server is running on http://localhost:${port}`)

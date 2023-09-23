@@ -6,5 +6,9 @@ export interface messageResponse {
   postData: any
   invalidOtp?: boolean,
   otpSent?: boolean
+}
 
+export interface I_postResponse {
+  uploadFailed?: boolean,
+  uploadSuccess?: boolean
 }

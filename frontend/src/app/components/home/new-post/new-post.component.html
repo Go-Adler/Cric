@@ -6,9 +6,18 @@
     <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="w-full flex flex-col gap-2">
       <div class="">
         <textarea formControlName="text" name="" id="" class="rounded-lg w-full p-2 text-black" rows="3" placeholder="What is happening?"></textarea>
-        <mat-error *ngIf="postForm.get('text')?.invalid && (postForm.get('text')?.dirty || postForm.get('text')?.touched && postForm.get('text')?.errors?.['maxlength'])">Maximum 100 characters are allowed</mat-error>
+        <mat-error *ngIf="(postForm.get('text')?.invalid && (postForm.get('text')?.dirty || postForm.get('text')?.touched) && postForm.get('text')?.errors?.['maxlength'])">Maximum 100 characters are allowed</mat-error>
       </div>
       <img *ngIf="selectedImage" [src]="selectedImage" alt="Selected Image" class="w-2/4 rounded-md" />
+      <mat-error *ngIf="postFailed">Post failed try again</mat-error>
+      <span *ngIf="postSuccess" class="flex gap-2 items-center text-lime-400">
+        <span>
+          Post success 
+        </span>
+        <span class="material-symbols-rounded text-lg">
+        check_circle
+        </span>
+      </span>
       <input type="file" (change)="onImageSelected($event)" accept="image/*" class="hidden" #fileInput>
       <div class="flex justify-between items-end">
         <span class="material-symbols-rounded cursor-pointer" (click)="fileInput.click()">

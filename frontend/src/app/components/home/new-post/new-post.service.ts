@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { messageResponse } from 'src/app/models/responses/message.model';
+import { I_postResponse } from 'src/app/models/responses/message.model';
 import { ConfigService } from 'src/app/services/config.service';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class NewPostService {
     this.API_URL = configService.getAPI_BaseURL();
   }
 
-  newPost(formData: FormData): Observable<messageResponse> {
-    return this.http.post<messageResponse>(`${this.API_URL}/user/post`, formData);
+  newPost(formData: FormData): Observable<I_postResponse> {
+    return this.http.post<I_postResponse>(`${this.API_URL}/user/post`, formData);
   }
 }

@@ -17,6 +17,7 @@ export class NewPostComponent implements OnInit {
   name: string = ''
   selectedImage: string | ArrayBuffer | null | undefined = null;
   postImage!: File
+  postFailed: boolean = false
 
   @Output() newPostEvent = new EventEmitter<SuccessPost>();
 
@@ -58,8 +59,14 @@ export class NewPostComponent implements OnInit {
     this.newPostService.newPost(formData).subscribe((response) => {
       this.isPosting = false;
       this.postSuccess = true;
+      if (response.uploadFailed) {
+        this.postFailed = true
+        return
+      }
+      this.postSuccess = true
       this.postForm.reset();
-      this.newPostEvent.emit(response.postData)
+      
+      // this.newPostEvent.emit(response.postData)
 
       setTimeout(() => {
         this.postSuccess = false;
