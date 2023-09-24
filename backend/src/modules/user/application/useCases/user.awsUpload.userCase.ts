@@ -7,7 +7,7 @@ export class AwsUploadUseCase {
   constructor() {
   }
 
-  uploadPost = async (userId: Types.ObjectId , imageFile:Express.Multer.File | undefined) => {
+  uploadPost = async (userId: Types.ObjectId , imageFile:Express.Multer.File) => {
     const awsAccessKey = process.env.AWS_ACCESS_KEY!
     const awsSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY!
     const bucketName = process.env.BUCKET_NAME!
@@ -33,7 +33,7 @@ export class AwsUploadUseCase {
 
     const upload = await s3.send(command)
     
-    if (upload.$metadata.httpStatusCode === 200) return true
+    if (upload.$metadata.httpStatusCode === 200) return fileName
     return false
   }
 }

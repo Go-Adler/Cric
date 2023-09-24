@@ -32,6 +32,7 @@
     "material-design-icons": "^3.0.1",
     "ng2-file-upload": "^5.0.0",
     "ngx-image-cropper": "^7.0.2",
+    "ngx-timeago": "^3.0.0",
     "rxjs": "~7.8.0",
     "three": "^0.156.0",
     "tslib": "^2.3.0",

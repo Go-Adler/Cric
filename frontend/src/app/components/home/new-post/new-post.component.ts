@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NewPostService } from './new-post.service';
 import { UserService } from 'src/app/services/user.service'
 import { SuccessPost } from 'src/app/models/post.model'
+import { I_post } from 'src/app/models/responses/message.model'
 
 @Component({
   selector: 'app-new-post',
@@ -18,8 +19,10 @@ export class NewPostComponent implements OnInit {
   selectedImage: string | ArrayBuffer | null | undefined = null;
   postImage!: File
   postFailed: boolean = false
+  isPostFailedMessage: boolean = true
+  postFailedMessage: string = ''
 
-  @Output() newPostEvent = new EventEmitter<SuccessPost>();
+  @Output() newPostEvent = new EventEmitter<I_post>();
 
   constructor(
     private fb: FormBuilder,
@@ -41,7 +44,7 @@ export class NewPostComponent implements OnInit {
       this.name = name
     })
     this.postForm = this.fb.group({
-      text: ['', [Validators.required, Validators.maxLength(100)]],
+      text: ['', [ Validators.maxLength(100)]],
       image: ''
     });
   }
@@ -51,6 +54,9 @@ export class NewPostComponent implements OnInit {
     const image = this.postForm.get('image')?.value
     const text = this.postForm.get('text')?.value
 
+
+    
+
     const formData = new FormData()
 
     formData.append('text', text)
@@ -58,15 +64,29 @@ export class NewPostComponent implements OnInit {
 
     this.newPostService.newPost(formData).subscribe((response) => {
       this.isPosting = false;
-      this.postSuccess = true;
+
       if (response.uploadFailed) {
+        if (response.message) {
+          this.postFailedMessage = response.message
+          this.isPostFailedMessage = true
+          setTimeout(() => {
+            this.isPostFailedMessage = false
+          }, 2000);
+          return
+        }
         this.postFailed = true
+
+        setTimeout(() => {
+          this.postFailed = false
+        }, 2000);
         return
       }
+      
       this.postSuccess = true
       this.postForm.reset();
+      this.selectedImage = null
       
-      // this.newPostEvent.emit(response.postData)
+      this.newPostEvent.emit(response.post)
 
       setTimeout(() => {
         this.postSuccess = false;

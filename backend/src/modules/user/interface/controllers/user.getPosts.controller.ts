@@ -14,6 +14,7 @@ export class GetUserPostsController {
     const { skip } = req.body
 
     try {
+      
       const posts = await this.getUserPostsUseCase.getUserPosts(userId, skip)
       res.json({posts})
     } catch (error) {

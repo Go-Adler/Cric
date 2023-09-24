@@ -1,13 +1,17 @@
 import { UserEntity } from '../domain/user.schema'
+import { PostEntity } from '../domain/user.postSchema';
 import { PostDocument } from '../../../shared/interfaces/userPost.interface'
 import mongoose, { Types } from 'mongoose'
 
 export class UserPostDataAccess {
   // Create a new post for a user
   async createPost(userId: Types.ObjectId, postData: PostDocument) {
-    // Find the user by their email and push the new post data into the 'posts' array
-    // const newPost = await UserEntity.findByIdAndUpdate(userId, { $push: { posts: postData } }, {new: true})
-    let newPost = await UserEntity.findByIdAndUpdate(userId, { $push: { posts: postData } }, {new: true, projection: { posts: { $slice: -1 } } })
+
+    const post = new PostEntity(postData);
+    console.log(post, 11);
+    
+    let newPost = await UserEntity.findByIdAndUpdate(userId, { $push: { posts: post } }, {new: true, projection: { posts: { $slice: -1 } } })
+    
     return newPost?.posts[0]
   }
 
@@ -22,7 +26,7 @@ export class UserPostDataAccess {
       // Unwind the posts array to destructure it
       { $unwind: "$posts" },
       // Sort the posts in reverse order (descending) based on a date field, adjust the field as per your data structure
-      { $sort: { "posts.metrics.timestamp": -1 } }, // Replace "dateField" with the actual field you want to sort by
+      { $sort: { "posts.timestamp": -1 } }, // Replace "dateField" with the actual field you want to sort by
       // Skip the first 3 sorted posts
       { $skip: skip },
       // Limit the result to the next 3 sorted posts

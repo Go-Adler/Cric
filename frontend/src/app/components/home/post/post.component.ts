@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { PostService } from '../home.post.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service'
+import { I_post } from 'src/app/models/responses/message.model'
 
 @Component({
   selector: 'app-post',
@@ -20,7 +21,7 @@ export class  PostComponent implements OnChanges{
   postsEnd: boolean = false
   posti: boolean = false
 
-  @Input() newPost = ''
+  @Input() newPost!: I_post
 
   constructor(
     private postService: PostService,

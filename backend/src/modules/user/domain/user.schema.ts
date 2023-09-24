@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import paginate from 'mongoose-paginate-v2';
 import { postSchema } from './user.postSchema';
 import { I_User } from '../../../shared/interfaces/user.interface'
 
@@ -54,7 +53,5 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-userSchema.plugin(paginate);
 
-
-export const UserEntity = mongoose.model<I_User, mongoose.PaginateModel<I_User>>('Users', userSchema);
+export const UserEntity = mongoose.model('Users', userSchema);

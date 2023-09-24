@@ -10,6 +10,8 @@
       </div>
       <img *ngIf="selectedImage" [src]="selectedImage" alt="Selected Image" class="w-2/4 rounded-md" />
       <mat-error *ngIf="postFailed">Post failed try again</mat-error>
+      <mat-error *ngIf="isPostFailedMessage">{{postFailedMessage}}</mat-error>
+
       <span *ngIf="postSuccess" class="flex gap-2 items-center text-lime-400">
         <span>
           Post success 

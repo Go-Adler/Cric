@@ -6,8 +6,4 @@ export class userPostsUseCase {
   constructor() {
     this.userPostDataAccess = new UserPostDataAccess()
   }
-
-  async getPosts(email: string) {
-    this.userPostDataAccess.getUserPosts(email)
-  }
 }

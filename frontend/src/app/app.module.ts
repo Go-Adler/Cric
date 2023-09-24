@@ -48,6 +48,7 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { TopNavComponent } from './components/top-nav/top-nav.component';
 import { RightAreaComponent } from './components/right-area/right-area.component';
 import { MatchInfoComponent } from './components/right-area/match-info/match-info.component'
+import { TimeagoModule } from "ngx-timeago";
 
 
 @NgModule({
@@ -99,7 +100,7 @@ import { MatchInfoComponent } from './components/right-area/match-info/match-inf
     ImageCropperModule,
     MatCommonModule,
     MatCardModule,
-    
+    TimeagoModule.forRoot()
   ],
   providers: [
     {
