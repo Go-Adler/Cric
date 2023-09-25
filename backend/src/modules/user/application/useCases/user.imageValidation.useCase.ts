@@ -17,8 +17,8 @@ export class ImageValidationUseCase {
     }
 
     // Check image dimensions (e.g., width and height)
-    const maxWidth = 1080 // Define your maximum width
-    const maxHeight = 1080 // Define your maximum height
+    const maxWidth = 3000
+    const maxHeight = 3000
 
     // Ensure metadata.width and metadata.height are defined
     if (

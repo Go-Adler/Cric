@@ -25,7 +25,7 @@
         <span class="material-symbols-rounded cursor-pointer" (click)="fileInput.click()">
           image
           </span>
-        <button type="submit" mat-raised-button class="postButton">{{isPosting ? 'Posting...' : 'Post'}}</button>
-      </div>
-    </form>
-</div>
+          <button [disabled]="!selectedImage && postForm.get('text')?.hasError('required')"  type="submit" mat-raised-button class="postButton">{{isPosting ? 'Posting...' : 'Post'}}</button>
+        </div>
+      </form>
+    </div>

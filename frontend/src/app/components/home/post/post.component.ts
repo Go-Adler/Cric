@@ -48,8 +48,6 @@ export class  PostComponent implements OnChanges{
     // get posts
     this.postService.getPosts(this.skip).subscribe((data) => {
       this.spinner = false;
-      console.log(data.posts, 47);
-      
       this.posts = data.posts;
     });
   }
@@ -66,7 +64,7 @@ export class  PostComponent implements OnChanges{
 
   loadMore() {
     this.fetchingPosts = true
-    this.skip += 2
+    this.skip += 6
     this.postService.getPosts(this.skip).subscribe((data) => {
       this.fetchingPosts = false;
       const postExists = data.posts[0]
@@ -77,5 +75,9 @@ export class  PostComponent implements OnChanges{
 
   selectedPost(postId:  string) {
     this.posti = true
+  }
+
+  likePost() {
+    
   }
 }

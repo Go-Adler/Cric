@@ -50,6 +50,10 @@ const userSchema = new mongoose.Schema({
   posts: {
     type: [postSchema],
     default: []
+  },
+  savedPosts: {
+    type: [mongoose.Schema.Types.ObjectId],
+    default: []
   }
 });
 

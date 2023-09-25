@@ -12,6 +12,7 @@ const actionsSchema = new mongoose.Schema({
   likes: { type: Number, default: 0 },
   rePosts: { type: Number, default: 0 },
   replies: { type: Number, default: 0 },
+  saved: { type: Number, default: 0 },
   quotePosts: { type: Number, default: 0 },
 })
 

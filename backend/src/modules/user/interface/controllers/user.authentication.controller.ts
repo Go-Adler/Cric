@@ -22,8 +22,7 @@ export class UserAutherizationController {
       // const token = this.tokenUseCase.generateTokenWithEmail(email, true)
       // return res.status(200).json({ message: 'OTP verification successful', token, otpVerified: true })
     } catch (error: any) {
-      console.log(error.stack)
-
+      console.error(error.stack)
       if (error instanceof InvalidOtpError) {
         return res.status(401).json({ messages: 'Invalid OTP' })
       }

@@ -18,7 +18,7 @@ export class SendOTP_UseCase {
       await this.userOtpDataAccess.addOtp(email, otp)
       return true
     } catch (error: any) {
-      console.log(error.message, 23);
+      console.error(error.message);
       throw error
     }
   }

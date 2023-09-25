@@ -39,8 +39,6 @@ export class ServerApp {
 
   private initializeErrorHandling() {
     this.app.use((err: Error, _req: Request, res: Response) => {
-      console.log('reaching here');
-      
       console.error('Error:', err.message)
       res.status(500).json({ error: 'Internal Server Error' })
     })

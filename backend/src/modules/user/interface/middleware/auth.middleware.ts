@@ -122,8 +122,7 @@ export class JwtMiddleware {
       // Proceed to the next middleware 
       next()
     } catch (error) {
-      console.log(error, 162);
-      
+      console.error(error)
       // Handle token verification errors
       return res.json({ invalidToken: true })
     }

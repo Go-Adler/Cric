@@ -22,7 +22,7 @@ export class UserDataAccess {
       })
       return user._id
     } catch (e: any) {
-      console.log(e.message)
+      console.error(e.message)
       throw new Error(e.message)
     }
   }
@@ -33,7 +33,7 @@ export class UserDataAccess {
       const user = await UserEntity.findOne({ userName })
       return user
     } catch (e: any) {
-      console.log(e.message)
+      console.error(e.message)
       throw new Error(e.message)
     }
   }
@@ -44,7 +44,7 @@ export class UserDataAccess {
       const user = await UserEntity.findOne({ userName })
       return user ? true : false
     } catch (e: any) {
-      console.log(e.message)
+      console.error(e.message)
       throw new Error(e.message)
     }
   }
@@ -55,7 +55,7 @@ export class UserDataAccess {
       const user = await UserEntity.findOne({ email })
       return user
     } catch (e: any) {
-      console.log(e.message)
+      console.error(e.message)
       throw new Error(e.message)
     }
   }
@@ -66,7 +66,7 @@ export class UserDataAccess {
       const user = await UserEntity.findById(userId, { _id: 0, name: 1 })
       return user?.name ?? 'User not found'
     } catch (e: any) {
-      console.log(e.message)
+      console.error(e.message)
       throw new Error(e.message)
     }
   }
@@ -77,7 +77,7 @@ export class UserDataAccess {
       const user = await UserEntity.findById(userId, { _id: 0, email: 1 })
       return user?.email ?? 'User not found'
     } catch (e: any) {
-      console.log(e.message)
+      console.error(e.message)
       throw new Error(e.message)
     }
   }
@@ -88,7 +88,7 @@ export class UserDataAccess {
       const user = await UserEntity.findById(userId, { _id: 0, userName: 1 })
       return user?.userName ?? 'User not found'
     } catch (e: any) {
-      console.log(e.message)
+      console.error(e.message)
       throw new Error(e.message)
     }
   }
@@ -99,7 +99,7 @@ export class UserDataAccess {
       const user = await UserEntity.findOne({ email })
       return user?._id
     } catch (e: any) {
-      console.log(e.message)
+      console.error(e.message)
       throw new Error(e.message)
     }
   }
@@ -110,7 +110,7 @@ export class UserDataAccess {
       const user = await UserEntity.findOne({ email })
       return (user?._id && !user?.isBlocked) ? user?._id : false
     } catch (e: any) {
-      console.log(e.message)
+      console.error(e.message)
       throw new Error(e.message)
     }
   }
@@ -121,7 +121,7 @@ export class UserDataAccess {
       const user = await UserEntity.findOne({ phone })
       return user
     } catch (e: any) {
-      console.log(e.message)
+      console.error(e.message)
       throw new Error(e.message)
     }
   }
@@ -132,7 +132,7 @@ export class UserDataAccess {
       const user = await UserEntity.findOne({ phone })
       return user ? true : false
     } catch (e: any) {
-      console.log(e.message)
+      console.error(e.message)
       throw new Error(e.message)
     }
   }
@@ -143,7 +143,7 @@ export class UserDataAccess {
       const user = await UserEntity.findOne({ email })
       return user?.password || ''
     } catch (e: any) {
-      console.log(e.message)
+      console.error(e.message)
       throw new Error(e.message)
     }
   }
@@ -156,7 +156,7 @@ export class UserDataAccess {
       }>('isVerified')
       return isVerified
     } catch (e: any) {
-      console.log(e.message)
+      console.error(e.message)
       throw new Error(e.message)
     }
   }
@@ -165,7 +165,7 @@ export class UserDataAccess {
     try {
       await UserEntity.findByIdAndUpdate(userId, { isVerified: true })
     } catch (e: any) {
-      console.log(e.message)
+      console.error(e.message)
       throw new Error(e.message)
     }
   }
@@ -174,7 +174,7 @@ export class UserDataAccess {
     try {
       await UserEntity.findByIdAndUpdate(userId, { password })
     } catch (e: any) {
-      console.log(e.message)
+      console.error(e.message)
       throw new Error(e.message)
     }
   }
@@ -187,7 +187,7 @@ export class UserDataAccess {
       )
       return userProfilePicture?.profilePicture
     } catch (e: any) {
-      console.log(e.message)
+      console.error(e.message)
       throw new Error(e.message)
     }
   }
@@ -198,7 +198,7 @@ export class UserDataAccess {
         const users = await UserEntity.find({isAdmin: false})
         return users
       } catch (e: any) {
-        console.log(e.message)
+        console.error(e.message)
         throw new Error(e.message)
       }
     }
@@ -209,7 +209,7 @@ export class UserDataAccess {
           const users = await UserEntity.findByIdAndUpdate(userId, {isBlocked: false }, { new: true })
           return users
         } catch (e: any) {
-          console.log(e.message)
+          console.error(e.message)
           throw new Error(e.message)
         }
       }  
@@ -219,7 +219,7 @@ export class UserDataAccess {
           const users = await UserEntity.findByIdAndUpdate(userId, {isBlocked: true }, {new: true })
           return users
         } catch (e: any) {
-          console.log(e.message)
+          console.error(e.message)
           throw new Error(e.message)
         }
       }

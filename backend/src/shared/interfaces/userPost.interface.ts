@@ -42,9 +42,7 @@ export interface PostDocument {
     mentions?: string[]
     links?: string[]
     multimedia?: string[]
-  }
-  metrics?: {
-    timestamp: Date
-  }
+  },
+  actions?: any 
   _id?: string
 }

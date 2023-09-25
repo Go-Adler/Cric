@@ -21,8 +21,7 @@ export class UserSignUpOtpController {
       await this.userVerifyOtpUseCase.verifyOtp(userId, otp)
       return res.status(200).json({ message: 'OTP verification successful', otpVerified: true })
     } catch (error: any) {
-      console.log(error.stack)
-
+      console.error(error)
       if (error instanceof InvalidOtpError) {
         return res.json({ invalidOtp: true })
       }
