@@ -1,6 +1,4 @@
 import mongoose from 'mongoose';
-import { postSchema } from './user.postSchema';
-import { I_User } from '../../../shared/interfaces/user.interface'
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -48,7 +46,7 @@ const userSchema = new mongoose.Schema({
     type: Number
   },
   posts: {
-    type: [postSchema],
+    type: [mongoose.Schema.Types.ObjectId],
     default: []
   },
   savedPosts: {

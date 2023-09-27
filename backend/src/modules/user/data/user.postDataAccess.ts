@@ -1,31 +1,20 @@
 // Import necessary modules and types
 import { UserEntity } from '../domain/user.schema'
 import { PostEntity, postSchema } from '../domain/user.postSchema'
-import { PostDocument } from '../../../shared/interfaces/userPost.interface'
+import { Post } from '../../../shared/interfaces/userPost.interface'
 import mongoose, { Types } from 'mongoose'
 
 export class UserPostDataAccess {
   // Create a new post for a user
-  async createPost(userId: Types.ObjectId, postData: PostDocument) {
+  async createPost(userId: Types.ObjectId, postData: Post) {
     try {
-      postData.actions = {}
+      const post = await PostEntity.create(postData)
+      await UserEntity.findByIdAndUpdate(userId, { $push: { posts: post._id } })
+      console.log(post, 13);
       
-      // Create a new post entity using the provided data
-      const post = new PostEntity(postData)
-
-      // Find and update the user by their ID, pushing the new post into the 'posts' array
-      // Return the new post
-      const newPost = await UserEntity.findByIdAndUpdate(
-        userId,
-        { $push: { posts: post } },
-        { new: true, projection: { posts: { $elemMatch: { _id: post._id } } } }
-      )
-
-      const createdPost: any  = newPost?.posts[0]
-      
-      return createdPost
+      return post
     } catch (error: any) {
-      console.error(error.message, 31)
+      console.error(error.message)
       throw new Error('Error in post creation')
     }
   }
@@ -66,10 +55,31 @@ export class UserPostDataAccess {
           },
         },
       ])
-      
-      return dPosts[0]?.posts || [] 
-    } catch (error) {
+
+      return dPosts[0]?.posts || []
+    } catch (error: any) {
+      console.error(error.message);
       throw new Error('Error fetching user posts')
     }
   }
+
+  // // Create a new post for a user
+  // async likePost(userId: Types.ObjectId, postId: Types.ObjectId) {
+  //   try {
+  //     // Find and update the user by their ID, pushing the new post into the 'posts' array
+  //     // Return the new post
+  //     const updatedPost = await UserEntity.findByIdAndUpdate(
+  //       userId,
+  //       { $push: {posts.usersLiked: userId}}
+  //       // { $set: { [`posts.${postId}.liked`]: true } }, // Correct the syntax here
+  //       // { new: true, arrayFilters: [{ "post._id": postId }] }
+  //     );
+
+  //     console.log(updatedPost);
+  //   } catch (error: any) {
+  //     console.error(error.message, 31);
+  //     throw new Error('Error in post like');
+  //   }
+  // }
+
 }

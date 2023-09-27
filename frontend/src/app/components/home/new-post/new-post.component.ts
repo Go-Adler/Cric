@@ -44,7 +44,7 @@ export class NewPostComponent implements OnInit {
       this.name = name
     })
     this.postForm = this.fb.group({
-      text: ['', [ Validators.maxLength(100), Validators.required]],
+      text: ['', [ Validators.maxLength(300), Validators.required]],
       image: ''
     });
   }

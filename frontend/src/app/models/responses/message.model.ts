@@ -27,3 +27,5 @@ export interface I_post {
   };
   _id?: string;
 }
+
+

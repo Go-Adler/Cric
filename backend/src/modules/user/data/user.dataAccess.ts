@@ -192,35 +192,36 @@ export class UserDataAccess {
     }
   }
 
-    // get profile picture with id
-    async getUsers() {
-      try {
-        const users = await UserEntity.find({isAdmin: false})
-        return users
-      } catch (e: any) {
-        console.error(e.message)
-        throw new Error(e.message)
-      }
+  // get profile picture with id
+  async getUsers() {
+    try {
+      const users = await UserEntity.find({ isAdmin: false })
+      return users
+    } catch (e: any) {
+      console.error(e.message)
+      throw new Error(e.message)
     }
+  }
 
-      // get profile picture with id
-      async unblockUser(userId: Types.ObjectId) {
-        try {
-          const users = await UserEntity.findByIdAndUpdate(userId, {isBlocked: false }, { new: true })
-          return users
-        } catch (e: any) {
-          console.error(e.message)
-          throw new Error(e.message)
-        }
-      }  
-      // get profile picture with id
-      async blockUser (userId: Types.ObjectId) {
-        try {
-          const users = await UserEntity.findByIdAndUpdate(userId, {isBlocked: true }, {new: true })
-          return users
-        } catch (e: any) {
-          console.error(e.message)
-          throw new Error(e.message)
-        }
-      }
+  // get profile picture with id
+  async unblockUser(userId: Types.ObjectId) {
+    try {
+      const users = await UserEntity.findByIdAndUpdate(userId, { isBlocked: false }, { new: true })
+      return users
+    } catch (e: any) {
+      console.error(e.message)
+      throw new Error(e.message)
+    }
+  }
+  
+  // get profile picture with id
+  async blockUser(userId: Types.ObjectId) {
+    try {
+      const users = await UserEntity.findByIdAndUpdate(userId, { isBlocked: true }, { new: true })
+      return users
+    } catch (e: any) {
+      console.error(e.message)
+      throw new Error(e.message)
+    }
+  }
 }

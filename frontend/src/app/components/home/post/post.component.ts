@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service'
 import { I_post } from 'src/app/models/responses/message.model'
 
+
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
@@ -77,7 +78,9 @@ export class  PostComponent implements OnChanges{
     this.posti = true
   }
 
-  likePost() {
-    
+  toggleLike(isLiked: boolean, postId:string ) {
+    this.postService.likePost(postId).subscribe(data => {
+      console.log(data);
+    })
   }
 }

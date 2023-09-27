@@ -1,48 +1,29 @@
-export interface PostContent {
-  text: string
-  hashtags: string[]
-  mentions: string[]
-  links: string[]
-  multimedia: string[]
-}
+import { Types } from "mongoose"
 
-export interface PostActions {
-  likes: number
-  rePosts: number
-  replies: number
-  quotePosts: number
-}
-
-export interface PostEngagement {
-  liked: boolean
-  rePosted: boolean
-}
-
-export interface PostMetrics {
-  timestamp: Date
-}
-
-export interface PostAdditionalInfo {
-  visibility: string
-}
-
-export interface PostDocumentComplete extends Document {
-  content?: PostContent
-  actions?: PostActions
-  engagement?: PostEngagement
-  metrics?: PostMetrics
-  additionalInfo?: PostAdditionalInfo
-  timestamp?: Date
-}
-
-export interface PostDocument {
+export interface Post {
+  _id?: Types.ObjectId;
+  userId?: Types.ObjectId;
   content?: {
-    text?: string
-    hashtags?: string[]
-    mentions?: string[]
-    links?: string[]
-    multimedia?: string[]
-  },
-  actions?: any 
-  _id?: string
+    text?: string;
+    hashtags?: string[];
+    mentions?: string[];
+    links?: string[];
+    multimedia?: string[];
+  };
+  actions?: {
+    likes?: number;
+    rePosts?: number;
+    replies?: number;
+    saved?: number;
+    quotePosts?: number;
+  };
+  engagement?: {
+    liked?: boolean;
+    rePosted?: boolean;
+  };
+  timestamp?: Date;
+  additionalInfo?: {
+    visibility?: 'public' | 'private' | 'friends';
+  };
+  usersLiked?: Types.ObjectId[];
 }

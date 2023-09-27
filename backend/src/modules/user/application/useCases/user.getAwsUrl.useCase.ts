@@ -1,7 +1,6 @@
-import { Types } from 'mongoose'
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
-import { PostDocument, PostDocumentComplete } from '../../../../shared/interfaces/userPost.interface'
+import { Post } from '../../../../shared/interfaces/userPost.interface'
 
 export class GetAwsUrlUseCase {
   private awsAccessKey
@@ -25,7 +24,7 @@ export class GetAwsUrlUseCase {
     })
   }
 
-  getPostsWithUrl = async (posts: PostDocumentComplete[]) => {
+  getPostsWithUrl = async (posts: Post[]) => {
     for (const post of posts) {
       if (post.content && post.content.multimedia && post.content.multimedia[0]) {
         const getObjectParams = {
@@ -41,7 +40,7 @@ export class GetAwsUrlUseCase {
     return posts
   }
 
-  getUrl = async (post: PostDocumentComplete) => {
+  getUrl = async (post: Post) => {
     if (post.content?.multimedia[0]) {
       const imageName = post?.content?.multimedia[0]!
 

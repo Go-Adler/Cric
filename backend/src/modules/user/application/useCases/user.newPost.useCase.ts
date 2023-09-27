@@ -1,5 +1,5 @@
 import { Types } from "mongoose" 
-import { PostDocument } from "../../../../shared/interfaces/userPost.interface"
+import { Post } from "../../../../shared/interfaces/userPost.interface"
 import { UserPostDataAccess } from "../../data/user.postDataAccess"
 
 export class CreatePostUseCase {
@@ -9,7 +9,7 @@ export class CreatePostUseCase {
     this.userPostDataAccess = new UserPostDataAccess()
   }
 
-  createPost = async (userId: Types.ObjectId, postData: PostDocument) => {
+  createPost = async (userId: Types.ObjectId, postData: Post) => {
     const post = await this.userPostDataAccess.createPost(userId, postData)
     return post
   }

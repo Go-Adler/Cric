@@ -46,6 +46,8 @@ export class JwtMiddleware {
 
       // Attach the decoded user information to the request object
       req.user = decoded
+
+      
       const { isVerified } = decoded
 
       const { userId } = decoded

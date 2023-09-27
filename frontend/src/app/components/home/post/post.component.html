@@ -1,7 +1,7 @@
 <div class="mb-10 mt-3 pt-10">
     <span class="flex justify-center" *ngIf="spinner"><mat-spinner diameter="30" color="primary"></mat-spinner></span>
     <!-- card -->
-    <mat-card class="text-black p-3 mb-6" *ngFor="let post of posts;">
+    <mat-card class="text-black p-2 md:p-3 mb-6" *ngFor="let post of posts;">
        
         <!-- card-title -->
         <div class="flex gap-2">
@@ -20,9 +20,8 @@
         </div>
 
         <!--  content -->
-        <span class="py-2 text-sm font-normal break-words">
+        <span class="py-2 text-sm font-normal break-words whitespace-pre-line">
             {{post.content.text}}
-            <!-- {{post | json}} -->
         </span>
 
         <!-- image -->
@@ -30,10 +29,10 @@
             (click)="selectedPost(post._id)">
 
         <!-- reactions -->
-        <div class="md:p-3 pt-2 flex justify-between">
+        <div class="md:pt-3 pt-2 flex justify-between">
             <!-- favourite -->
-            <div  class="gap-1 flex md:gap-1 justify-center items-center cursor-pointer actionArea">
-                <span class="text-lg lg:text-xl material-symbols-rounded">
+            <div  class="gap-1 flex md:gap-1 justify-center items-center cursor-pointer actionArea" (click)="toggleLike(post?.engagement?.liked, post._id)">
+                <span class="text-lg lg:text-xl material-symbols-rounded " [ngClass]="{'fillIcon': post?.engagement?.liked}">
                     favorite
                 </span>
                 <span class="text-sm lg:text-md font-normal">{{post.actions.likes || ''}}</span>
@@ -41,7 +40,7 @@
 
             <!-- comment -->
             <div class="gap-1 flex md:gap-3 justify-center items-center actionArea">
-                <span class="text-lg lg:text-xl lg:text-xl material-symbols-rounded cursor-pointer">
+                <span class="text-lg lg:text-xl lg:text-xl material-symbols-rounded  cursor-pointer">
                     mode_comment
                 </span>
                 <span class="text-sm lg:text-md font-normal">{{post.actions.replies || ''}}</span>

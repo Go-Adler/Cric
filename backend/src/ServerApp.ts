@@ -9,9 +9,11 @@ import { mongo} from './config/database'
 // Define the ServerApp class
 export class ServerApp {
   private app: Application
+  private port!: string
 
   // Constructor to initialize the Express application
   constructor(app: Application) {
+    this.port = process.env.PORT!
     this.app = app
     this.initializeMiddlewares()
     this.initializeRoutes()
@@ -45,10 +47,9 @@ export class ServerApp {
   }
   
   public startServer() {
-    const port = process.env.PORT
 
-    this.app.listen(port, () => {
-      console.log(`Server is running on http://localhost:${port}`)
+    this.app.listen(this.port, () => {
+      console.log(`Server is running on http://localhost:${this.port}`)
     })
   }
 }
