@@ -9,9 +9,8 @@ export class UserPostDataAccess {
   async createPost(userId: Types.ObjectId, postData: Post) {
     try {
       const post = await PostEntity.create(postData)
-      await UserEntity.findByIdAndUpdate(userId, { $push: { posts: post._id } })
-      console.log(post, 13);
-      
+      await UserEntity.findByIdAndUpdate(userId, { $push: { postIds: post._id } })
+
       return post
     } catch (error: any) {
       console.error(error.message)
@@ -22,43 +21,38 @@ export class UserPostDataAccess {
   // Get posts for a specific user
   async getUserPosts(id: Types.ObjectId, skip: number = 0) {
     try {
-      // Aggregate user posts using MongoDB aggregation pipeline
-      const dPosts = await UserEntity.aggregate([
-        // Match the user by ID
+
+      const postsResult = await UserEntity.aggregate([
+        // find the user by id
         { $match: { _id: new mongoose.Types.ObjectId(id) } },
-
-        // Unwind the 'posts' array to destructure it
-        { $unwind: '$posts' },
-
-        // Sort the posts in reverse order (descending) based on a date field
-        { $sort: { 'posts.timestamp': -1 } }, // Replace "timestamp" with the actual field you want to sort by
-
-        // Skip the specified number of sorted posts
+        // flatten the postIds array
+        { $unwind: "$postIds" },
+        // sort by post creation date in descending order
+        { $sort: { "postIds": 1 } },
+        // Skip the first 3 sorted posts
         { $skip: skip },
-
-        // Limit the result to a specified number of sorted posts
-        { $limit: 6 },
-
-        // Group the posts back into an array
-        {
-          $group: {
-            _id: null, // Group all posts into a single document
-            posts: { $push: '$posts' }, // Push the sorted and limited posts into an array
-          },
-        },
-
-        // Project to reshape the result as needed
+        // limit to 2 posts
+        { $limit: 2 }, 
+        // group back by user id and push the posts to an array
+        { $group: { _id: null, postIds: { $push: "$postIds" } } },
         {
           $project: {
-            _id: 0, // Exclude user ID from the result
-            posts: 1, // Include the sorted and limited posts array in the result
+            _id: 0, 
+            postIds: 1, 
           },
         },
       ])
 
-      return dPosts[0]?.posts || []
+      
+      const { postIds } = postsResult[0]
+      console.log(postIds, 48);
+      
+      const posts = await PostEntity.find({ _id: { $in: postIds } }) as Post[]
+
+
+      return posts
     } catch (error: any) {
-      console.error(error.message);
+      console.error(error.message)
       throw new Error('Error fetching user posts')
     }
   }

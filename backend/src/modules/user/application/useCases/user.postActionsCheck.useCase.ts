@@ -1,8 +1,8 @@
 import mongoose, { Types } from "mongoose"
-import { PostDocumentComplete } from "../../../../shared/interfaces/userPost.interface"
+import { Post } from "../../../../shared/interfaces/userPost.interface"
 
 export class PostActionsUseCase {
-  likedPosts = (userId: Types.ObjectId, posts: PostDocumentComplete[]) => {
+  likedPosts = (userId: Types.ObjectId, posts: Post[]) => {
     for (const post of posts) {
         const isLiked = (userId:Types.ObjectId, usersLiked:Types.ObjectId[]) => {
           return usersLiked.some(function (element:any) {

@@ -45,7 +45,7 @@ const userSchema = new mongoose.Schema({
   otp: {
     type: Number
   },
-  posts: {
+  postIds: {
     type: [mongoose.Schema.Types.ObjectId],
     default: []
   },

@@ -1,6 +1,6 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { PostService } from '../home.post.service';
-import { Router } from '@angular/router';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core'
+import { PostService } from '../home.post.service'
+import { Router } from '@angular/router'
 import { UserService } from 'src/app/services/user.service'
 import { I_post } from 'src/app/models/responses/message.model'
 
@@ -10,7 +10,7 @@ import { I_post } from 'src/app/models/responses/message.model'
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss'],
 })
-export class  PostComponent implements OnChanges{
+export class PostComponent implements OnChanges {
   posts: any[] = [];
   spinner: boolean = true;
   profilePicture: string = ''
@@ -21,6 +21,7 @@ export class  PostComponent implements OnChanges{
   skip: number = 0
   postsEnd: boolean = false
   posti: boolean = false
+  firstFetch: boolean = false
 
   @Input() newPost!: I_post
 
@@ -28,7 +29,7 @@ export class  PostComponent implements OnChanges{
     private postService: PostService,
     private router: Router,
     private userService: UserService
-    ) {}
+  ) { }
 
   ngOnInit(): void {
     // get profile picture
@@ -37,29 +38,32 @@ export class  PostComponent implements OnChanges{
     })
 
     // get name
-    this.userService.name$.subscribe( name => {
+    this.userService.name$.subscribe(name => {
       this.name = name
     })
 
     // get user name
-    this.userService.userName$.subscribe( userName => {
+    this.userService.userName$.subscribe(userName => {
       this.userName = userName
     })
-    
+
     // get posts
     this.postService.getPosts(this.skip).subscribe((data) => {
-      this.spinner = false;
-      this.posts = data.posts;
-    });
+      this.spinner = false
+      this.firstFetch = true
+      this.posts = data.posts
+    })
   }
 
   navigateToPost(postId: string) {
-    this.router.navigate(['/user/post', postId]);
+    this.router.navigate(['/user/post', postId])
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['newPost'].firstChange) {
       this.posts.unshift(changes['newPost'].currentValue)
+      console.log(this.posts, 65);
+      
     }
   }
 
@@ -67,20 +71,20 @@ export class  PostComponent implements OnChanges{
     this.fetchingPosts = true
     this.skip += 6
     this.postService.getPosts(this.skip).subscribe((data) => {
-      this.fetchingPosts = false;
+      this.fetchingPosts = false
       const postExists = data.posts[0]
       if (postExists) this.posts = [...this.posts, ...data.posts]
       else this.postsEnd = true
-    });
+    })
   }
 
-  selectedPost(postId:  string) {
+  selectedPost(postId: string) {
     this.posti = true
   }
 
-  toggleLike(isLiked: boolean, postId:string ) {
+  toggleLike(isLiked: boolean, postId: string) {
     this.postService.likePost(postId).subscribe(data => {
-      console.log(data);
+      console.log(data)
     })
   }
 }

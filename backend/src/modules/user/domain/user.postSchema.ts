@@ -46,7 +46,10 @@ export const postSchema = new mongoose.Schema({
     ref: 'Users',
   },
   content: contentSchema,
-  actions: actionsSchema,
+  actions: {
+    type: actionsSchema,
+    default: {}
+  },
   engagement: {
     type: engagementSchema,
     default: {}

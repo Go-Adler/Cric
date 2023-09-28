@@ -15,6 +15,6 @@ export class NewPostService {
   }
 
   newPost(formData: FormData): Observable<I_postResponse> {
-    return this.http.post<I_postResponse>(`${this.API_URL}/user/post`, formData);
+    return this.http.post<I_postResponse>(`${this.API_URL}/user/posts/post`, formData);
   }
 }

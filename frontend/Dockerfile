@@ -1,5 +1,8 @@
 # Use an official Node.js runtime as the base image
-FROM node:14
+FROM node:slim
+
+# Install the Angular CLI globally
+RUN npm install -g @angular/cli
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
@@ -13,8 +16,8 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
-# Expose the port your Node.js application listens on (replace with your app's port)
-EXPOSE 3000
+# Expose the port the app runs on
+EXPOSE 4202
 
-# Start your Node.js application
-CMD ["npx", "nodemon"]
+# Start the Angular app
+CMD ng serve --port 4202

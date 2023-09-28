@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NewPostService } from './new-post.service';
 import { UserService } from 'src/app/services/user.service'
-import { SuccessPost } from 'src/app/models/post.model'
 import { I_post } from 'src/app/models/responses/message.model'
 
 @Component({
@@ -85,7 +84,6 @@ export class NewPostComponent implements OnInit {
       this.postSuccess = true
       this.postForm.reset();
       this.selectedImage = null
-      
       this.newPostEvent.emit(response.post)
 
       setTimeout(() => {

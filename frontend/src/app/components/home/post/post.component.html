@@ -18,9 +18,8 @@
                 </span>
             </span>
         </div>
-
         <!--  content -->
-        <span class="py-2 text-sm font-normal break-words whitespace-pre-line">
+        <span  class="py-2 text-sm font-normal break-words whitespace-pre-line">
             {{post.content.text}}
         </span>
 
@@ -70,7 +69,12 @@
 
         </div>
     </mat-card>
-
+    <span *ngIf="!posts[0] && firstFetch" class="flex justify-center flex-col items-center gap-3 mt-10">
+        <span>No posts to show, create a new post, or follow someone.</span>
+        <span class="material-symbols-rounded">
+            empty_dashboard
+            </span>
+    </span>
     <!-- fetch posts -->
     <span *ngIf="posts[0] && !fetchingPosts && !postsEnd"
         class="flex flex-col gap-1 text-base justify-center items-center p-3 cursor-pointer flex-column mt-2 text-4xl border-t cursor fetchPosts" (click)="loadMore()">

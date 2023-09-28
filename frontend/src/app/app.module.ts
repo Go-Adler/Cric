@@ -34,7 +34,6 @@ import { AdminNavComponent } from './components/admin-nav/admin-nav.component';
 import { UsersComponent } from './components/users/users.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { CommentComponent } from './components/comment/comment.component';
-import { CubeComponent } from './cube/cube.component';
 import { SportsComponent } from './components/sports/sports.component';
 import {MatCardModule} from '@angular/material/card';
 import { MatCommonModule } from '@angular/material/core';
@@ -68,7 +67,6 @@ import { TimeagoModule } from "ngx-timeago";
     UsersComponent,
     ForgotPasswordComponent,
     CommentComponent,
-    CubeComponent,
     SportsComponent,
     UpdateProfilePictureComponent,
     TestFormCloudinaryComponent,

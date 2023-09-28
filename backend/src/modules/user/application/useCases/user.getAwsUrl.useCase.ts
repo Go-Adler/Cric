@@ -41,7 +41,7 @@ export class GetAwsUrlUseCase {
   }
 
   getUrl = async (post: Post) => {
-    if (post.content?.multimedia[0]) {
+    if (post.content?.multimedia && post.content?.multimedia[0]) {
       const imageName = post?.content?.multimedia[0]!
 
       const getObjectParams = {
