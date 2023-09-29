@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
     ]),
   ],
 })
+
 export class AdminNavComponent {
   constructor(private logOutService: LogOutService, private router: Router) {}
   profileAreaActive = false;
@@ -34,4 +35,4 @@ export class AdminNavComponent {
     this.router.navigate(['/user/log-in']);
   }
 
-}
+} 

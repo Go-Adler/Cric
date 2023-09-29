@@ -10,7 +10,7 @@ export class UserPostDataAccess {
     try {
       const post = await PostEntity.create(postData)
       await UserEntity.findByIdAndUpdate(userId, { $push: { postIds: post._id } })
-
+      
       return post
     } catch (error: any) {
       console.error(error.message)
@@ -28,11 +28,11 @@ export class UserPostDataAccess {
         // flatten the postIds array
         { $unwind: "$postIds" },
         // sort by post creation date in descending order
-        { $sort: { "postIds": 1 } },
+        { $sort: { "postIds": -1 } },
         // Skip the first 3 sorted posts
         { $skip: skip },
         // limit to 2 posts
-        { $limit: 2 }, 
+        { $limit: 6 }, 
         // group back by user id and push the posts to an array
         { $group: { _id: null, postIds: { $push: "$postIds" } } },
         {
@@ -44,36 +44,15 @@ export class UserPostDataAccess {
       ])
 
       
-      const { postIds } = postsResult[0]
-      console.log(postIds, 48);
+      const { postIds } = postsResult[0] ?? ''
+
+      const posts = await PostEntity.find({ _id: { $in: postIds } }).sort({ _id: -1 })
       
-      const posts = await PostEntity.find({ _id: { $in: postIds } }) as Post[]
-
-
       return posts
     } catch (error: any) {
       console.error(error.message)
       throw new Error('Error fetching user posts')
     }
   }
-
-  // // Create a new post for a user
-  // async likePost(userId: Types.ObjectId, postId: Types.ObjectId) {
-  //   try {
-  //     // Find and update the user by their ID, pushing the new post into the 'posts' array
-  //     // Return the new post
-  //     const updatedPost = await UserEntity.findByIdAndUpdate(
-  //       userId,
-  //       { $push: {posts.usersLiked: userId}}
-  //       // { $set: { [`posts.${postId}.liked`]: true } }, // Correct the syntax here
-  //       // { new: true, arrayFilters: [{ "post._id": postId }] }
-  //     );
-
-  //     console.log(updatedPost);
-  //   } catch (error: any) {
-  //     console.error(error.message, 31);
-  //     throw new Error('Error in post like');
-  //   }
-  // }
 
 }

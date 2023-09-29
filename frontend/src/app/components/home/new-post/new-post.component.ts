@@ -108,4 +108,9 @@ export class NewPostComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
+
+  onCloseImage() {
+    this.selectedImage = null
+    this.postForm.get('image')?.setValue(null);
+  }
 }

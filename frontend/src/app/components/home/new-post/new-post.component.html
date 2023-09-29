@@ -9,10 +9,12 @@
         <mat-error *ngIf="(postForm.get('text')?.invalid && (postForm.get('text')?.dirty || postForm.get('text')?.touched) && postForm.get('text')?.errors?.['maxlength'])">Maximum 100 characters are allowed</mat-error>
       </div>
       <span>
-      <img *ngIf="true" [src]="selectedImage" alt="Selected Image" class="w-2/4 rounded-md bg-red-500" />
-      <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-        <mat-icon>menu</mat-icon>
-      </button>
+      <span *ngIf="selectedImage"  class="flex gap-1">
+        <img [src]="selectedImage" alt="Selected Image" class="w-2/4 rounded-md bg-red-500" />
+        <span class="material-symbols-outlined cursor-pointer" (click)="onCloseImage()">
+          cancel
+          </span>
+      </span>
 
       </span>
       <mat-error *ngIf="postFailed">Post failed try again</mat-error>
