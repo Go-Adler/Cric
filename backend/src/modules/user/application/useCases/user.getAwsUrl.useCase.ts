@@ -8,11 +8,11 @@ export class GetAwsUrlUseCase {
   private bucketName
   private bucketRegion
   private s3
-  // change to dev
+
   constructor() {
     this.awsAccessKey = process.env.AWS_ACCESS_KEY!
     this.awsSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY!
-    this.bucketName = process.env.BUCKET_NAME!
+    this.bucketName = process.env.AWS_BUCKET_NAME!
     this.bucketRegion = process.env.AWS_REGION!
 
     this.s3 = new S3Client({
@@ -23,6 +23,9 @@ export class GetAwsUrlUseCase {
       region: this.bucketRegion,
     })
   }
+
+
+  
 
   getPostsWithUrl = async (posts: Post[]) => {
     for (const post of posts) {
