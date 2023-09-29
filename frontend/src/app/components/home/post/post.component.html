@@ -19,7 +19,7 @@
             </span>
         </div>
         <!--  content -->
-        <span  class="py-2 text-sm font-normal break-words whitespace-pre-line">
+        <span *ngIf="post.content.text"  class="py-2 text-sm font-normal break-words whitespace-pre-line">
             {{post.content.text}}
         </span>
 

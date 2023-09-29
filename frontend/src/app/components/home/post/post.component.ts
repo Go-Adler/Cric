@@ -62,8 +62,6 @@ export class PostComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['newPost'].firstChange) {
       this.posts.unshift(changes['newPost'].currentValue)
-      console.log(this.posts, 65);
-      
     }
   }
 

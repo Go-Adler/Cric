@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { type } from 'os'
 
 // Define a schema for the content of a post
 const contentSchema = new mongoose.Schema({

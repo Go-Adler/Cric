@@ -8,8 +8,10 @@ export class UserPostDataAccess {
   // Create a new post for a user
   async createPost(userId: Types.ObjectId, postData: Post) {
     try {
+      console.log(postData, 11);
+      
       const post = await PostEntity.create(postData)
-      await UserEntity.findByIdAndUpdate(userId, { $push: { postIds: post._id } })
+      // await UserEntity.findByIdAndUpdate(userId, { $push: { postIds: post._id } })
       
       return post
     } catch (error: any) {

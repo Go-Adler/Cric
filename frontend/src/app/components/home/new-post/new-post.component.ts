@@ -1,8 +1,15 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NewPostService } from './new-post.service';
-import { UserService } from 'src/app/services/user.service'
-import { I_post } from 'src/app/models/responses/message.model'
+import { UserService } from 'src/app/services/user.service';
+import { I_post } from 'src/app/models/responses/message.model';
 
 @Component({
   selector: 'app-new-post',
@@ -13,78 +20,78 @@ export class NewPostComponent implements OnInit {
   postForm!: FormGroup;
   isPosting: boolean = false;
   postSuccess: boolean = false;
-  profilePicture: string = ''
-  name: string = ''
+  profilePicture: string = '';
+  name: string = '';
   selectedImage: string | ArrayBuffer | null | undefined = null;
-  postImage!: File
-  postFailed: boolean = false
-  isPostFailedMessage: boolean = true
-  postFailedMessage: string = ''
+  postImage!: File | null;
+  postFailed: boolean = false;
+  isPostFailedMessage: boolean = true;
+  postFailedMessage: string = '';
 
   @Output() newPostEvent = new EventEmitter<I_post>();
+  @ViewChild('fileInput') fileInput!: ElementRef;
 
   constructor(
     private fb: FormBuilder,
     private newPostService: NewPostService,
     private userService: UserService
-    
   ) {}
 
   ngOnInit(): void {
-    this.userService.getUserBasicInfo()  // remove later - helpful for development gokul
+    this.userService.getUserBasicInfo(); // remove later - helpful for development gokul
 
     // fetch profile picture
-    this.userService.profilePicture$.subscribe( profilePicture => {
-      this.profilePicture = profilePicture
-    })
+    this.userService.profilePicture$.subscribe((profilePicture) => {
+      this.profilePicture = profilePicture;
+    });
 
     // fetch user name
-    this.userService.name$.subscribe( name => {
-      this.name = name
-    })
+    this.userService.name$.subscribe((name) => {
+      this.name = name;
+    });
     this.postForm = this.fb.group({
-      text: ['', [ Validators.maxLength(300), Validators.required]],
-      image: ''
+      text: ['', [Validators.maxLength(300), Validators.required]],
+      image: '',
     });
   }
 
   onSubmit() {
     this.isPosting = true;
-    const image = this.postForm.get('image')?.value
-    const text = this.postForm.get('text')?.value
+    const image = this.postForm.get('image')?.value;
+    let text = this.postForm.get('text')?.value;
 
+    if (text === '') text = ' '
 
     
+    const formData = new FormData();
 
-    const formData = new FormData()
-
-    formData.append('text', text)
-    formData.append('postImage', image)
+    formData.append('text', text);
+    formData.append('postImage', image);
 
     this.newPostService.newPost(formData).subscribe((response) => {
       this.isPosting = false;
 
       if (response.uploadFailed) {
         if (response.message) {
-          this.postFailedMessage = response.message
-          this.isPostFailedMessage = true
+          this.postFailedMessage = response.message;
+          this.isPostFailedMessage = true;
           setTimeout(() => {
-            this.isPostFailedMessage = false
+            this.isPostFailedMessage = false;
           }, 2000);
-          return
+          return;
         }
-        this.postFailed = true
+        this.postFailed = true;
 
         setTimeout(() => {
-          this.postFailed = false
+          this.postFailed = false;
         }, 2000);
-        return
+        return;
       }
-      
-      this.postSuccess = true
+
+      this.postSuccess = true;
       this.postForm.reset();
-      this.selectedImage = null
-      this.newPostEvent.emit(response.post)
+      this.selectedImage = null;
+      this.newPostEvent.emit(response.post);
 
       setTimeout(() => {
         this.postSuccess = false;
@@ -93,7 +100,6 @@ export class NewPostComponent implements OnInit {
   }
 
   onImageSelected(event: any) {
-    
     if (event.target.files.length > 0) {
       this.postImage = event.target.files[0];
       this.postForm.get('image')?.setValue(this.postImage);
@@ -110,7 +116,13 @@ export class NewPostComponent implements OnInit {
   }
 
   onCloseImage() {
-    this.selectedImage = null
+    this.fileInput.nativeElement.value = '';
+    this.selectedImage = null;
     this.postForm.get('image')?.setValue(null);
+  }
+
+  clickInput() {
+    this.fileInput.nativeElement.value = '';
+    this.fileInput.nativeElement.click()
   }
 }

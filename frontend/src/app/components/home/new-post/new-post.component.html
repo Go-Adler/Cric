@@ -30,7 +30,7 @@
       </span>
       <input type="file" (change)="onImageSelected($event)" accept="image/*" class="hidden" #fileInput>
       <div class="flex justify-between items-end">
-        <span class="material-symbols-rounded cursor-pointer" (click)="fileInput.click()">
+        <span class="material-symbols-rounded cursor-pointer" (click)="clickInput()">
           image
           </span>
           <button [disabled]="!selectedImage && postForm.get('text')?.hasError('required')"  type="submit" mat-raised-button class="postButton">{{isPosting ? 'Posting...' : 'Post'}}</button>

@@ -58,7 +58,7 @@ export class UserNewPostController {
         // Set the multimedia field to the file name
         multimedia = uploadInfo
       }
-
+      
       // Create and send the post
       const postData: Post = { userId, content: { text, multimedia: [multimedia] } }
 
