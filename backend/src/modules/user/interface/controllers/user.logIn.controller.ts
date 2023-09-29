@@ -20,7 +20,7 @@ export class UserLoginController {
   userLogin = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body
     try {
-      const isUserExisting = await this.userExistingUseCase.userExistingLogIn(email)
+      const isUserExisting = await this.userExistingUseCase.userExistingLogIn(email.toLowerCase())
 
       if (!isUserExisting) {
         return res.json({ userNotExisting: true })

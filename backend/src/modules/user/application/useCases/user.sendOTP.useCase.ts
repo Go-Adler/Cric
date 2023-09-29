@@ -1,25 +1,37 @@
 import { UserOtpDataAccess } from '../../data/user.otpAccess';
 import { generateOTP } from '../../../../utils/generateOTP.utils';
-import { EmailService } from '../../../../services/email.service';
+import { AwsSesService } from '../../../../services/awsSes.service';
 
 export class SendOTP_UseCase {
-  private emailService: EmailService
-  private userOtpDataAccess: UserOtpDataAccess
+  private awsSesService: AwsSesService;
+  private userOtpDataAccess: UserOtpDataAccess;
+
   constructor() {
-    this.emailService = new EmailService()
-    this.userOtpDataAccess = new UserOtpDataAccess()
+    this.userOtpDataAccess = new UserOtpDataAccess();
+    this.awsSesService = new AwsSesService();
   }
 
-  sendOTP = async (email: string) => {
+  /**
+   * Send an OTP verification email to the specified email address.
+   * @param email - Email address to which the OTP email will be sent.
+   * @returns True if the OTP email was sent successfully.
+   * @throws Error if there was an issue sending the OTP email.
+   */
+  sendOTP = async (email: string): Promise<boolean> => {
     try {
-      const otp = generateOTP()
-      console.log(otp, 'otp', 16);
-      // await this.emailService.sendOTPVerificationEmail(email, otp); // rememberGo - need to enable after sendgrid fixing
-      await this.userOtpDataAccess.addOtp(email, otp)
-      return true
+      // Generate a one-time password (OTP)
+      const otp = generateOTP();
+
+      // Send the OTP verification email
+      await this.awsSesService.sendOtpVerificationEmail(email, otp);
+
+      // Store the OTP in the data access layer
+      await this.userOtpDataAccess.addOtp(email, otp);
+
+      return true;
     } catch (error: any) {
-      console.error(error.message);
-      throw error
+      console.error(`Error sending OTP email: ${error.message}`);
+      throw new Error('Failed to send OTP email.');
     }
-  }
+  };
 }

@@ -13,7 +13,7 @@ export class GetAwsUrlUseCase {
     this.awsAccessKey = process.env.AWS_ACCESS_KEY!
     this.awsSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY!
     this.bucketName = process.env.BUCKET_NAME!
-    this.bucketRegion = process.env.BUCKET_REGION!
+    this.bucketRegion = process.env.AWS_REGION!
 
     this.s3 = new S3Client({
       credentials: {
