@@ -6,6 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule } from '@angular/common/http';
+import { TimeagoModule } from 'ngx-timeago';
+import { MatDialogModule } from '@angular/material/dialog';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -35,9 +37,9 @@ import { UsersComponent } from './components/users/users.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { SportsComponent } from './components/sports/sports.component';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { MatCommonModule } from '@angular/material/core';
-import { UpdateProfilePictureComponent } from './components/user-profile/update-profile-picture/update-profile-picture.component'
+import { UpdateProfilePictureComponent } from './components/user-profile/update-profile-picture/update-profile-picture.component';
 import { CloudinaryInterceptor } from './services/cloudinary.interceptor';
 import { TestFormCloudinaryComponent } from './components/user-profile/test-form-cloudinary/test-form-cloudinary.component';
 import { VerifySignUpOtpComponent } from './components/sign-up/verify-sign-up-otp/verify-sign-up-otp.component';
@@ -45,9 +47,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { TopNavComponent } from './components/top-nav/top-nav.component';
 import { RightAreaComponent } from './components/right-area/right-area.component';
-import { MatchInfoComponent } from './components/right-area/match-info/match-info.component'
-import { TimeagoModule } from "ngx-timeago";
-
+import { MatchInfoComponent } from './components/right-area/match-info/match-info.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +96,8 @@ import { TimeagoModule } from "ngx-timeago";
     ImageCropperModule,
     MatCommonModule,
     MatCardModule,
-    TimeagoModule.forRoot()
+    MatDialogModule,
+    TimeagoModule.forRoot(),
   ],
   providers: [
     {

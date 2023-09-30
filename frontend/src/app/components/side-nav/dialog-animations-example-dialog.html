@@ -1,0 +1,26 @@
+<div
+  mat-dialog-close
+  class="fixed left-0 top-0 flex justify-center items-center h-screen w-screen bg-black/60"
+>
+  <span class="bg-gray-100 text-black p-10 rounded-md flex flex-col gap-3">
+    <span class="text-base">Would you like to log out?</span>
+    <div class="flex flex-col gap-1 pt-8">
+      <!-- logout button-->
+      <div
+        (click)="logOut()"
+        class="logOutButton p-3 flex justify-center rounded-full cursor-pointer"
+        routerLink="user/home"
+      >
+        <span class=" text-base hidden lg:block">Log out</span>
+      </div>
+
+      <!-- cancel button -->
+      <div
+        class=" border-gray-800 p-3 flex justify-center rounded-full cursor-pointer"
+        routerLink="user/home"
+      >
+        <span class="sideItem text-base hidden lg:block">Cancel</span>
+      </div>
+    </div>
+  </span>
+</div>

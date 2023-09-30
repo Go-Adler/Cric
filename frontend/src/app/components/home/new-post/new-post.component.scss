@@ -1,6 +1,9 @@
 $cricBlue: #1a2938;
 
-.postButton {
-  background-color: $cricBlue !important;
+
+[mat-button] {
+  z-index: 0 !important;
   color: white !important;
+  background-color: $cricBlue !important;
 }
+

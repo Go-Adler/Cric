@@ -1,6 +1,8 @@
 $cricBlue: rgba(0, 0, 0, 0.8);
 $cricBlue: rgb(26, 41, 56, 0.7);
 $selectedTab:  rgba(24, 34, 44, 0.9);
+$profilePill:  rgba(12, 21, 31, 0.9);
+
 
 
 .sideItem {
@@ -19,4 +21,13 @@ $selectedTab:  rgba(24, 34, 44, 0.9);
 
 section {
   border-color: rgb(255, 255, 255, 0.1);
+}
+
+.profilePill {
+  background-color: $profilePill;
+}
+
+.logOutButton {
+  background-color: $cricBlue !important;
+  color: white !important;
 }
