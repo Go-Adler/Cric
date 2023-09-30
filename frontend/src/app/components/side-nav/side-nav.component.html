@@ -5,7 +5,7 @@
     <div class="lg:w-10/12 p-2 flex flex-col gap-2">
       <div
         routerLinkActive="selectedSideItem"
-        class="flex justify-start sideItemArea ps-5  rounded-full cursor-pointer items-end gap-4 items-end p-3"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 items-end p-3"
         routerLink="user/home"
       >
         <span class="material-symbols-rounded text-3xl"> home </span>
@@ -14,7 +14,7 @@
 
       <div
         routerLinkActive="selectedSideItem"
-        class="flex justify-start sideItemArea ps-5  rounded-full cursor-pointer items-end gap-4 p-3"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
         routerLink="user/sports"
       >
         <span class="material-symbols-rounded text-3xl"> sports_cricket </span>
@@ -23,7 +23,7 @@
 
       <div
         routerLinkActive="selectedSideItem"
-        class="flex justify-start sideItemArea ps-5  rounded-full cursor-pointer items-end gap-4 p-3"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
         routerLink="user/notifications"
       >
         <span class="material-symbols-rounded text-3xl"> notifications </span>
@@ -32,7 +32,7 @@
 
       <div
         routerLinkActive="selectedSideItem"
-        class="flex justify-start sideItemArea ps-5  rounded-full cursor-pointer items-end gap-4 p-3"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
         routerLink="user/messages"
       >
         <span class="material-symbols-rounded text-3xl"> forum </span>
@@ -40,7 +40,7 @@
       </div>
       <div
         routerLinkActive="selectedSideItem"
-        class="flex justify-start sideItemArea ps-5  rounded-full cursor-pointer items-end gap-4 p-3"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
         routerLink="user/friends"
       >
         <span class="material-symbols-rounded text-3xl"> group </span>
@@ -48,7 +48,7 @@
       </div>
       <div
         routerLinkActive="selectedSideItem"
-        class="flex justify-start sideItemArea ps-5  rounded-full cursor-pointer items-end gap-4 p-3"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
         routerLink="user/saved"
       >
         <span class="material-symbols-rounded text-3xl"> bookmark </span>
@@ -57,7 +57,7 @@
 
       <div
         routerLinkActive="selectedSideItem"
-        class="flex justify-start sideItemArea ps-5  rounded-full cursor-pointer items-end gap-4 p-3"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
         routerLink="user/profile"
       >
         <span class="material-symbols-rounded text-3xl"> person </span>
@@ -66,7 +66,7 @@
 
       <div
         routerLinkActive="selectedSideItem"
-        class="flex justify-start sideItemArea ps-5  rounded-full cursor-pointer gap-4 p-3"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer gap-4 p-3"
         routerLink="user/settings"
       >
         <span class="material-symbols-rounded text-3xl"> settings </span>
@@ -75,27 +75,30 @@
     </div>
 
     <!-- accounts -->
-    <span class="">
-      <div *ngIf="logOutPill"
-      (click)="openDialog('0ms', '0ms')"
-      routerLinkActive="selectedSideItem"
-      class="flex justify-center p-5 lg:justify-center sideItemArea items-center selectedSideItem rounded-full cursor-pointer gap-4 mb-3 w-10/12"
-    >
-      <span class="">
-        Log out @{{userName}} ?
-
-      </span>
-    </div>
-
-      <div (click)="showLogOut()" 
-      routerLinkActive="selectedSideItem"
-      class="flex justify-center p-3 lg:justify-start items-center profilePill sideItemArea ps-5  rounded-full cursor-pointer gap-4 mb-3 w-10/12"
-    >
-      <div class="w-6/12 lg:w-2/12">
-        <img [src]="profilePicture" alt="" class="rounded-full" />
+    <span class="w-full">
+      <div
+        *ngIf="logOutPill"
+        (click)="openDialog('0ms', '0ms')"
+        class="flex justify-center p-5 lg:justify-center items-center logOutButton rounded-full cursor-pointer gap-4 mb-3 w-10/12"
+      >
+        <span class="flex">
+          <span class="flex"
+            ><span> Log out <span>?</span></span></span
+          >
+          <span class="hidden lg:block">@{{ userName }} ?</span>
+        </span>
       </div>
-      <span>{{name}}</span>
-    </div>
+
+      <div
+        (click)="showLogOut()"
+        routerLinkActive="selectedSideItem"
+        class="flex justify-center p-3 lg:justify-start items-center profilePill sideItemArea ps-5 rounded-full cursor-pointer gap-4 mb-3 w-10/12"
+      >
+        <div class="w-6/12 lg:w-2/12">
+          <img [src]="profilePicture" alt="" class="rounded-full" />
+        </div>
+        <span class="hidden lg:block">{{ name }}</span>
+      </div>
     </span>
   </div>
 </section>

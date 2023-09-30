@@ -1,9 +1,25 @@
 <nav class="top-0 sticky nav p-2 flex justify-center border-b">
   <div class="flex justify-between md:justify-center p-2">
     <!-- account -->
-    <div class="w-2/12 md:hidden flex items-center">
+    <div class="w-2/12 md:hidden flex items-center" (click)="showLogOut()">
       <div class="w-6/12 md:w-4/12 flex items-center">
         <img [src]="profilePicture" alt="" class="rounded-full">
+      </div>
+    </div>
+
+    <!-- logout question button -->
+    <div class="fixed mt-10" (click)="openDialog('0ms', '0ms')">
+      <div
+        *ngIf="logOutPill"
+        class="flex justify-center p-2 lg:justify-center items-center logOutButton rounded-full cursor-pointer gap-4 mb-3 w"
+      >
+        <span class="flex">
+          <span class="flex gap-2 p-2"
+            ><span> Log out </span>
+            <span >@{{ userName }} ?</span>
+            </span
+          >
+        </span>
       </div>
     </div>
 

@@ -1,5 +1,7 @@
-$cricBlue: rgba(0, 0, 0, 0.8);
 $cricBlue: rgba(0, 0, 0, 0.7);
+
+$selectedTab:  rgba(24, 34, 44, 0.9);
+$profilePill:  rgba(12, 21, 31, 0.9);
 
 nav {
   backdrop-filter: blur(10px); 
@@ -10,4 +12,13 @@ nav {
 
 a {
   color: inherit;
+}
+
+.logOutButton {
+  background-color: $profilePill !important;
+  color: white !important;
+}
+
+.logOutButton:hover {
+  background-color: $selectedTab !important;
 }
