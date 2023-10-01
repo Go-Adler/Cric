@@ -23,4 +23,9 @@ export class PostService {
     const postData = { postId }
     return this.http.post<I_likePost>(`${this.API_URL}/user/posts/like-post`, postData);
   }
+
+  unlikePost(postId: string): Observable<I_likePost> {
+    const postData = { postId }
+    return this.http.post<I_likePost>(`${this.API_URL}/user/posts/unlike-post`, postData);
+  }
 }

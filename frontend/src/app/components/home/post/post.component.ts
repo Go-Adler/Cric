@@ -98,11 +98,32 @@ export class PostComponent implements OnChanges, OnDestroy {
 
   // Toggle like for a post
   toggleLike(isLiked: boolean, postId: string): void {
-    this.subscriptions.push(this.postService.likePost(postId).subscribe(data => {
-      console.log(data);
-    }, error => {
-      console.error(error);
-    }))
+    if (isLiked) {
+      this.subscriptions.push(this.postService.unlikePost(postId).subscribe(data => {
+        console.log(data);
+        const post = this.posts.find(post => post._id === postId);
+        if (post) {
+          
+          post.engagement.liked = false
+          post.actions.likes--
+        }
+      }, error => {
+        console.error(error);
+      }))
+
+    } else {
+      this.subscriptions.push(this.postService.likePost(postId).subscribe(data => {
+        console.log(data);
+        const post = this.posts.find(post => post._id === postId);
+        if (post) {
+          
+          post.engagement.liked = true
+          post.actions.likes++
+        }
+      }, error => {
+        console.error(error);
+      }))
+    }
   }
 
   ngOnDestroy(): void {

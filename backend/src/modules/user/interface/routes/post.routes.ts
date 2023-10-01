@@ -7,7 +7,7 @@ import { UserNewPostController } from '../controllers/user.newPost.controller'
 import { MulterMiddleware } from '../middleware/multer.middleware'
 
 
-const { likePost } = new PostLikeController()
+const { likePost, unlikePost } = new PostLikeController()
 const { getUserPosts } = new GetUserPostsController()
 const { verifyJwt } = new JwtMiddleware()
 const { userNewPost } = new UserNewPostController()
@@ -17,6 +17,8 @@ const { memoryStorage } = new MulterMiddleware()
 const router = express.Router()
 
 router.post('/like-post', verifyJwt, likePost)
+router.post('/unlike-post', verifyJwt, unlikePost)
+
 router.post('/post', verifyJwt, memoryStorage, userNewPost)
 router.post('/', verifyJwt, getUserPosts)
 
