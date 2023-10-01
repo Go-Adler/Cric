@@ -1,7 +1,7 @@
 <div class="mb-10 mt-3 pt-10 min-h-screen">
     <span class="flex justify-center" *ngIf="spinner"><mat-spinner diameter="30" color="primary"></mat-spinner></span>
     <!-- card -->
-    <mat-card class="text-black p-2 md:p-3 mb-6" *ngFor="let post of posts;">
+    <mat-card class="text-black p-2 md:p-3 mb-6" *ngFor="let post of posts | slice:0:1;">
        
         <!-- card-title -->
         <div class="flex gap-2">
@@ -18,6 +18,7 @@
                 </span>
             </span>
         </div>
+
         <!--  content -->
         <span *ngIf="post.content.text"  class="py-2 text-sm font-normal break-words whitespace-pre-line">
             {{post.content.text}}
@@ -68,6 +69,7 @@
             </div>
 
         </div>
+        <app-comment-section [profilePicture]="profilePicture" [userName]="userName" [name]="name" [posts]="posts"></app-comment-section>
     </mat-card>
     <span *ngIf="!posts[0] && firstFetch" class="flex justify-center flex-col items-center gap-3 mt-10">
         <span>No posts to show, create a new post, or follow someone.</span>
@@ -81,7 +83,7 @@
         <span class="text-lg lg:text-xl material-symbols-rounded">
             add_circle
         </span>
-        <span class="">load more</span>
+        <span class="text-xs">Load more</span>
     </span>
     <span *ngIf="fetchingPosts" class="flex justify-center items-center flex-col mt-2 cursor gap-2"
         (click)="loadMore()">

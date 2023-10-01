@@ -48,6 +48,7 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { TopNavComponent } from './components/top-nav/top-nav.component';
 import { RightAreaComponent } from './components/right-area/right-area.component';
 import { MatchInfoComponent } from './components/right-area/match-info/match-info.component';
+import { CommentSectionComponent } from './components/home/post/comment-section/comment-section.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { MatchInfoComponent } from './components/right-area/match-info/match-inf
     TopNavComponent,
     RightAreaComponent,
     MatchInfoComponent,
+    CommentSectionComponent,
   ],
   imports: [
     BrowserModule,
