@@ -1,60 +1,74 @@
-// Import necessary modules and types
-import { UserEntity } from '../domain/user.schema'
-import { PostEntity, postSchema } from '../domain/user.postSchema'
-import { Post } from '../../../shared/interfaces/userPost.interface'
-import mongoose, { Types } from 'mongoose'
+import { UserEntity } from "../domain/user.schema";
+import { PostEntity } from "../domain/user.postSchema";
+import { Post } from "../../../shared/interfaces/userPost.interface";
+import mongoose, { Types } from "mongoose";
 
+// UserPostDataAccess class for handling user post related operations
 export class UserPostDataAccess {
-  // Create a new post for a user
-  async createPost(userId: Types.ObjectId, postData: Post) {
+  // Create a new post for a user and return the created post
+  async createPost(userId: Types.ObjectId, postData: Post): Promise<Post> {
     try {
-      console.log(postData, 11);
-      
-      const post = await PostEntity.create(postData)
-      // await UserEntity.findByIdAndUpdate(userId, { $push: { postIds: post._id } })
-      
-      return post
+      // Ensure userId is a valid ObjectId
+      if (!Types.ObjectId.isValid(userId)) {
+        throw new Error("Invalid userId");
+      }
+
+      const post = await PostEntity.create(postData);
+      return post;
     } catch (error: any) {
-      console.error(error.message)
-      throw new Error('Error in post creation')
+      console.error(`Error in post creation: ${error.message}`);
+      throw new Error("Error in post creation");
     }
   }
 
-  // Get posts for a specific user
-  async getUserPosts(id: Types.ObjectId, skip: number = 0) {
+  // Get posts for a specific user and return the posts
+  async getUserPosts(id: Types.ObjectId, skip: number = 0): Promise<Array<Post>> {
     try {
+      // Ensure id is a valid ObjectId
+      if (!Types.ObjectId.isValid(id)) {
+        throw new Error("Invalid user id");
+      }
 
+      // Aggregation pipeline to retrieve user posts
       const postsResult = await UserEntity.aggregate([
-        // find the user by id
         { $match: { _id: new mongoose.Types.ObjectId(id) } },
-        // flatten the postIds array
         { $unwind: "$postIds" },
-        // sort by post creation date in descending order
-        { $sort: { "postIds": -1 } },
-        // Skip the first 3 sorted posts
+        { $sort: { postIds: -1 } },
         { $skip: skip },
-        // limit to 2 posts
-        { $limit: 6 }, 
-        // group back by user id and push the posts to an array
+        { $limit: 6 },
         { $group: { _id: null, postIds: { $push: "$postIds" } } },
         {
           $project: {
-            _id: 0, 
-            postIds: 1, 
+            _id: 0,
+            postIds: 1,
           },
         },
-      ])
+      ]);
 
-      
-      const { postIds } = postsResult[0] ?? ''
+      const { postIds } = postsResult[0] || { postIds: [] };
 
-      const posts = await PostEntity.find({ _id: { $in: postIds } }).sort({ _id: -1 })
-      
-      return posts
+      // Find and return the user's posts
+      const posts = await PostEntity.find({ _id: { $in: postIds } }).sort({ _id: -1 });
+      return posts;
     } catch (error: any) {
-      console.error(error.message)
-      throw new Error('Error fetching user posts')
+      console.error(`Error fetching user posts: ${error.message}`);
+      throw new Error("Error fetching user posts");
     }
   }
 
+  // Like a post and return a boolean indicating success
+  async likePost(userId: Types.ObjectId, postId: Types.ObjectId) {
+    try {
+      // Ensure both userId and postId are valid ObjectId values
+      if (!Types.ObjectId.isValid(userId) || !Types.ObjectId.isValid(postId)) {
+        throw new Error("Invalid userId or postId");
+      }
+
+      // Add the user's ID to the 'usersLiked' array of the post
+      await PostEntity.findByIdAndUpdate(postId, { $push: { usersLiked: userId } });
+    } catch (error: any) {
+      console.error(`Error liking post: ${error.message}`);
+      throw new Error("Error liking post");
+    }
+  }
 }

@@ -102,7 +102,7 @@ export class PostComponent implements OnChanges, OnDestroy {
       console.log(data);
     }, error => {
       console.error(error);
-    }));
+    }))
   }
 
   ngOnDestroy(): void {
