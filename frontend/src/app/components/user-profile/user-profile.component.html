@@ -1,35 +1,45 @@
-<div class="profileArea d-flex container justify-content-center mt-20 container items-center">
-  <!-- profile area -->
-  <div class="row">
-    <div class="col">
-      <div class="row d-flex justify-content-end">
-        <div class="col-7 p-0">
-          <img class="img-fluid" [src]="profilePicture" alt="">
-          <span class="d-flex items-center mt-2 gap-2 profilePictureEditArea" [style.cursor]="'pointer'"
-            (click)="changeProfilePicture()">
-            <i class="fa-solid fa-pen-to-square d-flex text-xs"></i>
-            <span class="text-xs m-0">Add picture</span>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class=" col d-flex flex-column justify-content-center ">
-      <span class="flex flex-column justify-center">
-        <span class="text-base m-0">Gokul</span>
-        <span class="text-lg m-0">Krishna</span>
-      </span>
-      <span class="flex flex-column">
-        <span class="flex gap-2">
-          <span class="text-xs">Nationality</span>
-          <span class="fi fi-in text-xs"></span>
-        </span>
-        <span class="flex gap-1">
-          <span class="text-xs">25</span>
-          <span class="text-xs">yrs</span>
-        </span>
-      </span>
-    </div>
+<div class="min-h-screen p-3 gap-2 flex">
+  <!-- profile picutre area -->
+  <div class="flex w-full flex-col items-end gap-2">
+    <img class="rounded-md" [src]="profilePicture" alt="" />
+    <span
+      class="flex justify-start gap-2 profilePictureEditArea items-center"
+      [style.cursor]="'pointer'"
+      (click)="changeProfilePicture()"
+    >
+      <i class="fa-solid fa-pen-to-square d-flex text-xs"></i>
+      <span class="text-sm">Edit picture</span>
+    </span>
   </div>
 
-  <app-update-profile-picture *ngIf="addProfilePicture" (closeComponentStatusEvent)="closeComponent($event)"></app-update-profile-picture>
+  <!-- info area -->
+  <span class="flex flex-col w-full ps-2 bg-gray-500">
+    <span class="flex flex-col">
+      <span class="text-base">Gokul</span>
+      <span class="text-lg">Krishna</span>
+    </span>
+    <span class="flex gap-2">
+      <span class="text-xs">Nationality</span>
+      <span class="fi fi-in text-xs"></span>
+    </span>
+    <span class="flex gap-1">
+      <span class="text-xs">25</span>
+      <span class="text-xs">yrs</span>
+    </span>
+
+    <span class="flex mt-5">
+      <span class="text-xs">Friends 0</span>
+    <span class="text-xs">Posts 0</span>
+    </span>
+  </span>
+
+  <!-- Edit profile -->
+  <span class="flex justify-end w-full ">
+    <button mat-stroked-button >Edit</button>
+  </span>
 </div>
+
+<app-update-profile-picture
+  *ngIf="addProfilePicture"
+  (closeComponentStatusEvent)="closeComponent($event)"
+></app-update-profile-picture>

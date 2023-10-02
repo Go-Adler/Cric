@@ -3,3 +3,8 @@ $cricBlue: #1A2938;
 .profilePictureEditArea:hover {
   color: rgb(46, 61, 189);
 }
+
+[mat-stroked-button] {
+  color: white !important;
+  border-color: white !important;
+}
