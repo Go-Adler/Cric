@@ -19,6 +19,7 @@ const router = express.Router()
 
 router.post('/new-comment', verifyJwt, memoryStorage, comment)
 router.post('/comments', verifyJwt, memoryStorage, getComments)
+
 router.post('/like-post', verifyJwt, likePost)
 router.post('/unlike-post', verifyJwt, unlikePost)
 router.post('/post', verifyJwt, memoryStorage, userNewPost)

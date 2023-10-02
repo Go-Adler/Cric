@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { I_postResponse } from 'src/app/models/responses/message.model';
+import { I_likePost } from 'src/app/models/responses/postLiked.model'
 import { ConfigService } from 'src/app/services/config.service';
 
 @Injectable({
@@ -21,5 +22,15 @@ export class CommentService {
   getComments(skip: number, postId: string): Observable<any> {
     const postData = { skip, postId }
     return this.http.post<I_postResponse>(`${this.API_URL}/user/posts/comments`, postData);
+  }
+
+  likePost(postId: string): Observable<I_likePost> {
+    const postData = { postId }
+    return this.http.post<I_likePost>(`${this.API_URL}/user/posts/like-post`, postData);
+  }
+
+  unlikePost(postId: string): Observable<I_likePost> {
+    const postData = { postId }
+    return this.http.post<I_likePost>(`${this.API_URL}/user/posts/unlike-post`, postData);
   }
 }

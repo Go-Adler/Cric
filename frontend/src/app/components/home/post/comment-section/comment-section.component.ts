@@ -74,9 +74,43 @@ export class CommentSectionComponent implements OnInit{
     );
   }
 
-  toggleLike(i: string, b: string) {
-    this.posts = []
+ // Toggle like for a post
+ toggleLike(isLiked: boolean, postId: string): void {
+  if (isLiked) {
+    this.subscriptions.push(
+      this.commentsService.unlikePost(postId).subscribe(
+        (data) => {
+          console.log(data);
+          const post = this.posts.find((post) => post._id === postId);
+          if (post) {
+            post.engagement.liked = false;
+            post.actions.likes--;
+          }
+        },
+        (error) => {
+          console.error(error);
+        }
+      )
+    );
+  } else {
+    this.subscriptions.push(
+      this.commentsService.likePost(postId).subscribe(
+        (data) => {
+          console.log(data);
+          const post = this.posts.find((post) => post._id === postId);
+          if (post) {
+            post.engagement.liked = true;
+            post.actions.likes++;
+          }
+        },
+        (error) => {
+          console.error(error);
+        }
+      )
+    );
   }
+}
+
 
   newPostSuccess(postData: any) {
     this.posts.unshift(postData)
