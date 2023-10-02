@@ -17,4 +17,9 @@ export class CommentService {
   newComment(formData: FormData): Observable<I_postResponse> {
     return this.http.post<I_postResponse>(`${this.API_URL}/user/posts/new-comment`, formData);
   }
+
+  getComments(skip: number, postId: string): Observable<any> {
+    const postData = { skip, postId }
+    return this.http.post<I_postResponse>(`${this.API_URL}/user/posts/comments`, postData);
+  }
 }

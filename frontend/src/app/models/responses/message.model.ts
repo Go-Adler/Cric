@@ -12,6 +12,7 @@ export interface I_postResponse {
   uploadFailed?: boolean;
   post?: I_post;
   message?: string
+  comments?: I_post 
 }
 
 export interface I_post {

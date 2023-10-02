@@ -1,5 +1,6 @@
 <div class="rounded-lg mt-4 flex flex-col bg-gray-50 items-center">
   <app-new-comment [postId]="postId" (newPostEvent)="newPostSuccess($event)" class="w-11/12 mb-2"></app-new-comment>
+  <span class="flex justify-center" *ngIf="spinner"><mat-spinner diameter="30" color="primary"></mat-spinner></span>
   <div
     class="text-black flex p-2 md:p-3 gap-2 border-b border-t w-11/12"
     *ngFor="let post of posts"
@@ -70,4 +71,20 @@
       </div>
     </div>
   </div>
+      <!-- fetch posts -->
+      <span *ngIf="posts[0] && !fetchingPosts && !postsEnd"
+      class="flex flex-col gap-1 justify-center items-center p-3 cursor-pointer flex-column mt-2 text-4xl border-t cursor fetchPosts" (click)="loadMore()">
+      <span class="text-lg lg:text-xl material-symbols-rounded">
+          add_circle
+      </span>
+      <span class="text-xs">Load more</span>
+  </span>
+  <span *ngIf="fetchingPosts" class="flex justify-center items-center flex-col mt-2 cursor gap-2"
+      (click)="loadMore()">
+      <mat-spinner diameter="30" color="primary"></mat-spinner>
+      <span class="text-xs">loading more posts</span>
+  </span>
+  <span *ngIf="postsEnd" class="flex justify-center items-center flex-column mt-2 text-4xl cursor gap-2">
+      <span class="text-xs">No more comments</span>
+  </span>
 </div>

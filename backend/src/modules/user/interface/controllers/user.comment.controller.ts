@@ -5,6 +5,7 @@ import { JwtPayload } from 'jsonwebtoken'
 import { ImageValidationUseCase } from '../../application/useCases/user.imageValidation.useCase'
 import { GetAwsUrlUseCase } from '../../application/useCases/user.getAwsUrl.useCase'
 import { Post } from '../../../../shared/interfaces/userPost.interface'
+import { PostActionsUseCase } from '../../application/useCases/user.postActionsCheck.useCase'
 
 // Define the controller class for user new comment
 export class CommentController {
@@ -12,12 +13,14 @@ export class CommentController {
   private imageValidationUseCase: ImageValidationUseCase
   private awsUploadUseCase: AwsUploadUseCase
   private getAwsUrlUseCase: GetAwsUrlUseCase
+  private postActionsUseCase: PostActionsUseCase
 
   constructor() {
     this.commentPostUseCase = new CommentPostUseCase()
     this.imageValidationUseCase = new ImageValidationUseCase()
     this.awsUploadUseCase = new AwsUploadUseCase()
     this.getAwsUrlUseCase = new GetAwsUrlUseCase()
+    this.postActionsUseCase = new PostActionsUseCase()
   }
 
   // Define the method for comment
@@ -77,6 +80,21 @@ export class CommentController {
     } catch (error) {
       // Pass the error to the next middleware
       next(error)
+    }
+  }
+
+  
+  getComments = async (req: Request, res: Response, next: NextFunction) => {
+    const { userId } = req.user as JwtPayload
+    const { skip, postId } = req.body
+    try {
+      
+      const postsWithoutUrl = await this.commentPostUseCase.getComments(postId, skip)
+      let posts = await this.getAwsUrlUseCase.getPostsWithUrl(postsWithoutUrl)
+      const comments = this.postActionsUseCase.likedPosts(userId, posts)
+      res.json({comments})
+    } catch (error) {
+      return next(error)
     }
   }
 }

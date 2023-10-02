@@ -132,4 +132,47 @@ export class UserPostDataAccess {
       throw new Error("Error in post creation")
     }
   }
+
+  /**
+   * Get posts for a specific user and return the posts
+   * @param id - The ID of the user
+   * @param skip - The number of posts to skip (default is 0)
+   * @returns The posts of the user
+   */
+  async getComments(postId: Types.ObjectId, skip: number = 0): Promise<Array<Post>> {
+    try {
+      // Ensure id is a valid ObjectId
+      if (!Types.ObjectId.isValid(postId)) {
+        throw new Error("Invalid user id")
+      }
+
+      // Aggregation pipeline to retrieve user posts
+      const postsResult = await PostEntity.aggregate([
+        { $match: { _id: new mongoose.Types.ObjectId(postId) } },
+        { $unwind: "$replies" },
+        { $sort: { replies: -1 } },
+        { $skip: skip },
+        { $limit: 6 },
+        { $group: { _id: null, replies: { $push: "$replies" } } },
+        {
+          $project: {
+            _id: 0,
+            replies: 1,
+          },
+        },
+      ])
+
+      console.log(postsResult, 165);
+      
+
+      const { replies } = postsResult[0] || { postIds: [] }
+
+      // Find and return the user's posts
+      const comments = await CommentEntity.find({ _id: { $in: replies } }).sort({ _id: -1 })
+      return comments
+    } catch (error: any) {
+      console.error(`Error fetching user posts: ${error.message}`)
+      throw new Error("Error fetching user posts")
+    }
+  }
 }

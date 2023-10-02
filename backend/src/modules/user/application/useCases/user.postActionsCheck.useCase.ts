@@ -1,4 +1,4 @@
-import mongoose, { Types } from "mongoose"
+import { Types } from "mongoose"
 import { Post } from "../../../../shared/interfaces/userPost.interface"
 
 export class PostActionsUseCase {
