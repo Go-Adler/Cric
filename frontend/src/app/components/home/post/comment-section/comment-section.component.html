@@ -36,7 +36,7 @@
             *ngIf="post.content.text"
             class="break-words whitespace-pre-line"
           >
-            <div class="text-xs font-normal py-2">{{
+            <div class="text-xs font-normal py-3">{{
               post.content.text
             }}</div>
           </span>
@@ -58,7 +58,7 @@
             (click)="toggleLike(post?.engagement?.liked, post._id)"
           >
             <span
-              class="text-lg lg:text-xl material-symbols-rounded"
+              class="text-lg material-symbols-rounded"
               [ngClass]="{ fillIcon: post?.engagement?.liked }"
             >
               favorite

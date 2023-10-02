@@ -78,7 +78,7 @@ export class CommentSectionComponent implements OnInit{
  toggleLike(isLiked: boolean, postId: string): void {
   if (isLiked) {
     this.subscriptions.push(
-      this.commentsService.unlikePost(postId).subscribe(
+      this.commentsService.unlikeComment(postId).subscribe(
         (data) => {
           console.log(data);
           const post = this.posts.find((post) => post._id === postId);
@@ -94,7 +94,7 @@ export class CommentSectionComponent implements OnInit{
     );
   } else {
     this.subscriptions.push(
-      this.commentsService.likePost(postId).subscribe(
+      this.commentsService.likeComment(postId).subscribe(
         (data) => {
           console.log(data);
           const post = this.posts.find((post) => post._id === postId);

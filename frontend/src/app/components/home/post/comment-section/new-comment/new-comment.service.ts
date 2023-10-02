@@ -24,13 +24,13 @@ export class CommentService {
     return this.http.post<I_postResponse>(`${this.API_URL}/user/posts/comments`, postData);
   }
 
-  likePost(postId: string): Observable<I_likePost> {
+  likeComment(postId: string): Observable<I_likePost> {
     const postData = { postId }
-    return this.http.post<I_likePost>(`${this.API_URL}/user/posts/like-post`, postData);
+    return this.http.post<I_likePost>(`${this.API_URL}/user/posts/like-comment`, postData);
   }
 
-  unlikePost(postId: string): Observable<I_likePost> {
+  unlikeComment(postId: string): Observable<I_likePost> {
     const postData = { postId }
-    return this.http.post<I_likePost>(`${this.API_URL}/user/posts/unlike-post`, postData);
+    return this.http.post<I_likePost>(`${this.API_URL}/user/posts/unlike-comment`, postData);
   }
 }

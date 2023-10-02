@@ -1,11 +1,11 @@
-import { Request, Response, NextFunction } from 'express'
-import { CommentPostUseCase } from '../../application/useCases/user.commentPost.useCase'
-import { AwsUploadUseCase } from '../../application/useCases/user.awsUpload.useCase'
-import { JwtPayload } from 'jsonwebtoken'
-import { ImageValidationUseCase } from '../../application/useCases/user.imageValidation.useCase'
-import { GetAwsUrlUseCase } from '../../application/useCases/user.getAwsUrl.useCase'
-import { Post } from '../../../../shared/interfaces/userPost.interface'
-import { PostActionsUseCase } from '../../application/useCases/user.postActionsCheck.useCase'
+import { Request, Response, NextFunction } from "express"
+import { CommentPostUseCase } from "../../application/useCases/user.commentPost.useCase"
+import { AwsUploadUseCase } from "../../application/useCases/user.awsUpload.useCase"
+import { JwtPayload } from "jsonwebtoken"
+import { ImageValidationUseCase } from "../../application/useCases/user.imageValidation.useCase"
+import { GetAwsUrlUseCase } from "../../application/useCases/user.getAwsUrl.useCase"
+import { Post } from "../../../../shared/interfaces/userPost.interface"
+import { PostActionsUseCase } from "../../application/useCases/user.postActionsCheck.useCase"
 
 // Define the controller class for user new comment
 export class CommentController {
@@ -30,17 +30,12 @@ export class CommentController {
       const { userId } = req.user as JwtPayload
       const { postId } = req.body as { postId: any }
       const { text } = req.body as { text: string }
-        console.log(postId, 31);
-        
-        console.log(req.body, 33);
-        
-      
 
       // Get the image file from the request
       const imageFile = req.file
 
       // Initialize the multimedia field
-      let multimedia = ''
+      let multimedia = ""
 
       // If image exists, validate and upload it
       if (imageFile) {
@@ -65,7 +60,7 @@ export class CommentController {
         // Set the multimedia field to the file name
         multimedia = uploadInfo
       }
-      
+
       // Create and send the post
       const postData: Post = { userId, content: { text, multimedia: [multimedia] } }
 
@@ -83,16 +78,42 @@ export class CommentController {
     }
   }
 
-  
   getComments = async (req: Request, res: Response, next: NextFunction) => {
     const { userId } = req.user as JwtPayload
     const { skip, postId } = req.body
     try {
-      
       const postsWithoutUrl = await this.commentPostUseCase.getComments(postId, skip)
       let posts = await this.getAwsUrlUseCase.getPostsWithUrl(postsWithoutUrl)
       const comments = this.postActionsUseCase.likedPosts(userId, posts)
-      res.json({comments})
+      res.json({ comments })
+    } catch (error) {
+      return next(error)
+    }
+  }
+
+  // Method to handle the request for liking a comment
+  likeComment = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userId } = req.user as JwtPayload
+      const { postId } = req.body
+      await this.commentPostUseCase.likeComment(userId, postId)
+
+      // Send a response back to indicate success
+      return res.json({ message: "Successfully liked the comment" })
+    } catch (error) {
+      return next(error)
+    }
+  }
+
+  // Method to handle the request for unliking a comment
+  unlikeComment = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userId } = req.user as JwtPayload
+      const { postId } = req.body
+      await this.commentPostUseCase.unlikeComment(userId, postId)
+
+      // Send a response back to indicate success
+      return res.json({ message: "Successfully unliked the comment" })
     } catch (error) {
       return next(error)
     }
