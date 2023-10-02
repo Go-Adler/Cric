@@ -40,7 +40,7 @@ const additionalInfoSchema = new mongoose.Schema({
 }, { _id: false })
 
 // Define a schema for a post
-export const postSchema = new mongoose.Schema({
+export const commentSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users',
@@ -68,4 +68,4 @@ export const postSchema = new mongoose.Schema({
 })
 
 // Create a model for the Posts collection
-export const PostEntity = mongoose.model('Posts', postSchema)
+export const CommentEntity = mongoose.model('Comments', commentSchema)

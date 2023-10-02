@@ -1,6 +1,7 @@
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { Post } from '../../../../shared/interfaces/userPost.interface'
+import { CommentEntity } from '../../../../shared/interfaces/userComment.interface'
 
 export class GetAwsUrlUseCase {
   private awsAccessKey
@@ -43,7 +44,7 @@ export class GetAwsUrlUseCase {
     return posts
   }
 
-  getUrl = async (post: Post) => {
+  getUrl = async (post: Post | any) => {
     if (post.content?.multimedia && post.content?.multimedia[0]) {
       const imageName = post?.content?.multimedia[0]!
 

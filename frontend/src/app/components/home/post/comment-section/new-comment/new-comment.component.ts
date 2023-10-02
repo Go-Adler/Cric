@@ -2,21 +2,22 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { PostService } from './new-post.service';
 import { UserService } from 'src/app/services/user.service';
+import { CommentService } from './new-comment.service';
 import { I_post } from 'src/app/models/responses/message.model';
 
 @Component({
-  selector: 'app-new-post',
-  templateUrl: './new-post.component.html',
-  styleUrls: ['./new-post.component.scss'],
+  selector: 'app-new-comment',
+  templateUrl: './new-comment.component.html',
+  styleUrls: ['./new-comment.component.scss']
 })
-export class NewPostComponent implements OnInit {
+export class NewCommentComponent implements OnInit{
   // Form group for the post
   postForm!: FormGroup;
 
@@ -42,12 +43,15 @@ export class NewPostComponent implements OnInit {
   // Event emitter for new posts
   @Output() newPostEvent = new EventEmitter<I_post>();
 
+  //  Post id  for the comment
+  @Input() postId!: string
+
   // Reference to the file input element
   @ViewChild('fileInput') fileInput!: ElementRef;
 
   constructor(
     private fb: FormBuilder,
-    private newPostService: PostService,
+    private commentService: CommentService,
     private userService: UserService
   ) {}
 
@@ -76,10 +80,12 @@ export class NewPostComponent implements OnInit {
 
     const formData = new FormData();
 
+
+    formData.append('postId', this.postId)
     formData.append('text', text);
     formData.append('postImage', image);
 
-    this.newPostService.newPost(formData).subscribe((response) => {
+    this.commentService.newComment(formData).subscribe((response) => {
       this.isPosting = false;
 
       if (response.uploadFailed) {

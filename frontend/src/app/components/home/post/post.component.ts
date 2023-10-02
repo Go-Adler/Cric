@@ -24,6 +24,7 @@ export class PostComponent implements OnChanges, OnDestroy {
   postsEnd = false;
   posti = false;
   firstFetch = false;
+  commentSection = false
 
   private subscriptions: Subscription[] = [];
 
@@ -124,6 +125,10 @@ export class PostComponent implements OnChanges, OnDestroy {
         console.error(error);
       }))
     }
+  }
+
+  toggleComment(index: number) {
+    this.posts[index].showCommentSection = !this.posts[index].showCommentSection;
   }
 
   ngOnDestroy(): void {

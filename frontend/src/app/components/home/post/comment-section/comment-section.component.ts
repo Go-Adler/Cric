@@ -6,13 +6,25 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./comment-section.component.scss']
 })
 export class CommentSectionComponent {
-  @Input() posts!: any[]
   @Input() userName!: string
   @Input() name!: string
   @Input() profilePicture!: string
+  @Input() postId!: string
 
-  toggleLike(i: string, b: string) {
-    
+  posts: any[]
+
+  newPostData: any
+
+
+  constructor() {
+    this.posts = []
   }
 
+  toggleLike(i: string, b: string) {
+    this.posts = []
+  }
+
+  newPostSuccess(postData: any) {
+    this.posts.unshift(postData)
+  }
 }

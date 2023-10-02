@@ -7,14 +7,14 @@ import { ConfigService } from 'src/app/services/config.service';
 @Injectable({
   providedIn: 'root',
 })
-export class PostService {
+export class CommentService {
   API_URL!: string;
 
   constructor(private configService: ConfigService, private http: HttpClient) {
     this.API_URL = configService.getAPI_BaseURL();
   }
 
-  newPost(formData: FormData): Observable<I_postResponse> {
-    return this.http.post<I_postResponse>(`${this.API_URL}/user/posts/post`, formData);
+  newComment(formData: FormData): Observable<I_postResponse> {
+    return this.http.post<I_postResponse>(`${this.API_URL}/user/posts/new-comment`, formData);
   }
 }

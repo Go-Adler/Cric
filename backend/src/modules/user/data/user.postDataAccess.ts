@@ -2,6 +2,7 @@ import { UserEntity } from "../domain/user.schema"
 import { PostEntity } from "../domain/user.postSchema"
 import { Post } from "../../../shared/interfaces/userPost.interface"
 import mongoose, { Types } from "mongoose"
+import { CommentEntity } from "../domain/post.commentSchema"
 
 /**
  * UserPostDataAccess class for handling user post related operations
@@ -107,6 +108,28 @@ export class UserPostDataAccess {
     } catch (error: any) {
       console.error(`Error unliking post: ${error.message}`)
       throw new Error("Error unliking post")
+    }
+  }
+
+  /**
+   * Create a new comment for a post and return the created comment
+   * @param postId - The ID of the post to be commented
+   * @param postData - The comment data
+   */
+  async comment(postId: Types.ObjectId, postData: Post) {
+    try {
+      // Ensure userId is a valid ObjectId
+      if (!Types.ObjectId.isValid(postId)) {
+        throw new Error("Invalid userId")
+      }
+
+      // Create the post and return it
+      const comment = await CommentEntity.create(postData)
+      await PostEntity.findByIdAndUpdate(postId, { $push: { replies: comment._id } })
+      return comment
+    } catch (error: any) {
+      console.error(`Error in post creation: ${error.message}`)
+      throw new Error("Error in post creation")
     }
   }
 }
