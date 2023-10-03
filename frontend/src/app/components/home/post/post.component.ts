@@ -156,11 +156,6 @@ export class PostComponent implements OnChanges, OnDestroy {
     }
   }
 
-  toggleComment(index: number) {
-    this.posts[index].showCommentSection =
-      !this.posts[index].showCommentSection;
-  }
-
   ngOnDestroy(): void {
     // Unsubscribe all subscriptions
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());

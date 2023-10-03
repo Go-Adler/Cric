@@ -39,7 +39,8 @@
             </div>
 
             <!-- comment -->
-            <div class="gap-1 flex md:gap-3 justify-center items-center actionArea" (click)="toggleComment(i)">
+            <div class="gap-1 flex md:gap-3 justify-center items-center actionArea" (click)="posts[i].showCommentSection =
+            !posts[i].showCommentSection;">
                 <span class="text-lg lg:text-xl  material-symbols-rounded  cursor-pointer">
                     mode_comment
                 </span>
