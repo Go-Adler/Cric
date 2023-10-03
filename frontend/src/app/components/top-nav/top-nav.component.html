@@ -6,12 +6,22 @@
         <img [src]="profilePicture" alt="" class="rounded-full">
       </div>
     </div>
-
     <!-- logout question button -->
-    <div class="fixed mt-10" (click)="openDialog('0ms', '0ms')">
+    <div class="fixed mt-10 flex flex-col gap-2" routerLink="user/profile" (click)="showLogOut()">
       <div
         *ngIf="logOutPill"
-        class="flex justify-center p-2 lg:justify-center items-center logOutButton rounded-full cursor-pointer gap-4 mb-3 w"
+        class="flex justify-center p-2 lg:justify-center items-center logOutButton rounded-full cursor-pointer gap-4"
+      >
+        <span class="flex">
+          <span class="flex gap-2 p-2"
+            >Go to Profile
+            </span
+          >
+        </span>
+      </div>
+      <div
+        *ngIf="logOutPill"
+        class="flex justify-center p-2 lg:justify-center items-center logOutButton rounded-full cursor-pointer gap-4"
       >
         <span class="flex">
           <span class="flex gap-2 p-2"
