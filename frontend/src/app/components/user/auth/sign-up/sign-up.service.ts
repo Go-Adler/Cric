@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 
 import { messageResponse } from 'src/app/models/responses/message.model'
-import { ConfigService } from '../../services/config.service'
+import { ConfigService } from 'src/app/services/config.service' 
 import { User } from 'src/app/models/user.model'
 
 @Injectable({

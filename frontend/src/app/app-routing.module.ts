@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './components/home/home.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { OtpComponent } from './components/otp/otp.component';
-import { LogInComponent } from './components/log-in/log-in.component';
+import { LogInComponent } from './components/user/auth/log-in/log-in.component';
 import { ErrorComponent } from './components/error/error.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
@@ -15,7 +14,6 @@ import { PostComponent } from './components/post/post.component';
 import { LogInGuard } from './guards/logIn.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { SportsComponent } from './components/sports/sports.component'
-import { VerifySignUpOtpComponent } from './components/sign-up/verify-sign-up-otp/verify-sign-up-otp.component'
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component'
 
 
@@ -30,58 +28,10 @@ const routes: Routes = [
     component: ErrorComponent
   },
   {
-    path: 'user/home',
-    component: HomeComponent,
-    canActivate: [AuthGuard],
+    path: 'user',
+    loadChildren: () => import('./components/user/auth/log-in/log-in.routes').then(routes => routes.authRoutes)
   },
-
-  { path: 'user/post/:id', component: PostComponent, canActivate: [AuthGuard] },
-
-  { path: 'user/forgot-password', component: ForgotPasswordComponent },
-  {
-    path: 'user/log-in',
-    component: LogInComponent,
-    canActivate: [LogInGuard],
-  },
-  { path: 'user/error', component: ErrorComponent },
-
-  {
-    path: 'user/profile',
-    component: UserProfileComponent,
-    canActivate: [AuthGuard],
-  },
-
-  {
-    path: 'user/sports',
-    component: SportsComponent,
-    canActivate: [AuthGuard],
-  },
-
-  {
-    path: 'user/sign-up',
-    component: SignUpComponent,
-    canActivate: [LogInGuard],
-  },
-
-  {
-    path: 'user/sign-up-otp',
-    component: VerifySignUpOtpComponent,
-    canActivate: [LogInGuard],
-  },
-
-  {
-    path: 'user/verify-otp',
-    component: OtpComponent,
-    canActivate: [LogInGuard],
-  },
-
-  //Admin
-  { path: 'admin/users', component: UsersComponent },
-
-  { path: 'admin/home', component: AdminHomeComponent },
-  { path: 'admin/log-in', component: AdminLoginComponent },
-  { path: '**', component: PageNotFoundComponent },
-];
+]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button'
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog'
 import { UserService } from 'src/app/services/user.service'
-import { LogOutService } from '../log-in/log-out.service'
+import { LogOutService } from '../user/auth/log-in/log-out.service'
 
 @Component({
   selector: 'app-top-nav',

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { LogOutService } from '../log-in/log-out.service';
+import { LogOutService } from '../user/auth/log-in/log-out.service';
 import { Router } from '@angular/router';
 
 @Component({
