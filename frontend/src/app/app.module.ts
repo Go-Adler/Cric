@@ -14,8 +14,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { AppComponent } from './app.component';
 import { NavComponent } from './components/nav/nav.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { LogInComponent } from './components/log-in/log-in.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -42,7 +40,6 @@ import { MatCommonModule } from '@angular/material/core';
 import { UpdateProfilePictureComponent } from './components/user-profile/update-profile-picture/update-profile-picture.component';
 import { CloudinaryInterceptor } from './services/cloudinary.interceptor';
 import { TestFormCloudinaryComponent } from './components/user-profile/test-form-cloudinary/test-form-cloudinary.component';
-import { VerifySignUpOtpComponent } from './components/sign-up/verify-sign-up-otp/verify-sign-up-otp.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { TopNavComponent } from './components/top-nav/top-nav.component';
@@ -50,13 +47,15 @@ import { RightAreaComponent } from './components/right-area/right-area.component
 import { MatchInfoComponent } from './components/right-area/match-info/match-info.component';
 import { CommentSectionComponent } from './components/home/post/comment-section/comment-section.component';
 import { NewCommentComponent } from './components/home/post/comment-section/new-comment/new-comment.component';
+import { CommonModule } from '@angular/common'
+import { SignUpComponent } from './components/user/auth/sign-up/sign-up.component';
+import { LogInComponent } from './components/user/auth/log-in/log-in.component';
 
 @NgModule({
   declarations: [
+    SignUpComponent,
     AppComponent,
     NavComponent,
-    SignUpComponent,
-    LogInComponent,
     HomeComponent,
     OtpComponent,
     ErrorComponent,
@@ -72,7 +71,6 @@ import { NewCommentComponent } from './components/home/post/comment-section/new-
     SportsComponent,
     UpdateProfilePictureComponent,
     TestFormCloudinaryComponent,
-    VerifySignUpOtpComponent,
     PageNotFoundComponent,
     SideNavComponent,
     TopNavComponent,
@@ -80,8 +78,10 @@ import { NewCommentComponent } from './components/home/post/comment-section/new-
     MatchInfoComponent,
     CommentSectionComponent,
     NewCommentComponent,
+    LogInComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router"
+import { LogInComponent } from "./log-in.component"
 
 export const authRoutes: Routes = [
     {
@@ -7,6 +8,6 @@ export const authRoutes: Routes = [
     },
     {
         path: 'log-in',
-        loadComponent: () => import('./log-in.component').then(c => c.LogInComponent)
+        component: LogInComponent
     }
 ]
