@@ -9,7 +9,7 @@ import {
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { LogOutService } from '../components/user/auth/log-in/log-out.service';
+import { LogOutService } from '../components/admin-login/log-out.service';
 
 @Injectable()
 export class LogoutInterceptor implements HttpInterceptor {

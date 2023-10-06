@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { LogOutService } from '../user/auth/log-in/log-out.service';
+// import { LogOutService } from '../user/auth/log-in/log-out.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
@@ -22,7 +22,7 @@ export class NavComponent implements OnInit {
   name: string = ''
   
   constructor(
-    private logOutService: LogOutService,
+    // private logOutService: LogOutService,
     private router: Router,
     private userService: UserService
   ) {}
@@ -48,7 +48,7 @@ export class NavComponent implements OnInit {
   }
 
   logOut(): void {
-    this.logOutService.logOut();
+    // this.logOutService.logOut();
     this.router.navigate(['/user/log-in']);
   }
 }

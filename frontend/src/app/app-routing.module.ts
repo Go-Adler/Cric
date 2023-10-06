@@ -1,28 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LogInComponent } from './components/user/auth/log-in/log-in.component';
 import { ErrorComponent } from './components/error/error.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'user/log-in',
+    redirectTo: 'user',
     pathMatch: 'full',
   },
   {
-    path: "user/log-in",
-    component: LogInComponent
+    path: 'user',
+    loadChildren: () => import('./user/user.module').then(m => m.UserModule)
   },
   {
     path: 'error',
-    component: ErrorComponent
+    component: ErrorComponent,
   },
-  {
-    path: 'user',
-    loadChildren: () => import('./components/user/auth/log-in/log-in.routes').then(routes => routes.authRoutes)
-  },
-]
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

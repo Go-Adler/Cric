@@ -25,12 +25,9 @@ import { TokenInterceptor } from './services/auth.interceptor';
 import { ErrorComponent } from './components/error/error.component';
 import { PostComponent } from './components/home/post/post.component';
 import { NewPostComponent } from './components/home/new-post/new-post.component';
-import { LogoutInterceptor } from './services/auth.noToken.interceptor';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
-import { AdminLoginComponent } from './components/admin-login/admin-login.component';
-import { AdminNavComponent } from './components/admin-nav/admin-nav.component';
 import { UsersComponent } from './components/users/users.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { CommentComponent } from './components/comment/comment.component';
@@ -49,13 +46,13 @@ import { CommentSectionComponent } from './components/home/post/comment-section/
 import { NewCommentComponent } from './components/home/post/comment-section/new-comment/new-comment.component';
 import { CommonModule } from '@angular/common'
 import { SignUpComponent } from './components/user/auth/sign-up/sign-up.component';
-import { LogInComponent } from './components/user/auth/log-in/log-in.component';
+import { UserModule } from './user/user.module'
+import { AdminModule } from './admin/admin.module'
 
 @NgModule({
   declarations: [
     SignUpComponent,
     AppComponent,
-    NavComponent,
     HomeComponent,
     OtpComponent,
     ErrorComponent,
@@ -63,8 +60,6 @@ import { LogInComponent } from './components/user/auth/log-in/log-in.component';
     NewPostComponent,
     UserProfileComponent,
     AdminHomeComponent,
-    AdminLoginComponent,
-    AdminNavComponent,
     UsersComponent,
     ForgotPasswordComponent,
     CommentComponent,
@@ -78,9 +73,10 @@ import { LogInComponent } from './components/user/auth/log-in/log-in.component';
     MatchInfoComponent,
     CommentSectionComponent,
     NewCommentComponent,
-    LogInComponent
   ],
   imports: [
+    UserModule,
+    AdminModule,
     CommonModule,
     BrowserModule,
     AppRoutingModule,
@@ -107,11 +103,6 @@ import { LogInComponent } from './components/user/auth/log-in/log-in.component';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
-      multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LogoutInterceptor,
       multi: true,
     },
     {
