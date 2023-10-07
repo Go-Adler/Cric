@@ -5,7 +5,17 @@ import { LogInComponent } from './log-in/log-in.component'
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'log-in',
+    redirectTo: 'user/auth/log-in',
+    pathMatch: 'full'
+  },
+  {
+    path: 'user',
+    redirectTo: 'user/auth/log-in',
+    pathMatch: 'full'
+  },
+  {
+    path: 'user/auth',
+    redirectTo: 'user/auth/log-in',
     pathMatch: 'full'
   },
   {

@@ -4,11 +4,6 @@ import { UserComponent } from './user.component'
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'user/auth',
-    pathMatch:'full'
-  },
-  {
     path: 'auth',
     component: UserComponent,
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)

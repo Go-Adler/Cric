@@ -1,3 +1,7 @@
-div {
-    width: 100% !important;
-}
+$cricBlue: #1A2938;
+
+.appArea {
+    background: linear-gradient(45deg, $cricBlue, #000000, $cricBlue);
+    animation: gradient 10s linear infinite;
+    background-size: 100% 100% !important;
+  }
