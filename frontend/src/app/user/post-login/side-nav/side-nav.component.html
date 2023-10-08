@@ -1,0 +1,104 @@
+<section class="top-0 sticky h-screen flex border-r">
+  <!-- <div class="h-full w-full"></div> -->
+  <div class="h-full w-full pt-16 flex flex-col justify-between items-end">
+    <!-- icons -->
+    <div class="lg:w-10/12 p-2 flex flex-col gap-2">
+      <div
+        routerLinkActive="selectedSideItem"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 items-end p-3"
+        routerLink="user/home"
+      >
+        <span class="material-symbols-rounded text-3xl"> home </span>
+        <span class="sideItem text-xl hidden lg:block">Home</span>
+      </div>
+
+      <div
+        routerLinkActive="selectedSideItem"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
+        routerLink="user/sports"
+      >
+        <span class="material-symbols-rounded text-3xl"> sports_cricket </span>
+        <span class="sideItem text-xl hidden lg:block">Sports</span>
+      </div>
+
+      <div
+        routerLinkActive="selectedSideItem"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
+        routerLink="user/notifications"
+      >
+        <span class="material-symbols-rounded text-3xl"> notifications </span>
+        <span class="sideItem text-xl hidden lg:block">Notifications</span>
+      </div>
+
+      <div
+        routerLinkActive="selectedSideItem"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
+        routerLink="user/messages"
+      >
+        <span class="material-symbols-rounded text-3xl"> forum </span>
+        <span class="sideItem text-xl hidden lg:block">Messages</span>
+      </div>
+      <div
+        routerLinkActive="selectedSideItem"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
+        routerLink="user/friends"
+      >
+        <span class="material-symbols-rounded text-3xl"> group </span>
+        <span class="sideItem text-xl hidden lg:block">Friends</span>
+      </div>
+      <div
+        routerLinkActive="selectedSideItem"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
+        routerLink="user/saved"
+      >
+        <span class="material-symbols-rounded text-3xl"> bookmark </span>
+        <span class="sideItem text-xl hidden lg:block">Saved</span>
+      </div>
+
+      <div
+        routerLinkActive="selectedSideItem"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
+        routerLink="user/profile"
+      >
+        <span class="material-symbols-rounded text-3xl"> person </span>
+        <span class="sideItem text-xl hidden lg:block">Profile</span>
+      </div>
+
+      <div
+        routerLinkActive="selectedSideItem"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer gap-4 p-3"
+        routerLink="user/settings"
+      >
+        <span class="material-symbols-rounded text-3xl"> settings </span>
+        <span class="sideItem text-xl hidden lg:block">Settings</span>
+      </div>
+    </div>
+
+    <!-- accounts -->
+    <span class="w-full">
+      <div
+        *ngIf="logOutPill"
+        (click)="openDialog('0ms', '0ms')"
+        class="flex justify-center p-5 lg:justify-center items-center logOutButton rounded-full cursor-pointer gap-4 mb-3 w-10/12"
+      >
+        <span class="flex">
+          <span class="flex"
+            ><span> Log out<span class="md:hidden">?</span></span></span
+          >
+          <span class="hidden lg:block">&nbsp;@{{ userName }} ?</span>
+        </span>
+      </div>
+
+      <div
+        (click)="showLogOut()"
+        routerLinkActive="selectedSideItem"
+        class="flex justify-center p-3 lg:justify-start items-center profilePill sideItemArea ps-5 rounded-full cursor-pointer gap-4 mb-3 w-10/12"
+      >
+        <div class="w-6/12 lg:w-2/12">
+          <img [src]="profilePicture" alt="" class="rounded-full" />
+        </div>
+        <span class="hidden lg:block">{{ name }}</span>
+      </div>
+    </span>
+  </div>
+</section>

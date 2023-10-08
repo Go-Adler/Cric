@@ -1,0 +1,48 @@
+<nav class="top-0 sticky nav p-2 flex justify-center border-b z-50">
+  <div class="flex justify-between md:justify-center p-2">
+    <!-- account -->
+    <div class="w-2/12 md:hidden flex items-center" (click)="showLogOut()">
+      <div class="w-6/12 md:w-4/12 flex items-center">
+        <img [src]="profilePicture" alt="" class="rounded-full">
+      </div>
+    </div>
+    <!-- logout question button -->
+    <div class="fixed mt-10 flex flex-col gap-2" routerLink="user/profile" (click)="showLogOut()">
+      <div
+        *ngIf="logOutPill"
+        class="flex justify-center p-2 lg:justify-center items-center logOutButton rounded-full cursor-pointer gap-4"
+      >
+        <span class="flex">
+          <span class="flex gap-2 p-2"
+            >Go to Profile
+            </span
+          >
+        </span>
+      </div>
+      <div
+        *ngIf="logOutPill"
+        class="flex justify-center p-2 lg:justify-center items-center logOutButton rounded-full cursor-pointer gap-4"
+      >
+        <span class="flex">
+          <span class="flex gap-2 p-2"
+            ><span> Log out </span>
+            <span >@{{ userName }} ?</span>
+            </span
+          >
+        </span>
+      </div>
+    </div>
+
+    <!-- logo -->
+    <div class="w-2/12 md:w-4/12 flex justify-center items-center">
+      <div class="md:w-6/12 flex justify-center items-center">
+        <img src="https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/NameAndLogo+(1).png" alt="">
+      </div>
+    </div>
+
+    <!-- third part -->
+    <div class="w-2/12 md:hidden">
+
+    </div>
+  </div>
+</nav>

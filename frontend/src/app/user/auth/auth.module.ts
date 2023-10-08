@@ -17,12 +17,12 @@ import { AuthComponent } from './auth.component'
   ],
   imports: [
     CommonModule,
-    AuthRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    AuthRoutingModule,
   ]
 })
 export class AuthModule { }

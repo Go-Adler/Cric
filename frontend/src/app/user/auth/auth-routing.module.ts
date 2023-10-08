@@ -9,11 +9,6 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'user',
-    redirectTo: 'user/auth/log-in',
-    pathMatch: 'full'
-  },
-  {
     path: 'user/auth',
     redirectTo: 'user/auth/log-in',
     pathMatch: 'full'

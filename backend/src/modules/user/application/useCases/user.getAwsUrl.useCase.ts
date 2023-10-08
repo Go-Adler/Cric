@@ -1,7 +1,6 @@
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { Post } from '../../../../shared/interfaces/userPost.interface'
-import { CommentEntity } from '../../../../shared/interfaces/userComment.interface'
 
 export class GetAwsUrlUseCase {
   private awsAccessKey
@@ -11,8 +10,8 @@ export class GetAwsUrlUseCase {
   private s3
 
   constructor() {
-    this.awsAccessKey = process.env.AWS_ACCESS_KEY!
-    this.awsSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY!
+    this.awsAccessKey = process.env.AWS_BUCKET_ACCESS_KEY!
+    this.awsSecretAccessKey = process.env.AWS_BUCKET_SECRET_ACCESS_KEY!
     this.bucketName = process.env.AWS_BUCKET_NAME!
     this.bucketRegion = process.env.AWS_REGION!
 

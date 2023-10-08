@@ -5,7 +5,7 @@ import {
   SimpleChanges,
   OnDestroy,
 } from '@angular/core';
-import { PostService } from '../home.post.service';
+import { PostService } from '../home.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { I_post } from 'src/app/models/responses/message.model';

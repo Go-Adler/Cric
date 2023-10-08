@@ -1,0 +1,33 @@
+<nav class="flex p-2 md:hidden">
+    <!-- Home tab -->
+    <div [title]="'Home'" [style.cursor]="'pointer'"
+      class="w-full flex justify-center items-center" routerLink="/user/home">
+      <span class="material-symbols-rounded text-3xl">
+        home
+      </span>
+    </div>
+
+    <!-- Sports tab -->
+    <div [title]="'Sports'" [style.cursor]="'pointer'"
+      class="w-full flex justify-center items-center" routerLink="/user/sports">
+      <span class="material-symbols-rounded text-3xl">
+        sports_cricket
+        </span>
+    </div>
+
+    <!-- Notification tab -->
+    <div [title]="'Notifications'" [style.cursor]="'pointer'"
+      class="w-full flex justify-center items-center">
+      <span class="material-symbols-rounded text-3xl">
+        notifications
+        </span>
+    </div>
+
+    <!-- Messages tab -->
+    <div [title]="'Messages'" [style.cursor]="'pointer'"
+      class="w-full flex justify-center items-center">
+      <span class="material-symbols-rounded text-3xl">
+        chat_bubble
+        </span>
+    </div>
+</nav>
