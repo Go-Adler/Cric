@@ -8,6 +8,8 @@ import { RightAreaComponent } from './right-area/right-area.component'
 import { TopNavComponent } from './top-nav/top-nav.component'
 import { MatchInfoComponent } from './right-area/match-info/match-info.component'
 import { PostLoginComponent } from './post-login.component'
+import { UserProfileModule } from './user-profile/user-profile.module'
+import { RouterModule } from '@angular/router'
 
 
 @NgModule({
@@ -17,11 +19,13 @@ import { PostLoginComponent } from './post-login.component'
     RightAreaComponent,
     TopNavComponent,
     MatchInfoComponent,
-    PostLoginComponent
+    PostLoginComponent,
   ],
   imports: [
+    RouterModule,
     CommonModule,
-    PostLoginRoutingModule
+    PostLoginRoutingModule,
+    UserProfileModule,
   ]
 })
 export class PostLoginModule { }

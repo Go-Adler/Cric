@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { UserRoutingModule } from './user-routing.module';
 import { AuthModule } from './auth/auth.module';
 import { UserComponent } from './user.component'
-import { PostLoginModule } from './post-login/post-login.module'
+import { HomeModule } from './post-login/home/home.module'
 
 @NgModule({
   declarations: [
@@ -12,9 +12,9 @@ import { PostLoginModule } from './post-login/post-login.module'
   ],
   imports: [
     AuthModule,
-    PostLoginModule,
     CommonModule,
-    UserRoutingModule
+    HomeModule,
+    UserRoutingModule,
   ]
 })
 export class UserModule { }
