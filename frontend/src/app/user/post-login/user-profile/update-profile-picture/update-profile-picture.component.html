@@ -1,9 +1,9 @@
 <div
-class="changeProfilePictureArea bg-black/60  flex flex-column align-items-center justify-content-center"
+class="bg-black/60 p-48 flex justify-center items-center z-10 fixed top-0 w-full h-full  left-0"
 >
 
 <!-- profile picture  change card -->
-<mat-card class="w-11/12 p-2 lg:w-6/12">
+<mat-card class="w-11/12 p-2 lg:w-6/12 ">
 
   <!-- close button -->
   <span class="flex justify-end">
@@ -14,7 +14,7 @@ class="changeProfilePictureArea bg-black/60  flex flex-column align-items-center
   </span>
 
   <!-- select picure -->
-  <span class="selectPicture flex flex-column items-center mb-2"  [style.cursor]="'pointer'" (click)="clickInput()">
+  <span class="selectPicture flex flex-col items-center mb-2"  [style.cursor]="'pointer'" (click)="clickInput()">
     <mat-icon class="text-4xl">add_photo_alternate</mat-icon>
     <span>Select new profile picture</span>
   </span>
@@ -26,7 +26,7 @@ class="changeProfilePictureArea bg-black/60  flex flex-column align-items-center
   <div class="flex items-center justify-center gap-2">
     
     <!-- selected image -->
-    <mat-card class="w-11/12  p-2 border selectedArea">
+    <mat-card class="w-11/12 p-2 border selectedArea">
       <span class="text-stone-500 flex justify-center">Selected photo</span>
       <div class="max-w-10/12">
         <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1"

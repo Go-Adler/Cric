@@ -67,18 +67,8 @@ export class UpdateProfilePictureComponent {
     const formData = new FormData();
     formData.append('file', this.uploadingImage.blob, this.uploadingImage.name);
 
+    form
     // Replace 'your_cloud_name' with your actual Cloudinary cloud name
-    this.httpClient.post(`https://api.cloudinary.com/v1_1/dprjb18ng/upload`, formData).subscribe(
-      (response) => {
-        // Handle the server's response here
-        console.log('Image upload successful', response);
-        // Provide user feedback here if needed
-      },
-      (error) => {
-        // Handle any errors that occur during the upload
-        console.error('Image upload failed', error);
-        // Provide user feedback here if needed
-      }
-    );
+   
   }
 }
