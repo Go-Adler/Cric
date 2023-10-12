@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog'
 import { MatMenuTrigger } from '@angular/material/menu';
 import { UserService } from 'src/app/services/user.service';
-// import { LogOutService } from '../user/auth/log-in/log-out.service'
+import { LogOutService } from 'src/app/user/auth/log-in/log-out.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -61,9 +61,11 @@ export class SideNavComponent implements OnInit {
   imports: [MatDialogModule, MatButtonModule],
 })
 export class DialogAnimationsExampleDialog {
-  // constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>, public logOutService: LogOutService) { }
+  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>, public logOutService: LogOutService) { }
 
   logOut() {
-    // this.logOutService.logOut()
+    console.log(67);
+    
+    this.logOutService.logOut()
   }
 }

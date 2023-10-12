@@ -3,14 +3,14 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import crypto from "crypto";
 
 export class AwsUploadUseCase {
-  private awsAccessKey: string;
-  private awsSecretAccessKey: string;
+  private awsBucketAccessKey: string;
+  private awsBucketSecretAccessKey: string;
   private bucketName: string;
   private bucketRegion: string;
 
   constructor() {
-    this.awsAccessKey = process.env.AWS_ACCESS_KEY!;
-    this.awsSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY!;
+    this.awsBucketAccessKey = process.env.AWS_BUCKET_ACCESS_KEY!;
+    this.awsBucketSecretAccessKey = process.env.AWS_BUCKET_SECRET_ACCESS_KEY!;
     this.bucketName = process.env.AWS_BUCKET_NAME!;
     this.bucketRegion = process.env.AWS_REGION!;
   }
@@ -27,8 +27,8 @@ export class AwsUploadUseCase {
       // Create an S3 client
       const s3 = new S3Client({
         credentials: {
-          accessKeyId: this.awsAccessKey,
-          secretAccessKey: this.awsSecretAccessKey,
+          accessKeyId: this.awsBucketAccessKey,
+          secretAccessKey: this.awsBucketSecretAccessKey,
         },
         region: this.bucketRegion,
       });

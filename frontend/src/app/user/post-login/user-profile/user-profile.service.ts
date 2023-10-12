@@ -16,9 +16,7 @@ export class UserProfileService {
   }
 
   uploadProfilePicture(data: any): Observable<I_LoginResponse> {
-    console.log(19, data);
-
-    const sendData = { data}
+    const sendData = { data };
     
     return this.http.post<I_LoginResponse>(
       `${this.API_URL}/user/upload`,

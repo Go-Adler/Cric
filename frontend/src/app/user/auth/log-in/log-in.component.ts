@@ -29,7 +29,7 @@ export class LogInComponent implements OnInit {
 
   ngOnInit(): void {
     this.logInForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
       password: [
         '',
         [

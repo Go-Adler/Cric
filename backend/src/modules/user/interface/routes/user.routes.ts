@@ -22,6 +22,7 @@ const { userBasicInfo } = new UserDataController()
 const router = express.Router()
 
 router.use('/posts', postRoutes)
+// router.use('/profile', )
 
 router.get('/basic-info', verifyJwt, userBasicInfo)
 router.get('/resend-otp', verifyVerifyToken, resendOtp)

@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser'
 import { HttpClient } from '@angular/common/http'
+import { UserProfileService } from '../user-profile.service'
 
 
 @Component({
@@ -26,6 +27,7 @@ export class UpdateProfilePictureComponent {
   constructor(
     private sanitizer: DomSanitizer,
     private httpClient: HttpClient,
+    private userProfileService: UserProfileService
   ) {} 
 
   closeChangeProfilePicture() {
@@ -67,8 +69,7 @@ export class UpdateProfilePictureComponent {
     const formData = new FormData();
     formData.append('file', this.uploadingImage.blob, this.uploadingImage.name);
 
-    form
-    // Replace 'your_cloud_name' with your actual Cloudinary cloud name
+    this.userProfileService.uploadProfilePicture(formData)
    
   }
 }
