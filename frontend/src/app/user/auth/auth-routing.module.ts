@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LogInComponent } from './log-in/log-in.component'
 import { SignUpComponent } from './sign-up/sign-up.component'
+import { VerifySignUpOtpComponent } from './sign-up/verify-sign-up-otp/verify-sign-up-otp.component'
 
 const routes: Routes = [
   {
@@ -24,7 +25,7 @@ const routes: Routes = [
   },
   {
     path: 'sign-up-otp',
-    component: SignUpComponent,
+    component: VerifySignUpOtpComponent,
   }
 ];
 

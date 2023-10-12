@@ -29,6 +29,6 @@ export class CreateUserUseCase {
     const userId = await this.userDataAccess.createUser(name, userName, gender, email, phone, passwordHash);
     
     // Return true to indicate successful user creation
-    return userId;
+    return userId ;
   }
 }

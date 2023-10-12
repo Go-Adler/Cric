@@ -15,7 +15,7 @@
         <td>{{user.email}}</td>
         <td><span class="badge badge-secondary">{{user.isBlocked ? 'Blocked' : 'Active'}}</span></td>
         <td>
-          <button (click)="toggleUserBlock(user.isBlocked, user._id, i)" class="btn btn-success btn-sm" [ngClass]="{'blocked': user.isBlocked, 'ublocked': !user.isBlocked}">{{user.isBlocked? 'Unblock': 'Block'}}</button>
+          <!-- <button (click)="toggleUserBlock(user.isBlocked, user._id, i)" class="btn btn-success btn-sm" [ngClass]="{'blocked': user.isBlocked, 'ublocked': !user.isBlocked}">{{user.isBlocked? 'Unblock': 'Block'}}</button> -->
         </td>
       </tr>
       <!-- Add more user rows as needed -->

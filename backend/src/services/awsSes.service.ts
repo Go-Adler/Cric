@@ -14,9 +14,6 @@ export class AwsSesService {
     this.region = process.env.AWS_REGION!
     this.source = process.env.AWS_SES_SENDER!
 
-    console.log(this.accessKeyId, this.secretAccessKey, this.region, this.source, 17);
-    
-
     const SES_CONFIG = {
       region: this.region,
       credentials: {
@@ -106,8 +103,7 @@ export class AwsSesService {
       }
 
       const command = new SendEmailCommand(params)
-      const res = await this.AWS_SES.send(command)
-      console.log(res, 101)
+      await this.AWS_SES.send(command)
     } catch (error: any) {
       console.error(error.message)
       throw new Error(error.message)

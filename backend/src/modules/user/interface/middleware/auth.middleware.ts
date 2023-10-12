@@ -96,7 +96,7 @@ export class JwtMiddleware {
           .status(401)
           .json({ message: 'Access denied. No token provided.' })
       }
-
+      
       // Extract token from the Authorization header
       const verifyToken = authHeader.split(' ')[1]
 
