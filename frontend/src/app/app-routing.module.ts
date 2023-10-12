@@ -11,7 +11,7 @@ const routes: Routes = [
     loadChildren: () => import('./user/user.module').then(m => m.UserModule)
   },
   {
-    path: 'error',
+    path: '**',
     component: ErrorComponent,
   },
 ];

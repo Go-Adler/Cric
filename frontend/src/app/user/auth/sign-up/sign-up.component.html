@@ -1,11 +1,14 @@
-<div class="pt-5">
-  <div class="container mt-5 d-flex flex-column lg:w-6/12">
+<div class="pt-5 h-screen w-screen flex justify-center items-center flex-col">
+   <!-- logo -->
+   <img class="img-fluid w-28 md:w-44" src="https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/NameAndLogo+(1).png"
+   alt="">
+  <div class="container mt-5 d-flex flex-column lg:w-6/12 p-8">
     <div class="row d-flex justify-content-center mb-4">
-      <div class="col-8 col-xl-6 d-flex justify-content-center fw-medium"><span class="fs-3">Sign up to continue</span>
+      <div class="flex justify-center"><span class="text-xl">Sign up to continue</span>
       </div>
     </div>
     <form action="" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-      <div *ngIf="errorMessage" class="w-100 d-flex justify-content-center gap-2 errorMessage fs-6 mb-1"><span>{{errorMessage}}.</span><a routerLink="/user/log-in" class="logIn"> Log in?</a> </div>
+      <div *ngIf="errorMessage" class="w-full flex justify-center gap-2 errorMessage mb-2"><span>{{errorMessage}}.</span><a routerLink="/user/log-in" class="logIn"> Log in?</a> </div>
       <!-- Name -->
       <div class="row d-flex justify-content-center">
         <div class="col-8 col-xl-6 d-flex flex-column p-0">
@@ -48,7 +51,7 @@
                 *ngIf="(signUpForm.get('email')?.invalid && (signUpForm.get('email')?.dirty || signUpForm.get('email')?.touched)) && (signUpForm.get('email')?.errors?.['required'])"
                 class="p-0">Email cannot be empty</mat-error>
               <mat-error
-                *ngIf="(signUpForm.get('email')?.invalid && (signUpForm.get('email')?.dirty || signUpForm.get('email')?.touched)) && (signUpForm.get('email')?.errors?.['email'])">Please
+                *ngIf="(signUpForm.get('email')?.invalid && (signUpForm.get('email')?.dirty || signUpForm.get('email')?.touched)) && (signUpForm.get('email')?.errors?.['pattern'])">Please
                 input email in the correct format</mat-error>
             </mat-form-field>
           </p>
@@ -136,16 +139,15 @@
       </div>
 
       <!-- Submit -->
-      <div class="row d-flex justify-content-center">
-        <div class="col-8 col-xl-6 p-0">
+      <div class="flex justify-center">
           <button mat-raised-button type="submit" [disabled]="!signUpForm.valid"
+          class="mb-2"
             [ngStyle]="{'opacity': (!signUpForm.valid) ? '0.5' : '1'}">{{isSigningUp ? 'Signing up.. ' : 'Sign up'}}</button>
-        </div>
       </div>
 
-      <span class="row-fluid d-flex justify-content-center mt-2 gap-1">
-        <span class="col-auto d-flex justify-content-end m-0 p-0">Already have an account?</span>
-        <a class="col-auto d-flex justify-content-start m-0 p-0" routerLink="/user/log-in">Log in</a>
+      <span class="flex justify-center mt-2 gap-1">
+        <span class="col flex justify-end">Already have an account?</span>
+        <a class="col flex justify-start underline font-normal" routerLink="/user/log-in">Log in</a>
       </span>
     </form>
   </div>

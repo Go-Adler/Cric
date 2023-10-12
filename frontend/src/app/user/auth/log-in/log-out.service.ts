@@ -14,8 +14,6 @@ export class LogOutService {
   ) {}
 
   logOut(): void {
-    console.log(17);
-    
     this.userService.changeToDefaultProfilePicture();
     localStorage.removeItem('token');
     this.authService.setLoginStatus(false);

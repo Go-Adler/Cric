@@ -6,7 +6,7 @@ import {
   ValidatorFn,
   AbstractControl,
 } from '@angular/forms';
-import { OTP_Service } from '../../otp/otp.service';
+import { OTP_Service } from 'src/app/components/otp/otp.service';
 import { Router } from '@angular/router';
 
 @Component({

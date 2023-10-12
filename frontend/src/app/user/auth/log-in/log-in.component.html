@@ -30,7 +30,7 @@
                     *ngIf="(logInForm.get('email')?.invalid && (logInForm.get('email')?.dirty || logInForm.get('email')?.touched)) && (logInForm.get('email')?.errors?.['required'])"
                     class="p-0">Email cannot be empty</mat-error>
                   <mat-error
-                    *ngIf="(logInForm.get('email')?.invalid && (logInForm.get('email')?.dirty || logInForm.get('email')?.touched)) && (logInForm.get('email')?.errors?.['email'])">Please
+                    *ngIf="(logInForm.get('email')?.invalid && (logInForm.get('email')?.dirty || logInForm.get('email')?.touched)) && (logInForm.get('email')?.errors?.['pattern'])">Please
                     input email in the correct format</mat-error>
                 </mat-form-field>
               </p>

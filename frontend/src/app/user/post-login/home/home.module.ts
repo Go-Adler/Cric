@@ -13,6 +13,8 @@ import { CommentSectionComponent } from './post/comment-section/comment-section.
 import { NewCommentComponent } from './post/comment-section/new-comment/new-comment.component'
 import { HomeRoutingModule } from './home-routing.module'
 import { FeedComponent } from './feed/feed.component'
+import { MatButtonModule } from '@angular/material/button'
+import { MatDividerModule } from '@angular/material/divider'
 
 
 
@@ -33,6 +35,9 @@ import { FeedComponent } from './feed/feed.component'
     MatIconModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
     TimeagoModule.forRoot(),
     HomeRoutingModule
   ]

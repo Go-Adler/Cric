@@ -8,11 +8,18 @@ import { MatIconModule } from '@angular/material/icon'
 import { LogInComponent } from './log-in/log-in.component'
 import { MatInputModule } from '@angular/material/input';
 import { AuthComponent } from './auth.component'
+import { SignUpComponent } from './sign-up/sign-up.component'
+import { VerifySignUpOtpComponent } from './sign-up/verify-sign-up-otp/verify-sign-up-otp.component'
+import { MatSelectModule } from '@angular/material/select'
+import { MatDividerModule } from '@angular/material/divider'
+import { MatButtonModule } from '@angular/material/button'
 
 
 @NgModule({
   declarations: [
     LogInComponent,
+    SignUpComponent,
+    VerifySignUpOtpComponent,
     AuthComponent
   ],
   imports: [
@@ -22,6 +29,11 @@ import { AuthComponent } from './auth.component'
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatDividerModule,
     AuthRoutingModule,
   ]
 })

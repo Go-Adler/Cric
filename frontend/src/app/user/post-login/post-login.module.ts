@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router'
 
 import { PostLoginRoutingModule } from './post-login-routing.module';
 import { SideNavComponent } from './side-nav/side-nav.component'
@@ -9,7 +10,8 @@ import { TopNavComponent } from './top-nav/top-nav.component'
 import { MatchInfoComponent } from './right-area/match-info/match-info.component'
 import { PostLoginComponent } from './post-login.component'
 import { UserProfileModule } from './user-profile/user-profile.module'
-import { RouterModule } from '@angular/router'
+import { HomeModule } from './home/home.module'
+
 
 
 @NgModule({
@@ -24,8 +26,9 @@ import { RouterModule } from '@angular/router'
   imports: [
     RouterModule,
     CommonModule,
-    PostLoginRoutingModule,
+    HomeModule,
     UserProfileModule,
+    PostLoginRoutingModule,
   ]
 })
 export class PostLoginModule { }

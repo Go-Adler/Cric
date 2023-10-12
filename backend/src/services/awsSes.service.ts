@@ -14,6 +14,9 @@ export class AwsSesService {
     this.region = process.env.AWS_REGION!
     this.source = process.env.AWS_SES_SENDER!
 
+    console.log(this.accessKeyId, this.secretAccessKey, this.region, this.source, 17);
+    
+
     const SES_CONFIG = {
       region: this.region,
       credentials: {
