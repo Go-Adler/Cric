@@ -6,18 +6,23 @@ import { LogInGuard } from '../guards/logIn.guard'
 import { AuthGuard } from '../guards/auth.guard'
 
 const routes: Routes = [
-  {
-    path: '',
-    component: PostLoginComponent,
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./post-login/post-login.module').then(m => m.PostLoginModule)
-  },
-  {
-    path: 'auth',
-    component: UserComponent,
-    canActivate: [LogInGuard],
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
-  },
+  // {
+  //   path: '',
+  //   pathMatch: 'full',
+  //   redirectTo: '/user/auth/log-in'
+  // },
+  // {
+  //   path: '',
+  //   component: PostLoginComponent,
+  //   canActivate: [AuthGuard],
+  //   loadChildren: () => import('./post-login/post-login.module').then(m => m.PostLoginModule)
+  // },
+  // {
+  //   path: 'auth',
+  //   component: UserComponent,
+  //   canActivate: [LogInGuard],
+  //   loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+  // },
 ];
 
 @NgModule({

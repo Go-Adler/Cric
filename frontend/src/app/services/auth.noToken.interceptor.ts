@@ -25,8 +25,6 @@ export class LogoutInterceptor implements HttpInterceptor {
           if (event instanceof HttpResponse) {
             
             const responseBody = event.body;
-            console.log(responseBody, 26);
-
             if (responseBody.token) {
               const token = responseBody.token;
               localStorage.setItem('token', token);
@@ -37,8 +35,8 @@ export class LogoutInterceptor implements HttpInterceptor {
             }
             if (responseBody.invalidToken) {
               this.logOutService.logOut();
-              if (this.router.url !== '/user/log-in') {
-                this.router.navigateByUrl('/user/log-in');
+              if (this.router.url !== '/user/auth/log-in') {
+                this.router.navigateByUrl('/user/auth/log-in');
               }
             }
 

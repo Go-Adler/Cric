@@ -5,28 +5,32 @@ import { SignUpComponent } from './sign-up/sign-up.component'
 import { VerifySignUpOtpComponent } from './sign-up/verify-sign-up-otp/verify-sign-up-otp.component'
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'user/auth/log-in',
-    pathMatch: 'full'
-  },
-  {
-    path: 'user/auth',
-    redirectTo: 'user/auth/log-in',
-    pathMatch: 'full'
-  },
-  {
-    path: 'log-in',
-    component: LogInComponent
-  },
-  {
-    path: 'sign-up',
-    component: SignUpComponent,
-  },
-  {
-    path: 'sign-up-otp',
-    component: VerifySignUpOtpComponent,
-  }
+  // {
+  //   path: '',
+  //   redirectTo: 'user/auth/log-in',
+  //   pathMatch: 'full'
+  // },
+  // {
+  //   path: 'user/auth',
+  //   redirectTo: 'user/auth/log-in',
+  //   pathMatch: 'full'
+  // },
+  // {
+  //   path: 'log-in',
+  //   component: LogInComponent
+  // },
+  // {
+  //   path: 'sign-up',
+  //   component: SignUpComponent,
+  // },
+  // {
+  //   path: 'sign-up-otp',
+  //   component: VerifySignUpOtpComponent,
+  // },
+  // {
+  //   path: '**',
+  //   redirectTo: 'error'
+  // }
 ];
 
 @NgModule({

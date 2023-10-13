@@ -32,7 +32,7 @@ export class AdminNavComponent {
   logOut(): void {
     
     this.logOutService.logOut();
-    this.router.navigate(['/user/log-in']);
+    this.router.navigate(['/user/auth/log-in']);
   }
 
 } 

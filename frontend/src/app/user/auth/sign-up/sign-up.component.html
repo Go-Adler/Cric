@@ -1,154 +1,228 @@
 <div class="pt-5 h-screen w-screen flex justify-center items-center flex-col">
-   <!-- logo -->
-   <img class="img-fluid w-28 md:w-44" src="https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/NameAndLogo+(1).png"
-   alt="">
-  <div class="container mt-5 d-flex flex-column lg:w-6/12 p-8">
-    <div class="row d-flex justify-content-center mb-4">
-      <div class="flex justify-center"><span class="text-xl">Sign up to continue</span>
+  <div class="w-screen flex flex-col justify-center items-center md:w-8/12">
+    <!-- logo -->
+    <img
+      class="img-fluid w-28 md:w-44"
+      src="https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/NameAndLogo+(1).png"
+      alt=""
+    />
+    <div class="container mt-5 d-flex flex-column lg:w-6/12 p-8">
+      <div class="row d-flex justify-content-center mb-4">
+        <div class="flex justify-center">
+          <span class="text-xl">Sign up to continue</span>
+        </div>
       </div>
+      <form action="" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        <div
+          *ngIf="errorMessage"
+          class="w-full flex justify-center gap-2 errorMessage mb-2"
+        >
+          <span>{{ errorMessage }}.</span
+          ><a routerLink="/user/auth/log-in" class="logIn"> Log in?</a>
+        </div>
+        <!-- Name -->
+        <div class="row d-flex justify-content-center">
+          <div class="col-8 col-xl-6 d-flex flex-column p-0">
+            <p class="m-0">
+              <mat-form-field appearance="fill" hideRequiredMarker="true">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name" />
+                <mat-error
+                  *ngIf="
+                    signUpForm.get('name')?.invalid &&
+                    (signUpForm.get('name')?.dirty ||
+                      signUpForm.get('name')?.touched)
+                  "
+                >
+                  <ng-container
+                    *ngIf="signUpForm.get('name')?.errors?.['required']"
+                    >Name cannot be empty</ng-container
+                  >
+                  <ng-container
+                    *ngIf="signUpForm.get('name')?.errors?.['pattern']"
+                    >Please input name in the correct format</ng-container
+                  >
+                </mat-error>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <!-- User name -->
+        <div class="row d-flex justify-content-center">
+          <div class="col-8 col-xl-6 d-flex flex-column p-0">
+            <p class="m-0">
+              <mat-form-field appearance="fill" hideRequiredMarker="true">
+                <mat-label>User Name</mat-label>
+                <input matInput formControlName="userName" />
+                <mat-error> </mat-error>
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="row d-flex justify-content-center">
+          <div class="col-8 col-xl-6 d-flex flex-column p-0">
+            <p class="m-0">
+              <mat-form-field appearance="fill" hideRequiredMarker="true">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" />
+                <mat-error
+                  *ngIf="(signUpForm.get('email')?.invalid && (signUpForm.get('email')?.dirty || signUpForm.get('email')?.touched)) && (signUpForm.get('email')?.errors?.['required'])"
+                  class="p-0"
+                  >Email cannot be empty</mat-error
+                >
+                <mat-error
+                  *ngIf="(signUpForm.get('email')?.invalid && (signUpForm.get('email')?.dirty || signUpForm.get('email')?.touched)) && (signUpForm.get('email')?.errors?.['pattern'])"
+                  >Please input email in the correct format</mat-error
+                >
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="row d-flex justify-content-center">
+          <div class="col-8 col-xl-6 d-flex flex-column p-0">
+            <p class="m-0">
+              <mat-form-field appearance="fill" hideRequiredMarker="true">
+                <mat-label>Phone</mat-label>
+                <input matInput formControlName="phone" />
+                <mat-error
+                  *ngIf="(signUpForm.get('phone')?.invalid && (signUpForm.get('phone')?.dirty || signUpForm.get('phone')?.touched)) && (signUpForm.get('phone')?.errors?.['required'])"
+                  class="p-0"
+                  >Phone cannot be empty</mat-error
+                >
+                <mat-error
+                  *ngIf="(signUpForm.get('phone')?.invalid && (signUpForm.get('phone')?.dirty || signUpForm.get('phone')?.touched)) && (signUpForm.get('phone')?.errors?.['pattern'])"
+                  >Please input phone in the correct format</mat-error
+                >
+              </mat-form-field>
+            </p>
+          </div>
+        </div>
+
+        <!-- Gender -->
+
+        <div class="row d-flex justify-content-center">
+          <div class="col-8 col-xl-6 d-flex flex-column p-0">
+            <mat-form-field hideRequiredMarker="true">
+              <mat-label>Gender</mat-label>
+              <mat-select formControlName="gender">
+                <mat-option value="male">Male</mat-option>
+                <mat-option value="female">Female</mat-option>
+                <mat-option value="other">Other</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="(signUpForm.get('gender')?.invalid && (signUpForm.get('gender')?.dirty || signUpForm.get('gender')?.touched)) && (signUpForm.get('gender')?.errors?.['required'])"
+                class="p-0"
+                >Please select a gender</mat-error
+              >
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="row d-flex justify-content-center">
+          <div class="col-8 col-xl-6 d-flex justify-content-center p-0">
+            <mat-form-field hideRequiredMarker="true">
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                [type]="hide ? 'password' : 'text'"
+                formControlName="password"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon class="text-stone-400">{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+              <mat-error
+                *ngIf="(signUpForm.get('password')?.invalid && (signUpForm.get('password')?.dirty || signUpForm.get('password')?.touched)) && (signUpForm.get('password')?.errors?.['required'])"
+                class="p-0"
+                >Password cannot be empty</mat-error
+              >
+              <mat-error
+                *ngIf="(signUpForm.get('password')?.invalid && (signUpForm.get('password')?.dirty || signUpForm.get('password')?.touched)) && (signUpForm.get('password')?.errors?.['pattern'])"
+                >Please input password in the correct format</mat-error
+              >
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Confirm password -->
+        <div class="row d-flex justify-content-center">
+          <div class="col-8 col-xl-6 d-flex justify-content-center p-0">
+            <mat-form-field hideRequiredMarker="true">
+              <mat-label>Confirm password</mat-label>
+              <input
+                matInput
+                [type]="confirmHide ? 'password' : 'text'"
+                formControlName="confirmPassword"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="confirmHide = !confirmHide"
+                [attr.aria-label]="'confirmHide password'"
+                [attr.aria-pressed]="confirmHide"
+              >
+                <mat-icon class="text-stone-400">{{
+                  confirmHide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+              <mat-error
+                *ngIf="(signUpForm.get('confirmPassword')?.invalid && (signUpForm.get('confirmPassword')?.dirty || signUpForm.get('confirmPassword')?.touched)) && (signUpForm.get('confirmPassword')?.errors?.['required'])"
+                class="p-0"
+                >Password cannot be empty</mat-error
+              >
+              <mat-error
+                *ngIf="(signUpForm.get('confirmPassword')?.invalid && (signUpForm.get('confirmPassword')?.dirty || signUpForm.get('confirmPassword')?.touched)) && (signUpForm.get('confirmPassword')?.errors?.['pattern'])"
+                >Please input password in the correct format</mat-error
+              >
+              <mat-hint
+                *ngIf="
+                  signUpForm.get('password')?.valid &&
+                  (signUpForm.get('confirmPassword')?.dirty ||
+                    signUpForm.get('confirmPassword')?.touched) &&
+                  signUpForm.get('password')?.value !=
+                    signUpForm.get('confirmPassword')?.value
+                "
+                >Password not matching</mat-hint
+              >
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="flex justify-center">
+          <button
+            mat-raised-button
+            type="submit"
+            [disabled]="!signUpForm.valid"
+            class="mb-2"
+            [ngStyle]="{ opacity: !signUpForm.valid ? '0.5' : '1' }"
+          >
+            {{ isSigningUp ? "Signing up.. " : "Sign up" }}
+          </button>
+        </div>
+
+        <span class="flex justify-center mt-2 gap-1">
+          <span class="col flex justify-end">Already have an account?</span>
+          <a
+            class="col flex justify-start underline font-normal"
+            routerLink="/user/auth/log-in"
+            >Log in</a
+          >
+        </span>
+      </form>
     </div>
-    <form action="" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-      <div *ngIf="errorMessage" class="w-full flex justify-center gap-2 errorMessage mb-2"><span>{{errorMessage}}.</span><a routerLink="/user/log-in" class="logIn"> Log in?</a> </div>
-      <!-- Name -->
-      <div class="row d-flex justify-content-center">
-        <div class="col-8 col-xl-6 d-flex flex-column p-0">
-          <p class="m-0">
-            <mat-form-field appearance="fill" hideRequiredMarker="true">
-              <mat-label>Name</mat-label>
-              <input matInput formControlName="name">
-              <mat-error *ngIf="signUpForm.get('name')?.invalid && (signUpForm.get('name')?.dirty || signUpForm.get('name')?.touched)">
-                <ng-container *ngIf="signUpForm.get('name')?.errors?.['required']">Name cannot be empty</ng-container>
-                <ng-container *ngIf="signUpForm.get('name')?.errors?.['pattern']">Please input name in the correct format</ng-container>
-              </mat-error>
-            </mat-form-field>
-          </p>
-        </div>
-      </div>
-
-      <!-- User name -->
-      <div class="row d-flex justify-content-center">
-        <div class="col-8 col-xl-6 d-flex flex-column p-0">
-          <p class="m-0">
-            <mat-form-field appearance="fill" hideRequiredMarker="true">
-              <mat-label>User Name</mat-label>
-              <input matInput formControlName="userName">
-              <mat-error>
-                
-              </mat-error>
-            </mat-form-field>
-          </p>
-        </div>
-      </div>
-
-      <!-- Email -->
-      <div class="row d-flex justify-content-center">
-        <div class="col-8 col-xl-6 d-flex flex-column p-0">
-          <p class="m-0">
-            <mat-form-field appearance="fill" hideRequiredMarker="true">
-              <mat-label>Email</mat-label>
-              <input matInput formControlName="email">
-              <mat-error
-                *ngIf="(signUpForm.get('email')?.invalid && (signUpForm.get('email')?.dirty || signUpForm.get('email')?.touched)) && (signUpForm.get('email')?.errors?.['required'])"
-                class="p-0">Email cannot be empty</mat-error>
-              <mat-error
-                *ngIf="(signUpForm.get('email')?.invalid && (signUpForm.get('email')?.dirty || signUpForm.get('email')?.touched)) && (signUpForm.get('email')?.errors?.['pattern'])">Please
-                input email in the correct format</mat-error>
-            </mat-form-field>
-          </p>
-        </div>
-      </div>
-
-      <!-- Phone -->
-      <div class="row d-flex justify-content-center">
-        <div class="col-8 col-xl-6 d-flex flex-column p-0">
-          <p class="m-0">
-            <mat-form-field appearance="fill" hideRequiredMarker="true">
-              <mat-label>Phone</mat-label>
-              <input matInput formControlName="phone">
-              <mat-error
-                *ngIf="(signUpForm.get('phone')?.invalid && (signUpForm.get('phone')?.dirty || signUpForm.get('phone')?.touched)) && (signUpForm.get('phone')?.errors?.['required'])"
-                class="p-0">Phone cannot be empty</mat-error>
-              <mat-error
-                *ngIf="(signUpForm.get('phone')?.invalid && (signUpForm.get('phone')?.dirty || signUpForm.get('phone')?.touched)) && (signUpForm.get('phone')?.errors?.['pattern'])">Please
-                input phone in the correct format</mat-error>
-            </mat-form-field>
-
-          </p>
-        </div>
-      </div>
-
-      <!-- Gender -->
-
-      <div class="row d-flex justify-content-center">
-        <div class="col-8 col-xl-6 d-flex flex-column p-0">
-          <mat-form-field hideRequiredMarker="true">
-            <mat-label>Gender</mat-label>
-            <mat-select formControlName="gender">
-              <mat-option value="male">Male</mat-option>
-              <mat-option value="female">Female</mat-option>
-              <mat-option value="other">Other</mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="(signUpForm.get('gender')?.invalid && (signUpForm.get('gender')?.dirty || signUpForm.get('gender')?.touched)) && (signUpForm.get('gender')?.errors?.['required'])"
-              class="p-0">Please select a gender</mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <!-- Password -->
-      <div class="row d-flex justify-content-center">
-        <div class="col-8 col-xl-6 d-flex justify-content-center p-0">
-          <mat-form-field hideRequiredMarker="true">
-            <mat-label>Password</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hide">
-              <mat-icon class="text-stone-400">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-            <mat-error
-              *ngIf="(signUpForm.get('password')?.invalid && (signUpForm.get('password')?.dirty || signUpForm.get('password')?.touched)) && (signUpForm.get('password')?.errors?.['required'])"
-              class="p-0">Password cannot be empty</mat-error>
-            <mat-error
-              *ngIf="(signUpForm.get('password')?.invalid && (signUpForm.get('password')?.dirty || signUpForm.get('password')?.touched)) && (signUpForm.get('password')?.errors?.['pattern'])">Please
-              input password in the correct format</mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <!-- Confirm password -->
-      <div class="row d-flex justify-content-center">
-        <div class="col-8 col-xl-6 d-flex justify-content-center p-0">
-          <mat-form-field hideRequiredMarker="true">
-            <mat-label>Confirm password</mat-label>
-            <input matInput [type]="confirmHide ? 'password' : 'text'" formControlName="confirmPassword">
-            <button mat-icon-button matSuffix (click)="confirmHide = !confirmHide"
-              [attr.aria-label]="'confirmHide password'" [attr.aria-pressed]="confirmHide">
-              <mat-icon class="text-stone-400">{{confirmHide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-            <mat-error
-              *ngIf="(signUpForm.get('confirmPassword')?.invalid && (signUpForm.get('confirmPassword')?.dirty || signUpForm.get('confirmPassword')?.touched)) && (signUpForm.get('confirmPassword')?.errors?.['required'])"
-              class="p-0">Password cannot be empty</mat-error>
-            <mat-error
-              *ngIf="(signUpForm.get('confirmPassword')?.invalid && (signUpForm.get('confirmPassword')?.dirty || signUpForm.get('confirmPassword')?.touched)) && (signUpForm.get('confirmPassword')?.errors?.['pattern'])">Please
-              input password in the correct format</mat-error>
-            <mat-hint
-              *ngIf="((signUpForm.get('password')?.valid && (signUpForm.get('confirmPassword')?.dirty || signUpForm.get('confirmPassword')?.touched) && (signUpForm.get('password')?.value != signUpForm.get('confirmPassword')?.value)))">Password
-              not matching</mat-hint>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <!-- Submit -->
-      <div class="flex justify-center">
-          <button mat-raised-button type="submit" [disabled]="!signUpForm.valid"
-          class="mb-2"
-            [ngStyle]="{'opacity': (!signUpForm.valid) ? '0.5' : '1'}">{{isSigningUp ? 'Signing up.. ' : 'Sign up'}}</button>
-      </div>
-
-      <span class="flex justify-center mt-2 gap-1">
-        <span class="col flex justify-end">Already have an account?</span>
-        <a class="col flex justify-start underline font-normal" routerLink="/user/log-in">Log in</a>
-      </span>
-    </form>
   </div>
 </div>

@@ -18,13 +18,13 @@ import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TokenInterceptor } from './services/auth.interceptor';
+import { LogoutInterceptor } from './services/auth.noToken.interceptor';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 import { UsersComponent } from './components/users/users.component';
 import { SportsComponent } from './components/sports/sports.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatCommonModule } from '@angular/material/core';
-import { CloudinaryInterceptor } from './services/cloudinary.interceptor';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { CommonModule } from '@angular/common'
 import { UserModule } from './user/user.module'
@@ -43,7 +43,6 @@ import { AdminModule } from './admin/admin.module'
     AdminModule,
     CommonModule,
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
@@ -61,6 +60,7 @@ import { AdminModule } from './admin/admin.module'
     MatCommonModule,
     MatCardModule,
     MatDialogModule,
+    AppRoutingModule,
   ],
   providers: [
     {
@@ -70,7 +70,7 @@ import { AdminModule } from './admin/admin.module'
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: CloudinaryInterceptor,
+      useClass: LogoutInterceptor,
       multi: true,
     },
   ],

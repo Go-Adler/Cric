@@ -48,11 +48,11 @@
     </div>
 
     <!-- after submit -->
-    <div *ngIf="verified" class="d-flex flex-column mt-40 align-items-center container">
-      <div class="row d-flex gap-4 align-items-center">
-        <span class="fs-3 d-flex justify-content-center gap-2 align-items-end">Verification success <i
+    <div *ngIf="verified" class="flex flex-col mt-40 items-center text-lg">
+      <div class="flex flex-col gap-4 items-center  w-full">
+        <span class="flex justify-center gap-2 items-center">Verification success <i
             class="fa-regular fa-thumbs-up"></i></span>
-        <button mat-raised-button class="continueButton" routerLink="/user/home">Continue</button>
+        <button mat-raised-button class="w-full" routerLink="/user/home">Continue</button>
       </div>
     </div>
   </div>
