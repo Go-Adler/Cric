@@ -1,134 +1,142 @@
-<div class="pt-5 d-flex justify-content-center align-items-center  ">
-  <!-- otp -->
-  <div class="container mt-5 d-flex lg:w-6/12 flex-column" *ngIf="!verified && !resetPassword && !passwordChanged">
-    <div class="row d-flex justify-content-center mb-4">
-      <div class="col-8 col-xl-6 d-flex justify-content-center fw-medium"><span class="fs-5">Enter OTP to
-          change password</span>
-      </div>
-      <div *ngIf="otpResent" class="flex text-green-500 items-center gap-1 justify-center">
-        OTP resent successfully <span class="flex items-start mb-1"><mat-icon class="text-lg">check_circle_outline</mat-icon></span>
-      </div>
+<div class="min-h-screen flex flex-col justify-center items-center p-3">
+  <div class="pt-5 flex flex-col justify-center items-center md:w-6/12">
+    <div class="w-32 mb-16">
+      <img
+        src="https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/NameAndLogo+(1).png"
+        alt=""
+      />
     </div>
-    <form action="" [formGroup]="OTP_Form" (ngSubmit)="onSubmit()" class="d-flex flex-column gap-2">
-
-      <!-- OTP -->
-      <div class="row d-flex justify-content-center">
-        <div class="col-8 col-xl-6 d-flex flex-column p-0">
-          <p class="m-0">
-            <mat-form-field appearance="fill" hideRequiredMarker="true">
-              <mat-label>OTP</mat-label>
-              <input matInput formControlName="OTP" type="number" (input)="onInput()">
-              <mat-error
-                *ngIf="(OTP_Form.get('OTP')?.invalid && (OTP_Form.get('OTP')?.dirty || OTP_Form.get('OTP')?.touched)) && (OTP_Form.get('OTP')?.errors?.['required'])"
-                class="p-0">OTP cannot be empty</mat-error>
-              <mat-error
-                *ngIf="(OTP_Form.get('OTP')?.invalid && (OTP_Form.get('OTP')?.dirty || OTP_Form.get('OTP')?.touched)) && (OTP_Form.get('OTP')?.errors?.['pattern'])">Please
-                input OTP in the correct format</mat-error>
-              <mat-error *ngIf="otpInvalid">Wrong otp try again</mat-error>
-              <mat-hint *ngIf="otpInvalid">Wrong otp try again</mat-hint>
-            </mat-form-field>
-          </p>
-          <span class="flex justify-end gap-2"><button type="button" [disabled]="!isResendEnabled" (click)="resendOtp()" [ngClass]="{'disabledButton': !isResendEnabled, 'underline': !isResendEnabled }">Resend otp?</button><span class="" *ngIf="!isResendEnabled">({{ formatTime(timerValue) }})</span></span>
+    <!-- otp -->
+    <div class="mt-5 flex lg:w-6/12 flex-col w-full" *ngIf="!verified && !resetPassword && !passwordChanged">
+      <div class="flex flex-col justify-center mb-4">
+        <div class="flex justify-center fw-medium"><span class="fs-5">Enter OTP to
+            change password</span>
         </div>
-
-      </div>
-
-      <!-- Submit -->
-      <div class="row d-flex justify-content-center">
-        <div class="col-8 col-xl-6 p-0">
-          <button mat-raised-button type="submit" [disabled]="!OTP_Form.valid"
-            [ngStyle]="{'opacity': (!OTP_Form.valid) ? '0.5' : '1'}">Continue</button>
+        <div *ngIf="otpResent" class="flex text-green-500 items-center gap-1 justify-center">
+          OTP resent successfully <span class="flex items-start mb-1"><mat-icon class="text-lg">check_circle_outline</mat-icon></span>
         </div>
       </div>
-    </form>
-  </div>
-
-  <!-- verified -->
-  <div *ngIf="verified" class="d-flex flex-column align-items-center container">
-    <div class="row d-flex gap-4 align-items-center">
-      <span class="fs-3 d-flex justify-content-center gap-2 align-items-end">Verification success <i
-          class="fa-regular fa-thumbs-up"></i></span>
-      <button mat-raised-button class="continueButton" routerLink="/user/home">Continue</button>
-    </div>
-  </div>
-
-  <!-- reset password -->
-  <div *ngIf="resetPassword" class="d-flex flex-column align-items-center container">
-    <div class="row d-flex gap-4 align-items-center lg:w-8/12">
-      <span class="text-sm md:text-lg d-flex justify-content-center align-items-center flex items-end">
-        <span class="mr-1">OTP verified</span>
-        <span class="text-md p-0 text-green-600 flex items-end m-0 ml-1">
-          <i class="fa-regular fa-circle-check m-0 p-0"></i></span>
-        <span>, Change password</span>
-      </span>
-      <form action="" [formGroup]="signUpForm" (ngSubmit)="submitPassword()">
-
-
-        <!-- Password -->
+      <form action="" [formGroup]="OTP_Form" (ngSubmit)="onSubmit()" class="d-flex flex-column gap-2">
+  
+        <!-- OTP -->
         <div class="row d-flex justify-content-center">
-          <div class="col-8 col-xl-6 d-flex justify-content-center p-0">
-            <mat-form-field hideRequiredMarker="true">
-              <mat-label>Password</mat-label>
-              <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-              </button>
-              <mat-error
-                *ngIf="(signUpForm.get('password')?.invalid && (signUpForm.get('password')?.dirty || signUpForm.get('password')?.touched)) && (signUpForm.get('password')?.errors?.['required'])"
-                class="p-0">Password cannot be empty</mat-error>
-              <mat-error
-                *ngIf="(signUpForm.get('password')?.invalid && (signUpForm.get('password')?.dirty || signUpForm.get('password')?.touched)) && (signUpForm.get('password')?.errors?.['pattern'])">Please
-                input password in the correct format</mat-error>
-            </mat-form-field>
+          <div class="col-8 col-xl-6 d-flex flex-column p-0">
+            <p class="m-0">
+              <mat-form-field appearance="fill" hideRequiredMarker="true">
+                <mat-label>OTP</mat-label>
+                <input matInput formControlName="OTP" type="number" (input)="onInput()">
+                <mat-error
+                  *ngIf="(OTP_Form.get('OTP')?.invalid && (OTP_Form.get('OTP')?.dirty || OTP_Form.get('OTP')?.touched)) && (OTP_Form.get('OTP')?.errors?.['required'])"
+                  class="p-0">OTP cannot be empty</mat-error>
+                <mat-error
+                  *ngIf="(OTP_Form.get('OTP')?.invalid && (OTP_Form.get('OTP')?.dirty || OTP_Form.get('OTP')?.touched)) && (OTP_Form.get('OTP')?.errors?.['pattern'])">Please
+                  input OTP in the correct format</mat-error>
+                <mat-error *ngIf="otpInvalid">Wrong otp try again</mat-error>
+                <mat-hint *ngIf="otpInvalid">Wrong otp try again</mat-hint>
+              </mat-form-field>
+            </p>
+            <span class="flex justify-end gap-2"><button type="button" [disabled]="!isResendEnabled" (click)="resendOtp()" [ngClass]="{'disabledButton': !isResendEnabled, 'underline': !isResendEnabled }">Resend otp?</button><span class="" *ngIf="!isResendEnabled">({{ formatTime(timerValue) }})</span></span>
           </div>
+  
         </div>
-
-        <!-- Confirm password -->
-        <div class="row d-flex justify-content-center">
-          <div class="col-8 col-xl-6 d-flex justify-content-center p-0">
-            <mat-form-field hideRequiredMarker="true">
-              <mat-label>Confirm password</mat-label>
-              <input matInput [type]="confirmHide ? 'password' : 'text'" formControlName="confirmPassword">
-              <button mat-icon-button matSuffix (click)="confirmHide = !confirmHide"
-                [attr.aria-label]="'confirmHide password'" [attr.aria-pressed]="confirmHide">
-                <mat-icon>{{confirmHide ? 'visibility_off' : 'visibility'}}</mat-icon>
-              </button>
-              <mat-error
-                *ngIf="(signUpForm.get('confirmPassword')?.invalid && (signUpForm.get('confirmPassword')?.dirty || signUpForm.get('confirmPassword')?.touched)) && (signUpForm.get('confirmPassword')?.errors?.['required'])"
-                class="p-0">Password cannot be empty</mat-error>
-              <mat-error
-                *ngIf="(signUpForm.get('confirmPassword')?.invalid && (signUpForm.get('confirmPassword')?.dirty || signUpForm.get('confirmPassword')?.touched)) && (signUpForm.get('confirmPassword')?.errors?.['pattern'])">Please
-                input password in the correct format</mat-error>
-              <mat-hint
-                *ngIf="((signUpForm.get('password')?.valid && (signUpForm.get('confirmPassword')?.dirty || signUpForm.get('confirmPassword')?.touched) && (signUpForm.get('password')?.value != signUpForm.get('confirmPassword')?.value)))">Password
-                not matching</mat-hint>
-            </mat-form-field>
-          </div>
-        </div>
-
+  
         <!-- Submit -->
         <div class="row d-flex justify-content-center">
           <div class="col-8 col-xl-6 p-0">
-            <button mat-raised-button type="submit" [disabled]="!signUpForm.valid"
-              [ngStyle]="{'opacity': (!signUpForm.valid) ? '0.5' : '1'}">{{isSigningUp ? 'Changing password...' :
-              'Change
-              password'}}</button>
+            <button mat-raised-button type="submit" [disabled]="!OTP_Form.valid"
+              [ngStyle]="{'opacity': (!OTP_Form.valid) ? '0.5' : '1'}">Continue</button>
           </div>
         </div>
-
-        <span class="row-fluid d-flex justify-content-center mt-2 gap-1">
-          <span class="col-auto d-flex justify-content-end m-0 p-0">Remember your password?</span>
-          <a class="col-auto d-flex justify-content-start m-0 p-0" routerLink="/user/auth/log-in">Log in</a>
-        </span>
       </form>
     </div>
-  </div>
-  <div *ngIf="passwordChanged" class="d-flex flex-column align-items-center container">
-    <div class="row d-flex gap-4 align-items-center">
-      <span class="fs-3 d-flex justify-content-center gap-2 align-items-end">Password changed <i
-          class="fa-regular fa-thumbs-up"></i></span>
-      <button mat-raised-button class="continueButton" routerLink="/user/auth/log-in">Continue to log in</button>
+  
+    <!-- verified -->
+    <div *ngIf="verified" class="flex flex-col items-center">
+      <div class="flex gap-4 items-center">
+        <span class="flex justify-center gap-2 items-end">Verification success <i
+            class="fa-regular fa-thumbs-up"></i></span>
+        <button mat-raised-button class="continueButton" routerLink="/user/home">Continue</button>
+      </div>
+    </div>
+  
+    <!-- reset password -->
+    <div *ngIf="resetPassword" class="flex flex-col items-center">
+      <div class="flex gap-4 items-center lg:w-8/12">
+        <span class="text-sm md:text-lg flex justify-center items-end">
+          <span class="mr-1">OTP verified</span>
+          <span class="text-md p-0 text-green-600 flex items-end m-0 ml-1">
+            <i class="fa-regular fa-circle-check m-0 p-0"></i></span>
+          <span>, Change password</span>
+        </span>
+        <form action="" [formGroup]="signUpForm" (ngSubmit)="submitPassword()">
+  
+  
+          <!-- Password -->
+          <div class="row d-flex justify-content-center">
+            <div class="col-8 col-xl-6 d-flex justify-content-center p-0">
+              <mat-form-field hideRequiredMarker="true">
+                <mat-label>Password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error
+                  *ngIf="(signUpForm.get('password')?.invalid && (signUpForm.get('password')?.dirty || signUpForm.get('password')?.touched)) && (signUpForm.get('password')?.errors?.['required'])"
+                  class="p-0">Password cannot be empty</mat-error>
+                <mat-error
+                  *ngIf="(signUpForm.get('password')?.invalid && (signUpForm.get('password')?.dirty || signUpForm.get('password')?.touched)) && (signUpForm.get('password')?.errors?.['pattern'])">Please
+                  input password in the correct format</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+  
+          <!-- Confirm password -->
+          <div class="row d-flex justify-content-center">
+            <div class="col-8 col-xl-6 d-flex justify-content-center p-0">
+              <mat-form-field hideRequiredMarker="true">
+                <mat-label>Confirm password</mat-label>
+                <input matInput [type]="confirmHide ? 'password' : 'text'" formControlName="confirmPassword">
+                <button mat-icon-button matSuffix (click)="confirmHide = !confirmHide"
+                  [attr.aria-label]="'confirmHide password'" [attr.aria-pressed]="confirmHide">
+                  <mat-icon>{{confirmHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error
+                  *ngIf="(signUpForm.get('confirmPassword')?.invalid && (signUpForm.get('confirmPassword')?.dirty || signUpForm.get('confirmPassword')?.touched)) && (signUpForm.get('confirmPassword')?.errors?.['required'])"
+                  class="p-0">Password cannot be empty</mat-error>
+                <mat-error
+                  *ngIf="(signUpForm.get('confirmPassword')?.invalid && (signUpForm.get('confirmPassword')?.dirty || signUpForm.get('confirmPassword')?.touched)) && (signUpForm.get('confirmPassword')?.errors?.['pattern'])">Please
+                  input password in the correct format</mat-error>
+                <mat-hint
+                  *ngIf="((signUpForm.get('password')?.valid && (signUpForm.get('confirmPassword')?.dirty || signUpForm.get('confirmPassword')?.touched) && (signUpForm.get('password')?.value != signUpForm.get('confirmPassword')?.value)))">Password
+                  not matching</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+  
+          <!-- Submit -->
+          <div class="row d-flex justify-content-center">
+            <div class="col-8 col-xl-6 p-0">
+              <button mat-raised-button type="submit" [disabled]="!signUpForm.valid"
+                [ngStyle]="{'opacity': (!signUpForm.valid) ? '0.5' : '1'}">{{isSigningUp ? 'Changing password...' :
+                'Change
+                password'}}</button>
+            </div>
+          </div>
+  
+          <span class="row-fluid d-flex justify-content-center mt-2 gap-1">
+            <span class="col-auto d-flex justify-content-end m-0 p-0">Remember your password?</span>
+            <a class="col-auto d-flex justify-content-start m-0 p-0" routerLink="/user/auth/log-in">Log in</a>
+          </span>
+        </form>
+      </div>
+    </div>
+    <div *ngIf="passwordChanged" class="d-flex flex-column align-items-center container">
+      <div class="row d-flex gap-4 align-items-center">
+        <span class="fs-3 d-flex justify-content-center gap-2 align-items-end">Password changed <i
+            class="fa-regular fa-thumbs-up"></i></span>
+        <button mat-raised-button class="continueButton" routerLink="/user/auth/log-in">Continue to log in</button>
+      </div>
     </div>
   </div>
 </div>
