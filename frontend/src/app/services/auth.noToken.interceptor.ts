@@ -9,7 +9,7 @@ import {
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { LogOutService } from '../components/admin-login/log-out.service';
+import { LogOutService } from '../user/auth/log-in/log-out.service';
 
 @Injectable()
 export class LogoutInterceptor implements HttpInterceptor {
@@ -41,7 +41,7 @@ export class LogoutInterceptor implements HttpInterceptor {
             }
 
             if (responseBody.notVerified) {
-              this.router.navigateByUrl('/user/verify-otp');
+              this.router.navigateByUrl('/user/auth/verify-otp');
             }
           }
         },
