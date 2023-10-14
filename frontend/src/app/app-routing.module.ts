@@ -1,18 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserComponent } from './user/user.component'
+import { PostLoginComponent } from './user/post-login/post-login.component'
 
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'user/auth/log-in'
-  },
-  {
-    path: 'user',
-    component: UserComponent,
-    loadChildren: () => import('./user/user.module').then(m => m.UserModule)
-  },
+    component: PostLoginComponent,
+    loadChildren: () => import('./user/post-login/post-login.module').then(m => m.PostLoginModule)
+  }
 ];
 
 @NgModule({
