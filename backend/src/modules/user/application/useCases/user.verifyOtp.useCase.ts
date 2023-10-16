@@ -14,11 +14,8 @@ export class UserVerifyOtpUseCase {
 
   verifyOtp = async (userId: Types.ObjectId, otp: number) => {
     try {
-      console.log(userId, otp, 17);
-      
       // Check if the otp matches
       const OTP = await this.userOtpDataAccess.getOtp(userId)
-      console.log(otp, OTP, 18);
       
       if (OTP !== otp) {
         throw new InvalidOtpError('Incorrect otp')

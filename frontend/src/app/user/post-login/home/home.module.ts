@@ -15,20 +15,22 @@ import { HomeRoutingModule } from './home-routing.module'
 import { FeedComponent } from './feed/feed.component'
 import { MatButtonModule } from '@angular/material/button'
 import { MatDividerModule } from '@angular/material/divider'
+import { MatProgressBarModule } from '@angular/material/progress-bar'
 
 
 
 @NgModule({
   declarations: [
-    HomeComponent,
     NewPostComponent,
     PostComponent,
     CommentSectionComponent,
     NewCommentComponent,
-    FeedComponent
+    FeedComponent,
+    HomeComponent,
   ],
   imports: [
     CommonModule,
+    MatProgressBarModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,

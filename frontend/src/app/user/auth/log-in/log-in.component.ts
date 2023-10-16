@@ -66,7 +66,7 @@ export class LogInComponent implements OnInit {
           
           this.userService.getUserBasicInfo()
           this.authService.setLoginStatus(true);
-          this.router.navigate(['user/home']);
+          this.router.navigate(['/home']);
         }
       },
       (errorResponse) => {

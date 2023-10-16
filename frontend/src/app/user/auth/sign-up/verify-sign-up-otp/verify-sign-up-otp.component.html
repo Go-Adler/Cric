@@ -1,5 +1,5 @@
 <div class="flex flex-col items-center h-screen">
-  <div class=" w-11/12 md:w-8/12 lg:w-6/12">
+  <div class=" w-11/12 md:w-6/12 lg:w-3/12">
     <!-- logo -->
     <div class=" flex justify-center mt-5">
       <img class="img-fluid w-20 md:w-44"
@@ -29,7 +29,7 @@
               </mat-form-field>
               <ng-container>
                <mat-error
-               *ngIf="OTP_Form.get('OTP')?.errors?.['required']"
+               *ngIf="(OTP_Form.get('OTP')?.dirty || OTP_Form.get('OTP')?.touched) && OTP_Form.get('OTP')?.errors?.['required']"
                class="p-0">OTP cannot be empty</mat-error>
              <mat-error
                *ngIf="(OTP_Form.get('OTP')?.errors?.['pattern'])">Please
@@ -59,8 +59,10 @@
       <div class="flex flex-col gap-4 items-center  w-full">
         <span class="flex justify-center gap-2 items-center">Verification success <i
             class="fa-regular fa-thumbs-up"></i></span>
-        <button mat-raised-button class="w-full" routerLink="/user/home" (click)="verifying = true">Continue</button>
-        <mat-progress-bar *ngIf="verifying" mode="indeterminate"></mat-progress-bar>
+        <div class="w-full">
+          <button mat-raised-button class="w-full" routerLink="/user/home" (click)="verifying = true">Continue</button>
+          <mat-progress-bar *ngIf="verifying" mode="indeterminate"></mat-progress-bar>
+        </div>
         
       </div>
     </div>

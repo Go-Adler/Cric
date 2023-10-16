@@ -13,7 +13,7 @@ export const LogInGuard: CanActivateFn = (
   const token = localStorage.getItem('token');
   const router = inject(Router);
   if (token) {
-    router.navigateByUrl('/user/home');
+    router.navigateByUrl('/home');
 
     return false;
   } else {

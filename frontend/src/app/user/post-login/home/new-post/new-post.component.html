@@ -10,7 +10,12 @@
       </div>
       <span>
       <span *ngIf="selectedImage"  class="flex gap-1">
-        <img [src]="selectedImage" alt="Selected Image" class="w-2/4 rounded-md bg-red-500" />
+        <div class="flex flex-col">
+          <img [src]="selectedImage" alt="Selected Image" class="w-2/4 rounded-md bg-red-500" />
+          <div class="w-2/4">
+            <mat-progress-bar *ngIf="isPosting" mode="indeterminate"></mat-progress-bar>
+          </div>
+        </div>
         <span class="material-symbols-outlined cursor-pointer" (click)="onCloseImage()">
           cancel
           </span>
@@ -33,7 +38,7 @@
         <span class="material-symbols-rounded cursor-pointer" (click)="clickInput()">
           image
           </span>
-          <button [disabled]="!selectedImage && postForm.get('text')?.hasError('required')"  type="submit" mat-button class="postButton">{{isPosting ? 'Posting...' : 'Post'}}</button>
+          <button [disabled]="!selectedImage && postForm.get('text')?.hasError('required')"  type="submit" mat-button class="p-2">{{isPosting ? 'Posting' : 'Post'}}</button>
         </div>
       </form>
 </div>
