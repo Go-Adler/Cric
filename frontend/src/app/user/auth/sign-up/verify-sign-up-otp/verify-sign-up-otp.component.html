@@ -19,20 +19,26 @@
         <!-- OTP -->
         <div class="row  d-flex justify-content-center w-full">
           <div class="col-10 col-xl-6 d-flex flex-column p-0 ">
+            <div *ngIf="otpResent" class="flex text-green-500 items-center gap-1 justify-center">
+              OTP resent successfully <span class="flex items-start mb-1"><mat-icon class="text-lg">check_circle_outline</mat-icon></span>
+            </div>
             <p class="m-0">
               <mat-form-field appearance="fill" hideRequiredMarker="true">
                 <mat-label>OTP</mat-label>
                 <input matInput formControlName="OTP" type="number" (input)="onInput()">
-                <mat-error
-                  *ngIf="OTP_Form.get('OTP')?.errors?.['required']"
-                  class="p-0">OTP cannot be empty</mat-error>
-                <mat-error
-                  *ngIf="(OTP_Form.get('OTP')?.errors?.['pattern'])">Please
-                  input OTP in the correct format</mat-error>
-                <mat-error *ngIf="otpInvalid">Wrong otp try again</mat-error>
-                <mat-hint *ngIf="otpInvalid">Wrong otp try again</mat-hint>
               </mat-form-field>
+              <ng-container>
+               <mat-error
+               *ngIf="OTP_Form.get('OTP')?.errors?.['required']"
+               class="p-0">OTP cannot be empty</mat-error>
+             <mat-error
+               *ngIf="(OTP_Form.get('OTP')?.errors?.['pattern'])">Please
+               input OTP in the correct format</mat-error>
+             <mat-error *ngIf="otpInvalid">Wrong otp try again</mat-error>
+              </ng-container>
             </p>
+            <span class="flex justify-end mb-2 gap-2"><button class="underline" type="button" [disabled]="!isResendEnabled" (click)="resendOtp()" [ngClass]="{'disabledButton': !isResendEnabled, 'underline': !isResendEnabled }"><span class="underline">Resend otp?</span></button><span class="" *ngIf="!isResendEnabled">({{ formatTime(timerValue) }})</span></span>
+
           </div>
         </div>
 
@@ -42,6 +48,7 @@
           <div class="col-10 col-xl-6 p-0">
             <button mat-raised-button w-100 type="submit" [disabled]="!OTP_Form.valid"
               [ngStyle]="{'opacity': (!OTP_Form.valid) ? '0.5' : '1'}">Continue</button>
+              <mat-progress-bar *ngIf="verifying" mode="indeterminate"></mat-progress-bar>
           </div>
         </div>
       </form>
@@ -52,7 +59,9 @@
       <div class="flex flex-col gap-4 items-center  w-full">
         <span class="flex justify-center gap-2 items-center">Verification success <i
             class="fa-regular fa-thumbs-up"></i></span>
-        <button mat-raised-button class="w-full" routerLink="/user/home">Continue</button>
+        <button mat-raised-button class="w-full" routerLink="/user/home" (click)="verifying = true">Continue</button>
+        <mat-progress-bar *ngIf="verifying" mode="indeterminate"></mat-progress-bar>
+        
       </div>
     </div>
   </div>

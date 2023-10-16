@@ -23,12 +23,14 @@ export class OtpComponent implements OnInit, OnDestroy {
   hide: boolean = true;
   confirmHide: boolean = true;
   resetPassword: boolean = false;
-  isSigningUp: boolean = false;
+  isChangingPassword: boolean = false;
   passwordChanged: boolean = false;
   timerValue: number = 5;
   timer: any;
   isResendEnabled: boolean = false;
   otpResent: boolean = false
+  otpVerifying = false
+  continueToLogin = false
 
   constructor(
     private fb: FormBuilder,
@@ -90,9 +92,11 @@ export class OtpComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    this.otpVerifying = true
     const { OTP } = this.OTP_Form.value;
     this.otpService.verificationOTP(OTP).subscribe(
       (response) => {
+        this.otpVerifying = false
         if (response.otpVerified) {
           this.resetPassword = true;
         } else if (response.invalidOtp) {
@@ -103,9 +107,10 @@ export class OtpComponent implements OnInit, OnDestroy {
   }
 
   submitPassword() {
-    this.isSigningUp = true;
+    this.isChangingPassword = true;
     const { password } = this.signUpForm.value;
     this.otpService.changePassword(password).subscribe((response) => {
+      this.isChangingPassword = false
       if (response.changePassword) {
         this.resetPassword = false;
         this.passwordChanged = true;

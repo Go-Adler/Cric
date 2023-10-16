@@ -60,7 +60,7 @@ export class LogInComponent implements OnInit {
         } else if (response.wrongPassword) {
           this.wrongPassword = 'Wrong password';
         } else if (response.notVerified) {
-          this.router.navigate(['user/auth/verify-otp']);
+          this.router.navigate(['/auth/verify-otp']);
         } else {
           console.log('login succesful');
           

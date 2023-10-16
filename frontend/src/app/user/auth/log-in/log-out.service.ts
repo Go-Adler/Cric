@@ -17,6 +17,6 @@ export class LogOutService {
     this.userService.changeToDefaultProfilePicture();
     localStorage.removeItem('token');
     this.authService.setLoginStatus(false);
-    this.router.navigate(['user/auth/log-in']);
+    this.router.navigate(['/auth/log-in']);
   }
 }

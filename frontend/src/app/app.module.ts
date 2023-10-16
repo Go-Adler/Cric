@@ -29,6 +29,9 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { CommonModule } from '@angular/common'
 import { UserModule } from './user/user.module'
 import { AdminModule } from './admin/admin.module'
+import { PostLoginModule } from './user/post-login/post-login.module'
+import { AuthModule } from './user/auth/auth.module'
+import { RouterModule } from '@angular/router'
 
 @NgModule({
   declarations: [
@@ -41,6 +44,7 @@ import { AdminModule } from './admin/admin.module'
   imports: [
     UserModule,
     AdminModule,
+    RouterModule,
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,

@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component'
+import { PostLoginComponent } from './post-login.component'
 const routes: Routes = [
   {
     path: 'home',
-    component: HomeComponent
+    component: PostLoginComponent,
+    loadChildren: () => import('./home/home-routing.module').then(m => m.HomeRoutingModule)
   }
 ];
 

@@ -15,6 +15,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { OtpComponent } from './otp/otp.component'
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component'
+import {MatProgressBarModule} from '@angular/material/progress-bar'
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     MatButtonModule,
     MatDividerModule,
     AuthRoutingModule,
+    MatProgressBarModule,
   ],
 })
 export class AuthModule {}

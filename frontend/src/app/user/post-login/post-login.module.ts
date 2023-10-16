@@ -26,7 +26,6 @@ import { HomeModule } from './home/home.module'
   imports: [
     RouterModule,
     CommonModule,
-    HomeModule,
     UserProfileModule,
     PostLoginRoutingModule,
   ]

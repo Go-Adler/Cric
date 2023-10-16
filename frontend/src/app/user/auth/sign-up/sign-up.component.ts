@@ -88,7 +88,7 @@ export class SignUpComponent implements OnInit {
         if (response.error) {
           this.errorMessage = response.error;
         } else {
-          this.router.navigate(['/user/sign-up-otp']);
+          this.router.navigate(['/auth/sign-up-otp']);
         }
       },
       (error) => {

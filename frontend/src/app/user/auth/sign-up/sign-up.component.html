@@ -18,7 +18,7 @@
           class="w-full flex justify-center gap-2 errorMessage mb-2"
         >
           <span>{{ errorMessage }}.</span
-          ><a routerLink="/user/auth/log-in" class="logIn"> Log in?</a>
+          ><a routerLink="/auth/log-in" class="logIn"> Log in?</a>
         </div>
         <!-- Name -->
         <div class="row d-flex justify-content-center">
@@ -202,7 +202,7 @@
         </div>
 
         <!-- Submit -->
-        <div class="flex justify-center">
+        <div class="flex justify-center flex-col">
           <button
             mat-raised-button
             type="submit"
@@ -210,15 +210,16 @@
             class="mb-2"
             [ngStyle]="{ opacity: !signUpForm.valid ? '0.5' : '1' }"
           >
-            {{ isSigningUp ? "Signing up.. " : "Sign up" }}
+            {{ isSigningUp ? "Signing up " : "Sign up" }}
           </button>
+          <mat-progress-bar *ngIf="isSigningUp" mode="indeterminate"></mat-progress-bar>
         </div>
 
         <span class="flex justify-center mt-2 gap-1">
           <span class="col flex justify-end">Already have an account?</span>
           <a
             class="col flex justify-start underline font-normal"
-            routerLink="/user/auth/log-in"
+            routerLink="/auth/log-in"
             >Log in</a
           >
         </span>

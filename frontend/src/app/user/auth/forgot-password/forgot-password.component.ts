@@ -23,7 +23,7 @@ export class ForgotPasswordComponent {
 
   ngOnInit(): void {
     this.logInForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
     });
   }
 
@@ -38,7 +38,7 @@ export class ForgotPasswordComponent {
         if (response.userNotExisting) {
           this.errorMessage = 'User not existing';
         } else {
-          this.router.navigate(['user/auth/verify-otp']);
+          this.router.navigate(['/auth/verify-otp']);
         }
       },
       (errorResponse) => {
