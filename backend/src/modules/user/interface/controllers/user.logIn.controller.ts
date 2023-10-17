@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction } from 'express'
-import { UserExistingUseCase } from '../../application/useCases/user.existing.useCase'
-import { UserLoginUseCase } from '../../application/useCases/user.logIn.useCase'
-import { TokenUseCase } from '../../application/useCases/user.token.useCase'
-import { SendOTP_UseCase } from '../../application/useCases/user.sendOTP.useCase'
+import { Request, Response, NextFunction } from "express"
+import { UserExistingUseCase } from "../../application/useCases/user.existing.useCase"
+import { UserLoginUseCase } from "../../application/useCases/user.logIn.useCase"
+import { TokenUseCase } from "../../application/useCases/user.token.useCase"
+import { SendOTP_UseCase } from "../../application/useCases/user.sendOTP.useCase"
 
 export class UserLoginController {
   private userExistingUseCase: UserExistingUseCase
@@ -30,22 +30,19 @@ export class UserLoginController {
       let isVerified = await this.userLogInUseCase.isVerified(email)
       isVerified = !!isVerified
 
-      
-      
       if (userId) {
         const token = this.tokenUseCase.generateTokenWithUserId(userId, isVerified)
-        if (isVerified) res.json({ message: 'Verification success', token })
-        else {
+        if (isVerified) {
+          res.json({ message: "Verification success", token })
+        } else {
           await this.sendOtpUseCase.sendOTP(email)
           res.json({ notVerified: true, token })
         }
-      } 
-
-      
+      }
     } catch (error: any) {
-      if (error.message === 'InvalidPassword') {
+      if (error.message === "InvalidPassword") {
         return res.json({ wrongPassword: true })
-      } else if (error.message === 'NotVerified') {
+      } else if (error.message === "NotVerified") {
         return res.json({ notVerified: true })
       }
       return next(error)

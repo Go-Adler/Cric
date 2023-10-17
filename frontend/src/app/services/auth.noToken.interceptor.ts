@@ -42,7 +42,7 @@ export class LogoutInterceptor implements HttpInterceptor {
             }
 
             if (responseBody.notVerified) {
-              this.router.navigateByUrl('/auth/verify-otp');
+              this.router.navigateByUrl('/auth/sign-up-otp');
             }
           }
         },

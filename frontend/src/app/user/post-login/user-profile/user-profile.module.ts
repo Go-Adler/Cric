@@ -17,11 +17,11 @@ import { ImageCropperModule } from 'ngx-image-cropper'
   ],
   imports: [
     CommonModule,
-    UserProfileRoutingModule,
     MatIconModule,
     MatButtonModule,
     MatCardModule,
-    ImageCropperModule
+    ImageCropperModule,
+    UserProfileRoutingModule,
   ]
 })
 export class UserProfileModule { }
