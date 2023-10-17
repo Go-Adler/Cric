@@ -16,11 +16,10 @@ export class UserProfileService {
   }
 
   uploadProfilePicture(data: any): Observable<I_LoginResponse> {
-    const sendData = { data };
+    const sendData = { name: 'babu' };
+
+    console.log(20, this.API_URL, 20);
     
-    return this.http.post<I_LoginResponse>(
-      `${this.API_URL}/user/upload`,
-      sendData
-    );
+    return this.http.get<I_LoginResponse>(`${this.API_URL}/user/profile`,)
   }
 }

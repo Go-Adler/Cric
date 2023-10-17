@@ -27,4 +27,4 @@ router.post('/unlike-comment', unlikePost)
 router.post('/post', memoryStorage, userNewPost)
 router.post('/', getUserPosts)
 
-export { router as postRoutes }
+export { router as postRoutes } 

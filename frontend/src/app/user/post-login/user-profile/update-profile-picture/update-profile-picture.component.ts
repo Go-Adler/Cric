@@ -6,7 +6,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser'
-import { HttpClient } from '@angular/common/http'
 import { UserProfileService } from '../user-profile.service'
 
 
@@ -26,7 +25,6 @@ export class UpdateProfilePictureComponent {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private httpClient: HttpClient,
     private userProfileService: UserProfileService
   ) {} 
 

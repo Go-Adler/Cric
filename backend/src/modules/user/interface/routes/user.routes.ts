@@ -9,6 +9,7 @@ import { UserChangePasswordController } from '../controllers/user.changePassword
 import { UserDataController } from '../controllers/user.userDataController'
 import { UserResendOtpController } from '../controllers/user.resendOtp.controller'
 import { postRoutes } from './post.routes'
+import { profileRoutes } from './profile.routes'
 
 const { verifyJwt, verifyToken, verifyVerifyToken } = new JwtMiddleware()
 const { resendOtp } = new UserResendOtpController()
@@ -22,14 +23,15 @@ const { userBasicInfo } = new UserDataController()
 const router = express.Router()
 
 router.use('/posts', postRoutes)
-// router.use('/profile', )
+router.get('/profile', () => console.log(26))
+// router.use('/profile', profileRoutes)
 
 router.get('/basic-info', verifyJwt, userBasicInfo)
 router.get('/resend-otp', verifyVerifyToken, resendOtp)
 
 router.post('/log-in', userLogin)
 router.post('/sign-up', userSignUp)
-router.post('/upload')
+router.post('/upload',)
 router.post('/verification', verifyVerifyToken, verifyOtp)
 router.post('/forgot-password', forgotPassword)
 router.post('/forgot-password-otp', verifyVerifyToken)
