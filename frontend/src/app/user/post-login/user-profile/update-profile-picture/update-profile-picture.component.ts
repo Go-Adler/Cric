@@ -67,7 +67,7 @@ export class UpdateProfilePictureComponent {
     const formData = new FormData();
     formData.append('file', this.uploadingImage.blob, this.uploadingImage.name);
 
-    this.userProfileService.uploadProfilePicture(formData)
+    this.userProfileService.updateProfilePicture()
    
   }
 }

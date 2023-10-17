@@ -1,25 +1,27 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable } from "rxjs";
 
-import { I_LoginResponse } from 'src/app/models/responses/login.model';
-import { ConfigService } from 'src/app/services/config.service';
+import { ConfigService } from "src/app/services/config.service"
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root'
 })
-export class UserProfileService {
-  API_URL!: string;
+export class UserProfileService{
+    API_URL!: string
 
-  constructor(private configService: ConfigService, private http: HttpClient) {
-    this.API_URL = configService.getAPI_BaseURL();
-  }
+    constructor(private configService: ConfigService, private http: HttpClient) {
+        this.API_URL = configService.getAPI_BaseURL()
+    }
 
-  uploadProfilePicture(data: any): Observable<I_LoginResponse> {
-    const sendData = { name: 'babu' };
-
-    console.log(20, this.API_URL, 20);
-    
-    return this.http.get<I_LoginResponse>(`${this.API_URL}/user/profile`,)
-  }
+    updateProfilePicture(): Observable<any> {
+        const postData = { name: 'b' }
+        const httpOptions = {
+            headers: new HttpHeaders({
+              'content-type': 'application/json',
+            }),
+          }; 
+        console.log(19, this.API_URL)  
+        return this.http.post<any>(`${this.API_URL}/user/posts/unlike-post`, JSON.stringify(postData), httpOptions);
+    }
 }
