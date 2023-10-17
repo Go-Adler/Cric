@@ -6,7 +6,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser'
-import { UserProfileService } from '../user-profile.service'
+import { PostService } from '../user-profile.service'
+import { PostService as s } from './../../home/home.service'
 
 
 @Component({
@@ -25,7 +26,8 @@ export class UpdateProfilePictureComponent {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private userProfileService: UserProfileService
+    private userProfileService: PostService,
+    private s: s
   ) {} 
 
   closeChangeProfilePicture() {
@@ -66,8 +68,8 @@ export class UpdateProfilePictureComponent {
   submitPicture() {
     const formData = new FormData();
     formData.append('file', this.uploadingImage.blob, this.uploadingImage.name);
-
-    this.userProfileService.updateProfilePicture()
+    this.s.likePost('ss')
+    this.userProfileService.getPosts(1)
    
   }
 }
