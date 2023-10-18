@@ -11,21 +11,25 @@ export class UsersComponent implements OnInit {
 
   constructor(private userService: UsersService) {}
   ngOnInit(): void {
-    this.userService.getUsers().subscribe((data) => {
-      console.log(data.users);
-
-      this.users = data.users;
+    this.userService.getUsers().subscribe({
+      next: (data) => {
+        this.users = data.users;
+      }
     });
   }
 
   toggleUserBlock(isBlocked: boolean, id: string, i: number) {
     if (isBlocked) {
-      this.userService.unblockUser(id).subscribe((response) => {
-        this.users[i].isBlocked = response.user.isBlocked;
+      this.userService.unblockUser(id).subscribe({
+        next: (response) => {
+          this.users[i].isBlocked = response.user.isBlocked;
+        }
       });
     } else {
-      this.userService.blockUser(id).subscribe((response) => {
-        this.users[i].isBlocked = response.user.isBlocked;
+      this.userService.blockUser(id).subscribe({
+        next: (response) => {
+          this.users[i].isBlocked = response.user.isBlocked;
+        }
       });
     }
   }

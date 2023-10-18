@@ -33,10 +33,12 @@ export class UserService {
   getUserBasicInfo() {
     this.http.get<I_UserBasicInfo>(`${this.API_URL}/user/basic-info`)
     .subscribe(
-      response => {
-        if (response.profilePicture) this.profilePicture.next(response.profilePicture)
-        if (response.name) this.name.next(response.name)
-        if (response.userName) this.userName.next(response.userName)
+      {
+        next: response => {
+          if (response.profilePicture) this.profilePicture.next(response.profilePicture)
+          if (response.name) this.name.next(response.name)
+          if (response.userName) this.userName.next(response.userName)
+        }
       }
     )
   }

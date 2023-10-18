@@ -55,4 +55,38 @@ export class AwsUploadUseCase {
       throw new Error("Failed to upload to the AWS bucket.");
     }
   };
+
+  uploadProfilePicture = async (userId: Types.ObjectId, imageFile: Express.Multer.File) => {
+    try {
+      // Create an S3 client
+      const s3 = new S3Client({
+        credentials: {
+          accessKeyId: this.awsBucketAccessKey,
+          secretAccessKey: this.awsBucketSecretAccessKey,
+        },
+        region: this.bucketRegion,
+      });
+
+      // Generate a random image name
+      const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString("hex");
+      const fileName = `users/${userId}/profilePicture/${randomImageName()}`;
+
+      // Create a command to put an object in the S3 bucket
+      const command = new PutObjectCommand({
+        Bucket: this.bucketName,
+        Key: fileName,
+        Body: imageFile?.buffer,
+        ContentType: imageFile?.mimetype,
+      });
+
+      // Send the command to the S3 client
+      const upload = await s3.send(command);
+
+      if (upload.$metadata.httpStatusCode === 200) return fileName;
+      return false;
+    } catch (error: any) {
+      console.error(`Error uploading post image: ${error.message}`);
+      throw new Error("Failed to upload to the AWS bucket.");
+    }
+  };
 }

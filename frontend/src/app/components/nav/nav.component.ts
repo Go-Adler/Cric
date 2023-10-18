@@ -30,12 +30,16 @@ export class NavComponent implements OnInit {
   profileAreaActive = false;
 
   ngOnInit(): void {
-   this.userService.profilePicture$.subscribe( profilePicture => {
-    this.profilePicture = profilePicture    
+    this.userService.profilePicture$.subscribe({
+     next: profilePicture => {
+      this.profilePicture = profilePicture    
+     }
    }) 
 
-   this.userService.name$.subscribe( name => {
-    this.name = name
+    this.userService.name$.subscribe({
+     next: name => {
+      this.name = name
+     }
    })
   }
 

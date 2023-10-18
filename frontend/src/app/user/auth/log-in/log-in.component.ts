@@ -49,27 +49,25 @@ export class LogInComponent implements OnInit {
     const { email, password } = this.logInForm.value;
 
     this.logInService.login(email, password).subscribe(
-      (response) => {
-        this.isLogging = false;
-        if (response.token) {
-          const token = response.token;
-          localStorage.setItem('token', token);
+      {
+        next:(response) => {
+          this.isLogging = false;
+          if (response.token) {
+            const token = response.token;
+            localStorage.setItem('token', token);
+          }
+          if (response.userNotExisting) {
+            this.errorMessage = 'User not existing';
+          } else if (response.wrongPassword) {
+            this.wrongPassword = 'Wrong password';
+          } else if (response.notVerified) {
+            this.router.navigate(['/auth/sign-up-otp']);
+          } else {
+            this.userService.getUserBasicInfo()
+            this.authService.setLoginStatus(true);
+            this.router.navigate(['/home']);
+          }
         }
-        if (response.userNotExisting) {
-          this.errorMessage = 'User not existing';
-        } else if (response.wrongPassword) {
-          this.wrongPassword = 'Wrong password';
-        } else if (response.notVerified) {
-          this.router.navigate(['/auth/sign-up-otp']);
-        } else {
-          console.log('login succesful');
-          
-          this.userService.getUserBasicInfo()
-          this.authService.setLoginStatus(true);
-          this.router.navigate(['/home']);
-        }
-      },
-      (errorResponse) => {
       }
     );
   }

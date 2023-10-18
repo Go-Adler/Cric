@@ -45,8 +45,10 @@ export class PostComponent implements OnChanges, OnDestroy {
   ngOnInit(): void {
     // Get name
     this.subscriptions.push(
-      this.userService.name$.subscribe((name) => {
-        this.name = name;
+      this.userService.name$.subscribe({
+        next: (name) => {
+          this.name = name;
+        },
       })
     );
 
@@ -59,24 +61,26 @@ export class PostComponent implements OnChanges, OnDestroy {
 
     // Get profile picture
     this.subscriptions.push(
-      this.userService.profilePicture$.subscribe((profilePicture) => {
-        this.profilePicture = profilePicture;
+      this.userService.profilePicture$.subscribe({
+        next: (profilePicture) => {
+          this.profilePicture = profilePicture;
+        },
       })
     );
 
     // Get posts
     this.subscriptions.push(
-      this.postService.getPosts(this.skip).subscribe(
-        (data) => {
+      this.postService.getPosts(this.skip).subscribe({
+        next: (data) => {
           this.spinner = false;
           this.firstFetch = true;
           this.posts = data.posts;
         },
-        (error) => {
+        error: (error) => {
           console.error(error);
           this.spinner = false;
-        }
-      )
+        },
+      })
     );
   }
 
@@ -96,8 +100,8 @@ export class PostComponent implements OnChanges, OnDestroy {
     this.fetchingPosts = true;
     this.skip += POSTS_LIMIT;
     this.subscriptions.push(
-      this.postService.getPosts(this.skip).subscribe(
-        (data) => {
+      this.postService.getPosts(this.skip).subscribe({
+        next: (data) => {
           this.fetchingPosts = false;
           const postExists = data.posts[0];
           if (postExists) {
@@ -106,11 +110,11 @@ export class PostComponent implements OnChanges, OnDestroy {
             this.postsEnd = true;
           }
         },
-        (error) => {
+        error: (error) => {
           console.error(error);
           this.fetchingPosts = false;
-        }
-      )
+        },
+      })
     );
   }
 
@@ -123,35 +127,33 @@ export class PostComponent implements OnChanges, OnDestroy {
   toggleLike(isLiked: boolean, postId: string): void {
     if (isLiked) {
       this.subscriptions.push(
-        this.postService.unlikePost(postId).subscribe(
-          (data) => {
-            console.log(data);
+        this.postService.unlikePost(postId).subscribe({
+          next: (data) => {
             const post = this.posts.find((post) => post._id === postId);
             if (post) {
               post.engagement.liked = false;
               post.actions.likes--;
             }
           },
-          (error) => {
+          error: (error) => {
             console.error(error);
-          }
-        )
+          },
+        })
       );
     } else {
       this.subscriptions.push(
-        this.postService.likePost(postId).subscribe(
-          (data) => {
-            console.log(data);
+        this.postService.likePost(postId).subscribe({
+          next: (data) => {
             const post = this.posts.find((post) => post._id === postId);
             if (post) {
               post.engagement.liked = true;
               post.actions.likes++;
             }
           },
-          (error) => {
+          error: (error) => {
             console.error(error);
-          }
-        )
+          },
+        })
       );
     }
   }

@@ -1,6 +1,6 @@
-import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
-import { Post } from '../../../../shared/interfaces/userPost.interface'
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3"
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
+import { Post } from "../../../../shared/interfaces/userPost.interface"
 
 export class GetAwsUrlUseCase {
   private awsAccessKey
@@ -24,9 +24,6 @@ export class GetAwsUrlUseCase {
     })
   }
 
-
-  
-
   getPostsWithUrl = async (posts: Post[]) => {
     for (const post of posts) {
       if (post.content && post.content.multimedia && post.content.multimedia[0]) {
@@ -43,6 +40,17 @@ export class GetAwsUrlUseCase {
     return posts
   }
 
+  getImageUrl = async (image: string) => {
+    const getObjectParams = {
+      Bucket: this.bucketName,
+      Key: image,
+    }
+    const command = new GetObjectCommand(getObjectParams)
+    const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+
+    return url
+  }
+
   getUrl = async (post: Post | any) => {
     if (post.content?.multimedia && post.content?.multimedia[0]) {
       const imageName = post?.content?.multimedia[0]!
@@ -53,7 +61,7 @@ export class GetAwsUrlUseCase {
       }
       const command = new GetObjectCommand(getObjectParams)
       const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
-  
+
       post.content.multimedia[0] = url
       return post
     } else {

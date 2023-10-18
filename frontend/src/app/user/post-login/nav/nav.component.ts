@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 // import { LogOutService } from '../user/auth/log-in/log-out.service';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service'
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-nav',
@@ -18,9 +18,9 @@ import { UserService } from 'src/app/services/user.service'
   ],
 })
 export class NavComponent implements OnInit {
-  profilePicture: string = ''
-  name: string = ''
-  
+  profilePicture: string = '';
+  name: string = '';
+
   constructor(
     // private logOutService: LogOutService,
     private router: Router,
@@ -30,13 +30,17 @@ export class NavComponent implements OnInit {
   profileAreaActive = false;
 
   ngOnInit(): void {
-   this.userService.profilePicture$.subscribe( profilePicture => {
-    this.profilePicture = profilePicture    
-   }) 
+    this.userService.profilePicture$.subscribe({
+      next: (profilePicture) => {
+        this.profilePicture = profilePicture;
+      },
+    });
 
-   this.userService.name$.subscribe( name => {
-    this.name = name
-   })
+    this.userService.name$.subscribe({
+      next: (name) => {
+        this.name = name;
+      }
+    });
   }
 
   showProfile() {

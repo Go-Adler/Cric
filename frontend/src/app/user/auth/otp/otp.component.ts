@@ -95,26 +95,30 @@ export class OtpComponent implements OnInit, OnDestroy {
     this.otpVerifying = true
     const { OTP } = this.OTP_Form.value;
     this.otpService.verificationOTP(OTP).subscribe(
-      (response) => {
-        this.otpVerifying = false
-        if (response.otpVerified) {
-          this.resetPassword = true;
-        } else if (response.invalidOtp) {
-          this.otpInvalid = true
-        }
-      },
+      {
+        next: (response) => {
+          this.otpVerifying = false
+          if (response.otpVerified) {
+            this.resetPassword = true;
+          } else if (response.invalidOtp) {
+            this.otpInvalid = true
+          }
+        },
+      }
     );
   }
 
   submitPassword() {
     this.isChangingPassword = true;
     const { password } = this.signUpForm.value;
-    this.otpService.changePassword(password).subscribe((response) => {
-      this.isChangingPassword = false
-      if (response.changePassword) {
-        this.resetPassword = false;
-        this.passwordChanged = true;
-        localStorage.removeItem('verifyToken')
+    this.otpService.changePassword(password).subscribe({
+      next: (response) => {
+        this.isChangingPassword = false
+        if (response.changePassword) {
+          this.resetPassword = false;
+          this.passwordChanged = true;
+          localStorage.removeItem('verifyToken')
+        }
       }
     });
   }
@@ -141,15 +145,17 @@ export class OtpComponent implements OnInit, OnDestroy {
   }
 
   resendOtp() {
-    this.otpService.resendOtp().subscribe((response) => {
-      if (response.otpSent) {
-        this.otpResent = true
-        this.resetOtpResent()
-        this.timerValue = 3
-        this.startTimer();
-        this.isResendEnabled = false
+    this.otpService.resendOtp().subscribe({
+      next: (response) => {
+        if (response.otpSent) {
+          this.otpResent = true
+          this.resetOtpResent()
+          this.timerValue = 3
+          this.startTimer();
+          this.isResendEnabled = false
+        }
+        
       }
-      
     })
   }
 

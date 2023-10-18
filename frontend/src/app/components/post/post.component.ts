@@ -10,12 +10,14 @@ export class PostComponent {
   constructor (private route: ActivatedRoute) {}
   
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      const postId = +params['id'];
-      
-      // this.dataService.getPostById(postId).subscribe(post => {
-      //   this.post = post;
-      // });
+    this.route.params.subscribe({
+      next: params => {
+        const postId = +params['id'];
+        
+        // this.dataService.getPostById(postId).subscribe(post => {
+        //   this.post = post;
+        // });
+      }
     });
   }
 }

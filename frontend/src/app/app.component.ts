@@ -13,8 +13,12 @@ export class AppComponent implements OnInit {
   
   ngOnInit(): void {
     this.authService.setLoginStatus(this.authService.checkToken());
-    this.authService.loginStatus$.subscribe(status => {
-      this.isLogin = status;
-    });
+    this.authService.loginStatus$.subscribe(
+      {
+        next: status => {
+          this.isLogin = status;
+        }
+      }
+    );
   }
 }

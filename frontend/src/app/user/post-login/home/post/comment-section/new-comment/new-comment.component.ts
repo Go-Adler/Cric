@@ -15,9 +15,9 @@ import { I_post } from 'src/app/models/responses/message.model';
 @Component({
   selector: 'app-new-comment',
   templateUrl: './new-comment.component.html',
-  styleUrls: ['./new-comment.component.scss']
+  styleUrls: ['./new-comment.component.scss'],
 })
-export class NewCommentComponent implements OnInit{
+export class NewCommentComponent implements OnInit {
   // Form group for the post
   postForm!: FormGroup;
 
@@ -44,7 +44,7 @@ export class NewCommentComponent implements OnInit{
   @Output() newPostEvent = new EventEmitter<I_post>();
 
   //  Post id  for the comment
-  @Input() postId!: string
+  @Input() postId!: string;
 
   // Reference to the file input element
   @ViewChild('fileInput') fileInput!: ElementRef;
@@ -58,11 +58,15 @@ export class NewCommentComponent implements OnInit{
   ngOnInit(): void {
     // Fetch user's basic info and profile picture, and initialize the form
     this.userService.getUserBasicInfo();
-    this.userService.profilePicture$.subscribe((profilePicture) => {
-      this.profilePicture = profilePicture;
+    this.userService.profilePicture$.subscribe({
+      next: (profilePicture) => {
+        this.profilePicture = profilePicture;
+      },
     });
-    this.userService.name$.subscribe((name) => {
-      this.name = name;
+    this.userService.name$.subscribe({
+      next: (name) => {
+        this.name = name;
+      },
     });
     this.postForm = this.fb.group({
       text: ['', [Validators.maxLength(300), Validators.required]],
@@ -80,39 +84,40 @@ export class NewCommentComponent implements OnInit{
 
     const formData = new FormData();
 
-
-    formData.append('postId', this.postId)
+    formData.append('postId', this.postId);
     formData.append('text', text);
     formData.append('postImage', image);
 
-    this.commentService.newComment(formData).subscribe((response) => {
-      this.isPosting = false;
+    this.commentService.newComment(formData).subscribe({
+      next: (response) => {
+        this.isPosting = false;
 
-      if (response.uploadFailed) {
-        if (response.message) {
-          this.postFailedMessage = response.message;
-          this.isPostFailedMessage = true;
+        if (response.uploadFailed) {
+          if (response.message) {
+            this.postFailedMessage = response.message;
+            this.isPostFailedMessage = true;
+            setTimeout(() => {
+              this.isPostFailedMessage = false;
+            }, 2000);
+            return;
+          }
+          this.postFailed = true;
+
           setTimeout(() => {
-            this.isPostFailedMessage = false;
+            this.postFailed = false;
           }, 2000);
           return;
         }
-        this.postFailed = true;
+
+        this.postSuccess = true;
+        this.postForm.reset();
+        this.selectedImage = null;
+        this.newPostEvent.emit(response.post);
 
         setTimeout(() => {
-          this.postFailed = false;
+          this.postSuccess = false;
         }, 2000);
-        return;
-      }
-
-      this.postSuccess = true;
-      this.postForm.reset();
-      this.selectedImage = null;
-      this.newPostEvent.emit(response.post);
-
-      setTimeout(() => {
-        this.postSuccess = false;
-      }, 2000);
+      },
     });
   }
 

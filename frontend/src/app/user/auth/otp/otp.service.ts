@@ -28,8 +28,6 @@ export class OTP_Service {
   }
 
   resendOtp(): Observable<messageResponse> {
-    console.log(31);
-    
     return this.http.get<messageResponse>(`${this.API_URL}/user/resend-otp`)
   }
 

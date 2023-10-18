@@ -20,14 +20,18 @@ export class TopNavComponent implements OnInit{
   ) {}
   
   ngOnInit(): void {
-    this.userService.profilePicture$.subscribe( profilePicture => {
-      this.profilePicture = profilePicture
+    this.userService.profilePicture$.subscribe({
+      next: profilePicture => {
+        this.profilePicture = profilePicture
+      }
     })
 
      // Get user name
-     this.userService.userName$.subscribe((userName) => {
-      this.userName = userName;
-    });
+    this.userService.userName$.subscribe({
+       next: (userName) => {
+        this.userName = userName;
+      }
+     });
   }
 
   showLogOut() {

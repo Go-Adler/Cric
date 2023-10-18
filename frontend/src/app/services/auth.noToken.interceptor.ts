@@ -24,7 +24,6 @@ export class LogoutInterceptor implements HttpInterceptor {
         (event) => {
           if (event instanceof HttpResponse) {
             const responseBody = event.body;
-            console.log(responseBody, 28);
 
             if (responseBody.token) {
               const token = responseBody.token;

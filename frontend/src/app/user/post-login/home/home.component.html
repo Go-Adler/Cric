@@ -2,7 +2,6 @@
     <router-outlet></router-outlet>
     <div class="w-10/12 lg:w-10/12">
         <app-new-post (newPostEvent)="newPostSuccess($event)"></app-new-post>
-        <button (click)="btClick()">sssssssss</button>
         <app-post [newPost]="newPostData"></app-post>
     </div>
 </div>

@@ -54,12 +54,18 @@ export class NewPostComponent implements OnInit {
   ngOnInit(): void {
     // Fetch user's basic info and profile picture, and initialize the form
     this.userService.getUserBasicInfo();
-    this.userService.profilePicture$.subscribe((profilePicture) => {
-      this.profilePicture = profilePicture;
+    this.userService.profilePicture$.subscribe({
+      next: (profilePicture) => {
+        this.profilePicture = profilePicture;
+      }
     });
-    this.userService.name$.subscribe((name) => {
-      this.name = name;
-    });
+    this.userService.name$.subscribe(
+      {
+        next: (name) => {
+          this.name = name;
+        }
+      }
+    );
     this.postForm = this.fb.group({
       text: ['', [Validators.maxLength(300), Validators.required]],
       image: '',
@@ -79,35 +85,39 @@ export class NewPostComponent implements OnInit {
     formData.append('text', text);
     formData.append('postImage', image);
 
-    this.newPostService.newPost(formData).subscribe((response) => {
-      this.isPosting = false;
-
-      if (response.uploadFailed) {
-        if (response.message) {
-          this.postFailedMessage = response.message;
-          this.isPostFailedMessage = true;
+    this.newPostService.newPost(formData).subscribe(
+      {
+        next: (response) => {
+          this.isPosting = false;
+    
+          if (response.uploadFailed) {
+            if (response.message) {
+              this.postFailedMessage = response.message;
+              this.isPostFailedMessage = true;
+              setTimeout(() => {
+                this.isPostFailedMessage = false;
+              }, 2000);
+              return;
+            }
+            this.postFailed = true;
+    
+            setTimeout(() => {
+              this.postFailed = false;
+            }, 2000);
+            return;
+          }
+    
+          this.postSuccess = true;
+          this.postForm.reset();
+          this.selectedImage = null;
+          this.newPostEvent.emit(response.post);
+    
           setTimeout(() => {
-            this.isPostFailedMessage = false;
+            this.postSuccess = false;
           }, 2000);
-          return;
         }
-        this.postFailed = true;
-
-        setTimeout(() => {
-          this.postFailed = false;
-        }, 2000);
-        return;
       }
-
-      this.postSuccess = true;
-      this.postForm.reset();
-      this.selectedImage = null;
-      this.newPostEvent.emit(response.post);
-
-      setTimeout(() => {
-        this.postSuccess = false;
-      }, 2000);
-    });
+    );
   }
 
   // Function to handle image selection

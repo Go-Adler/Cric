@@ -19,14 +19,11 @@ export class VerifySignUpOtpComponent {
   otpInvalid: boolean = false;
   verified: boolean = false;
   hide: boolean = true;
-  verifying: boolean = false
+  verifying: boolean = false;
   isResendEnabled: boolean = false;
-  otpResent: boolean = false
+  otpResent: boolean = false;
   timer: any;
   timerValue: number = 5;
-
-
-
 
   constructor(
     private fb: FormBuilder,
@@ -63,32 +60,32 @@ export class VerifySignUpOtpComponent {
   }
 
   onSubmit() {
-    this.verifying = true
+    this.verifying = true;
     const { OTP } = this.OTP_Form.value;
-    this.otpService.verificationOTP(OTP).subscribe(
-      (response) => {
-        this.verifying = false
+    this.otpService.verificationOTP(OTP).subscribe({
+      next: (response) => {
+        this.verifying = false;
         if (response.otpVerified) {
-          this.verified = true
+          this.verified = true;
         } else if (response.invalidOtp) {
-          this.otpInvalid = true
+          this.otpInvalid = true;
         }
       },
-      (errorResponse) => {
+      error: (errorResponse) => {
         if (errorResponse.status === 401) {
           this.otpInvalid = true;
         }
-      }
-    );
+      },
+    });
   }
 
   startTimer() {
     this.timer = setInterval(() => {
       if (this.timerValue > 0) {
-        this.timerValue--; 
+        this.timerValue--;
       } else {
         this.stopTimer();
-        this.isResendEnabled = true; 
+        this.isResendEnabled = true;
       }
     }, 1000);
   }
@@ -98,21 +95,22 @@ export class VerifySignUpOtpComponent {
   }
 
   resendOtp() {
-    this.otpService.resendOtp().subscribe((response) => {
-      if (response.otpSent) {
-        this.otpResent = true
-        this.resetOtpResent()
-        this.timerValue = 3
-        this.startTimer();
-        this.isResendEnabled = false
-      }
-      
-    })
+    this.otpService.resendOtp().subscribe({
+      error: (response) => {
+        if (response.otpSent) {
+          this.otpResent = true;
+          this.resetOtpResent();
+          this.timerValue = 3;
+          this.startTimer();
+          this.isResendEnabled = false;
+        }
+      },
+    });
   }
 
   resetOtpResent() {
     setTimeout(() => {
-      this.otpResent = false
-    }, (3000));
+      this.otpResent = false;
+    }, 3000);
   }
 }

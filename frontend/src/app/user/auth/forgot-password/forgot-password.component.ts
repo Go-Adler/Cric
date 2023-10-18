@@ -33,15 +33,15 @@ export class ForgotPasswordComponent {
     const { email } = this.logInForm.value;
 
     this.forgotPasswordService.forgotPassword(email).subscribe(
-      (response) => {
-        this.isLogging = false;
-        if (response.userNotExisting) {
-          this.errorMessage = 'User not existing';
-        } else {
-          this.router.navigate(['/auth/verify-otp']);
+      {
+        next:(response) => {
+          this.isLogging = false;
+          if (response.userNotExisting) {
+            this.errorMessage = 'User not existing';
+          } else {
+            this.router.navigate(['/auth/verify-otp']);
+          }
         }
-      },
-      (errorResponse) => {
       }
     );
   }

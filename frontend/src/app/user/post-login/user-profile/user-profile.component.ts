@@ -16,8 +16,10 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getUserBasicInfo()  // remove later - helpful for development gokul
 
-    this.userService.profilePicture$.subscribe(profilePicture => {
-      this.profilePicture = profilePicture
+    this.userService.profilePicture$.subscribe({
+      next: profilePicture => {
+        this.profilePicture = profilePicture
+      }
     })
   }
 

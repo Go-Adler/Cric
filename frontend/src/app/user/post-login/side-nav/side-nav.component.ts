@@ -23,18 +23,24 @@ export class SideNavComponent implements OnInit {
 
   ngOnInit(): void {
     // Subscribing to profilePicture$ observable to get the profile picture
-    this.userService.profilePicture$.subscribe((profilePicture) => {
-      this.profilePicture = profilePicture;
+    this.userService.profilePicture$.subscribe({
+      next: (profilePicture) => {
+        this.profilePicture = profilePicture;
+      }
     });
 
     // Subscribing to name$ observable to get the name
-    this.userService.name$.subscribe((name) => {
-      this.name = name;
+    this.userService.name$.subscribe({
+      next: (name) => {
+        this.name = name;
+      }
     });
 
     // Get user name
-    this.userService.userName$.subscribe((userName) => {
-      this.userName = userName;
+    this.userService.userName$.subscribe({
+      next: (userName) => {
+        this.userName = userName;
+      }
     });
   }
 

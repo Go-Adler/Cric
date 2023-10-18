@@ -83,16 +83,18 @@ export class SignUpComponent implements OnInit {
     delete formData.confirmPassword;
     
     this.signUpService.signUp(formData).subscribe(
-      (response) => {
-        this.isSigningUp = false;
-        if (response.error) {
-          this.errorMessage = response.error;
-        } else {
-          this.router.navigate(['/auth/sign-up-otp']);
-        }
-      },
-      (error) => {
-        this.errorMessage = error.error.message;
+      {
+        next:      (response) => {
+          this.isSigningUp = false;
+          if (response.error) {
+            this.errorMessage = response.error;
+          } else {
+            this.router.navigate(['/auth/sign-up-otp']);
+          }
+        },
+        error: (error) => {
+            this.errorMessage = error.error.message;
+          }
       }
     );
   }
