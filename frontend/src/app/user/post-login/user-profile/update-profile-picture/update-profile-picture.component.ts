@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser'
 import { ProfileService } from '../user-profile.service'
+import { UserService } from 'src/app/services/user.service'
 
 
 @Component({
@@ -19,6 +20,9 @@ export class UpdateProfilePictureComponent {
   croppedImage: any = '';
   uploadingImage: any = '';
   isSubmitDisabled: boolean = true;
+  pictureUpdated: boolean = false
+  pictureUpdateFailed: boolean = false
+  isUpdating: boolean = false
 
   @Output() closeComponentStatusEvent = new EventEmitter<boolean>();
   @ViewChild('fileInput') fileInputRef!: ElementRef;
@@ -26,6 +30,7 @@ export class UpdateProfilePictureComponent {
   constructor(
     private sanitizer: DomSanitizer,
     private userProfileService: ProfileService,
+    private userService: UserService
   ) {} 
 
   closeChangeProfilePicture() {
@@ -64,12 +69,20 @@ export class UpdateProfilePictureComponent {
   }
 
   submitPicture() {
+    this.isUpdating = true
     const formData = new FormData();
     formData.append('file', this.uploadingImage.blob, this.uploadingImage.name);
     this.userProfileService.updateProfilePicture(formData).subscribe(
       {
-        next: (data) => {
-          console.log(data, 72);
+        next: () => {
+          this.isUpdating = false,
+          this.userService.getUserBasicInfo()  
+          this.pictureUpdated = true
+        },
+
+        error: () => {
+          this.isUpdating = false,
+          this.pictureUpdateFailed = true
         }
       }
     )

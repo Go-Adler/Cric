@@ -1,48 +1,105 @@
 <div
-class="bg-black/60 p-48 flex justify-center items-center z-10 fixed top-0 w-full h-full  left-0"
+  class="bg-black/60 p-48 flex justify-center items-center z-10 fixed top-0 w-full h-full left-0"
 >
+  <!-- profile picture  change card -->
+  <mat-card class="w-11/12 p-2 lg:w-6/12" *ngIf="!pictureUpdated">
+    <!-- close button -->
+    <span class="flex justify-end">
+      <button
+        (click)="closeChangeProfilePicture()"
+        mat-mini-fab
+        class="closeButton"
+        aria-label="Example icon button with a bookmark icon"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </span>
 
-<!-- profile picture  change card -->
-<mat-card class="w-11/12 p-2 lg:w-6/12 ">
+    <!-- select picure -->
+    <span
+      class="selectPicture flex flex-col items-center mb-2"
+      [style.cursor]="'pointer'"
+      (click)="clickInput()"
+    >
+      <mat-icon class="text-4xl">add_photo_alternate</mat-icon>
+      <span>Select new profile picture</span>
+    </span>
 
-  <!-- close button -->
-  <span class="flex justify-end">
-    <button (click)="closeChangeProfilePicture()" mat-mini-fab class="closeButton"
-      aria-label="Example icon button with a bookmark icon">
-      <mat-icon>close</mat-icon>
+    <!-- hidden input -->
+    <input
+      hidden
+      type="file"
+      #fileInput
+      accept="image/*"
+      (change)="onFileSelected($event)"
+    />
+
+    <!-- cropping area -->
+    <div class="flex items-center justify-center gap-2">
+      <!-- selected image -->
+      <mat-card class="w-11/12 p-2 border selectedArea">
+        <span class="text-stone-500 flex justify-center">Selected photo</span>
+        <div class="max-w-10/12">
+          <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="1 / 1"
+            format="png"
+            (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()"
+          ></image-cropper>
+        </div>
+      </mat-card>
+
+      <mat-card class="w-11/12 border p-2 croppedArea">
+        <span class="text-stone-500 flex justify-center mb-1"
+          >Cropped photo</span
+        >
+        <div class="max-w-10/12">
+          <img [src]="croppedImage" />
+        </div>
+      </mat-card>
+    </div>
+    <mat-progress-bar *ngIf="isUpdating"  mode="indeterminate"></mat-progress-bar>
+    <button
+      [disabled]="isSubmitDisabled"
+      [ngClass]="{ buttonDisabled: isSubmitDisabled }"
+      (click)="submitPicture()"
+      mat-raised-button
+      class="mt-2 submitProfilePictureButton"
+    >
+      Update profile picture
     </button>
-  </span>
+  </mat-card>
 
-  <!-- select picure -->
-  <span class="selectPicture flex flex-col items-center mb-2"  [style.cursor]="'pointer'" (click)="clickInput()">
-    <mat-icon class="text-4xl">add_photo_alternate</mat-icon>
-    <span>Select new profile picture</span>
-  </span>
+  <!-- profile picture  change card -->
+  <mat-card class="w-11/12 p-2 lg:w-6/12 pb-10" *ngIf="pictureUpdated">
+    <!-- close button -->
+    <span class="flex justify-end">
+      <button
+        (click)="closeChangeProfilePicture()"
+        mat-mini-fab
+        class="closeButton"
+        aria-label="Example icon button with a bookmark icon"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </span>
 
-  <!-- hidden input -->
-  <input hidden type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" />
+    <div *ngIf="!pictureUpdateFailed" class="text-stone-500 flex justify-center items-center gap-2 text-lg">
+      Picture updated successfully
+      <span class="material-symbols-rounded text-green-500">
+        check_circle
+      </span>
+    </div>
 
-  <!-- cropping area -->
-  <div class="flex items-center justify-center gap-2">
-    
-    <!-- selected image -->
-    <mat-card class="w-11/12 p-2 border selectedArea">
-      <span class="text-stone-500 flex justify-center">Selected photo</span>
-      <div class="max-w-10/12">
-        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1"
-          format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
-          (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
-      </div>
-    </mat-card>
-
-    <mat-card class="w-11/12 border p-2 croppedArea">
-      <span class="text-stone-500 flex justify-center mb-1">Cropped photo</span>
-      <div class="max-w-10/12">
-        <img [src]="croppedImage" />
-      </div>
-    </mat-card>
-  </div>
-  <button [disabled]="isSubmitDisabled" [ngClass]="{'buttonDisabled': isSubmitDisabled}" (click)="submitPicture()" mat-raised-button class="mt-2 submitProfilePictureButton">Update profile picture</button>
-
-</mat-card>
+    <div *ngIf="pictureUpdateFailed" class="text-stone-500 flex justify-center items-center gap-2 text-lg">
+      Picture update failed
+      <span class="material-symbols-rounded text-red-500">
+        error
+        </span>
+    </div>
+  </mat-card>
 </div>
