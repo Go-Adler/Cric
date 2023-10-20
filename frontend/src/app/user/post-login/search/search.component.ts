@@ -3,6 +3,7 @@ import { FindUser } from '../post-log-in.interface';
 import { FormControl } from '@angular/forms';
 import { Observable, map, startWith } from 'rxjs';
 import { SearchService } from './search.service';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-search',
@@ -15,7 +16,7 @@ export class SearchComponent implements OnInit {
   filteredOptions!: Observable<FindUser[]>;
   defaultProfilePicture: string = '';
 
-  constructor(private searchService: SearchService) {}
+  constructor(private searchService: SearchService, private router: Router) {}
 
   ngOnInit() {
     this.defaultProfilePicture = this.searchService.getDefualtProfilePicture();
@@ -28,7 +29,7 @@ export class SearchComponent implements OnInit {
     );
   }
 
-  displayFn(user: FindUser): string {
+  displayFn(user: FindUser) {
     return user && user.userName ? user.userName : '';
   }
 
@@ -59,5 +60,9 @@ export class SearchComponent implements OnInit {
         },
       });
     }
+  }
+
+  onUserSelected(user: FindUser) {
+    this.router.navigate(['/profile']);
   }
 }
