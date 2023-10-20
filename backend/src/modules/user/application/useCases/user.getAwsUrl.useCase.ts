@@ -1,6 +1,6 @@
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
-import { Post } from "../../../../shared/interfaces/userPost.interface"
+import { Post, UsersFind } from "../../../../shared/interfaces/userPost.interface"
 
 export class GetAwsUrlUseCase {
   private awsAccessKey
@@ -49,6 +49,21 @@ export class GetAwsUrlUseCase {
     const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
 
     return url
+  }
+
+  getImageUrlUsersFind = async (users: any) => {
+    for (const user of users) {
+      if (user.profilePicture) {
+        const getObjectParams = {
+          Bucket: this.bucketName,
+          Key: user.profilePicture,
+        }
+        const command = new GetObjectCommand(getObjectParams)
+        const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+        user.profilePicture = url
+      }
+    }
+    return users
   }
 
   getUrl = async (post: Post | any) => {

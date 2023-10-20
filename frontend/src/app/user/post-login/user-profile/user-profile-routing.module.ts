@@ -1,11 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserProfileComponent } from './user-profile.component'
+import { FriendsComponent } from './friends/friends.component'
+import { PostComponent } from '../home/post/post.component'
+import { SavedComponent } from './saved/saved.component'
 
 const routes: Routes = [
   {
     path: '',
-    component: UserProfileComponent
+    pathMatch: 'prefix',
+    redirectTo:'posts'
+  },
+  {
+    path: 'posts',
+    component: PostComponent
+  },
+  {
+    path: 'friends',
+    component: FriendsComponent
+  },
+  {
+    path: 'saved',
+    component: SavedComponent
   }
 ];
 

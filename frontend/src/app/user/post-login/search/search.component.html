@@ -1,0 +1,36 @@
+<div class="p-16 h-full">
+  <form class="example-form" class="">
+    <mat-form-field class="example-full-width w-full">
+      <mat-label>Search users</mat-label>
+      <input
+        type="text"
+        (input)="fetchUsers($event)"
+        matInput
+        [formControl]="myControl"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete #auto="matAutocomplete" >
+        <mat-option
+          *ngFor="let option of filteredOptions | async | slice : 0 : 10"
+          [value]="option"
+        >
+          <div class="flex w-full p-2 gap-2">
+            <div class="w-1/12 h-auto">
+              <img class="rounded-full" [src]="option.profilePicture || defaultProfilePicture" alt="" />
+            </div>
+            <div>
+              <div>{{ option.name }}</div>
+              <div class="text-stone-400 text-base font-normal">@{{ option.userName }}</div>
+            </div>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  <div class="flex justify-center items-center h-full flex-col gap-4">
+    <span class="material-symbols-rounded tesxt text-9xl">
+      person_search
+    </span>
+    <div class="text-6xl">Find friends</div>
+  </div>
+</div>

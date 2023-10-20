@@ -15,6 +15,17 @@
       <div
         routerLinkActive="selectedSideItem"
         class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
+        routerLink="search"
+      >
+        <span class="material-symbols-rounded text-3xl">
+          search
+          </span>
+        <span class="sideItem text-xl hidden lg:block">Search</span>
+      </div>
+
+      <div
+        routerLinkActive="selectedSideItem"
+        class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
         routerLink="sports"
       >
         <span class="material-symbols-rounded text-3xl"> sports_cricket </span>
@@ -39,12 +50,15 @@
         <span class="sideItem text-xl hidden lg:block">Messages</span>
       </div>
       <div
-        routerLinkActive="selectedSideItem"
         class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
-        routerLink="friends"
+        routerLink="profile/friends"
       >
         <span class="material-symbols-rounded text-3xl"> group </span>
-        <span class="sideItem text-xl hidden lg:block">Friends</span>
+        <span
+          routerLinkActive="selectedSideItem"
+          class="sideItem text-xl hidden lg:block"
+          >Friends</span
+        >
       </div>
       <div
         routerLinkActive="selectedSideItem"
@@ -59,7 +73,6 @@
         routerLinkActive="selectedSideItem"
         class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
         routerLink="profile"
-        
       >
         <span class="material-symbols-rounded text-3xl"> person </span>
         <span class="sideItem text-xl hidden lg:block">Profile</span>

@@ -19,12 +19,13 @@ export class UserDataController {
       let profilePicture = await this.userDataUseCase.getProfilePicture(userId)
       profilePicture = await this.getAwsUrlUseCase.getImageUrl(profilePicture)
       const userName = await this.userDataUseCase.getUserName(userId)
+      const friendsCount = await this.userDataUseCase.getFriendsCount(userId)
       const name = await this.userDataUseCase.getName(userId)
       res.json({
         profilePicture,
         name,
         userName,
-        message: "user info fetched success",
+        friendsCount,
       })
     } catch (error) {
       return next(error)

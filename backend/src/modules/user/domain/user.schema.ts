@@ -52,6 +52,10 @@ const userSchema = new mongoose.Schema({
   savedPosts: {
     type: [mongoose.Schema.Types.ObjectId],
     default: []
+  },
+  friends: {
+    type: [mongoose.Schema.Types.ObjectId],
+    default: []
   }
 });
 

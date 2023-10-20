@@ -5,7 +5,8 @@ import { FriendsRoutingModule } from './friends-routing.module';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule,
     FriendsRoutingModule

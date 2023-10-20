@@ -1,16 +1,10 @@
-import { Types } from 'mongoose'
-import { UserEntity } from './../domain/user.schema'
+import { Types } from "mongoose"
+import { UserEntity } from "./../domain/user.schema"
+import { UsersFind } from "../../../shared/interfaces/userPost.interface"
 
 export class UserDataAccess {
   // Create a new user
-  async createUser(
-    name: string,
-    userName: string,
-    gender: string,
-    email: string,
-    phone: string,
-    password: string
-  ) {
+  async createUser(name: string, userName: string, gender: string, email: string, phone: string, password: string) {
     try {
       const user = await UserEntity.create({
         name,
@@ -64,7 +58,7 @@ export class UserDataAccess {
   async getNameById(userId: string) {
     try {
       const user = await UserEntity.findById(userId, { _id: 0, name: 1 })
-      return user?.name ?? 'User not found'
+      return user?.name ?? "User not found"
     } catch (e: any) {
       console.error(e.message)
       throw new Error(e.message)
@@ -75,7 +69,18 @@ export class UserDataAccess {
   async getEmailById(userId: Types.ObjectId) {
     try {
       const user = await UserEntity.findById(userId, { _id: 0, email: 1 })
-      return user?.email ?? 'User not found'
+      return user?.email ?? "User not found"
+    } catch (e: any) {
+      console.error(e.message)
+      throw new Error(e.message)
+    }
+  }
+
+  // get friends count with _id
+  async getFriendsCountById(userId: Types.ObjectId) {
+    try {
+      const user = await UserEntity.findById(userId, { _id: 0, friends: 1 })
+      return user?.friends.length
     } catch (e: any) {
       console.error(e.message)
       throw new Error(e.message)
@@ -86,7 +91,7 @@ export class UserDataAccess {
   async getUserNameById(userId: string) {
     try {
       const user = await UserEntity.findById(userId, { _id: 0, userName: 1 })
-      return user?.userName ?? 'User not found'
+      return user?.userName ?? "User not found"
     } catch (e: any) {
       console.error(e.message)
       throw new Error(e.message)
@@ -108,7 +113,7 @@ export class UserDataAccess {
   async checkUserByEmail(email: string) {
     try {
       const user = await UserEntity.findOne({ email })
-      return (user?._id && !user?.isBlocked) ? user?._id : false
+      return user?._id && !user?.isBlocked ? user?._id : false
     } catch (e: any) {
       console.error(e.message)
       throw new Error(e.message)
@@ -141,7 +146,7 @@ export class UserDataAccess {
   async getUserPasswordByEmail(email: string) {
     try {
       const user = await UserEntity.findOne({ email })
-      return user?.password || ''
+      return user?.password || ""
     } catch (e: any) {
       console.error(e.message)
       throw new Error(e.message)
@@ -153,7 +158,7 @@ export class UserDataAccess {
     try {
       const { isVerified } = await UserEntity.findOne({ email }).select<{
         isVerified: boolean
-      }>('isVerified')
+      }>("isVerified")
       return isVerified
     } catch (e: any) {
       console.error(e.message)
@@ -182,9 +187,7 @@ export class UserDataAccess {
   // get profile picture with id
   async getUserProfilePictureWithId(id: string) {
     try {
-      const userProfilePicture = await UserEntity.findById(id).select(
-        'profilePicture'
-      )
+      const userProfilePicture = await UserEntity.findById(id).select("profilePicture")
       return userProfilePicture?.profilePicture
     } catch (e: any) {
       console.error(e.message)
@@ -192,7 +195,7 @@ export class UserDataAccess {
     }
   }
 
-  // get profile picture with id
+  // get users
   async getUsers() {
     try {
       const users = await UserEntity.find({ isAdmin: false })
@@ -202,6 +205,27 @@ export class UserDataAccess {
       throw new Error(e.message)
     }
   }
+
+  // find users
+  async findUsers(input: string) {
+    try {
+      const users = await UserEntity.find({
+        isAdmin: false,
+        $or: [
+          { userName: { $regex: input, $options: "i" } }, 
+          { email: { $regex: input, $options: "i" } }, 
+          { name: { $regex: input, $options: "i" } }
+        ],
+      }, '_id userName profilePicture name')
+      console.log(users, input);
+      
+      return users
+    } catch (e: any) {
+      console.error(e.message)
+      throw new Error(e.message)
+    }
+  }
+
 
   // get profile picture with id
   async unblockUser(userId: Types.ObjectId) {
@@ -213,7 +237,7 @@ export class UserDataAccess {
       throw new Error(e.message)
     }
   }
-  
+
   // get profile picture with id
   async blockUser(userId: Types.ObjectId) {
     try {

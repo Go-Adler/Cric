@@ -27,3 +27,10 @@ export interface Post {
   };
   usersLiked?: Types.ObjectId[];
 }
+
+export interface UsersFind {
+  _id: string,
+  profilePicture: string,
+  userName: string,
+  name: string
+}

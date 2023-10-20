@@ -23,6 +23,11 @@ export class GetUserDataUseCase {
     return userName
   }
 
+  getFriendsCount = async (userId: Types.ObjectId): Promise<any> => {
+    const friendsCount = await this.userDataAccess.getFriendsCountById(userId)
+    return friendsCount
+  }
+
   getEmail = async (userId: Types.ObjectId): Promise<any> => {
     const email = await this.userDataAccess.getEmailById(userId)
     return email
