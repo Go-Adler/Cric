@@ -23,7 +23,7 @@ export class UserSignUpController {
       const { userName, phone, email } = req.body;
 
       // Ensure email is in lowercase for consistency
-      const userData = { ...req.body, email: email.toLowerCase() };
+      const userData = { ...req.body, email: email.toLowerCase(), userName: userName.toLowerCase() };
 
       // Check if the user already exists
       await this.userExistingUseCase.userExisting(userName, phone, userData.email);

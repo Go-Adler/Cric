@@ -1,5 +1,6 @@
 import { Types } from "mongoose"
 import { UserDataAccess } from "../../data/user.dataAccess"
+import { log } from "console"
 
 export class GetUserDataUseCase {
   private userDataAccess: UserDataAccess
@@ -11,6 +12,11 @@ export class GetUserDataUseCase {
   getProfilePicture = async (userId: string): Promise<any> => {
     const userProfilePicture = await this.userDataAccess.getUserProfilePictureWithId(userId)
     return userProfilePicture
+  }
+
+  getUserId = async (userName: string): Promise<any> => {
+    const userId = await this.userDataAccess.getUserIdWIthUserName(userName)
+    return userId._id
   }
 
   getName = async (userId: string): Promise<any> => {

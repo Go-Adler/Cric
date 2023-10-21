@@ -63,8 +63,6 @@ export class SearchComponent implements OnInit {
   }
 
   onUserSelected(user: FindUser) {
-    console.log(user, 66);
-    
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/user', user]);
   }
 }

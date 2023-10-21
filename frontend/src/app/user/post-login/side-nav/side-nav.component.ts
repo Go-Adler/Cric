@@ -15,6 +15,7 @@ export class SideNavComponent implements OnInit {
   name: string = '';
   userName: string = '';
   logOutPill: boolean = false;
+  friendsActive: boolean = false
 
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
 

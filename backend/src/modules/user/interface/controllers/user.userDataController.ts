@@ -31,4 +31,26 @@ export class UserDataController {
       return next(error)
     }
   }
+
+  friendBasicInfo = async (req: Request, res: Response, next: NextFunction) => {
+    const { userName } = req.params
+    try {
+      const userId = await this.userDataUseCase.getUserId(userName)
+      console.log(userId, 39);
+      
+      let profilePicture = await this.userDataUseCase.getProfilePicture(userId)
+      
+      if (profilePicture) profilePicture = await this.getAwsUrlUseCase.getImageUrl(profilePicture) 
+      const friendsCount = await this.userDataUseCase.getFriendsCount(userId)
+      const name = await this.userDataUseCase.getName(userId)
+      res.json({
+        profilePicture,
+        name,
+        userName,
+        friendsCount,
+      })
+    } catch (error) {
+      return next(error)
+    }
+  }
 }

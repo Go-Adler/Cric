@@ -1,27 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
-import { UserService } from 'src/app/services/user.service'
+import { FriendsService } from './friends.service'
 
 @Component({
   selector: 'app-friends',
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.scss'],
 })
-export class FriendsComponent implements OnInit {
+export class FriendsComponent implements OnInit, OnDestroy {
   profilePicture: string = '';
   name: string = '';
-  userName: string = '';
+  userName: string | null = '';
   friendsCount: string = '';
 
-  constructor(private route: ActivatedRoute, private userService: UserService) {}
+  constructor(private route: ActivatedRoute, private friendsService: FriendsService ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      console.log(params, 19);
-      
-      const userId = this.route.snapshot.paramMap.get('id');
-      console.log(userId, 20);
-      
-    });
+      const userId = this.route.snapshot.paramMap.get('id')
+      this.userName = userId!
+      this.friendsService.getFriendBasicInfo(this.userName)
+    })
+
+    this.friendsService.friendsCount$.subscribe({
+      next: friendsCount => {
+        this.friendsCount = friendsCount
+      }
+    })
+
+    this.friendsService.name$.subscribe({
+      next: name => {
+        this.name = name
+      }
+    })
+
+    this.friendsService.profilePicture$.subscribe({
+      next: profilePicture => {
+        this.profilePicture = profilePicture
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.friendsService.changeToDefault()
   }
 }

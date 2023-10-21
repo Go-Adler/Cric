@@ -25,7 +25,7 @@ export class SignUpComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private signUpService: SignUpService,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -36,7 +36,13 @@ export class SignUpComponent implements OnInit {
           '',
           [Validators.required, Validators.pattern('^[a-zA-Z0-9_-]+$')],
         ],
-        email: ['', [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
+        email: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+          ],
+        ],
         phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
         gender: ['', Validators.required],
         password: [
@@ -76,15 +82,15 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit() {
-    this.isSigningUp = true;
-    this.errorMessage = '';
+    if (this.signUpForm.valid) {
+      this.isSigningUp = true;
+      this.errorMessage = '';
 
-    const formData = { ...this.signUpForm.value };
-    delete formData.confirmPassword;
-    
-    this.signUpService.signUp(formData).subscribe(
-      {
-        next:      (response) => {
+      const formData = { ...this.signUpForm.value };
+      delete formData.confirmPassword;
+
+      this.signUpService.signUp(formData).subscribe({
+        next: (response) => {
           this.isSigningUp = false;
           if (response.error) {
             this.errorMessage = response.error;
@@ -93,9 +99,14 @@ export class SignUpComponent implements OnInit {
           }
         },
         error: (error) => {
-            this.errorMessage = error.error.message;
-          }
-      }
-    );
+          this.errorMessage = error.error.message;
+        },
+      });
+    } else {
+      this.errorMessage = 'Please fill the form correctly'
+      setTimeout(() => {
+        this.errorMessage = ''
+      }, 3000);
+    }
   }
 }

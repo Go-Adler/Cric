@@ -14,7 +14,7 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
   },
   {
-    path: 'friends/:id',
+    path: 'user/:id',
     component: FriendsComponent,
     loadChildren: () => import('./friends/friends.module').then(m => m.FriendsModule)
   },

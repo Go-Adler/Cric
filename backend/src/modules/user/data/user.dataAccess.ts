@@ -110,9 +110,24 @@ export class UserDataAccess {
   }
 
   // check email already exist
-  async checkUserByEmail(email: string) {
+  async checkUserByEmail(input: string) {
     try {
-      const user = await UserEntity.findOne({ email })
+      const usern = await UserEntity.find({
+        $or: [
+          {
+            userName: { $regex: input, $options: "i" },
+          },
+          {
+            email: { $regex: input, $options: "i" },
+          },
+          {
+            phone: { $regex: input, $options: "i" },
+          },
+        ],
+      }, '_id')
+      console.log(usern, 128);
+      
+      const user = await UserEntity.findOne({ input })
       return user?._id && !user?.isBlocked ? user?._id : false
     } catch (e: any) {
       console.error(e.message)
@@ -195,6 +210,17 @@ export class UserDataAccess {
     }
   }
 
+  // get user id with user name
+  async getUserIdWIthUserName(userName: string) {
+    try {
+      const userId = await UserEntity.find({userName}).select("_id")
+      return userId[0]
+    } catch (e: any) {
+      console.error(e.message)
+      throw new Error(e.message)
+    }
+  }
+
   // get users
   async getUsers() {
     try {
@@ -209,22 +235,20 @@ export class UserDataAccess {
   // find users
   async findUsers(input: string) {
     try {
-      const users = await UserEntity.find({
-        isAdmin: false,
-        $or: [
-          { userName: { $regex: input, $options: "i" } }, 
-          { email: { $regex: input, $options: "i" } }, 
-          { name: { $regex: input, $options: "i" } }
-        ],
-      }, '_id userName profilePicture name')
-      
+      const users = await UserEntity.find(
+        {
+          isAdmin: false,
+          $or: [{ userName: { $regex: input, $options: "i" } }, { email: { $regex: input, $options: "i" } }, { name: { $regex: input, $options: "i" } }],
+        },
+        "_id userName profilePicture name"
+      )
+
       return users
     } catch (e: any) {
       console.error(e.message)
       throw new Error(e.message)
     }
   }
-
 
   // get profile picture with id
   async unblockUser(userId: Types.ObjectId) {
