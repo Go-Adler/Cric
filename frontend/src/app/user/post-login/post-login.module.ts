@@ -15,7 +15,8 @@ import { HomeModule } from './home/home.module';
 import { SearchComponent } from './search/search.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatInputModule } from '@angular/material/input'
+import { MatInputModule } from '@angular/material/input';
+import { FriendsComponent } from './friends/friends.component'
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MatInputModule } from '@angular/material/input'
     MatchInfoComponent,
     PostLoginComponent,
     SearchComponent,
+    FriendsComponent,
   ],
   imports: [
     HomeModule,

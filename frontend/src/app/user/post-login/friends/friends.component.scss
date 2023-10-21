@@ -1,0 +1,22 @@
+$cricBlue: rgb(26, 41, 56, 0.8);
+
+.profilePictureEditArea:hover {
+  color: rgb(46, 61, 189);
+}
+
+[mat-stroked-button] {
+  color: white !important;
+  border-color: white !important;
+}
+
+
+.nav {
+  backdrop-filter: blur(20px); 
+  color: white;
+  border-color: rgb(255, 255, 255, 0.1);
+  
+}
+
+.borderColor {
+  border-color: rgb(255, 255, 255, 0.1) ;
+}

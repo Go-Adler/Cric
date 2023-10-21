@@ -1,0 +1,30 @@
+<div class="min-h-screen">
+  <div class="sticky pt-14 top-0 nav z-10">
+    <div class="p-5 gap-2 flex">
+      <!-- profile picutre area -->
+      <div class="flex w-8/12 flex-col items-end gap-2">
+        <img class="rounded-md" [src]="profilePicture" alt="" />
+      </div>
+
+      <!-- info area -->
+      <span class="flex flex-col w-full ps-2 justify-start pt-2">
+        <div class="text-lg">{{ name }}</div>
+        <div class="text-base text-stone-400">@{{ userName }}</div>
+
+        <span class="flex mt-5">
+          <span class="text-sm">Friends {{friendsCount}}</span>
+        </span>
+      </span>
+
+      <!-- Edit profile -->
+    </div>
+    <div class="flex p-1 border-b borderColor">
+      <div routerLink="posts" class="w-full flex justify-center border-r borderColor cursor-pointer">Posts</div>
+      <div routerLink="friends" class="w-full flex justify-center border-r borderColor cursor-pointer">Friends</div>
+      <div routerLink="saved" class="w-full flex justify-center cursor-pointer">Saved</div>
+    </div>
+  </div>
+  <div class="p-20">
+    <!-- <router-outlet></router-outlet> -->
+  </div>
+</div>

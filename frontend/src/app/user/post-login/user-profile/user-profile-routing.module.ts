@@ -6,6 +6,11 @@ import { SavedComponent } from './saved/saved.component'
 
 const routes: Routes = [
   {
+    path: 'friends',
+    pathMatch: 'full',
+    redirectTo: '/profile/friends'
+  },
+  {
     path: '',
     pathMatch: 'prefix',
     redirectTo:'posts'

@@ -217,7 +217,6 @@ export class UserDataAccess {
           { name: { $regex: input, $options: "i" } }
         ],
       }, '_id userName profilePicture name')
-      console.log(users, input);
       
       return users
     } catch (e: any) {
