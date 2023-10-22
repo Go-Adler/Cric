@@ -110,9 +110,9 @@ export class UserDataAccess {
   }
 
   // check email already exist
-  async checkUserByEmail(input: string) {
+  async checkUserByEmail(email: string) {
     try {
-      const user = await UserEntity.findOne({ input })
+      const user = await UserEntity.findOne({ email })
       return user?._id && !user?.isBlocked ? user?._id : false
     } catch (e: any) {
       console.error(e.message)

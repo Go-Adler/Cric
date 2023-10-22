@@ -31,6 +31,7 @@ export class PostComponent implements OnChanges, OnDestroy {
   posti = false;
   firstFetch = false;
   commentSection = false;
+  postLoadingImage: string = '';
 
   private subscriptions: Subscription[] = [];
 
@@ -68,6 +69,8 @@ export class PostComponent implements OnChanges, OnDestroy {
       })
     );
 
+    this.postLoadingImage = this.postService.getPostLoadingImage();
+    
     // Get posts
     this.subscriptions.push(
       this.postService.getPosts(this.skip).subscribe({

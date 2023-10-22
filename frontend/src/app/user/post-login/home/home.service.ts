@@ -10,7 +10,8 @@ import { I_likePost } from 'src/app/models/responses/postLiked.model'
 })
 export class PostService {
   API_URL!: string
-
+  postLoadingImage: string = 'https://goadlercric.s3.ap-south-1.amazonaws.com/assets/Loading-removebg-preview.png'
+  
   constructor(private configService: ConfigService, private http: HttpClient) { 
     this.API_URL = configService.getAPI_BaseURL()
   }
@@ -28,5 +29,10 @@ export class PostService {
   unlikePost(postId: string): Observable<I_likePost> {
     const postData = { postId }
     return this.http.post<I_likePost>(`${this.API_URL}/user/posts/unlike-post`, postData);
+  }
+
+  getPostLoadingImage() {
+
+    return this.postLoadingImage
   }
 }
