@@ -37,17 +37,19 @@ export class SearchComponent implements OnInit {
     const filterValue = name.toLowerCase();
     let usersArray: FindUser[] = [];
 
-    usersArray = [
-      ...usersArray,
+    let usersSet = new Set([
       ...this.options.filter((option) =>
         option.userName.toLowerCase().includes(filterValue)
       ),
       ...this.options.filter((option) =>
         option.name.toLowerCase().includes(filterValue)
       ),
-    ];
-
+    ]);
+    
+    usersArray = Array.from(usersSet);
+    
     return usersArray;
+    
   }
 
   fetchUsers(event: any) {
