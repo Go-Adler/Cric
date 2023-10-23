@@ -13,7 +13,9 @@ export class FriendsService {
   private profilePicture = new BehaviorSubject<string>(this.defaultProfilePicture);
   private friendsCount = new BehaviorSubject<string>('')
   private name = new BehaviorSubject<string>('')
+  fetchComplete = new BehaviorSubject<boolean>(false)
 
+  fetchComplete$: Observable<boolean> = this.fetchComplete.asObservable()
   name$: Observable<string> = this.name.asObservable()
   friendsCount$: Observable<string> = this.friendsCount.asObservable()
   profilePicture$: Observable<string> = this.profilePicture.asObservable()
@@ -25,10 +27,12 @@ export class FriendsService {
   }
 
   getFriendBasicInfo(userName: string) {
+    this.fetchComplete.next(false)
     this.http.get<I_UserBasicInfo>(`${this.API_URL}/user/friend/basic-info/${userName}`)
     .subscribe(
       {
         next: response => {
+          this.fetchComplete.next(true)
           if(response.profilePicture) this.profilePicture.next(response.profilePicture)
           this.name.next(response.name)
           this.friendsCount.next(response.friendsCount)

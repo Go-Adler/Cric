@@ -4,9 +4,9 @@ import { PostComponent } from '../home/post/post.component'
 
 const routes: Routes = [
   {
-    path: ':id',
+    path: '',
     pathMatch: 'prefix',
-    redirectTo:':id/posts'
+    redirectTo:'posts'
   },
   {
     path: 'posts',

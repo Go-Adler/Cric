@@ -12,10 +12,17 @@ export class FriendsComponent implements OnInit, OnDestroy {
   name: string = '';
   userName: string | null = '';
   friendsCount: string = '';
+  fetchingData: boolean = false
 
   constructor(private route: ActivatedRoute, private friendsService: FriendsService ) {}
 
   ngOnInit(): void {
+
+    this.friendsService.fetchComplete$.subscribe({
+      next: fetchComplete => {
+        this.fetchingData = fetchComplete
+      }
+    })
     this.route.paramMap.subscribe(params => {
       const userId = this.route.snapshot.paramMap.get('id')
       this.userName = userId!

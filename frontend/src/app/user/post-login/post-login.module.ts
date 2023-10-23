@@ -17,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input';
 import { FriendsComponent } from './friends/friends.component'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { FriendsComponent } from './friends/friends.component'
     ReactiveFormsModule,
     NgFor,
     AsyncPipe,
+    MatProgressSpinnerModule,
     PostLoginRoutingModule,
   ]
 })

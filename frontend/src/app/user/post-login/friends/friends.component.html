@@ -1,6 +1,6 @@
 <div class="min-h-screen">
   <div class="sticky pt-14 top-0 nav z-10">
-    <div class="p-5 gap-2 flex">
+    <div class="p-5 gap-2 flex" *ngIf="fetchingData">
       <!-- profile picutre area -->
       <div class="flex w-4/12 flex-col items-end gap-2">
         <img class="rounded-md" [src]="profilePicture" alt="" />
@@ -18,13 +18,16 @@
 
       <!-- Edit profile -->
     </div>
+    <div class="p-5 gap-2 flex justify-center items-end" *ngIf="!fetchingData">
+      <mat-spinner></mat-spinner>
+    </div>
     <div class="flex p-1 border-b borderColor">
       <div routerLink="posts" class="w-full flex justify-center border-r borderColor cursor-pointer">Posts</div>
       <div routerLink="friends" class="w-full flex justify-center border-r borderColor cursor-pointer">Friends</div>
       <div routerLink="saved" class="w-full flex justify-center cursor-pointer">Saved</div>
     </div>
   </div>
-  <div class="p-20">
-    <!-- <router-outlet></router-outlet> -->
+  <div class="px-20">
+    <router-outlet></router-outlet>
   </div>
 </div>

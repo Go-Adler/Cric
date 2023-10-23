@@ -1,0 +1,149 @@
+<div class="mb-10 mt-3 pt-10 min-h-screen">
+  <span class="flex justify-center" *ngIf="spinner"
+    ><mat-spinner diameter="30" color="primary"></mat-spinner
+  ></span>
+  <!-- card -->
+  <mat-card
+    class="text-black p-2 md:p-3 mb-6"
+    *ngFor="let post of posts; let i = index"
+  >
+    <!-- card-title -->
+    <div class="flex gap-2">
+      <span class="w-10">
+        <img [src]="profilePicture" alt="" class="rounded-full" />
+      </span>
+      <span class="">
+        <span class="flex items-center gap-2">
+          <span class="md:text-base">{{ name }}</span>
+          <span
+            class="text-xs font-light md:font-normal md:text-sm text-stone-500"
+            >{{ post.timestamp | timeago }}</span
+          >
+        </span>
+        <span>
+          <span class="text-sm font-light">@{{ userName }}</span>
+        </span>
+      </span>
+    </div>
+
+    <!--  content -->
+    <span
+      *ngIf="post.content.text"
+      class="py-2 text-sm font-normal break-words whitespace-pre-line"
+    >
+      {{ post.content.text }}
+    </span>
+
+    <!-- image -->
+    <img
+      *ngIf="post.content?.multimedia[0]"
+      [defaultImage]="postLoadingImage"
+      [lazyLoad]="post.content?.multimedia[0]"
+      alt="Post Image"
+      class="rounded-md"
+      (click)="selectedPost(post._id)"
+    />
+    <!-- reactions -->
+    <div class="md:pt-3 pt-2 flex justify-between">
+      <!-- favourite -->
+      <div
+        class="gap-1 flex md:gap-1 justify-center items-center cursor-pointer actionArea"
+        (click)="toggleLike(post?.engagement?.liked, post._id)"
+      >
+        <span
+          class="text-lg lg:text-xl material-symbols-rounded"
+          [ngClass]="{ fillIcon: post?.engagement?.liked }"
+        >
+          favorite
+        </span>
+        <span class="text-sm lg:text-md font-normal">{{
+          post.actions.likes || ""
+        }}</span>
+      </div>
+
+      <!-- comment -->
+      <div
+        class="gap-1 flex md:gap-3 justify-center items-center actionArea"
+        (click)="posts[i].showCommentSection = !posts[i].showCommentSection"
+      >
+        <span
+          class="text-lg lg:text-xl material-symbols-rounded cursor-pointer"
+        >
+          mode_comment
+        </span>
+        <span class="text-sm lg:text-md font-normal">{{
+          post.actions.replies || ""
+        }}</span>
+      </div>
+
+      <!-- bookmark -->
+      <div class="gap-1 flex md:gap-3 justify-center items-center actionArea">
+        <span
+          class="text-lg lg:text-xl material-symbols-rounded cursor-pointer"
+        >
+          bookmark
+        </span>
+        <span class="text-sm lg:text-md font-normal">{{
+          post.actions.saved || ""
+        }}</span>
+      </div>
+
+      <!-- send -->
+      <div class="gap-1 flex md:gap-3 justify-center items-center actionArea">
+        <span
+          class="text-lg lg:text-xl material-symbols-rounded cursor-pointer"
+        >
+          send
+        </span>
+      </div>
+
+      <!-- share -->
+      <div class="gap-1 flex md:gap-3 justify-center items-center actionArea">
+        <span
+          class="text-lg lg:text-xl material-symbols-rounded cursor-pointer"
+        >
+          share
+        </span>
+      </div>
+    </div>
+    <app-comment-section
+      *ngIf="posts[i]?.showCommentSection"
+      [postId]="post._id"
+      [profilePicture]="profilePicture"
+      [userName]="userName"
+      [name]="name"
+    ></app-comment-section>
+  </mat-card>
+  <span
+    *ngIf="!posts[0] && firstFetch"
+    class="flex justify-center flex-col items-center gap-3 mt-10"
+  >
+    <span>No posts to show, create a new post, or follow someone.</span>
+    <span class="material-symbols-rounded"> empty_dashboard </span>
+  </span>
+  <!-- fetch posts -->
+  <span
+    *ngIf="posts[0] && !fetchingPosts && !postsEnd"
+    class="flex flex-col gap-1 justify-center items-center p-3 cursor-pointer flex-column mt-2 text-4xl border-t cursor fetchPosts"
+    (click)="loadMore()"
+  >
+    <span class="text-lg lg:text-xl material-symbols-rounded">
+      add_circle
+    </span>
+    <span class="text-xs">Load more</span>
+  </span>
+  <span
+    *ngIf="fetchingPosts"
+    class="flex justify-center items-center flex-col mt-2 cursor gap-2"
+    (click)="loadMore()"
+  >
+    <mat-spinner diameter="30" color="primary"></mat-spinner>
+    <span class="text-xs">loading more posts</span>
+  </span>
+  <span
+    *ngIf="postsEnd"
+    class="flex justify-center items-center flex-column mt-2 text-4xl cursor gap-2"
+  >
+    <span class="text-xs">No more posts</span>
+  </span>
+</div>
