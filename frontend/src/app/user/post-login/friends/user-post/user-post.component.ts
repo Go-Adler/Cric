@@ -7,10 +7,9 @@ import {
 } from '@angular/core';
 import { FriendsService } from '../friends.service';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
 import { I_post } from 'src/app/models/responses/message.model';
 import { Subscription } from 'rxjs';
-import { UserPostService } from './user-post.service'
+import { UserPostService } from './user-post.service';
 
 const POSTS_LIMIT = 6;
 
@@ -39,16 +38,15 @@ export class UserPostComponent implements OnChanges, OnDestroy {
   @Input() newPost!: I_post;
 
   constructor(
-    private friendsService: FriendsService,
     private router: Router,
-    private userService: UserService,
     private userPostService: UserPostService,
+    private friendsService: FriendsService
   ) {}
 
   ngOnInit(): void {
     // Get name
     this.subscriptions.push(
-      this.userService.name$.subscribe({
+      this.friendsService.name$.subscribe({
         next: (name) => {
           this.name = name;
         },
@@ -56,15 +54,11 @@ export class UserPostComponent implements OnChanges, OnDestroy {
     );
 
     // Get user name
-    this.subscriptions.push(
-      this.userService.userName$.subscribe((userName) => {
-        this.userName = userName;
-      })
-    );
+    this.userName = this.friendsService.getUserName();
 
     // Get profile picture
     this.subscriptions.push(
-      this.userService.profilePicture$.subscribe({
+      this.friendsService.profilePicture$.subscribe({
         next: (profilePicture) => {
           this.profilePicture = profilePicture;
         },
@@ -72,21 +66,19 @@ export class UserPostComponent implements OnChanges, OnDestroy {
     );
 
     this.postLoadingImage = this.userPostService.getPostLoadingImage();
-    
+
     // Get posts
-    this.subscriptions.push(
-      this.userPostService.getPosts('ss', this.skip).subscribe({
-        next: (data) => {
-          this.spinner = false;
-          this.firstFetch = true;
-          this.posts = data.posts;
-        },
-        error: (error) => {
-          console.error(error);
-          this.spinner = false;
-        },
-      })
-    );
+    this.userPostService.getPosts(this.skip).subscribe({
+      next: (data) => {
+        this.spinner = false;
+        this.firstFetch = true;
+        this.posts = data.posts;
+      },
+      error: (error) => {
+        console.error(error);
+        this.spinner = false;
+      },
+    });
   }
 
   // Navigate to post
@@ -105,7 +97,7 @@ export class UserPostComponent implements OnChanges, OnDestroy {
     this.fetchingPosts = true;
     this.skip += POSTS_LIMIT;
     this.subscriptions.push(
-      this.userPostService.getPosts('', this.skip).subscribe({
+      this.userPostService.getPosts(this.skip).subscribe({
         next: (data) => {
           this.fetchingPosts = false;
           const postExists = data.posts[0];

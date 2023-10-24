@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { ConfigService } from 'src/app/services/config.service'
 import { I_likePost } from 'src/app/models/responses/postLiked.model'
+import { FriendsService } from '../friends.service'
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,15 @@ export class UserPostService {
   API_URL!: string
   postLoadingImage: string = 'https://goadlercric.s3.ap-south-1.amazonaws.com/assets/Loading-removebg-preview.png'
   
-  constructor(private configService: ConfigService, private http: HttpClient) { 
+  constructor(private configService: ConfigService, private http: HttpClient, private friendsService: FriendsService) { 
     this.API_URL = configService.getAPI_BaseURL()
   }
 
-  getPosts(userId: string, skip: number): Observable<any> {
-    const postData = { skip }
-    return this.http.post<any>(`${this.API_URL}/user/posts`, postData);
+  getPosts(skip: number): Observable<any> {
+    const userName = this.friendsService.getUserName()
+    
+    const postData = { skip, userName }
+    return this.http.post<any>(`${this.API_URL}/user/posts/friends-posts`, postData);
   }
 
   likePost(postId: string): Observable<I_likePost> {

@@ -5,6 +5,11 @@ import { SearchComponent } from './search/search.component'
 import { FriendsComponent } from './friends/friends.component'
 const routes: Routes = [
   {
+    path: 'user/:id',
+    pathMatch: 'full',
+    redirectTo: 'user/:id/posts'
+  },
+  {
     path: 'profile',
     component: UserProfileComponent,
     loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileModule)

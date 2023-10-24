@@ -14,6 +14,7 @@ export class FriendsService {
   private friendsCount = new BehaviorSubject<string>('')
   private name = new BehaviorSubject<string>('')
   fetchComplete = new BehaviorSubject<boolean>(false)
+  userName: string = ''
 
   fetchComplete$: Observable<boolean> = this.fetchComplete.asObservable()
   name$: Observable<string> = this.name.asObservable()
@@ -27,6 +28,7 @@ export class FriendsService {
   }
 
   getFriendBasicInfo(userName: string) {
+    this.userName = userName
     this.fetchComplete.next(false)
     this.http.get<I_UserBasicInfo>(`${this.API_URL}/user/friend/basic-info/${userName}`)
     .subscribe(
@@ -47,5 +49,7 @@ export class FriendsService {
     this.friendsCount.next('')
   }
 
-  
+  getUserName() {
+    return this.userName
+  }
 }

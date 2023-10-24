@@ -27,7 +27,7 @@
       <div routerLink="saved" class="w-full flex justify-center cursor-pointer">Saved</div>
     </div>
   </div>
-  <div class="px-20">
+  <div *ngIf="fetchingData">
     <router-outlet></router-outlet>
   </div>
 </div>

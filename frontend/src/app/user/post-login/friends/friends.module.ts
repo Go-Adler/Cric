@@ -3,7 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { FriendsRoutingModule } from './friends-routing.module';
 import { UserPostComponent } from './user-post/user-post.component';
-import { MatProgressBarModule } from '@angular/material/progress-bar'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatCardModule } from '@angular/material/card'
+import { TimeagoModule } from 'ngx-timeago'
+import { LazyLoadImageModule } from 'ng-lazyload-image'
+import { HomeModule } from '../home/home.module'
 
 
 @NgModule({
@@ -12,7 +16,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar'
   ],
   imports: [
     CommonModule,
-    MatProgressBarModule,
+    HomeModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    TimeagoModule.forRoot(),
+    LazyLoadImageModule,
     FriendsRoutingModule,
   ]
 })

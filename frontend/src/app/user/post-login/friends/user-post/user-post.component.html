@@ -1,4 +1,4 @@
-<div class="mb-10 mt-3 pt-10 min-h-screen">
+<div class="mb-10 pt-10 min-h-screen px-16">
   <span class="flex justify-center" *ngIf="spinner"
     ><mat-spinner diameter="30" color="primary"></mat-spinner
   ></span>
@@ -118,7 +118,7 @@
     *ngIf="!posts[0] && firstFetch"
     class="flex justify-center flex-col items-center gap-3 mt-10"
   >
-    <span>No posts to show, create a new post, or follow someone.</span>
+    <span>User not created a post yet.</span>
     <span class="material-symbols-rounded"> empty_dashboard </span>
   </span>
   <!-- fetch posts -->

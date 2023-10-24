@@ -44,6 +44,9 @@ import { LazyLoadImageModule } from 'ng-lazyload-image'
     TimeagoModule.forRoot(),
     LazyLoadImageModule,
     HomeRoutingModule
+  ],
+  exports: [
+    CommentSectionComponent
   ]
 })
 export class HomeModule { }
