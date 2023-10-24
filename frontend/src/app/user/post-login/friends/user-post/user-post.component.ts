@@ -10,13 +10,14 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { I_post } from 'src/app/models/responses/message.model';
 import { Subscription } from 'rxjs';
+import { UserPostService } from './user-post.service'
 
 const POSTS_LIMIT = 6;
 
 @Component({
-  selector: 'app-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.scss'],
+  selector: 'app-user-post',
+  templateUrl: './user-post.component.html',
+  styleUrls: ['./user-post.component.scss'],
 })
 export class UserPostComponent implements OnChanges, OnDestroy {
   posts: any[] = [];
@@ -38,9 +39,10 @@ export class UserPostComponent implements OnChanges, OnDestroy {
   @Input() newPost!: I_post;
 
   constructor(
-    private friendsService: FriendsService
+    private friendsService: FriendsService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private userPostService: UserPostService,
   ) {}
 
   ngOnInit(): void {
@@ -69,11 +71,11 @@ export class UserPostComponent implements OnChanges, OnDestroy {
       })
     );
 
-    this.postLoadingImage = this.postService.getPostLoadingImage();
+    this.postLoadingImage = this.userPostService.getPostLoadingImage();
     
     // Get posts
     this.subscriptions.push(
-      this.postService.getPosts(this.skip).subscribe({
+      this.userPostService.getPosts('ss', this.skip).subscribe({
         next: (data) => {
           this.spinner = false;
           this.firstFetch = true;
@@ -103,7 +105,7 @@ export class UserPostComponent implements OnChanges, OnDestroy {
     this.fetchingPosts = true;
     this.skip += POSTS_LIMIT;
     this.subscriptions.push(
-      this.postService.getPosts(this.skip).subscribe({
+      this.userPostService.getPosts('', this.skip).subscribe({
         next: (data) => {
           this.fetchingPosts = false;
           const postExists = data.posts[0];
@@ -130,7 +132,7 @@ export class UserPostComponent implements OnChanges, OnDestroy {
   toggleLike(isLiked: boolean, postId: string): void {
     if (isLiked) {
       this.subscriptions.push(
-        this.postService.unlikePost(postId).subscribe({
+        this.userPostService.unlikePost(postId).subscribe({
           next: (data) => {
             const post = this.posts.find((post) => post._id === postId);
             if (post) {
@@ -145,7 +147,7 @@ export class UserPostComponent implements OnChanges, OnDestroy {
       );
     } else {
       this.subscriptions.push(
-        this.postService.likePost(postId).subscribe({
+        this.userPostService.likePost(postId).subscribe({
           next: (data) => {
             const post = this.posts.find((post) => post._id === postId);
             if (post) {

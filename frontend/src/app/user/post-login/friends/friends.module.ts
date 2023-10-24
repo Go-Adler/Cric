@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { FriendsRoutingModule } from './friends-routing.module';
 import { UserPostComponent } from './user-post/user-post.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar'
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { UserPostComponent } from './user-post/user-post.component';
   ],
   imports: [
     CommonModule,
-    FriendsRoutingModule
+    MatProgressBarModule,
+    FriendsRoutingModule,
   ]
 })
 export class FriendsModule { }
