@@ -7,7 +7,7 @@ import { FriendsService } from './friends.service'
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.scss'],
 })
-export class FriendsComponent implements OnInit, On Destroy {
+export class FriendsComponent implements OnInit, OnDestroy {
   profilePicture: string = '';
   name: string = '';
   userName: string | null = '';
@@ -25,9 +25,6 @@ export class FriendsComponent implements OnInit, On Destroy {
     })
     this.route.paramMap.subscribe(params => {
       const userId = this.route.snapshot.paramMap.get('id')
-      console.log(123);
-      console.log(123);
-      
       this.userName = userId!
       this.friendsService.getFriendBasicInfo(this.userName)
     })

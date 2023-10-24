@@ -74,7 +74,7 @@ export class UserPostDataAccess {
       }
 
       await PostEntity.findByIdAndUpdate(postId, {
-        $push: { usersLiked: userId },
+        $addToSet: { usersLiked: userId },
         $inc: { "actions.likes": 1 },
       });
     } catch (error: any) {
