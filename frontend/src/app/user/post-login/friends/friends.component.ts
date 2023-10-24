@@ -7,7 +7,7 @@ import { FriendsService } from './friends.service'
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.scss'],
 })
-export class FriendsComponent implements OnInit, OnDestroy {
+export class FriendsComponent implements OnInit, On Destroy {
   profilePicture: string = '';
   name: string = '';
   userName: string | null = '';
