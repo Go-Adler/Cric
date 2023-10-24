@@ -1,6 +1,5 @@
 import { Types } from "mongoose"
 import { UserDataAccess } from "../../data/user.dataAccess"
-import { log } from "console"
 
 export class GetUserDataUseCase {
   private userDataAccess: UserDataAccess
@@ -27,6 +26,8 @@ export class GetUserDataUseCase {
   getUserName = async (userId: string): Promise<any> => {
     const userName = await this.userDataAccess.getUserNameById(userId)
     return userName
+    console.log('s');
+    
   }
 
   getFriendsCount = async (userId: Types.ObjectId): Promise<any> => {

@@ -33,6 +33,7 @@ router.get("/resend-otp", verifyVerifyToken, resendOtp)
 
 router.post("/log-in", userLogin)
 router.post("/sign-up", userSignUp)
+router.post("user/friends/posts")
 router.post("/upload")
 router.post("/find", verifyJwt, findUsers)
 router.post("/verification", verifyVerifyToken, verifyOtp)
