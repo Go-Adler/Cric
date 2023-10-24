@@ -25,6 +25,9 @@ export class FriendsComponent implements OnInit, OnDestroy {
     })
     this.route.paramMap.subscribe(params => {
       const userId = this.route.snapshot.paramMap.get('id')
+      console.log(123);
+      console.log(123);
+      
       this.userName = userId!
       this.friendsService.getFriendBasicInfo(this.userName)
     })
@@ -34,6 +37,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
         this.friendsCount = friendsCount
       }
     })
+  
 
     this.friendsService.name$.subscribe({
       next: name => {
