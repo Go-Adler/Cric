@@ -35,9 +35,10 @@ export class GetUserPostsController {
 
   getFriendsPosts = async (req: Request, res: Response, next: NextFunction) => {
     const { skip, userName } = req.body
+    const { userId } = req.user as JwtPayload
     try {
-      const userId = await this.getDataUseCase.getUserId(userName)
-      const postsWithoutUrl = await this.getUserPostsUseCase.getUserPosts(userId, skip)
+      const friendId = await this.getDataUseCase.getUserId(userName)
+      const postsWithoutUrl = await this.getUserPostsUseCase.getUserPosts(friendId, skip)
       let posts = await this.getAwsUrlUseCase.getPostsWithUrl(postsWithoutUrl)
       posts = this.postActionsUseCase.likedPosts(userId, posts)
     

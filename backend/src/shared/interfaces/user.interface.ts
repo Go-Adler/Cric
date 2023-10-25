@@ -1,4 +1,5 @@
-import { Post } from "./post.interface"
+import { Types } from 'mongoose'
+import { Post } from "./userPost.interface"
 
 export interface I_User extends Document {
   name: string;
@@ -13,4 +14,8 @@ export interface I_User extends Document {
   isAdmin: boolean
   posts: Post[]
   isBlocked: boolean
+}
+
+export interface PostLikeRequestBody {
+  postId: Types.ObjectId;
 }
