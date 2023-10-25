@@ -24,6 +24,7 @@
           <span class="text-sm font-light">@{{ userName }}</span>
         </span>
       </span>
+
     </div>
 
     <!--  content -->
@@ -63,7 +64,7 @@
 
       <!-- comment -->
       <div
-        class="gap-1 flex md:gap-3 justify-center items-center actionArea"
+        class="gap-1 flex md:gap-1 justify-center items-center actionArea"
         (click)="posts[i].showCommentSection = !posts[i].showCommentSection"
       >
         <span
@@ -72,7 +73,7 @@
           mode_comment
         </span>
         <span class="text-sm lg:text-md font-normal">{{
-          post.actions.replies || ""
+          post.replies.length || ""
         }}</span>
       </div>
 

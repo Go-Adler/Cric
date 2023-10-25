@@ -12,7 +12,7 @@
         <div class="text-base text-stone-400">@{{ userName }}</div>
 
         <span class="flex mt-5">
-          <span class="text-sm">Friends {{friendsCount}}</span>
+          <span class="text-sm">Friends {{ friendsCount }}</span>
         </span>
       </span>
 
@@ -21,10 +21,24 @@
     <div class="p-5 gap-2 flex justify-center items-end" *ngIf="!fetchingData">
       <mat-spinner></mat-spinner>
     </div>
+    <button (click)="addFriend()">Add friend</button>
+
     <div class="flex p-1 border-b borderColor">
-      <div routerLink="posts" class="w-full flex justify-center border-r borderColor cursor-pointer">Posts</div>
-      <div routerLink="friends" class="w-full flex justify-center border-r borderColor cursor-pointer">Friends</div>
-      <div routerLink="saved" class="w-full flex justify-center cursor-pointer">Saved</div>
+      <div
+        routerLink="posts"
+        class="w-full flex justify-center border-r borderColor cursor-pointer"
+      >
+        Posts
+      </div>
+      <div
+        routerLink="friends"
+        class="w-full flex justify-center border-r borderColor cursor-pointer"
+      >
+        Friends
+      </div>
+      <div routerLink="saved" class="w-full flex justify-center cursor-pointer">
+        Saved
+      </div>
     </div>
   </div>
   <div *ngIf="fetchingData">

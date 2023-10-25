@@ -52,4 +52,8 @@ export class FriendsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.friendsService.changeToDefault()
   }
+
+  addFriend() {
+    console.log(57);
+  }
 }
