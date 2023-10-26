@@ -1,8 +1,5 @@
-<button class="mt-80" (click)="callSocket()">send message</button>
 <div class="flex justify-center mb-3">
-
     <div class="w-10/12 lg:w-10/12">
-
         <app-new-post (newPostEvent)="newPostSuccess($event)"></app-new-post>
         <app-post [newPost]="newPostData"></app-post>
     </div>
