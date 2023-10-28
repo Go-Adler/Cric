@@ -61,7 +61,6 @@ export class SideNavComponent implements OnInit {
 
 
 @Component({
-  selector: 'dialog-animations-example-dialog',
   templateUrl: 'dialog-animations-example-dialog.html',
   styleUrls: ['./side-nav.component.scss'],
   standalone: true,

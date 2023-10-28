@@ -165,4 +165,9 @@ export class PostComponent implements OnChanges, OnDestroy {
     // Unsubscribe all subscriptions
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
+
+  handleImageError() {
+    console.log('lazy loading image error');
+    
+  }
 }
