@@ -61,7 +61,6 @@ export class ServerApp {
   }
 
   private socketIoSetup() {
-    console.log(53);
     this.io.on("connection", socket => {
       console.log(`Socket connected: ${socket.id}`, 53);
       socket.emit('message', 'hello fron the server')
