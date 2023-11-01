@@ -36,7 +36,6 @@ export class UserDataController {
     const { userName } = req.params
     try {
       const userId = await this.userDataUseCase.getUserId(userName)
-      console.log(userId, 39);
       
       let profilePicture = await this.userDataUseCase.getProfilePicture(userId)
       

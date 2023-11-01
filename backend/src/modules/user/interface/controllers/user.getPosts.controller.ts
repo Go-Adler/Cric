@@ -22,7 +22,6 @@ export class GetUserPostsController {
     const { userId } = req.user as JwtPayload
     const { skip } = req.body
     try {
-      
       const postsWithoutUrl = await this.getUserPostsUseCase.getUserPosts(userId, skip)
       let posts = await this.getAwsUrlUseCase.getPostsWithUrl(postsWithoutUrl)
       posts = this.postActionsUseCase.likedPosts(userId, posts)

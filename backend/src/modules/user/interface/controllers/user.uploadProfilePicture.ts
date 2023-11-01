@@ -15,7 +15,6 @@ export class UserDataController {
     res: Response,
     next: NextFunction
   ) => {
-
     try {
     } catch (error) {
       return next(error)

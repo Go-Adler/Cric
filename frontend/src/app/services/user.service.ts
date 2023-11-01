@@ -10,10 +10,10 @@ import { I_UserBasicInfo } from "../models/responses/userResponses"
   providedIn: "root"
 })
 export class UserService {
-  private defaultProfilePicture = 'https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/Default/DefaultProfilePicture.png'
   private defaultName = ''
   private defaultUserName = 'userName'
   private defualtFriendsCount = ''
+  private defaultProfilePicture = 'https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/Default/DefaultProfilePicture.png'
 
   private profilePicture = new BehaviorSubject<string>(this.defaultProfilePicture);
   private friendsCount = new BehaviorSubject<string>(this.defualtFriendsCount)
@@ -49,5 +49,9 @@ export class UserService {
 
   changeToDefaultProfilePicture() {
     this.profilePicture.next(this.defaultProfilePicture)
+  }
+
+  getDefaultProfilePicture() {
+    return this.defaultProfilePicture
   }
 }

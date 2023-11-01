@@ -43,32 +43,34 @@ export class LogInComponent implements OnInit {
   }
 
   onSubmit() {
-    this.isLogging = true;
-    this.errorMessage = '';
-    this.wrongPassword = '';
-    const { email, password } = this.logInForm.value;
-
-    this.logInService.login(email, password).subscribe(
-      {
-        next:(response) => {
-          this.isLogging = false;
-          if (response.token) {
-            const token = response.token;
-            localStorage.setItem('token', token);
-          }
-          if (response.userNotExisting) {
-            this.errorMessage = 'User not existing';
-          } else if (response.wrongPassword) {
-            this.wrongPassword = 'Wrong password';
-          } else if (response.notVerified) {
-            this.router.navigate(['/auth/sign-up-otp']);
-          } else {
-            this.userService.getUserBasicInfo()
-            this.authService.setLoginStatus(true);
-            this.router.navigate(['/home']);
+    if (this.logInForm.valid) {
+      this.isLogging = true;
+      this.errorMessage = '';
+      this.wrongPassword = '';
+      const { email, password } = this.logInForm.value;
+  
+      this.logInService.login(email, password).subscribe(
+        {
+          next:(response) => {
+            this.isLogging = false;
+            if (response.token) {
+              const token = response.token;
+              localStorage.setItem('token', token);
+            }
+            if (response.userNotExisting) {
+              this.errorMessage = 'User not existing';
+            } else if (response.wrongPassword) {
+              this.wrongPassword = 'Wrong password';
+            } else if (response.notVerified) {
+              this.router.navigate(['/auth/sign-up-otp']);
+            } else {
+              this.userService.getUserBasicInfo()
+              this.authService.setLoginStatus(true);
+              this.router.navigate(['/home']);
+            }
           }
         }
-      }
-    );
+      );
+    }
   }
 }

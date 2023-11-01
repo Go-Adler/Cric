@@ -10,6 +10,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { PostService } from './new-post.service';
 import { UserService } from 'src/app/services/user.service';
 import { I_post } from 'src/app/models/responses/message.model';
+import { SearchService } from '../../search/search.service';
 
 @Component({
   selector: 'app-new-post',
@@ -25,7 +26,7 @@ export class NewPostComponent implements OnInit {
   postSuccess: boolean = false;
 
   // User's profile picture and name
-  profilePicture: string = '';
+  profilePicture: string = ''
   name: string = '';
 
   // Selected image for the post
@@ -53,6 +54,7 @@ export class NewPostComponent implements OnInit {
 
   ngOnInit(): void {
     // Fetch user's basic info and profile picture, and initialize the form
+    this.profilePicture = this.userService.getDefaultProfilePicture()
     this.userService.getUserBasicInfo();
     this.userService.profilePicture$.subscribe({
       next: (profilePicture) => {
