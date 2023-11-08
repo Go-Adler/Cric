@@ -42,7 +42,7 @@ export class UserLoginController {
       if (userId) {
         const token = this.tokenUseCase.generateTokenWithUserId(userId, isVerified)
         // Setup the socket.io service for notification
-        
+        this.notificationService.setUpSocketIo(userId)
 
         // If the user is verified, return a response with a success message and the token
         if (isVerified) {

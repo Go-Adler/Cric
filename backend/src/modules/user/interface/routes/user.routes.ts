@@ -1,4 +1,7 @@
 import express from "express"
+import { Request, Response, NextFunction } from 'express'
+import { JwtPayload } from "jsonwebtoken"
+import { Socket } from "socket.io"
 
 import { UserSignUpController } from "../controllers/user.signUp.controller"
 import { UserSignUpOtpController } from "../controllers/user.signUpOtp.controller"
@@ -11,8 +14,8 @@ import { UserResendOtpController } from "../controllers/user.resendOtp.controlle
 import { postRoutes } from "./post.routes"
 import { profileRoutes } from "./profile.routes"
 import { UsersController } from "../controllers/user.users.controller"
-import { setupSocketIo } from "../../../../services/notificationService"
-import { Socket } from "socket.io"
+import { NotificationService } from "../../../../services/notificationService"
+import { UserDataUseCase } from "../../application/useCases/user.data.useCase"
 
 const { verifyJwt, verifyToken, verifyVerifyToken } = new JwtMiddleware()
 const { findUsers } = new UsersController()
@@ -23,6 +26,8 @@ const { userLogin } = new UserLoginController()
 const { forgotPassword } = new UserForgotPasswordController()
 const { changePassword } = new UserChangePasswordController()
 const { userBasicInfo, friendBasicInfo } = new UserDataController()
+const { setUpSocketIo } = new NotificationService()
+const { setSocketConnection } = new UserDataUseCase()
 
 const router = express.Router()
 
@@ -32,12 +37,14 @@ router.use("/profile", profileRoutes)
 router.get("/basic-info", verifyJwt, userBasicInfo)
 router.get("/friend/basic-info/:userName", verifyJwt, friendBasicInfo)
 router.get("/resend-otp", verifyVerifyToken, resendOtp)
-router.get('/socket', (req, res) => {
-  const io = setupSocketIo()
-  io.on("connection", (socket: Socket) => {
+router.get('/socket', verifyJwt, (req: Request, res) => {
+  const { userId } = req.user as JwtPayload
+  const io = setUpSocketIo(userId)
+  io.on("connection", async(socket: Socket) => {
     console.log(`Socket connected: ${socket.id}`);
-
-    socket.on('like-post', data => {
+    const socketId = socket.id
+      await setSocketConnection(userId, socketId)
+      socket.on('like-post', data => {
       console.log('like post recieved');
       io.emit('notification', {
         type: 'like'

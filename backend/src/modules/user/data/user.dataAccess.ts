@@ -1,6 +1,5 @@
 import { Types } from "mongoose"
 import { UserEntity } from "./../domain/user.schema"
-import { Socket } from "socket.io"
 
 export class UserDataAccess {
   // Create a new user
@@ -258,9 +257,9 @@ export class UserDataAccess {
   }
 
   // add notification socket
-  async addNotificationSocket(userId: Types.ObjectId, socket: Socket) {
+  async addNotificationSocket(userId: Types.ObjectId, socket: string) {
     try {
-      await UserEntity.findByIdAndUpdate(userId, { notificationSocket: socket })
+      await UserEntity.findByIdAndUpdate(userId, { notificationSocketId: socket })
     } catch (e: any) {
       console.error(e.message)
       throw new Error(e.message)

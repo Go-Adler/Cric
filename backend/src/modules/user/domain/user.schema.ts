@@ -57,7 +57,7 @@ const userSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     default: []
   },
-  notificationSocket: {
+  notificationSocketId: {
     type: String,
   }
 });

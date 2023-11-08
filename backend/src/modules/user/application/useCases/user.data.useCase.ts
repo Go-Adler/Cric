@@ -1,6 +1,5 @@
 import { Types } from "mongoose"
 import { UserDataAccess } from "../../data/user.dataAccess"
-import { Socket } from "socket.io"
 
 export class UserDataUseCase {
   private userDataAccess:UserDataAccess
@@ -9,7 +8,7 @@ export class UserDataUseCase {
     this.userDataAccess = new UserDataAccess()
   }
 
-  setSocketConnection = async (userId: Types.ObjectId, socket: Socket) => {
+  setSocketConnection = async (userId: Types.ObjectId, socket: string) => {
     await this.userDataAccess.addNotificationSocket(userId, socket)
   }
 }
