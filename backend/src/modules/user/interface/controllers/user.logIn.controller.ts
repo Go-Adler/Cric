@@ -3,38 +3,52 @@ import { UserExistingUseCase } from "../../application/useCases/user.existing.us
 import { UserLoginUseCase } from "../../application/useCases/user.logIn.useCase"
 import { TokenUseCase } from "../../application/useCases/user.token.useCase"
 import { SendOTP_UseCase } from "../../application/useCases/user.sendOTP.useCase"
+import { NotificationService } from "../../../../services/notificationService"
 
 export class UserLoginController {
   private userExistingUseCase: UserExistingUseCase
   private userLogInUseCase: UserLoginUseCase
   private tokenUseCase: TokenUseCase
   private sendOtpUseCase: SendOTP_UseCase
+  private notificationService: NotificationService
 
   constructor() {
     this.userExistingUseCase = new UserExistingUseCase()
     this.userLogInUseCase = new UserLoginUseCase()
     this.tokenUseCase = new TokenUseCase()
     this.sendOtpUseCase = new SendOTP_UseCase()
+    this.notificationService = new NotificationService()
   }
 
   userLogin = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body
     try {
+      // Check if the user exists in the database using the email
       const isUserExisting = await this.userExistingUseCase.userExistingLogIn(email.toLowerCase())
 
+      // If the user does not exist, return a response with userNotExisting flag
       if (!isUserExisting) {
         return res.json({ userNotExisting: true })
       }
+
+      // If the user exists, get the user id by verifying the email and password
       const userId = await this.userLogInUseCase.userLogIn(email, password)
 
+      // Check if the user is verified using the email
       let isVerified = await this.userLogInUseCase.isVerified(email)
       isVerified = !!isVerified
 
+      // If the user id is valid, generate a token with the user id and the isVerified flag
       if (userId) {
         const token = this.tokenUseCase.generateTokenWithUserId(userId, isVerified)
+        // Setup the socket.io service for notification
+        
+
+        // If the user is verified, return a response with a success message and the token
         if (isVerified) {
           res.json({ message: "Verification success", token })
         } else {
+          // If the user is not verified, send an OTP to the email and return a response with notVerified flag and the token
           await this.sendOtpUseCase.sendOTP(email)
           res.json({ notVerified: true, token })
         }

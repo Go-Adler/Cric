@@ -11,6 +11,8 @@ import { UserResendOtpController } from "../controllers/user.resendOtp.controlle
 import { postRoutes } from "./post.routes"
 import { profileRoutes } from "./profile.routes"
 import { UsersController } from "../controllers/user.users.controller"
+import { setupSocketIo } from "../../../../services/notificationService"
+import { Socket } from "socket.io"
 
 const { verifyJwt, verifyToken, verifyVerifyToken } = new JwtMiddleware()
 const { findUsers } = new UsersController()
@@ -30,11 +32,23 @@ router.use("/profile", profileRoutes)
 router.get("/basic-info", verifyJwt, userBasicInfo)
 router.get("/friend/basic-info/:userName", verifyJwt, friendBasicInfo)
 router.get("/resend-otp", verifyVerifyToken, resendOtp)
+router.get('/socket', (req, res) => {
+  const io = setupSocketIo()
+  io.on("connection", (socket: Socket) => {
+    console.log(`Socket connected: ${socket.id}`);
+
+    socket.on('like-post', data => {
+      console.log('like post recieved');
+      io.emit('notification', {
+        type: 'like'
+      })
+    })
+  })
+  res.json({success: true})
+})
 
 router.post("/log-in", userLogin)
 router.post("/sign-up", userSignUp)
-router.post("user/friends/posts")
-router.post("/upload")
 router.post("/find", verifyJwt, findUsers)
 router.post("/verification", verifyVerifyToken, verifyOtp)
 router.post("/forgot-password", forgotPassword)

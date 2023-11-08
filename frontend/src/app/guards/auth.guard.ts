@@ -17,7 +17,6 @@ export const AuthGuard: CanActivateFn = (
     return true;
   } else {
     router.navigateByUrl('/auth/log-in');
-
     return false;
   }
 };

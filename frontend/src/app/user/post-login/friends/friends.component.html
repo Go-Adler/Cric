@@ -21,7 +21,13 @@
     <div class="p-5 gap-2 flex justify-center items-end" *ngIf="!fetchingData">
       <mat-spinner></mat-spinner>
     </div>
-    <button (click)="addFriend()">Add friend</button>
+   <div class="flex gap-3 ">
+    <button class="bg-red-300" (click)="addFriend()">Add friend</button>
+    <button class="bg-amber-500" (click)="start()">start</button>
+    <button class="bg-slate-300" (click)="connect()">connect</button>
+
+
+   </div>
 
     <div class="flex p-1 border-b borderColor">
       <div

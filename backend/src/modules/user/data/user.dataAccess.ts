@@ -1,6 +1,6 @@
 import { Types } from "mongoose"
 import { UserEntity } from "./../domain/user.schema"
-import { UsersFind } from "../../../shared/interfaces/userPost.interface"
+import { Socket } from "socket.io"
 
 export class UserDataAccess {
   // Create a new user
@@ -198,7 +198,7 @@ export class UserDataAccess {
   // get user id with user name
   async getUserIdWIthUserName(userName: string) {
     try {
-      const userId = await UserEntity.find({userName}).select("_id")
+      const userId = await UserEntity.find({ userName }).select("_id")
       return userId[0]
     } catch (e: any) {
       console.error(e.message)
@@ -251,6 +251,16 @@ export class UserDataAccess {
     try {
       const users = await UserEntity.findByIdAndUpdate(userId, { isBlocked: true }, { new: true })
       return users
+    } catch (e: any) {
+      console.error(e.message)
+      throw new Error(e.message)
+    }
+  }
+
+  // add notification socket
+  async addNotificationSocket(userId: Types.ObjectId, socket: Socket) {
+    try {
+      await UserEntity.findByIdAndUpdate(userId, { notificationSocket: socket })
     } catch (e: any) {
       console.error(e.message)
       throw new Error(e.message)

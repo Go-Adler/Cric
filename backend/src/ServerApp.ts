@@ -2,7 +2,6 @@ import express, { Application, Request, Response } from "express"
 import morgan from "morgan"
 import cors from "cors"
 import http from "http"
-import { Server } from 'socket.io'
 import rateLimit from "express-rate-limit";
 
 import { userRoutes } from "./modules/user/interface/routes/user.routes"
@@ -11,24 +10,16 @@ import { mongo } from "./config/database"
 
 export class ServerApp {
   private app: Application
-  private server: http.Server
-  private io: Server
   private port!: string
+  server: http.Server
 
   constructor(app: Application) {
     this.port = process.env.PORT!
     this.app = app
     this.server = http.createServer(this.app)
-    this.io = new Server(this.server, {
-      cors: {
-        origin: "http://localhost:4200",
-        methods: ["GET", "POST"],
-      },
-    })
     this.initializeMiddlewares()
     this.initializeRoutes()
     this.initializeErrorHandling()
-    this.socketIoSetup()
     mongo()
   }
 
@@ -59,18 +50,7 @@ export class ServerApp {
       res.status(500).json({ error: "Internal Server Error" })
     })
   }
-
-  private socketIoSetup() {
-    this.io.on("connection", socket => {
-      console.log(`Socket connected: ${socket.id}`, 53);
-      socket.emit('message', 'hello fron the server')
-      socket.on('client-event', data => {
-        console.log('Message recieved from client', data, 56);
-      })
-      
-    })
-  }
-
+  
   public startServer() {
     this.server.listen(this.port, () => {
       console.log(`Server is running on http://localhost:${this.port}`)

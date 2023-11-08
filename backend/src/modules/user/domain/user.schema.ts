@@ -56,6 +56,9 @@ const userSchema = new mongoose.Schema({
   friends: {
     type: [mongoose.Schema.Types.ObjectId],
     default: []
+  },
+  notificationSocket: {
+    type: String,
   }
 });
 

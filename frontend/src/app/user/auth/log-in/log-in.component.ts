@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
-
 import { AuthService } from 'src/app/services/auth.service'
 import { UserService } from 'src/app/services/user.service'
 import { loginService } from './log-in.service'
+import { NotificationService } from '../../post-login/post-login.service'
 
 @Component({
   selector: 'app-log-in',
@@ -24,7 +24,8 @@ export class LogInComponent implements OnInit {
     private logInService: loginService,
     private router: Router,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +67,9 @@ export class LogInComponent implements OnInit {
             } else {
               this.userService.getUserBasicInfo()
               this.authService.setLoginStatus(true);
+              console.log(71);
+              this.notificationService.notificationSocketOn()
+              console.log(71);
               this.router.navigate(['/home']);
             }
           }

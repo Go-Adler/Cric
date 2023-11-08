@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { FriendsService } from './friends.service'
+import { NotificationService } from '../post-login.service'
 
 @Component({
   selector: 'app-friends',
@@ -14,7 +15,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
   friendsCount: string = '';
   fetchingData: boolean = false
 
-  constructor(private route: ActivatedRoute, private friendsService: FriendsService ) {}
+  constructor(private route: ActivatedRoute, private friendsService: FriendsService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
 
@@ -23,6 +24,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
         this.fetchingData = fetchComplete
       }
     })
+    
     this.route.paramMap.subscribe(params => {
       const userId = this.route.snapshot.paramMap.get('id')
       this.userName = userId!
@@ -34,7 +36,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
         this.friendsCount = friendsCount
       }
     })
-  
+
 
     this.friendsService.name$.subscribe({
       next: name => {
@@ -54,6 +56,15 @@ export class FriendsComponent implements OnInit, OnDestroy {
   }
 
   addFriend() {
-    console.log(57);
+    this.notificationService.emitLikeNotification('ss', 'ss')
+    console.log(57)
+  }
+
+  start() {
+    this.notificationService.start().subscribe()
+  }
+
+  connect() {
+    this.notificationService.notificationSocketOn()
   }
 }

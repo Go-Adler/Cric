@@ -9,3 +9,5 @@ const app = express()
 const serverApp = new ServerApp(app)
 
 serverApp.startServer()
+
+export default serverApp
