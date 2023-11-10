@@ -67,4 +67,8 @@ export class FriendsComponent implements OnInit, OnDestroy {
   connect() {
     this.notificationService.notificationSocketOn()
   }
+
+  disconnect() {
+    this.notificationService.emitLogout()
+  }
 }

@@ -15,6 +15,8 @@ export class NotificationService {
   }
 
   notificationSocketOn() {
+    console.log(this.socket, 'init sock id', 18);
+    
     this.socket = io(this.API_URL)
     this.socket.on('connect', () => {
       console.log(this.socket.id, 20);
@@ -41,5 +43,10 @@ export class NotificationService {
     // Emit a "dislike" event
     emitDislikeNotification(postId: string, userId: string) {
       this.socket.emit('dislike-post', { postId, user: userId });
+    }
+
+    // Emit a "dislike" event
+    emitLogout() {
+      this.socket.emit('disconnect');
     }
 }

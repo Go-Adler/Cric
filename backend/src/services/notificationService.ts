@@ -19,10 +19,16 @@ export class NotificationService {
     });
   
     io.on("connection", (socket: Socket) => {
+      console.log(socket.id, 'connected');
+      
       const socketId = socket.id
       this.userDataUseCase.setSocketConnection(userId, socketId)
+
+      socket.on('disconnect', () => {
+        console.log('disconned');
+        socket.disconnect()
+      })
     })
-    
     return io
   }
 }

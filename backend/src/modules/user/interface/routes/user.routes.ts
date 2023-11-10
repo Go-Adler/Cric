@@ -39,18 +39,7 @@ router.get("/friend/basic-info/:userName", verifyJwt, friendBasicInfo)
 router.get("/resend-otp", verifyVerifyToken, resendOtp)
 router.get('/socket', verifyJwt, (req: Request, res) => {
   const { userId } = req.user as JwtPayload
-  const io = setUpSocketIo(userId)
-  io.on("connection", async(socket: Socket) => {
-    console.log(`Socket connected: ${socket.id}`);
-    const socketId = socket.id
-      await setSocketConnection(userId, socketId)
-      socket.on('like-post', data => {
-      console.log('like post recieved');
-      io.emit('notification', {
-        type: 'like'
-      })
-    })
-  })
+  setUpSocketIo(userId)
   res.json({success: true})
 })
 

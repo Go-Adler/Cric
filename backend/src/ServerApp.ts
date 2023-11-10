@@ -26,7 +26,7 @@ export class ServerApp {
   private initializeMiddlewares() {
     const limiter = rateLimit({
       windowMs: 15 * 60 * 1000,
-      max: 100, 
+      max: 1000, 
     });
     this.app.use(cors())
     this.app.use(morgan("dev"))
