@@ -67,9 +67,6 @@ export class LogInComponent implements OnInit {
             } else {
               this.userService.getUserBasicInfo()
               this.authService.setLoginStatus(true);
-              console.log(71);
-              this.notificationService.notificationSocketOn()
-              console.log(71);
               this.router.navigate(['/home']);
             }
           }

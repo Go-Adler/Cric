@@ -20,9 +20,12 @@ export class SocketService {
   
   setUpSocketIo = () => {
     this.io.on("connection", (socket: Socket) => {
+      console.log('connected', 23);
+      
       const userName = socket.handshake.query.userName as string
       const socketId = socket.id
-
+      console.log(userName, 27);
+      
       this.userDataUseCase.setSocketConnection(userName, socketId)
       
 
@@ -30,7 +33,11 @@ export class SocketService {
         socket.disconnect()
         console.log('disconned');
       })
+
+      socket.on('disconnect', () => {
+        console.log('disconnectd', socket.id);
+      })
     })
-    instrument(this.io, {auth: false})
+    instrument(this.io, { auth: false })
   }
 }

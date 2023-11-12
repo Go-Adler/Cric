@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from "rxjs"
 
 import { ConfigService } from "./config.service"
 import { I_UserBasicInfo } from "../models/responses/userResponses"
+import { SocketService } from "./socket.service"
 
 
 @Injectable({
@@ -28,8 +29,12 @@ export class UserService {
 
 
   private API_URL!: string
+  private socket: any
 
-  constructor(private configService: ConfigService, private http: HttpClient) {
+  constructor(private configService: ConfigService,
+    private http: HttpClient,
+    private socketService: SocketService
+  ) {
     this.API_URL = this.configService.getAPI_BaseURL()
   }
 
@@ -42,6 +47,7 @@ export class UserService {
           this.name.next(response.name)
           this.userName.next(response.userName)
           this.friendsCount.next(response.friendsCount)
+          this.socket = this.socketService.connect(response.userName)
         }
       }
     )

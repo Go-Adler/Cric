@@ -61,7 +61,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
   }
 
   start() {
-    this.notificationService.start().subscribe()
+    // this.notificationService.start().subscribe()
   }
 
   connect() {
