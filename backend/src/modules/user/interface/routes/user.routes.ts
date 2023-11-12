@@ -1,7 +1,4 @@
 import express from "express"
-import { Request, Response, NextFunction } from 'express'
-import { JwtPayload } from "jsonwebtoken"
-import { Socket } from "socket.io"
 
 import { UserSignUpController } from "../controllers/user.signUp.controller"
 import { UserSignUpOtpController } from "../controllers/user.signUpOtp.controller"
@@ -14,8 +11,6 @@ import { UserResendOtpController } from "../controllers/user.resendOtp.controlle
 import { postRoutes } from "./post.routes"
 import { profileRoutes } from "./profile.routes"
 import { UsersController } from "../controllers/user.users.controller"
-import { NotificationService } from "../../../../services/notificationService"
-import { UserDataUseCase } from "../../application/useCases/user.data.useCase"
 
 const { verifyJwt, verifyToken, verifyVerifyToken } = new JwtMiddleware()
 const { findUsers } = new UsersController()
@@ -26,8 +21,6 @@ const { userLogin } = new UserLoginController()
 const { forgotPassword } = new UserForgotPasswordController()
 const { changePassword } = new UserChangePasswordController()
 const { userBasicInfo, friendBasicInfo } = new UserDataController()
-const { setUpSocketIo } = new NotificationService()
-const { setSocketConnection } = new UserDataUseCase()
 
 const router = express.Router()
 
@@ -37,11 +30,6 @@ router.use("/profile", profileRoutes)
 router.get("/basic-info", verifyJwt, userBasicInfo)
 router.get("/friend/basic-info/:userName", verifyJwt, friendBasicInfo)
 router.get("/resend-otp", verifyVerifyToken, resendOtp)
-router.get('/socket', verifyJwt, (req: Request, res) => {
-  const { userId } = req.user as JwtPayload
-  setUpSocketIo(userId)
-  res.json({success: true})
-})
 
 router.post("/log-in", userLogin)
 router.post("/sign-up", userSignUp)

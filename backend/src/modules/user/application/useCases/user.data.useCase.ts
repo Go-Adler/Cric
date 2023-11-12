@@ -8,7 +8,7 @@ export class UserDataUseCase {
     this.userDataAccess = new UserDataAccess()
   }
 
-  setSocketConnection = async (userId: Types.ObjectId, socket: string) => {
-    await this.userDataAccess.addNotificationSocket(userId, socket)
+  setSocketConnection = async (userName: string, socket: string) => {
+    await this.userDataAccess.addSocketId(userName, socket)
   }
 }

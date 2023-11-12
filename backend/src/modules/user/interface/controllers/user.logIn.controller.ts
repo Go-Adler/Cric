@@ -3,21 +3,18 @@ import { UserExistingUseCase } from "../../application/useCases/user.existing.us
 import { UserLoginUseCase } from "../../application/useCases/user.logIn.useCase"
 import { TokenUseCase } from "../../application/useCases/user.token.useCase"
 import { SendOTP_UseCase } from "../../application/useCases/user.sendOTP.useCase"
-import { NotificationService } from "../../../../services/notificationService"
 
 export class UserLoginController {
   private userExistingUseCase: UserExistingUseCase
   private userLogInUseCase: UserLoginUseCase
   private tokenUseCase: TokenUseCase
   private sendOtpUseCase: SendOTP_UseCase
-  private notificationService: NotificationService
 
   constructor() {
     this.userExistingUseCase = new UserExistingUseCase()
     this.userLogInUseCase = new UserLoginUseCase()
     this.tokenUseCase = new TokenUseCase()
     this.sendOtpUseCase = new SendOTP_UseCase()
-    this.notificationService = new NotificationService()
   }
 
   userLogin = async (req: Request, res: Response, next: NextFunction) => {
@@ -41,8 +38,6 @@ export class UserLoginController {
       // If the user id is valid, generate a token with the user id and the isVerified flag
       if (userId) {
         const token = this.tokenUseCase.generateTokenWithUserId(userId, isVerified)
-        // Setup the socket.io service for notification
-        this.notificationService.setUpSocketIo(userId)
 
         // If the user is verified, return a response with a success message and the token
         if (isVerified) {

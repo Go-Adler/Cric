@@ -256,10 +256,10 @@ export class UserDataAccess {
     }
   }
 
-  // add notification socket
-  async addNotificationSocket(userId: Types.ObjectId, socket: string) {
+  // add socket connection
+  async addSocketId(userName: string, socketId: string) {
     try {
-      await UserEntity.findByIdAndUpdate(userId, { notificationSocketId: socket })
+      await UserEntity.findOneAndUpdate({ userName }, { socketId })
     } catch (e: any) {
       console.error(e.message)
       throw new Error(e.message)

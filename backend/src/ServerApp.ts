@@ -7,16 +7,19 @@ import rateLimit from "express-rate-limit";
 import { userRoutes } from "./modules/user/interface/routes/user.routes"
 import { adminRoutes } from "./modules/admin/interface/routes/admin.routes"
 import { mongo } from "./config/database"
+import { SocketService } from "./services/socketService";
 
 export class ServerApp {
   private app: Application
   private port!: string
+  private socketService: SocketService
   server: http.Server
 
   constructor(app: Application) {
     this.port = process.env.PORT!
     this.app = app
     this.server = http.createServer(this.app)
+    this.socketService = new SocketService(this.server)
     this.initializeMiddlewares()
     this.initializeRoutes()
     this.initializeErrorHandling()

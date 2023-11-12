@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { ConfigService } from "src/app/services/config.service"
 import { io } from "socket.io-client"
+import { UserService } from "src/app/services/user.service"
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +11,23 @@ export class NotificationService {
   private socket: any
   private API_URL!: string
 
-  constructor(private configService: ConfigService, private http: HttpClient) {
+  constructor (
+    private configService: ConfigService,
+    private http: HttpClient,
+    
+  ) {
     this.API_URL = configService.getAPI_BaseURL()
   }
 
   notificationSocketOn() {
-    console.log(this.socket, 'init sock id', 18);
-    
-    this.socket = io(this.API_URL)
+    UserService
+    this.socket = io(this.API_URL, {
+      query: {
+        token: 'your-jwt-token',
+        userId: 'user-123',
+      },
+    })
+
     this.socket.on('connect', () => {
       console.log(this.socket.id, 20);
     })
@@ -28,8 +38,6 @@ export class NotificationService {
       console.log('Received Notification:', data);
       // You can process and display the notification as needed in your application
     });
-
-
   }
 
   start() {
@@ -47,6 +55,6 @@ export class NotificationService {
 
     // Emit a "dislike" event
     emitLogout() {
-      this.socket.emit('disconnect');
+      this.socket.emit('disconnect-request');
     }
 }
