@@ -55,7 +55,6 @@ export class NewPostComponent implements OnInit {
   ngOnInit(): void {
     // Fetch user's basic info and profile picture, and initialize the form
     this.profilePicture = this.userService.getDefaultProfilePicture()
-    this.userService.getUserBasicInfo();
     this.userService.profilePicture$.subscribe({
       next: (profilePicture) => {
         this.profilePicture = profilePicture;

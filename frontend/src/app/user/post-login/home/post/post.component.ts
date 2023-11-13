@@ -44,6 +44,8 @@ export class PostComponent implements OnChanges, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.userService.getUserBasicInfo()
+    
     // Get name
     this.subscriptions.push(
       this.userService.name$.subscribe({

@@ -1,5 +1,6 @@
 import { Types } from "mongoose"
 import { UserEntity } from "./../domain/user.schema"
+import { SocketEntity } from "../domain/user.socketSchema"
 
 export class UserDataAccess {
   // Create a new user
@@ -259,7 +260,17 @@ export class UserDataAccess {
   // add socket connection
   async addSocketId(userName: string, socketId: string) {
     try {
-      await UserEntity.findOneAndUpdate({ userName }, { socketId })
+      await UserEntity.findOneAndUpdate({ userName }, { $push: { socketId } })
+    } catch (e: any) {
+      console.error(e.message)
+      throw new Error(e.message)
+    }
+  }
+
+  // remove socket connection
+  async removeSocketId(userName: string, socketId: string) {
+    try {
+      await UserEntity.findOneAndUpdate({ userName }, { $pull: { socketId } })
     } catch (e: any) {
       console.error(e.message)
       throw new Error(e.message)

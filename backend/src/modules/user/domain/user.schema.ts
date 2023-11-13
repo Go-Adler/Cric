@@ -58,7 +58,7 @@ const userSchema = new mongoose.Schema({
     default: []
   },
   socketId: {
-    type: String,
+    type: [String],
     default: ''
   }
 });

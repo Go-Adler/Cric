@@ -13,18 +13,8 @@ export class SocketService {
   private API_URL!: string;
 
   constructor(private configService: ConfigService, private http: HttpClient) {
-    // this.API_URL = configService.getAPI_BaseURL()
-    // this.subscriptions.push(
-    //   this.userService.userName$.subscribe({
-    //     next: userName => this.userName = userName
-    //   })
-    // )
-    //   console.log(29, this.userName);
-    // this.socket = io(this.API_URL, {
-    //   query: {
-    //     userName: this.userName
-    //   },
-    // })
+    this.API_URL = configService.getAPI_BaseURL()
+    // this.notificationSocketOn()
   }
 
   connect(userName: string) {
@@ -33,9 +23,18 @@ export class SocketService {
         userName: userName,
       },
     });
+
+    this.notificationSocketOn()
+    return this.socket
   }
   notificationSocketOn() {
     this.socket.on('connect', () => {
+      console.log(this.socket.id, 20);
+    });
+
+    this.socket.on('disconnect', () => {
+      console.log('disconnected', this.socket.id);
+      
       console.log(this.socket.id, 20);
     });
     console.log(19);

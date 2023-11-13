@@ -76,7 +76,7 @@ export class UpdateProfilePictureComponent {
       {
         next: () => {
           this.isUpdating = false,
-          this.userService.getUserBasicInfo()  
+          this.userService.updateProfilePicture()  
           this.pictureUpdated = true
         },
 

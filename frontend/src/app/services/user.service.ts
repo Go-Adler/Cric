@@ -29,7 +29,7 @@ export class UserService {
 
 
   private API_URL!: string
-  private socket: any
+  private socket: any = ''
 
   constructor(private configService: ConfigService,
     private http: HttpClient,
@@ -47,12 +47,26 @@ export class UserService {
           this.name.next(response.name)
           this.userName.next(response.userName)
           this.friendsCount.next(response.friendsCount)
-          this.socket = this.socketService.connect(response.userName)
+          
+          if (this.socket?.id === undefined) {
+            this.socket = this.socketService.connect(response.userName)
+          }
         }
       }
     )
   }
 
+  updateProfilePicture() {
+    this.http.get<I_UserBasicInfo>(`${this.API_URL}/user/basic-info`)
+    .subscribe(
+      {
+        next: response => {
+          this.profilePicture.next(response.profilePicture)
+        }
+      }
+    )
+  }
+  
   changeToDefaultProfilePicture() {
     this.profilePicture.next(this.defaultProfilePicture)
   }

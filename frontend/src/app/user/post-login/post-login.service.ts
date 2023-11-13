@@ -1,10 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from 'src/app/services/config.service';
-import { io } from 'socket.io-client';
-import { UserService } from 'src/app/services/user.service';
 import { Subscription } from 'rxjs';
-import { SocketService } from 'src/app/services/socket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +27,7 @@ export class NotificationService {
   start() {
     // return this.http.get(`${this.API_URL}/user/socket`);
   }
+  
   // Emit a "like" event
   emitLikeNotification(postId: string, userId: string) {
     // this.socket.emit('like-post', { postId, user: userId });
