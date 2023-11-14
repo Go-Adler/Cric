@@ -19,7 +19,8 @@ export class ServerApp {
     this.port = process.env.PORT!
     this.app = app
     this.server = http.createServer(this.app)
-    this.socketService = new SocketService(this.server)
+    this.socketService = new SocketService()
+    this.socketService.setUpSocketIo(this.server)
     this.initializeMiddlewares()
     this.initializeRoutes()
     this.initializeErrorHandling()

@@ -14,8 +14,8 @@ export class GetUserDataUseCase {
   }
 
   getUserId = async (userName: string): Promise<any> => {
-    const userId = await this.userDataAccess.getUserIdWIthUserName(userName)
-    return userId._id
+    const userId = await this.userDataAccess.getUserIdWithUserName(userName)
+    return userId?._id
   }
 
   getName = async (userId: string): Promise<any> => {

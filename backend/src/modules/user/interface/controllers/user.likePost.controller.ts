@@ -38,10 +38,15 @@ export class PostLikeController {
 
     try {
       await this.likePostUseCase.likePost(userId, postId);
-      const sameUser =  await this.userDataUseCase.checkSameUser(postId, userId)
 
-      if (!sameUser) {
-        s
+      // Returns false or if user is present the user id
+      const isDifferentUser =  await this.userDataUseCase.checkSameUser(postId, userId)
+
+      if (isDifferentUser) {
+        // sending user id getting from checking the user
+        console.log('different user');
+        
+        this.socketService.sendNotification(isDifferentUser)
       }
       // Send a response back to indicate success
       return res.status(200).json({ message: "Successfully liked the post" });

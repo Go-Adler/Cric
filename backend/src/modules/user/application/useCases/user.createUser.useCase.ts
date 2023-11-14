@@ -18,7 +18,7 @@ export class CreateUserUseCase {
   }
 
   // Define an async function that takes a user data object and returns a promise of a boolean value
-  createUser = async (userData: I_User): Promise<Types.ObjectId> => {
+  createUser = async (userData: I_User) => {
     // Destructure the user data object into variables for easier access
     const { name, userName, email, gender, phone } = userData;
     
