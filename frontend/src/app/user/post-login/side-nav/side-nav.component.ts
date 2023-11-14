@@ -4,6 +4,7 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
 import { MatMenuTrigger } from '@angular/material/menu';
 import { UserService } from 'src/app/services/user.service';
 import { LogOutService } from '../../auth/log-in/log-out.service';
+import { SocketService } from 'src/app/services/socket.service'
 
 @Component({
   selector: 'app-side-nav',
@@ -11,6 +12,7 @@ import { LogOutService } from '../../auth/log-in/log-out.service';
   styleUrls: ['./side-nav.component.scss'],
 })
 export class SideNavComponent implements OnInit {
+  notificationCount: number = 0
   profilePicture: string = '';
   name: string = '';
   userName: string = '';
@@ -20,9 +22,16 @@ export class SideNavComponent implements OnInit {
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
 
   // Injecting UserService and MatDialog in the constructor
-  constructor(private userService: UserService, public dialog: MatDialog) {}
+  constructor(private userService: UserService, public dialog: MatDialog, private notificationService: SocketService) {}
 
   ngOnInit(): void {
+
+    this.notificationService.notificationCount$.subscribe({
+      next: (notificationCount) => {
+        this.notificationCount = notificationCount
+      }
+    })
+
     // Subscribing to profilePicture$ observable to get the profile picture
     this.userService.profilePicture$.subscribe({
       next: (profilePicture) => {

@@ -35,3 +35,15 @@ section {
 .logOutButton:hover {
   background-color: $selectedTab !important;
 }
+
+.fillIcon {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24,
+}
+
+.notificationCount {
+  color: rgb(26, 41, 56);
+}

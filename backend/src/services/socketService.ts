@@ -23,7 +23,7 @@ export class SocketService {
       
       const userName = socket.handshake.query.userName as string
       const socketId = socket.id
-      
+      console.log(userName, 26);
       this.userDataUseCase.setSocketConnection(userName, socketId)
       
 

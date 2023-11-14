@@ -37,7 +37,12 @@
         class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-end gap-4 p-3"
         routerLink="notifications"
       >
-        <span class="material-symbols-rounded text-3xl"> notifications </span>
+        <span class="material-symbols-rounded text-3xl relative"> 
+          notifications 
+          <div class="rounded-full text-xs flex absolute -top-1 left-4 w-6 p-1 justify-center items-center bg-white">
+            <span class="notificationCount">{{ notificationCount ? notificationCount : 10 }}</span>
+          </div>
+        </span>
         <span class="sideItem text-xl hidden lg:block">Notifications</span>
       </div>
 
@@ -98,7 +103,7 @@
           <span class="flex"
             ><span> Log out<span class="md:hidden">?</span></span></span
           >
-          <span class="hidden lg:block">&nbsp;@{{ userName }} ?</span>
+          <span class="hidden lg:block">&nbsp;{{'@'}}{{ userName }} ?</span>
         </span>
       </div>
 

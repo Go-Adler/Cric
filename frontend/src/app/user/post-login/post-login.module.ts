@@ -17,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input';
 import { FriendsComponent } from './friends/friends.component'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NotificationsComponent } from './notifications/notifications.component'
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
     PostLoginComponent,
     SearchComponent,
     FriendsComponent,
+    NotificationsComponent,
   ],
   imports: [
     HomeModule,

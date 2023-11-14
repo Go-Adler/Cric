@@ -4,15 +4,21 @@ import { JwtPayload } from "jsonwebtoken";
 
 import { PostLikeRequestBody } from "../../../../shared/interfaces/user.interface";
 import { LikePostUseCase } from "../../application/useCases/user.likePost.useCase";
+import { UserDataUseCase } from "../../application/useCases/user.data.useCase"
+import { SocketService } from "../../../../services/socketService"
 
 /**
  * Controller class for liking and unliking a post
  */
 export class PostLikeController {
   private likePostUseCase: LikePostUseCase;
+  private userDataUseCase: UserDataUseCase
+  private socketService: SocketService
 
   constructor() {
     this.likePostUseCase = new LikePostUseCase();
+    this.userDataUseCase = new UserDataUseCase()
+    this.socketService = new SocketService()
   }
 
   /**
@@ -32,7 +38,11 @@ export class PostLikeController {
 
     try {
       await this.likePostUseCase.likePost(userId, postId);
+      const sameUser =  await this.userDataUseCase.checkSameUser(postId, userId)
 
+      if (!sameUser) {
+        s
+      }
       // Send a response back to indicate success
       return res.status(200).json({ message: "Successfully liked the post" });
     } catch (error) {

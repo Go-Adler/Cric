@@ -1,6 +1,6 @@
 import { Types } from "mongoose"
 import { UserEntity } from "./../domain/user.schema"
-import { SocketEntity } from "../domain/user.socketSchema"
+import { PostEntity } from "../domain/user.postSchema"
 
 export class UserDataAccess {
   // Create a new user
@@ -273,6 +273,18 @@ export class UserDataAccess {
       await UserEntity.findOneAndUpdate({ userName }, { $pull: { socketId } })
     } catch (e: any) {
       console.error(e.message)
+      throw new Error(e.message)
+    }
+  }
+
+  // Check postId and userId
+  async checkSameUser(postId: Types.ObjectId, userId: string) {
+    try {
+      const postData = await PostEntity.findById(postId) as { userId: string }
+      if (postData.userId === userId) return true
+      else return false
+    } catch (e: any) {
+      console.log(e.message);
       throw new Error(e.message)
     }
   }

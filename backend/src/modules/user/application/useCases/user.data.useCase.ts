@@ -1,4 +1,5 @@
 import { Types } from "mongoose"
+
 import { UserDataAccess } from "../../data/user.dataAccess"
 import { SocketDataAccess } from "../../data/user.socketDataAccess"
 
@@ -20,5 +21,9 @@ export class UserDataUseCase {
     const userName = await this.socketDataAccess.GetUserNameWithSocketId(socketId)
     await this.userDataAccess.removeSocketId(userName, socketId)
     await this.socketDataAccess.removeSocketId(socketId)
+  }
+
+  checkSameUser = async (postId: Types.ObjectId, userId: string) => {
+    return await this.userDataAccess.checkSameUser(postId, userId)
   }
 }
