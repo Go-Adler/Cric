@@ -36,15 +36,17 @@ export class SocketService {
     })
 
     instrument(this.io, { auth: false })
+    
   }
 
-  async sendNotification(userId: string) {
+  sendNotification = async (userId: string) => {
     const sockets = await this.userDataUseCase.getSockets(userId)
-
+    console.log(this.io, 39);
+    
     if (sockets) {
       sockets.forEach(socket => {
         console.log(socket, 46);
-        this.io.to(socket).emit('notification')
+        this.io.to(socket).emit('notification', 'a message')
       });
     }
   }
