@@ -1,3 +1,5 @@
+// serverApp.ts
+
 import express, { Application, Request, Response } from "express"
 import morgan from "morgan"
 import cors from "cors"
@@ -19,7 +21,7 @@ export class ServerApp {
     this.port = process.env.PORT!
     this.app = app
     this.server = http.createServer(this.app)
-    this.socketService = new SocketService()
+    this.socketService = SocketService.getInstance()
     this.socketService.setUpSocketIo(this.server)
     this.initializeMiddlewares()
     this.initializeRoutes()

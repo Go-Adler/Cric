@@ -18,7 +18,7 @@ export class PostLikeController {
   constructor() {
     this.likePostUseCase = new LikePostUseCase();
     this.userDataUseCase = new UserDataUseCase()
-    this.socketService = new SocketService()
+    this.socketService = SocketService.getInstance()
   }
 
   /**
