@@ -44,8 +44,6 @@ export class PostLikeController {
 
       if (isDifferentUser) {
         // sending user id getting from checking the user
-        console.log('different user');
-        
         this.socketService.sendNotification(isDifferentUser)
       }
       // Send a response back to indicate success

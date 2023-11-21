@@ -26,7 +26,7 @@ export class SideNavComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.notificationService.notificationCount$.subscribe({
+    this.userService.notificationsCount$.subscribe({
       next: (notificationCount) => {
         this.notificationCount = notificationCount
       }

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { notificationSchema } from './user.notificationSchema'
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -60,6 +61,10 @@ const userSchema = new mongoose.Schema({
   socketId: {
     type: [String],
     default: ''
+  },
+  notifications: {
+    type: [notificationSchema],
+    default: []
   }
 });
 

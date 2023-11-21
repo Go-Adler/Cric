@@ -39,8 +39,8 @@
       >
         <span class="material-symbols-rounded text-3xl relative"> 
           notifications 
-          <div class="rounded-full text-xs flex absolute -top-1 left-4 w-6 p-1 justify-center items-center bg-white">
-            <span class="notificationCount">{{ notificationCount ? notificationCount : 10 }}</span>
+          <div class="rounded-full text-xs flex absolute -top-1 left-4 w-6 p-1 justify-center items-center bg-white" *ngIf="notificationCount">
+            <span class="notificationCount">{{ notificationCount }}</span>
           </div>
         </span>
         <span class="sideItem text-xl hidden lg:block">Notifications</span>

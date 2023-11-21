@@ -21,11 +21,14 @@ export class UserDataController {
       const userName = await this.userDataUseCase.getUserName(userId)
       const friendsCount = await this.userDataUseCase.getFriendsCount(userId)
       const name = await this.userDataUseCase.getName(userId)
+      const notificationsCount = await this.userDataUseCase.getNotificationsCount(userId)
+
       res.json({
         profilePicture,
         name,
         userName,
         friendsCount,
+        notificationsCount
       })
     } catch (error) {
       return next(error)

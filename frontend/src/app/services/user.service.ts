@@ -20,12 +20,14 @@ export class UserService {
   private friendsCount = new BehaviorSubject<string>(this.defualtFriendsCount)
   private name = new BehaviorSubject<string>(this.defaultName)
   private userName = new BehaviorSubject<string>(this.defaultUserName)
+  private notificationsCount = new BehaviorSubject<number>(0)
 
 
   name$: Observable<string> = this.name.asObservable();
   friendsCount$: Observable<string> = this.friendsCount.asObservable()
   profilePicture$: Observable<string> = this.profilePicture.asObservable();
   userName$: Observable<string> = this.userName.asObservable();
+  notificationsCount$: Observable<number> = this.notificationsCount.asObservable()
 
 
   private API_URL!: string

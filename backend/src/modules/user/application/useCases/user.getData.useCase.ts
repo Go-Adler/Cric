@@ -52,4 +52,8 @@ export class GetUserDataUseCase {
     const users = await this.userDataAccess.unblockUser(userId)
     return users
   }
+
+  getNotificationsCount = async (userId: Types.ObjectId) => {
+    return await this.userDataAccess.getNotificationsCount(userId)
+  }
 }
