@@ -102,12 +102,21 @@ export class SocketService {
 
       // Check if sockets exist
       if (sockets) {
-
         // Loop through each socket
         sockets.forEach((socket) => {
-          // Emit a notification event to each socket
-          this.io.to(socket).emit(NOTIFICATION_EVENT, DEFAULT_MESSAGE)
-        })
+          // Check if the socket exists
+          const connectedSocket = this.io.sockets.sockets.get(socket);
+          console.log(connectedSocket, 111);
+          if (connectedSocket) {
+            // Emit a notification event to the existing socket
+            connectedSocket.emit(NOTIFICATION_EVENT, DEFAULT_MESSAGE);
+          } else {
+            // Handle the case where the socket does not exist
+            console.log(`Socket ${socket} does not exist or is not connected.`);
+            // You may want to perform some cleanup or take other actions.
+          }
+        });
+        
       }
     } catch (error) {
       // Handle error

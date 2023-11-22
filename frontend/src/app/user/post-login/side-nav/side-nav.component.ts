@@ -18,6 +18,8 @@ export class SideNavComponent implements OnInit {
   userName: string = '';
   logOutPill: boolean = false;
   friendsActive: boolean = false
+  private socket: any = ''
+
 
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
 
@@ -25,7 +27,8 @@ export class SideNavComponent implements OnInit {
   constructor(
     private userService: UserService,
     public dialog: MatDialog,
-    private notificationService: SocketService) {}
+    private socketService: SocketService) {
+}
 
   ngOnInit(): void {
 
@@ -53,6 +56,10 @@ export class SideNavComponent implements OnInit {
     this.userService.userName$.subscribe({
       next: (userName) => {
         this.userName = userName;
+        if (this.socket?.id === undefined) {
+          console.log(userName, 60);
+          this.socket = this.socketService.connect(userName)
+        }
       }
     });
   }

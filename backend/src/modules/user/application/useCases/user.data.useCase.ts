@@ -39,6 +39,8 @@ export class UserDataUseCase {
       }
 
       // Adding the socket ID to the user data
+      console.log('adding to users data', userName, socketId);
+      
       await this.userDataAccess.addSocketId(userName, socketId)
 
       // Adding the socket data to the socket data access

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from 'src/app/services/config.service';
 import { io } from 'socket.io-client';
+import { UserService } from './user.service'
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ export class SocketService {
   
   constructor(
       private configService: ConfigService,
+      private userService: UserService,
       private http: HttpClient,
     ) {
     this.API_URL = configService.getAPI_BaseURL()
@@ -38,6 +40,8 @@ export class SocketService {
 
     // Handle incoming notifications
     this.socket.on('notification', (data: any) => {
+      console.log(43, 'notification called'); 
+      this.userService.updateNotificationsCount()
     });
 
   }
