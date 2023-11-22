@@ -405,11 +405,12 @@ export class UserDataAccess {
    */
   async checkDifferentUser(postId: Types.ObjectId, currentId: string) {
     try {
-      const { userId } = (await PostEntity.findById(postId)) as { userId: string }
-      if (userId === currentId) {
+      // let currentIdConverted = new Types.ObjectId(currentId)
+      const { userId } = (await PostEntity.findById(postId)) as { userId: Types.ObjectId }
+      if (userId.toString() === currentId) {
         return false
       } else {
-        return userId
+        return userId.toString()
       }
 
       // else return userId

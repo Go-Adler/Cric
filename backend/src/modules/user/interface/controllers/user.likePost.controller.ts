@@ -43,6 +43,8 @@ export class PostLikeController {
       const isDifferentUser =  await this.userDataUseCase.checkSameUser(postId, userId)
 
       if (isDifferentUser) {
+        console.log(46, isDifferentUser);
+        
         // sending user id getting from checking the user
         this.socketService.sendNotification(isDifferentUser)
       }

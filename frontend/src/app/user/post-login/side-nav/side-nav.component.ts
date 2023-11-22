@@ -56,8 +56,7 @@ export class SideNavComponent implements OnInit {
     this.userService.userName$.subscribe({
       next: (userName) => {
         this.userName = userName;
-        if (this.socket?.id === undefined) {
-          console.log(userName, 60);
+        if (this.socket?.id === undefined && userName) {
           this.socket = this.socketService.connect(userName)
         }
       }

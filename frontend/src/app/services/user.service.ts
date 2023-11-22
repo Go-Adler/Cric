@@ -10,7 +10,7 @@ import { I_UserBasicInfo } from "../models/responses/userResponses"
 })
 export class UserService {
   private defaultName = ''
-  private defaultUserName = 'userName'
+  private defaultUserName = ''
   private defualtFriendsCount = ''
   private defaultProfilePicture = 'https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/Default/DefaultProfilePicture.png'
 
