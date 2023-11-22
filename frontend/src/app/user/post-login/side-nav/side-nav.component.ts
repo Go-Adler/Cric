@@ -22,7 +22,10 @@ export class SideNavComponent implements OnInit {
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
 
   // Injecting UserService and MatDialog in the constructor
-  constructor(private userService: UserService, public dialog: MatDialog, private notificationService: SocketService) {}
+  constructor(
+    private userService: UserService,
+    public dialog: MatDialog,
+    private notificationService: SocketService) {}
 
   ngOnInit(): void {
 

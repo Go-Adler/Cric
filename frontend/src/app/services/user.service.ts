@@ -1,11 +1,10 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http"
+import { Injectable } from "@angular/core"
 import { BehaviorSubject, Observable } from "rxjs"
 
 import { ConfigService } from "./config.service"
 import { I_UserBasicInfo } from "../models/responses/userResponses"
 import { SocketService } from "./socket.service"
-
 
 @Injectable({
   providedIn: "root"
@@ -21,7 +20,6 @@ export class UserService {
   private name = new BehaviorSubject<string>(this.defaultName)
   private userName = new BehaviorSubject<string>(this.defaultUserName)
   private notificationsCount = new BehaviorSubject<number>(0)
-
 
   name$: Observable<string> = this.name.asObservable();
   friendsCount$: Observable<string> = this.friendsCount.asObservable()
@@ -42,38 +40,46 @@ export class UserService {
 
   getUserBasicInfo() {
     this.http.get<I_UserBasicInfo>(`${this.API_URL}/user/basic-info`)
-    .subscribe(
-      {
-        next: response => {
-          this.profilePicture.next(response.profilePicture)
-          this.name.next(response.name)
-          this.userName.next(response.userName)
-          this.friendsCount.next(response.friendsCount)
-          
-          if (this.socket?.id === undefined) {
-            this.socket = this.socketService.connect(response.userName)
+      .subscribe(
+        {
+          next: response => {
+            this.profilePicture.next(response.profilePicture)
+            this.name.next(response.name)
+            this.userName.next(response.userName)
+            this.friendsCount.next(response.friendsCount)
+            if (response.notificationsCount) {
+              this.notificationsCount.next(response.notificationsCount)
+            }
+            if (this.socket?.id === undefined) {
+              this.socket = this.socketService.connect(response.userName)
+            }
           }
         }
-      }
-    )
+      )
   }
 
   updateProfilePicture() {
     this.http.get<I_UserBasicInfo>(`${this.API_URL}/user/basic-info`)
-    .subscribe(
-      {
-        next: response => {
-          this.profilePicture.next(response.profilePicture)
+      .subscribe(
+        {
+          next: response => {
+            this.profilePicture.next(response.profilePicture)
+          }
         }
-      }
-    )
+      )
   }
-  
+
   changeToDefaultProfilePicture() {
     this.profilePicture.next(this.defaultProfilePicture)
   }
 
   getDefaultProfilePicture() {
     return this.defaultProfilePicture
+  }
+
+  updateNotificationsCount() {
+    let currentCount = this.notificationsCount.value
+    currentCount++
+    this.notificationsCount.next(currentCount)
   }
 }

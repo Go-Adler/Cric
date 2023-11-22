@@ -24,7 +24,7 @@ export class NavComponent implements OnInit {
   constructor(
     // private logOutService: LogOutService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
   ) {}
 
   profileAreaActive = false;
