@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FriendsComponent } from './friends/friends.component'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NotificationsComponent } from './notifications/notifications.component'
+import { TimeagoModule } from 'ngx-timeago'
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
     AsyncPipe,
     MatProgressSpinnerModule,
     PostLoginRoutingModule,
+    TimeagoModule.forRoot(),
   ]
 })
 export class PostLoginModule { }

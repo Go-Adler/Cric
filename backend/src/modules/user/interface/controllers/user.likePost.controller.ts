@@ -6,18 +6,21 @@ import { PostLikeRequestBody } from "../../../../shared/interfaces/user.interfac
 import { LikePostUseCase } from "../../application/useCases/user.likePost.useCase";
 import { UserDataUseCase } from "../../application/useCases/user.data.useCase"
 import { SocketService } from "../../../../services/socketService"
+import { NotificationUseCase } from "../../application/useCases/user.notification.useCase"
 
 /**
  * Controller class for liking and unliking a post
  */
 export class PostLikeController {
-  private likePostUseCase: LikePostUseCase;
+  private likePostUseCase: LikePostUseCase
   private userDataUseCase: UserDataUseCase
+  private notificationUseCase: NotificationUseCase
   private socketService: SocketService
 
   constructor() {
     this.likePostUseCase = new LikePostUseCase();
     this.userDataUseCase = new UserDataUseCase()
+    this.notificationUseCase = new NotificationUseCase()
     this.socketService = SocketService.getInstance()
   }
 
@@ -43,8 +46,9 @@ export class PostLikeController {
       const isDifferentUser =  await this.userDataUseCase.checkSameUser(postId, userId)
 
       if (isDifferentUser) {
-        console.log(46, isDifferentUser);
-        
+        // adding notification to user
+        this.notificationUseCase.addNotification(userId, 'like', postId)
+
         // sending user id getting from checking the user
         this.socketService.sendNotification(isDifferentUser)
       }

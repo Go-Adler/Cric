@@ -1,3 +1,28 @@
-<div>
-  
+<div class="relative">
+  <!-- Title bar - notifications -->
+  <div class="flex justify-start p-1 m-2 text-lg sticky top-16 titleBar gap-2">
+    <span class="material-symbols-rounded text-xl"> notifications </span>
+    <div>Notifications</div>
+  </div>
+
+  <!-- Notifications list -->
+  <div
+    *ngFor="let notification of notifications; let last = last"
+    class="p-4 flex justify-between items-center border-t cursor-pointer border-slate-600"
+    [class.border-b]="last"
+  >
+    <div class="flex gap-2">
+      <img
+        src="https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+        alt=""
+        class="w-6 rounded-full"
+      />
+        <div class="p-2" *ngIf="notification.type === 'like'">{{notification.userName}} liked your post</div>
+        <div class="p-2" *ngIf="notifications.type === 'comment'">{{notification.userName}} commented on your post</div>
+    </div>
+
+    <div>
+      {{ notification.timeStamp | timeago }}
+    </div>
+  </div>
 </div>

@@ -1,9 +1,15 @@
-import { Schema } from 'mongoose'
+import { Schema, Types } from 'mongoose'
 
 export const notificationSchema = new Schema({
-  text: String,
+  type: String,
+  userName: String,
+  read: {
+    type: Boolean,
+    default: false
+  },
   timeStamp:  {
+    type: Date,
     default: Date.now,
-    type: Date
-  }
+  },
+  postId: Types.ObjectId
 })

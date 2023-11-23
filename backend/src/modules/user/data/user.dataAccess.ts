@@ -450,4 +450,28 @@ export class UserDataAccess {
       handleError(e)
     }
   }
+
+  /**
+  * Get notification count of a user by user ID
+  * @param userId - The ID of the user
+  * @returns notification count or 0 if not found
+  */
+  async addNotification(userId: Types.ObjectId, type: string, postId: Types.ObjectId) {
+    try {
+      const userName = await UserEntity.findByIdAndUpdate(userId).select('userName') as { userName: string }
+      const user = await PostEntity.findById(postId).populate('userId', 'userName')
+      console.log(user);
+      
+      const { notifications } = await UserEntity.findByIdAndUpdate(userId,{
+        notifications: {
+          type,
+          userName,
+        }
+      }) as { notifications: [] }
+      return notifications.length || 0
+    } catch (e: any) {
+      console.log(e.message)
+      handleError(e)
+    }
+  }
 }
