@@ -47,7 +47,7 @@ export class PostLikeController {
 
       if (isDifferentUser) {
         // adding notification to user
-        this.notificationUseCase.addNotification(userId, 'like', postId)
+        this.notificationUseCase.addNotification(userId, 'like', postId, isDifferentUser)
 
         // sending user id getting from checking the user
         this.socketService.sendNotification(isDifferentUser)

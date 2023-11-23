@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class NotificationsComponent {
   notifications: any = [1, 2, 3, 4,4,4,4,4,4,,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]
+  
 }

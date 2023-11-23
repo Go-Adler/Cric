@@ -456,19 +456,16 @@ export class UserDataAccess {
   * @param userId - The ID of the user
   * @returns notification count or 0 if not found
   */
-  async addNotification(userId: Types.ObjectId, type: string, postId: Types.ObjectId) {
+  async addNotification(_id: Types.ObjectId, type: string, postId: Types.ObjectId, postUserId: string) {
     try {
-      const userName = await UserEntity.findByIdAndUpdate(userId).select('userName') as { userName: string }
-      const user = await PostEntity.findById(postId).populate('userId', 'userName')
-      console.log(user);
-      
-      const { notifications } = await UserEntity.findByIdAndUpdate(userId,{
+      const { userName } = await UserEntity.findByIdAndUpdate(_id).select('userName') as { userName: string }
+      await UserEntity.findByIdAndUpdate(postUserId,{
         notifications: {
           type,
           userName,
+          postId,
         }
-      }) as { notifications: [] }
-      return notifications.length || 0
+      })
     } catch (e: any) {
       console.log(e.message)
       handleError(e)

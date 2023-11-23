@@ -16,9 +16,9 @@ export class NotificationUseCase {
    * @param postId - The ID of the post interacted with.
    * @throws Error if there's an issue while liking the post.
    */
-   async addNotification(userId: Types.ObjectId, type: string, postId: Types.ObjectId): Promise<void> {
+   async addNotification(userId: Types.ObjectId, type: string, postId: Types.ObjectId, postUserId: string): Promise<void> {
     try {
-      await this.userDataAccess.addNotification(userId, type, postId);
+      await this.userDataAccess.addNotification(userId, type, postId, postUserId);
     } catch (error) {
       console.error(`Error occurred while adding notification: ${error}`);
       throw error;
