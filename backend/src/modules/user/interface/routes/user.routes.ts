@@ -20,7 +20,7 @@ const { verifyOtp } = new UserSignUpOtpController()
 const { userLogin } = new UserLoginController()
 const { forgotPassword } = new UserForgotPasswordController()
 const { changePassword } = new UserChangePasswordController()
-const { userBasicInfo, friendBasicInfo } = new UserDataController()
+const { userBasicInfo, friendBasicInfo, getNotifications } = new UserDataController()
 
 const router = express.Router()
 
@@ -28,6 +28,7 @@ router.use("/posts", postRoutes)
 router.use("/profile", profileRoutes)
 
 router.get("/basic-info", verifyJwt, userBasicInfo)
+router.get("/notifications", verifyJwt, getNotifications)
 router.get("/friend/basic-info/:userName", verifyJwt, friendBasicInfo)
 router.get("/resend-otp", verifyVerifyToken, resendOtp)
 

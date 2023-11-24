@@ -3,14 +3,17 @@ import { Request, Response, NextFunction } from "express"
 import { JwtPayload } from "jsonwebtoken"
 import { GetUserDataUseCase } from "../../application/useCases/user.getData.useCase"
 import { GetAwsUrlUseCase } from "../../application/useCases/user.getAwsUrl.useCase"
+import { NotificationUseCase } from "../../application/useCases/user.notification.useCase"
 
 export class UserDataController {
   private userDataUseCase: GetUserDataUseCase
   private getAwsUrlUseCase: GetAwsUrlUseCase
+  private notificationUseCase: NotificationUseCase
 
   constructor() {
     this.userDataUseCase = new GetUserDataUseCase()
     this.getAwsUrlUseCase = new GetAwsUrlUseCase()
+    this.notificationUseCase = new NotificationUseCase()
   }
 
   userBasicInfo = async (req: Request, res: Response, next: NextFunction) => {
@@ -54,5 +57,17 @@ export class UserDataController {
     } catch (error) {
       return next(error)
     }
+  }
+
+  getNotifications = async (req: Request, res: Response, next: NextFunction) => {
+    const { userId } = req.user as JwtPayload
+    try {
+      const notifications = await this.notificationUseCase.getNotifications(userId)
+      res.json({notifications})
+    } catch (e: any) {
+      console.log(`Error in get notification, user data controller: ${e.message}`);
+      return next(e)
+    }
+    
   }
 }

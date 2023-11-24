@@ -3,6 +3,7 @@ import { UserEntity } from "./../domain/user.schema"
 import { PostEntity } from "../domain/user.postSchema"
 import { validateString } from "../../../utils/validateString.utils"
 import { handleError } from "../../../utils/handleError.utils"
+import { error } from "console"
 
 export class UserDataAccess {
   /**
@@ -460,13 +461,34 @@ export class UserDataAccess {
     try {
       const { userName } = await UserEntity.findByIdAndUpdate(_id).select('userName') as { userName: string }
       await UserEntity.findByIdAndUpdate(postUserId,{
-        notifications: {
-          type,
-          userName,
-          postId,
+        $push: {
+          notifications: {
+            type,
+            userName,
+            postId,
+          }
         }
       })
+      return { type, userName, postId, timeStamp: Date.now() }
     } catch (e: any) {
+      console.log(e.message)
+      handleError(e)
+    }
+  }
+
+  /**
+   * Method to get notification of user by user ID.
+   * 
+   * @param userId - The ID of the user.
+   * @returns notifications of user of empty array
+  */
+  async getNotifications(userId: string) {
+    try {
+      const { notifications } = await UserEntity.findById(userId).select('notifications').sort({ 'notifications.timeStamp': -1 }) as { notifications: { timeStamp: Date }[] }
+      const sortedNotifications : {timeStamp: Date}[] = notifications.sort((a, b) => b.timeStamp.getTime() - a.timeStamp.getTime());
+
+      return sortedNotifications || []
+    } catch(e: any) {
       console.log(e.message)
       handleError(e)
     }
