@@ -25,8 +25,8 @@ export class GetUserPostsController {
       const postsWithoutUrl = await this.getUserPostsUseCase.getUserPosts(userId, skip)
       let posts = await this.getAwsUrlUseCase.getPostsWithUrl(postsWithoutUrl)
       posts = this.postActionsUseCase.likedPosts(userId, posts)
-    
-      res.json({posts})
+
+      res.json({ posts })
     } catch (error) {
       return next(error)
     }
@@ -40,8 +40,8 @@ export class GetUserPostsController {
       const postsWithoutUrl = await this.getUserPostsUseCase.getUserPosts(friendId, skip)
       let posts = await this.getAwsUrlUseCase.getPostsWithUrl(postsWithoutUrl)
       posts = this.postActionsUseCase.likedPosts(userId, posts)
-    
-      res.json({posts})
+
+      res.json({ posts })
     } catch (error) {
       return next(error)
     }

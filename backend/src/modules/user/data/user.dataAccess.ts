@@ -459,13 +459,14 @@ export class UserDataAccess {
   */
   async addNotification(_id: Types.ObjectId, type: string, postId: Types.ObjectId, postUserId: string) {
     try {
-      const { userName } = await UserEntity.findByIdAndUpdate(_id).select('userName') as { userName: string }
-      await UserEntity.findByIdAndUpdate(postUserId,{
+      const { userName, profilePicture } = await UserEntity.findById(_id).select('userName profilePicture') as { userName: string, profilePicture: string }
+      await UserEntity.findByIdAndUpdate(postUserId, {
         $push: {
           notifications: {
             type,
             userName,
             postId,
+            profilePicture
           }
         }
       })
@@ -485,10 +486,10 @@ export class UserDataAccess {
   async getNotifications(userId: string) {
     try {
       const { notifications } = await UserEntity.findById(userId).select('notifications').sort({ 'notifications.timeStamp': -1 }) as { notifications: { timeStamp: Date }[] }
-      const sortedNotifications : {timeStamp: Date}[] = notifications.sort((a, b) => b.timeStamp.getTime() - a.timeStamp.getTime());
-
+      const sortedNotifications: { timeStamp: Date }[] = notifications.sort((a, b) => b.timeStamp.getTime() - a.timeStamp.getTime())
+      console.log(notifications);
       return sortedNotifications || []
-    } catch(e: any) {
+    } catch (e: any) {
       console.log(e.message)
       handleError(e)
     }

@@ -83,4 +83,8 @@ export class GetAwsUrlUseCase {
       return post
     }
   }
+
+  getNotificationsWithProfileUrl = async (notification) => {
+    if ()
+  }
 }

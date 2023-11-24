@@ -123,32 +123,30 @@ export class UserPostComponent implements OnChanges, OnDestroy {
   // Toggle like for a post
   toggleLike(isLiked: boolean, postId: string): void {
     if (isLiked) {
+      const post = this.posts.find((post) => post._id === postId);
+      if (post) {
+        post.engagement.liked = false;
+        post.actions.likes--;
+      }
       this.subscriptions.push(
         this.userPostService.unlikePost(postId).subscribe({
-          next: (data) => {
-            const post = this.posts.find((post) => post._id === postId);
-            if (post) {
-              post.engagement.liked = false;
-              post.actions.likes--;
-            }
-          },
-          error: (error) => {
-            console.error(error);
+          error: () => {
+            post.engagement.liked = true;
+            post.actions.likes++;
           },
         })
       );
     } else {
+      const post = this.posts.find((post) => post._id === postId);
+      if (post) {
+        post.engagement.liked = true;
+        post.actions.likes++;
+      }
       this.subscriptions.push(
         this.userPostService.likePost(postId).subscribe({
-          next: (data) => {
-            const post = this.posts.find((post) => post._id === postId);
-            if (post) {
-              post.engagement.liked = true;
-              post.actions.likes++;
-            }
-          },
-          error: (error) => {
-            console.error(error);
+          error: () => {
+            post.engagement.liked = false;
+            post.actions.likes--;
           },
         })
       );
