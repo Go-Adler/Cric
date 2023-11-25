@@ -1,21 +1,24 @@
 import { Types } from 'mongoose'
-import { Post } from "./userPost.interface"
 
-export interface I_User extends Document {
+export interface PostLikeRequestBody {
+  postId: Types.ObjectId;
+}
+
+export interface User extends Document {
   name: string;
-  profilePicture?: string; 
+  profilePicture?: string;
   userName: string;
   gender: string;
   email: string;
   phone: string;
   password: string;
   isVerified: boolean;
+  isBlocked: boolean;
+  isAdmin: boolean;
   otp?: number;
-  isAdmin: boolean
-  posts: Post[]
-  isBlocked: boolean
-}
-
-export interface PostLikeRequestBody {
-  postId: Types.ObjectId;
+  postIds: Types.ObjectId[];
+  savedPosts: Types.ObjectId[];
+  friends: Types.ObjectId[];
+  socketId: string[];
+  notifications: Notification[];
 }

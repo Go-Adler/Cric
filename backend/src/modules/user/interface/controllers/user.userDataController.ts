@@ -62,8 +62,8 @@ export class UserDataController {
   getNotifications = async (req: Request, res: Response, next: NextFunction) => {
     const { userId } = req.user as JwtPayload
     try {
-      const notificationsWithoutProfileUrl = await this.notificationUseCase.getNotifications(userId)
-      const notifications = 
+      const notifications = await this.notificationUseCase.getNotifications(userId)
+      // const notifications = await this.getAwsUrlUseCase.getNotificationsWithProfileUrl(notificationsWithoutProfileUrl)
       res.json({notifications})
     } catch (e: any) {
       console.log(`Error in get notification, user data controller: ${e.message}`);

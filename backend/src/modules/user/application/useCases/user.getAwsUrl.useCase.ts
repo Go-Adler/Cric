@@ -1,6 +1,7 @@
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import { Post, UsersFind } from "../../../../shared/interfaces/userPost.interface"
+import { Notifications } from '../../../../shared/interfaces/user.notification.interface'
 
 export class GetAwsUrlUseCase {
   private awsAccessKey
@@ -84,7 +85,18 @@ export class GetAwsUrlUseCase {
     }
   }
 
-  getNotificationsWithProfileUrl = async (notification) => {
-    if ()
+  getNotificationsWithProfileUrl = async (notifications: Notifications[]) => {
+    for (const notification of notifications) {
+      const imageName = notification.profilePicture
+      const getObjectParams = {
+        Bucket: this.bucketName,
+        Key: imageName,
+      }
+      const command = new GetObjectCommand(getObjectParams)
+      const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+
+      notification.profilePicture = url
+    }
+    return notifications
   }
 }

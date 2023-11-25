@@ -3,7 +3,7 @@ import { UserEntity } from "./../domain/user.schema"
 import { PostEntity } from "../domain/user.postSchema"
 import { validateString } from "../../../utils/validateString.utils"
 import { handleError } from "../../../utils/handleError.utils"
-import { error } from "console"
+import { Notification } from '../../../shared/interfaces/user.notification.interface'
 
 export class UserDataAccess {
   /**
@@ -485,10 +485,11 @@ export class UserDataAccess {
   */
   async getNotifications(userId: string) {
     try {
-      const { notifications } = await UserEntity.findById(userId).select('notifications').sort({ 'notifications.timeStamp': -1 }) as { notifications: { timeStamp: Date }[] }
-      const sortedNotifications: { timeStamp: Date }[] = notifications.sort((a, b) => b.timeStamp.getTime() - a.timeStamp.getTime())
-      console.log(notifications);
-      return sortedNotifications || []
+      const userData: { notifications: Notification[]} | null = await UserEntity.findById(userId).select('notifications').sort({ 'notifications.timeStamp': -1 }) 
+      // const notifications: Notifications[] = userData.notifications
+      // const sortedNotifications: { timeStamp: Date }[] = notifications.sort((a, b) => b.timeStamp.getTime() - a.timeStamp.getTime())
+      // console.log(notifications);
+      // return sortedNotifications || []
     } catch (e: any) {
       console.log(e.message)
       handleError(e)
