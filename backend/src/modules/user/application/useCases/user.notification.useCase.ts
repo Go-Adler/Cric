@@ -1,6 +1,7 @@
 import { Types } from 'mongoose'
 import { UserDataAccess } from '../../data/user.dataAccess'
 import { handleError } from '../../../../utils/handleError.utils'
+import { Notification } from '../../../../shared/interfaces/user.notification.interface'
 
 export class NotificationUseCase {
   private userDataAccess: UserDataAccess

@@ -1,8 +1,6 @@
 import { Types } from 'mongoose'
+import { Notification } from './user.notification.interface';
 
-export interface PostLikeRequestBody {
-  postId: Types.ObjectId;
-}
 
 export interface User extends Document {
   name: string;

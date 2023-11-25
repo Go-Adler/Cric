@@ -12,11 +12,12 @@
     [class.border-b]="last"
   >
     <div class="flex gap-2">
-      <img
-        src="https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-        alt=""
-        class="w-6 rounded-full"
-      />
+      <img [src]="getProfilePicture(notification)"
+      alt=""
+      class="w-6 rounded-full"
+ />
+
+      
         <div class="p-2" *ngIf="notification.type === 'like'">{{notification.userName}} liked your post</div>
         <div class="p-2" *ngIf="notifications.type === 'comment'">{{notification.userName}} commented on your post</div>
     </div>

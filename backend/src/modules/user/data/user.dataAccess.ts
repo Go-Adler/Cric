@@ -4,6 +4,7 @@ import { PostEntity } from "../domain/user.postSchema"
 import { validateString } from "../../../utils/validateString.utils"
 import { handleError } from "../../../utils/handleError.utils"
 import { Notification } from '../../../shared/interfaces/user.notification.interface'
+import { User } from '../../../shared/interfaces/user.interface'
 
 export class UserDataAccess {
   /**
@@ -485,11 +486,13 @@ export class UserDataAccess {
   */
   async getNotifications(userId: string) {
     try {
-      const userData: { notifications: Notification[]} | null = await UserEntity.findById(userId).select('notifications').sort({ 'notifications.timeStamp': -1 }) 
-      // const notifications: Notifications[] = userData.notifications
-      // const sortedNotifications: { timeStamp: Date }[] = notifications.sort((a, b) => b.timeStamp.getTime() - a.timeStamp.getTime())
-      // console.log(notifications);
-      // return sortedNotifications || []
+      const userData = await UserEntity.findById(userId).select('notifications').sort({ 'notifications.timeStamp': -1 }) 
+      let notifications = userData?.notifications
+
+      if (notifications) {
+        notifications = notifications.sort((a, b) => b.timeStamp.getTime() - a.timeStamp.getTime())
+      }
+      return notifications || []
     } catch (e: any) {
       console.log(e.message)
       handleError(e)

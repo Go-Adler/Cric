@@ -2,7 +2,6 @@
 import { NextFunction, Request, Response } from "express";
 import { JwtPayload } from "jsonwebtoken";
 
-import { PostLikeRequestBody } from "../../../../shared/interfaces/user.interface";
 import { LikePostUseCase } from "../../application/useCases/user.likePost.useCase";
 import { UserDataUseCase } from "../../application/useCases/user.data.useCase"
 import { SocketService } from "../../../../services/socketService"
@@ -32,7 +31,7 @@ export class PostLikeController {
    */
   likePost = async (req: Request, res: Response, next: NextFunction) => {
     const { userId } = req.user as JwtPayload;
-    const { postId } = req.body as PostLikeRequestBody;
+    const { postId } = req.body;
 
     // Validate inputs
     if (!userId || !postId) {
@@ -68,7 +67,7 @@ export class PostLikeController {
    */
   unlikePost = async (req: Request, res: Response, next: NextFunction) => {
     const { userId } = req.user as JwtPayload;
-    const { postId } = req.body as PostLikeRequestBody;
+    const { postId } = req.body 
 
     // Validate inputs
     if (!userId || !postId) {

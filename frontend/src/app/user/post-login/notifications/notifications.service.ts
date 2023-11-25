@@ -3,6 +3,7 @@ import { ConfigService } from "src/app/services/config.service"
 import { HttpClient } from '@angular/common/http'
 import { Observable } from "rxjs"
 import { Notification } from './../../../models/responses/notification.model'
+import { UserService } from '../../../services/user.service'
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class NotificationService {
 
   constructor (
     private configService: ConfigService,
+    private userService: UserService,
     private http: HttpClient
     ) {
       this.API_URL = configService.getAPI_BaseURL()

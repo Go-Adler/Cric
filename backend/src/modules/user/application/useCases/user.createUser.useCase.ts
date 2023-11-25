@@ -1,8 +1,7 @@
 // Import the required modules
 import { UserDataAccess } from "../../data/user.dataAccess";
-import { I_User } from "../../../../shared/interfaces/user.interface";
+import { User } from "../../../../shared/interfaces/user.interface";
 import { PasswordManager } from "../../../../utils/bcrypt.utils";
-import { Types } from "mongoose"
 
 // Define a class for the user creation use case
 export class CreateUserUseCase {
@@ -18,7 +17,7 @@ export class CreateUserUseCase {
   }
 
   // Define an async function that takes a user data object and returns a promise of a boolean value
-  createUser = async (userData: I_User) => {
+  createUser = async (userData: User) => {
     // Destructure the user data object into variables for easier access
     const { name, userName, email, gender, phone } = userData;
     
