@@ -21,6 +21,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NotificationsComponent } from './notifications/notifications.component'
 import { TimeagoModule } from 'ngx-timeago';
 import { PostComponent } from './post/post.component'
+import { MatCardModule } from '@angular/material/card'
+import { LazyLoadImageModule } from 'ng-lazyload-image'
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import { PostComponent } from './post/post.component'
     ReactiveFormsModule,
     NgFor,
     AsyncPipe,
+    MatCardModule,
+    LazyLoadImageModule,
     MatProgressSpinnerModule,
     TimeagoModule.forRoot(),
     PostLoginRoutingModule,

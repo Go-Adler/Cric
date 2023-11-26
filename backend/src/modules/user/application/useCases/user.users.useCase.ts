@@ -1,4 +1,3 @@
-import { Types } from "mongoose"
 import { UserDataAccess } from "../../data/user.dataAccess"
 
 export class UsersUseCase {

@@ -22,8 +22,7 @@ export class NotificationsComponent implements OnInit{
   ngOnInit() {
     this.notificationService.getNotifications().subscribe({
       next: (response) => {
-        console.log(response);
-        const notification = response.notifications
+        const { notifications } = response
         this.notifications.push(...notifications)
      }
    })

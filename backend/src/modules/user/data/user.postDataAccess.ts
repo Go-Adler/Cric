@@ -3,7 +3,7 @@ import { Types } from "mongoose"
 
 import { UserEntity } from "../domain/user.schema"
 import { PostEntity } from "../domain/user.postSchema"
-import { Post } from "../../../shared/interfaces/userPost.interface"
+import { Post, PostResponse } from "../../../shared/interfaces/userPost.interface"
 
 /**
  * UserPostDataAccess class for handling user post related operations
@@ -67,12 +67,18 @@ export class UserPostDataAccess {
    * @param postId - The ID of the post
    * @returns the post requested
    */
-  async getUserPost(postId: Types.ObjectId) {
+  async getUserPost(postId: Types.ObjectId): Promise<PostResponse> {
     try {
       if (!Types.ObjectId.isValid(postId)) {
         throw new Error("Invalid post id")
       }
-      return await PostEntity.findById(postId)
+      
+      const post =  await PostEntity.findById(postId)
+      if (!post) throw new Error('Post fetch failed')
+      const userData = await UserEntity.findById(post.userId).select('profilePicture name userName')
+      if (!userData) throw new Error('Cannot find user')
+      const { profilePicture, name, userName } = userData
+      return { post, profilePicture, name, userName }
     } catch (error: any) {
       console.error(`Error fetching user posts: ${error.message}`)
       throw new Error("Error fetching user posts")

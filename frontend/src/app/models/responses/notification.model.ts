@@ -7,3 +7,7 @@
     profilePicture: string,
     userId: string
   }
+
+  export interface NotificationResponse {
+    notifications: Notification[];
+  }

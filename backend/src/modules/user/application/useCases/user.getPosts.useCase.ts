@@ -1,6 +1,6 @@
 import { Types } from 'mongoose'
 import { UserPostDataAccess } from '../../data/user.postDataAccess'
-import { Post } from '../../../../shared/interfaces/userPost.interface'
+import { PostResponse } from '../../../../shared/interfaces/userPost.interface'
 
 export class GetUserPostsUseCase {
   private userPostDataAccess: UserPostDataAccess
@@ -15,7 +15,7 @@ export class GetUserPostsUseCase {
   }
 
   
-  getUserPost = async (postId: Types.ObjectId): Promise<Post | null> => {
+  getUserPost = async (postId: Types.ObjectId): Promise<PostResponse> => {
     return await this.userPostDataAccess.getUserPost(postId)
   }
 

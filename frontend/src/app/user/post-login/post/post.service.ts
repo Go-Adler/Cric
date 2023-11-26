@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { ConfigService } from '../../../services/config.service'
-import { Post } from '../../../models/post.model'
+import { PostResponse } from '../../../models/post.model'
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class PostService {
     this.API_URL = configService.getAPI_BaseURL()
   }
 
-  getPost(postId: string): Observable<Post> {
-    return this.http.get<Post>(`${this.API_URL}/user/posts/${postId}`)
+  getPost(postId: string): Observable<PostResponse> {
+    return this.http.get<PostResponse>(`${this.API_URL}/user/posts/${postId}`)
   }
 }

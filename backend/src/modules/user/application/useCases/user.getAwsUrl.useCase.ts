@@ -1,6 +1,6 @@
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
-import { Post } from "../../../../shared/interfaces/userPost.interface"
+import { Post, PostResponse } from "../../../../shared/interfaces/userPost.interface"
 import { Notification } from '../../../../shared/interfaces/user.notification.interface'
 
 export class GetAwsUrlUseCase {
@@ -100,5 +100,31 @@ export class GetAwsUrlUseCase {
       }
     }
     return notifications
+  }
+
+  getPostWithUrl = async (postResponse: PostResponse) => {
+    if (postResponse.profilePicture) {
+      const imageName = postResponse.profilePicture
+        const getObjectParams = {
+          Bucket: this.bucketName,
+          Key: imageName,
+        }
+        const command = new GetObjectCommand(getObjectParams)
+        const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+  
+        postResponse.profilePicture = url
+    }
+
+    if (postResponse.post.content?.multimedia[0]) {
+      const imageName = postResponse.post.content.multimedia[0]
+        const getObjectParams = {
+          Bucket: this.bucketName,
+          Key: imageName,
+        }
+        const command = new GetObjectCommand(getObjectParams)
+        const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+  
+        post.profilePicture = url
+    }
   }
 }

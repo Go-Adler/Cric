@@ -1,1 +1,110 @@
-<p>post works!</p>
+<mat-card
+class="text-black p-2 md:p-3 mb-6"
+>
+<!-- card-title -->
+<div class="flex gap-2">
+  <span class="w-10">
+    <img [src]="post.profilePicture" alt="" class="rounded-full" />
+  </span>
+  <span class="">
+    <span class="flex items-center gap-2">
+      <span class="md:text-base">{{ post.name }}</span>
+      <span
+        class="text-xs font-light md:font-normal md:text-sm text-stone-500"
+        >{{ post.timestamp | timeago }}</span
+      >
+    </span>
+    <span>
+      <span class="text-sm font-light">{{'@'}} {{ post.userName }}</span>
+    </span>
+  </span>
+</div>
+
+<!--  content -->
+<span
+  *ngIf="post.content.text"
+  class="py-2 text-sm font-normal break-words whitespace-pre-line"
+>
+  {{ post.content.text }}
+</span>
+
+<!-- image -->
+<img
+  *ngIf="post.content?.multimedia[0]"
+  [defaultImage]="postLoadingImage"
+  [lazyLoad]="post.content?.multimedia[0]"
+  alt="Post Image"
+  class="rounded-md"
+  (error)="handleImageError()"
+/>
+<!-- reactions -->
+<div class="md:pt-3 pt-2 flex justify-between">
+  <!-- favourite -->
+  <div
+    class="gap-1 flex md:gap-1 justify-center items-center cursor-pointer actionArea"
+    (click)="toggleLike(post?.engagement?.liked, post._id)"
+  >
+    <span
+      class="text-lg lg:text-xl material-symbols-rounded"
+      [ngClass]="{ fillIcon: post?.engagement?.liked }"
+    >
+      favorite
+    </span>
+    <span class="text-sm lg:text-md font-normal">{{
+      post.actions.likes || ""
+    }}</span>
+  </div>
+
+  <!-- comment -->
+  <div
+    class="gap-1 flex md:gap-3 justify-center items-center actionArea"
+    (click)="post.showCommentSection = !post.showCommentSection"
+  >
+    <span
+      class="text-lg lg:text-xl material-symbols-rounded cursor-pointer"
+    >
+      mode_comment
+    </span>
+    <span class="text-sm lg:text-md font-normal">{{
+      post.replies.length || ""
+    }}</span>
+  </div>
+
+  <!-- bookmark -->
+  <div class="gap-1 flex md:gap-3 justify-center items-center actionArea">
+    <span
+      class="text-lg lg:text-xl material-symbols-rounded cursor-pointer"
+    >
+      bookmark
+    </span>
+    <span class="text-sm lg:text-md font-normal">{{
+      post.actions.saved || ""
+    }}</span>
+  </div>
+
+  <!-- send -->
+  <div class="gap-1 flex md:gap-3 justify-center items-center actionArea">
+    <span
+      class="text-lg lg:text-xl material-symbols-rounded cursor-pointer"
+    >
+      send
+    </span>
+  </div>
+
+  <!-- share -->
+  <div class="gap-1 flex md:gap-3 justify-center items-center actionArea">
+    <span
+      class="text-lg lg:text-xl material-symbols-rounded cursor-pointer"
+    >
+      share
+    </span>
+  </div>
+</div>
+<app-comment-section
+  *ngIf="post?.showCommentSection"
+  [postId]="post._id"
+  [profilePicture]="post.profilePicture"
+  [userName]="post.userName"
+  [name]="post.name"
+></app-comment-section>
+</mat-card>

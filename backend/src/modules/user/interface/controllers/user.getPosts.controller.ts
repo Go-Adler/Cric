@@ -52,9 +52,9 @@ export class GetUserPostsController {
     try {
       const { id } = req.params
       const postId = new Types.ObjectId(id)
-      const post = await this.getUserPostsUseCase.getUserPost(postId)
-      if (post) return res.json({ post })
-      throw new Error('Post could not be found')
+      let postResponse = await this.getUserPostsUseCase.getUserPost(postId)
+
+      return res.json({ postResponse })
     } catch (error) {
       return next(error)
     }

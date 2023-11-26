@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core"
 import { ConfigService } from "src/app/services/config.service"
 import { HttpClient } from '@angular/common/http'
 import { Observable } from "rxjs"
-import { Notification } from './../../../models/responses/notification.model'
+import { NotificationResponse } from './../../../models/responses/notification.model'
 import { UserService } from '../../../services/user.service'
 
 @Injectable({
@@ -19,8 +19,8 @@ export class NotificationService {
       this.API_URL = configService.getAPI_BaseURL()
   }
 
-  getNotifications(): Observable<Notification[]> {
-    return this.http.get<Notification[]>(`${this.API_URL}/user/notifications`)
+  getNotifications(): Observable<NotificationResponse> {
+    return this.http.get<NotificationResponse>(`${this.API_URL}/user/notifications`)
   }
 
 }

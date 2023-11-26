@@ -5,12 +5,12 @@
     <div>Notifications</div>
   </div>
 
-  <!-- Notifications list
+  <!-- Notifications list -->
   <div
     *ngFor="let notification of notifications; let last = last"
     class="p-4 flex justify-between items-center border-t cursor-pointer border-slate-600"
     [class.border-b]="last"
-    [routerLink]="[`/user/notification.`]"
+    [routerLink]="['/user/' + notification.userName + '/' + notification.postId]"
   >
     <div class="flex gap-2 items-center">
       <div class="w-8">
@@ -32,5 +32,5 @@
     <div>
       {{ notification.timeStamp | timeago }}
     </div>
-  </div> -->
+  </div>
 </div>

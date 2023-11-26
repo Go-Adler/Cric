@@ -40,3 +40,7 @@ export interface Post extends Document {
   usersLiked: Types.ObjectId[];
   replies: Types.ObjectId[];
 }
+
+export interface PostResponse {
+  post: Post
+}
