@@ -5,9 +5,16 @@
     timeStamp: Date
     postId: string
     profilePicture: string,
-    userId: string
+    userId: string,
+    _id: string
   }
 
   export interface NotificationResponse {
     notifications: Notification[];
+  }
+
+  export interface NotificationMarkAsReadResponse {
+    success: boolean;
+    message: string;
+    updatedNotification: Notification;
   }

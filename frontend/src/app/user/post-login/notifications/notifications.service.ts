@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core"
 import { ConfigService } from "src/app/services/config.service"
 import { HttpClient } from '@angular/common/http'
 import { Observable } from "rxjs"
-import { NotificationResponse } from './../../../models/responses/notification.model'
+import { NotificationResponse, NotificationMarkAsReadResponse } from './../../../models/responses/notification.model'
 import { UserService } from '../../../services/user.service'
 
 @Injectable({
@@ -21,6 +21,10 @@ export class NotificationService {
 
   getNotifications(): Observable<NotificationResponse> {
     return this.http.get<NotificationResponse>(`${this.API_URL}/user/notifications`)
+  }
+
+  notificationMarkAsRead(notificationId: string): Observable<NotificationMarkAsReadResponse> {
+    return this.http.patch<NotificationMarkAsReadResponse>(`${this.API_URL}/user/notifications/mark-as-read`, {notificationId})
   }
 
 }

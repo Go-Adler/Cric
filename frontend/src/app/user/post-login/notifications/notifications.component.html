@@ -4,12 +4,19 @@
     <span class="material-symbols-rounded text-xl"> notifications </span>
     <div>Notifications</div>
   </div>
+  <div class="flex justify-center">
+    <div class="">
+      <mat-spinner [diameter]="40" *ngIf="spinner"></mat-spinner>
 
+    </div>
+  </div>
   <!-- Notifications list -->
   <div
     *ngFor="let notification of notifications; let last = last"
     class="p-4 flex justify-between items-center border-t cursor-pointer border-slate-600"
+    [ngClass]="[notification.read ? '' : 'bg-slate-800']"
     [class.border-b]="last"
+    (click)="toRead(notification._id)"
     [routerLink]="['/user/' + notification.userName + '/' + notification.postId]"
   >
     <div class="flex gap-2 items-center">
@@ -24,7 +31,7 @@
       <div class="p-2" *ngIf="notification.type === 'like'">
         {{ notification.userName }} liked your post
       </div>
-      <div class="p-2" *ngIf="notifications.type === 'comment'">
+      <div class="p-2" *ngIf="notification.type === 'comment'">
         {{ notification.userName }} commented on your post
       </div>
     </div>

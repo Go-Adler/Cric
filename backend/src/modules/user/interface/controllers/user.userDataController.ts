@@ -24,7 +24,7 @@ export class UserDataController {
       const userName = await this.userDataUseCase.getUserName(userId)
       const friendsCount = await this.userDataUseCase.getFriendsCount(userId)
       const name = await this.userDataUseCase.getName(userId)
-      const notificationsCount = await this.userDataUseCase.getNotificationsCount(userId)
+      const notificationsCount = await this.notificationUseCase.getNotificationsCount(userId)
 
       res.json({
         profilePicture,
@@ -56,18 +56,6 @@ export class UserDataController {
       })
     } catch (error) {
       return next(error)
-    }
-  }
-
-  getNotifications = async (req: Request, res: Response, next: NextFunction) => {
-    const { userId } = req.user as JwtPayload
-    try {
-      let notifications = await this.notificationUseCase.getNotifications(userId)
-      await this.getAwsUrlUseCase.getNotificationsWithProfileUrl(notifications)
-      res.json({ notifications })
-    } catch (e: any) {
-      console.log(`Error in get notification, user data controller: ${e.message}`)
-      return next(e)
     }
   }
 }

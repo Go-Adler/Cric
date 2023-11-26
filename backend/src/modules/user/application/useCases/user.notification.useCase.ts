@@ -1,13 +1,13 @@
 import { Types } from 'mongoose'
-import { UserDataAccess } from '../../data/user.dataAccess'
+import { NotificationDataAccess } from '../../data/user.notification.dataAccess'
 import { handleError } from '../../../../utils/handleError.utils'
 import { Notification } from '../../../../shared/interfaces/user.notification.interface'
 
 export class NotificationUseCase {
-  private userDataAccess: UserDataAccess
+  private notificationDataAccess: NotificationDataAccess
 
   constructor() {
-    this.userDataAccess = new UserDataAccess()
+    this.notificationDataAccess = new NotificationDataAccess()
   }
 
    /**
@@ -21,13 +21,12 @@ export class NotificationUseCase {
    */
    async addNotification(userId: Types.ObjectId, type: string, postId: Types.ObjectId, postUserId: string) {
     try {
-      return await this.userDataAccess.addNotification(userId, type, postId, postUserId);
+      return await this.notificationDataAccess.addNotification(userId, type, postId, postUserId);
     } catch (e: any) {
       console.error(`Error occurred while adding notification: ${e.message}`);
       handleError(e.message)
     }
    }
-  
   
   /**
    * Method to get notifications of user.
@@ -37,11 +36,31 @@ export class NotificationUseCase {
    */
   async getNotifications(userId: string): Promise<Notification[]> {
     try {
-      return await this.userDataAccess.getNotifications(userId)
+      return await this.notificationDataAccess.getNotifications(userId)
     } catch (e: any) {
       console.log(`Error occured while fetching notifications ${e.message}`);
       handleError(e.message)
       return []
     }
+  }
+
+  /**
+   * Method to mark notification as read.
+   * 
+   * @param userId - The ID of the user.
+   * @param notificationId - The ID of the notification.
+   */
+  async markAsRead(userId: string, notificationId: string) {
+
+  }
+
+  /**
+   * Method to get the count of notifications.
+   * 
+   * @param userId - User ID to get the notifications.
+   * @returns 
+   */
+  getNotificationsCount = async (userId: Types.ObjectId) => {
+    return await this.notificationDataAccess.getNotificationsCount(userId)
   }
 }

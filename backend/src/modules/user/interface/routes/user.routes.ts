@@ -8,9 +8,10 @@ import { UserForgotPasswordController } from "../controllers/user.forgotPassword
 import { UserChangePasswordController } from "../controllers/user.changePassword.controller"
 import { UserDataController } from "../controllers/user.userDataController"
 import { UserResendOtpController } from "../controllers/user.resendOtp.controller"
+import { UsersController } from "../controllers/user.users.controller"
 import { postRoutes } from "./post.routes"
 import { profileRoutes } from "./profile.routes"
-import { UsersController } from "../controllers/user.users.controller"
+import { notificationRoutes } from "./notification.routes"
 
 const { verifyJwt, verifyToken, verifyVerifyToken } = new JwtMiddleware()
 const { findUsers } = new UsersController()
@@ -20,15 +21,15 @@ const { verifyOtp } = new UserSignUpOtpController()
 const { userLogin } = new UserLoginController()
 const { forgotPassword } = new UserForgotPasswordController()
 const { changePassword } = new UserChangePasswordController()
-const { userBasicInfo, friendBasicInfo, getNotifications } = new UserDataController()
+const { userBasicInfo, friendBasicInfo } = new UserDataController()
 
 const router = express.Router()
 
 router.use("/posts", postRoutes)
 router.use("/profile", profileRoutes)
+router.use("/notifications", notificationRoutes)
 
 router.get("/basic-info", verifyJwt, userBasicInfo)
-router.get("/notifications", verifyJwt, getNotifications)
 router.get("/friend/basic-info/:userName", verifyJwt, friendBasicInfo)
 router.get("/resend-otp", verifyVerifyToken, resendOtp)
 
