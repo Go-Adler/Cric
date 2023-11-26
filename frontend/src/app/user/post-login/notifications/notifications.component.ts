@@ -32,7 +32,11 @@ export class NotificationsComponent implements OnInit{
   }
 
   toRead(_id: string) {
-    
+    this.notificationService.markAsRead(_id).subscribe({
+      next: data => {
+        console.log(data, 37);
+      }
+    })
   }
   getProfilePicture(notification: any) {
     return notification?.profilePicture || this.defaultProfilePicture;

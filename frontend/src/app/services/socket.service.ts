@@ -61,7 +61,7 @@ export class SocketService {
 
   // Emit a "dislike" event
   emitLogout() {
-    this.socket.emit('disconnect-request');
+    if (this.socket) this.socket.emit('disconnect-request');
   }
   getSocket() {
     return this.socket;
