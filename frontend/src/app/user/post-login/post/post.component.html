@@ -1,21 +1,22 @@
-<mat-card
+<div class="p-8 md:p-16">
+  <mat-card
 class="text-black p-2 md:p-3 mb-6" *ngIf="post"
 >
 <!-- card-title -->
 <div class="flex gap-2">
   <span class="w-10">
-    <img [src]="post.profilePicture" alt="" class="rounded-full" />
+    <img [src]="profilePicture" alt="" class="rounded-full" />
   </span>
   <span class="">
     <span class="flex items-center gap-2">
-      <span class="md:text-base">{{ post.name }}</span>
+      <span class="md:text-base">{{ name }}</span>
       <span
         class="text-xs font-light md:font-normal md:text-sm text-stone-500"
         >{{ post.timestamp | timeago }}</span
       >
     </span>
     <span>
-      <span class="text-sm font-light">{{'@'}} {{ post.userName }}</span>
+      <span class="text-sm font-light">{{'@'}} {{ userName }}</span>
     </span>
   </span>
 </div>
@@ -108,3 +109,4 @@ class="text-black p-2 md:p-3 mb-6" *ngIf="post"
   [name]="post.name"
 ></app-comment-section>
 </mat-card>
+</div>

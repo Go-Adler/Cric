@@ -12,6 +12,9 @@ export class PostComponent {
   postId: string | null
   post: any
   postLoadingImage: string
+  userName: string = ''
+  name: string = ''
+  profilePicture: string = ''
   
   constructor(
     private route: ActivatedRoute,
@@ -25,8 +28,13 @@ export class PostComponent {
   ngOnInit() {
     if (this.postId) {
      this.postService.getPost(this.postId).subscribe({
-      next: data => {
+       next: data => {
+         this.userName = data.userName
+         this.name = data.name
          this.post = data.post
+         if (data.profilePicture) {
+           this.profilePicture = data.profilePicture
+         }
       }
      })
     }
