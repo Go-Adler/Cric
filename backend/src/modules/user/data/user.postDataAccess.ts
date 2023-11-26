@@ -63,6 +63,23 @@ export class UserPostDataAccess {
   }
 
   /**
+   * Get post with id
+   * @param postId - The ID of the post
+   * @returns the post requested
+   */
+  async getUserPost(postId: Types.ObjectId) {
+    try {
+      if (!Types.ObjectId.isValid(postId)) {
+        throw new Error("Invalid post id")
+      }
+      return await PostEntity.findById(postId)
+    } catch (error: any) {
+      console.error(`Error fetching user posts: ${error.message}`)
+      throw new Error("Error fetching user posts")
+    }
+  }
+
+  /**
    * Like a post
    * @param userId - The ID of the user who likes the post
    * @param postId - The ID of the post to be liked

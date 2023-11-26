@@ -1,4 +1,5 @@
 import { Schema } from 'mongoose'
+
 import { Notification } from '../../../shared/interfaces/user.notification.interface'
 
 export const notificationSchema = new Schema<Notification>({
@@ -23,6 +24,10 @@ export const notificationSchema = new Schema<Notification>({
     default: Date.now,
   },
   postId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+  },
+  userId: {
     type: Schema.Types.ObjectId,
     required: true,
   }

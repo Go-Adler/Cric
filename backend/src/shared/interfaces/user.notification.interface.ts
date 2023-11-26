@@ -2,7 +2,8 @@ import { Document, Types } from 'mongoose'
 
 export interface Notification extends Document {
     type: string
-    userName: string
+    userName: string,
+    userId: Types.ObjectId,
     read: boolean
     timeStamp: Date
     postId: Types.ObjectId

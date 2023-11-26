@@ -60,7 +60,7 @@ export class UserNewPostController {
       }
       
       // Create and send the post
-      const postData: Post = { userId, content: { text, multimedia: [multimedia] } }
+      const postData = { userId, content: { text, multimedia: [multimedia] } } as Post
 
       // Create the post without url using the use case
       const postWithoutUrl = await this.createPostUseCase.createPost(userId, postData)

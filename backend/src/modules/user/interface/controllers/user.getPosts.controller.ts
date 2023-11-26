@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express"
+import { Types } from 'mongoose'
 import { GetUserPostsUseCase } from "../../application/useCases/user.getPosts.useCase"
 import { JwtPayload } from "jsonwebtoken"
 import { GetAwsUrlUseCase } from "../../application/useCases/user.getAwsUrl.useCase"
@@ -42,6 +43,18 @@ export class GetUserPostsController {
       posts = this.postActionsUseCase.likedPosts(userId, posts)
 
       res.json({ posts })
+    } catch (error) {
+      return next(error)
+    }
+  }
+
+  getPost = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params
+      const postId = new Types.ObjectId(id)
+      const post = await this.getUserPostsUseCase.getUserPost(postId)
+      if (post) return res.json({ post })
+      throw new Error('Post could not be found')
     } catch (error) {
       return next(error)
     }

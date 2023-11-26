@@ -4,7 +4,6 @@ import { PostEntity } from "../domain/user.postSchema"
 import { validateString } from "../../../utils/validateString.utils"
 import { handleError } from "../../../utils/handleError.utils"
 import { Notification } from '../../../shared/interfaces/user.notification.interface'
-import { User } from '../../../shared/interfaces/user.interface'
 
 export class UserDataAccess {
   /**
@@ -458,16 +457,21 @@ export class UserDataAccess {
   * @param userId - The ID of the user
   * @returns notification count or 0 if not found
   */
-  async addNotification(_id: Types.ObjectId, type: string, postId: Types.ObjectId, postUserId: string) {
+  async addNotification(userId: Types.ObjectId, type: string, postId: Types.ObjectId, postUserId: string) {
     try {
-      const { userName, profilePicture } = await UserEntity.findById(_id).select('userName profilePicture') as { userName: string, profilePicture: string }
+      const userData = await UserEntity.findById(userId).select('userName profilePicture')
+
+      if (!userData) throw new Error('Error in adding notificaiton: User does not exist')
+
+      const { userName , profilePicture } = userData
       await UserEntity.findByIdAndUpdate(postUserId, {
         $push: {
           notifications: {
             type,
             userName,
             postId,
-            profilePicture
+            profilePicture,
+            userId,
           }
         }
       })
@@ -484,18 +488,17 @@ export class UserDataAccess {
    * @param userId - The ID of the user.
    * @returns notifications of user of empty array
   */
-  async getNotifications(userId: string) {
+  async getNotifications(userId: string): Promise<Notification[]> {
     try {
       const userData = await UserEntity.findById(userId).select('notifications').sort({ 'notifications.timeStamp': -1 }) 
-      let notifications = userData?.notifications
-
-      if (notifications) {
-        notifications = notifications.sort((a, b) => b.timeStamp.getTime() - a.timeStamp.getTime())
-      }
-      return notifications || []
+      if (!userData?.notifications) return []
+      let notifications = userData.notifications
+      notifications = notifications.sort((a, b) => b.timeStamp.getTime() - a.timeStamp.getTime())
+      return notifications
     } catch (e: any) {
       console.log(e.message)
       handleError(e)
+      return []
     }
   }
 }

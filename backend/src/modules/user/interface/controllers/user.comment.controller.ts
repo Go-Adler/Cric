@@ -59,7 +59,7 @@ export class CommentController {
         multimedia = uploadInfo;
       }
 
-      const postData: Post = { userId, content: { text, multimedia: [multimedia] } };
+      const postData = { userId, content: { text, multimedia: [multimedia] } } as Post
 
       const postWithoutUrl = await this.commentPostUseCase.createComment(postId, postData);
 

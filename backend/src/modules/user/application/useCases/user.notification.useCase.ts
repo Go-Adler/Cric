@@ -35,12 +35,13 @@ export class NotificationUseCase {
    * @param userId - The ID of the user
    * @returns Notifications of the user
    */
-  async getNotifications(userId: string) {
+  async getNotifications(userId: string): Promise<Notification[]> {
     try {
       return await this.userDataAccess.getNotifications(userId)
     } catch (e: any) {
       console.log(`Error occured while fetching notifications ${e.message}`);
       handleError(e.message)
+      return []
     }
   }
 }

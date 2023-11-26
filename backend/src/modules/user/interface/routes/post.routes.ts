@@ -10,7 +10,7 @@ import { JwtMiddleware } from '../middleware/auth.middleware'
 const { likeComment, comment, getComments } = new CommentController()
 const { verifyJwt } = new JwtMiddleware()
 const { likePost, unlikePost } = new PostLikeController()
-const { getUserPosts, getFriendsPosts } = new GetUserPostsController()
+const { getUserPosts, getFriendsPosts, getPost } = new GetUserPostsController()
 const { userNewPost } = new UserNewPostController()
 const { memoryStorage } = new MulterMiddleware()
 
@@ -26,6 +26,7 @@ router.post('/like-comment', likeComment)
 router.post('/unlike-comment', unlikePost)
 router.post('/post', memoryStorage, userNewPost)
 router.post('/friends-posts', getFriendsPosts)
+router.get('/:id', getPost)
 router.post('/', getUserPosts)
 
 export { router as postRoutes } 

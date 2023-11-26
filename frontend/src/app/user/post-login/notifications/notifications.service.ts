@@ -19,8 +19,8 @@ export class NotificationService {
       this.API_URL = configService.getAPI_BaseURL()
   }
 
-  getNotifications(): Observable<Notification> {
-    return this.http.get<Notification>(`${this.API_URL}/user/notifications`)
+  getNotifications(): Observable<Notification[]> {
+    return this.http.get<Notification[]>(`${this.API_URL}/user/notifications`)
   }
 
 }

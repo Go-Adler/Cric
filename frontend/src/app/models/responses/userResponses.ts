@@ -1,4 +1,4 @@
-import { SuccessPost } from "../post.model"
+import { Post } from "../post.model"
 
 export interface I_UserBasicInfo {
   profilePicture: string,
@@ -10,5 +10,5 @@ export interface I_UserBasicInfo {
 
 export interface postSuccessResponse {
   message: string,
-  postContent: SuccessPost
+  postContent: Post
 }

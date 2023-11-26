@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { NotificationService } from './notifications.service'
 import { UserService } from '../../../services/user.service'
 
@@ -21,7 +22,8 @@ export class NotificationsComponent implements OnInit{
   ngOnInit() {
     this.notificationService.getNotifications().subscribe({
       next: (response) => {
-        const notifications = response.notifications
+        console.log(response);
+        const notification = response.notifications
         this.notifications.push(...notifications)
      }
    })

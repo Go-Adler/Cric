@@ -87,15 +87,17 @@ export class GetAwsUrlUseCase {
 
   getNotificationsWithProfileUrl = async (notifications: Notification[]) => {
     for (const notification of notifications) {
-      const imageName = notification.profilePicture
-      const getObjectParams = {
-        Bucket: this.bucketName,
-        Key: imageName,
+      if (notification?.profilePicture) {
+        const imageName = notification.profilePicture
+        const getObjectParams = {
+          Bucket: this.bucketName,
+          Key: imageName,
+        }
+        const command = new GetObjectCommand(getObjectParams)
+        const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+  
+        notification.profilePicture = url
       }
-      const command = new GetObjectCommand(getObjectParams)
-      const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
-
-      notification.profilePicture = url
     }
     return notifications
   }
