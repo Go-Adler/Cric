@@ -26,7 +26,7 @@ export class PostComponent {
     if (this.postId) {
      this.postService.getPost(this.postId).subscribe({
       next: data => {
-        this.post = data.post
+         this.post = data.post
       }
      })
     }

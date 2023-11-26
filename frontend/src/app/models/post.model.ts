@@ -42,5 +42,8 @@ export interface Post extends Document {
 }
 
 export interface PostResponse {
-  post: Post
+  post: Post,
+  profilePicture?: string,
+  name: string,
+  userName: string
 }

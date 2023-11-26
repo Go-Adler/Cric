@@ -115,7 +115,7 @@ export class GetAwsUrlUseCase {
         postResponse.profilePicture = url
     }
 
-    if (postResponse.post.content?.multimedia[0]) {
+    if (postResponse.post.content?.multimedia && postResponse.post.content?.multimedia[0]) {
       const imageName = postResponse.post.content.multimedia[0]
         const getObjectParams = {
           Bucket: this.bucketName,
@@ -124,7 +124,9 @@ export class GetAwsUrlUseCase {
         const command = new GetObjectCommand(getObjectParams)
         const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
   
-        post.profilePicture = url
+        postResponse.post.content.multimedia[0] = url
     }
+
+    return postResponse
   }
 }

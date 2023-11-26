@@ -53,8 +53,8 @@ export class GetUserPostsController {
       const { id } = req.params
       const postId = new Types.ObjectId(id)
       let postResponse = await this.getUserPostsUseCase.getUserPost(postId)
-
-      return res.json({ postResponse })
+      postResponse = await this.getAwsUrlUseCase.getPostWithUrl(postResponse)
+      return res.json(postResponse)
     } catch (error) {
       return next(error)
     }
