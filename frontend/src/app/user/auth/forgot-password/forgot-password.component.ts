@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ForgotPasswordService } from './forgot.password.service'
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -14,6 +15,8 @@ export class ForgotPasswordComponent {
   hide: boolean = true;
   errorMessage: string = '';
   isLogging: boolean = false;
+  logo = environment.CRIC_LOGO
+
 
   constructor(
     private fb: FormBuilder,

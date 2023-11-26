@@ -6,9 +6,10 @@ import {
   ValidatorFn,
   AbstractControl,
 } from '@angular/forms';
-
-import { OTP_Service } from './otp.service';
 import { Router } from '@angular/router';
+
+import { environment } from 'src/environments/environment';
+import { OTP_Service } from './otp.service';
 
 @Component({
   selector: 'app-otp',
@@ -31,6 +32,7 @@ export class OtpComponent implements OnInit, OnDestroy {
   otpResent: boolean = false
   otpVerifying = false
   continueToLogin = false
+  logo = environment.CRIC_LOGO
 
   constructor(
     private fb: FormBuilder,

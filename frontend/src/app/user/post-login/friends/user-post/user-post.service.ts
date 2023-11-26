@@ -5,13 +5,14 @@ import { Observable } from 'rxjs';
 import { ConfigService } from 'src/app/services/config.service'
 import { I_likePost } from 'src/app/models/responses/postLiked.model'
 import { FriendsService } from '../friends.service'
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserPostService {
   API_URL!: string
-  postLoadingImage: string = 'https://goadlercric.s3.ap-south-1.amazonaws.com/assets/Loading-removebg-preview.png'
+  postLoadingImage = environment.POST_LOADING_IMAGE
   
   constructor(private configService: ConfigService, private http: HttpClient, private friendsService: FriendsService) { 
     this.API_URL = configService.getAPI_BaseURL()

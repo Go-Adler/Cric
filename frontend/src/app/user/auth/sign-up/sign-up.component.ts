@@ -6,9 +6,10 @@ import {
   AbstractControl,
   ValidatorFn,
 } from '@angular/forms';
-
-import { SignUpService } from './sign-up.service';
 import { Router } from '@angular/router';
+
+import { environment } from 'src/environments/environment';
+import { SignUpService } from './sign-up.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -21,6 +22,7 @@ export class SignUpComponent implements OnInit {
   confirmHide: boolean = true;
   errorMessage!: string;
   isSigningUp: boolean = false;
+  logo = environment.CRIC_LOGO
 
   constructor(
     private fb: FormBuilder,

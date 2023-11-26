@@ -2,14 +2,14 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, ObservableLike } from "rxjs";
 import { I_UserBasicInfo } from "src/app/models/responses/userResponses"
-
 import { ConfigService } from "src/app/services/config.service"
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FriendsService {
-  private defaultProfilePicture = 'https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/Default/DefaultProfilePicture.png'
+  private defaultProfilePicture = environment.DEFAULT_PROFILE_PICTURE
   private profilePicture = new BehaviorSubject<string>(this.defaultProfilePicture);
   private friendsCount = new BehaviorSubject<string>('')
   private name = new BehaviorSubject<string>('')

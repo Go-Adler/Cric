@@ -3,11 +3,12 @@ import {
   FormBuilder,
   Validators,
   FormGroup,
-  ValidatorFn,
   AbstractControl,
 } from '@angular/forms';
+import { Router } from '@angular/router'
+
+import { environment } from 'src/environments/environment';
 import { OTP_Service } from '../../otp/otp.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-verify-sign-up-otp',
@@ -24,6 +25,7 @@ export class VerifySignUpOtpComponent {
   otpResent: boolean = false;
   timer: any;
   timerValue: number = 5;
+  logo = environment
 
   constructor(
     private fb: FormBuilder,

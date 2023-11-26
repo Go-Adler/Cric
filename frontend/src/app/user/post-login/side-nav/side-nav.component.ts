@@ -5,6 +5,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { UserService } from 'src/app/services/user.service';
 import { LogOutService } from '../../auth/log-in/log-out.service';
 import { SocketService } from 'src/app/services/socket.service'
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-side-nav',
@@ -19,6 +20,7 @@ export class SideNavComponent implements OnInit {
   logOutPill: boolean = false;
   friendsActive: boolean = false
   private socket: any = ''
+  logOutImage = environment.LOG_OUT_IMAGE
 
 
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
@@ -85,6 +87,7 @@ export class SideNavComponent implements OnInit {
   imports: [MatDialogModule, MatButtonModule],
 })
 export class DialogAnimationsExampleDialog {
+  logOutImage = environment.LOG_OUT_IMAGE
   constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>, public logOutService: LogOutService) { }
 
   logOut() {

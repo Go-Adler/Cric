@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog'
 import { UserService } from 'src/app/services/user.service'
 import { LogOutService } from '../../auth/log-in/log-out.service'
+import { environment } from '../../../../environments/environment'
 
 @Component({
   selector: 'app-top-nav',
@@ -13,11 +14,14 @@ export class TopNavComponent implements OnInit{
   profilePicture: string = ''
   userName: string = '';
   logOutPill: boolean = false;
+  logo: string
 
   constructor(
     private userService: UserService,
     public dialog: MatDialog
-  ) {}
+  ) {
+    this.logo = environment.CRIC_LOGO
+  }
   
   ngOnInit(): void {
     this.userService.profilePicture$.subscribe({

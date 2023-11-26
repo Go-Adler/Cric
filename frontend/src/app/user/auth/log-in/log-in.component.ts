@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service'
 import { UserService } from 'src/app/services/user.service'
 import { loginService } from './log-in.service'
 import { NotificationService } from '../../post-login/post-login.service'
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-log-in',
@@ -18,6 +19,7 @@ export class LogInComponent implements OnInit {
   errorMessage: string = '';
   wrongPassword: string = '';
   isLogging: boolean = false;
+  logo = environment.CRIC_LOGO
 
   constructor(
     private fb: FormBuilder,

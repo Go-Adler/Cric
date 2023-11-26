@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from "rxjs"
 
 import { ConfigService } from "./config.service"
 import { I_UserBasicInfo } from "../models/responses/userResponses"
+import { environment } from "src/environments/environment"
 
 @Injectable({
   providedIn: "root"
@@ -12,7 +13,7 @@ export class UserService {
   private defaultName = ''
   private defaultUserName = ''
   private defualtFriendsCount = ''
-  private defaultProfilePicture = 'https://goadlercric.s3.ap-south-1.amazonaws.com/Logos/Default/DefaultProfilePicture.png'
+  private defaultProfilePicture = environment.DEFAULT_PROFILE_PICTURE
 
   private profilePicture = new BehaviorSubject<string>(this.defaultProfilePicture);
   private friendsCount = new BehaviorSubject<string>(this.defualtFriendsCount)

@@ -4,17 +4,21 @@ import { Observable } from 'rxjs';
 
 import { ConfigService } from 'src/app/services/config.service';
 import { Users } from '../post-log-in.interface';
+import { environment } from '../../../../environments/environment'
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
   API_URL!: string
-  defaultProfilePicture: string =
-    'https://goadlercric.s3.ap-south-1.amazonaws.com/assets/defualtProfilePictureBlack-removebg-preview.png';
+  defaultProfilePicture: string
 
-  constructor(private configService: ConfigService, private http: HttpClient) {
+  constructor(
+    private configService: ConfigService,
+    private http: HttpClient,
+  ) {
     this.API_URL = configService.getAPI_BaseURL()
+    this.defaultProfilePicture = environment.DEFAULT_PROFILE_PICTURE
   }
 
   fetchUsers(input: string): Observable<Users> {
