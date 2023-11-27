@@ -1,6 +1,7 @@
 import { Server as SocketServer, Socket } from "socket.io"
 import { instrument } from "@socket.io/admin-ui"
 import { Server } from "http"
+import { Types } from 'mongoose'
 import { UserDataUseCase } from "../modules/user/application/useCases/user.data.useCase"
 
 // Define constants
@@ -95,7 +96,7 @@ export class SocketService {
   }
 
   // Send a notification to all sockets associated with the user
-  public async sendNotification(userId: string, notification: any): Promise<void> {
+  public async sendNotification(userId: Types.ObjectId, notification: any): Promise<void> {
     try {
       // Get sockets for the user
       const sockets = await this.userDataUseCase.getSockets(userId)

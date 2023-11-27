@@ -12,6 +12,7 @@ import { Notification } from 'src/app/models/responses/notification.model';
 export class NotificationsComponent implements OnInit{
   defaultProfilePicture: string
   spinner = true
+  notifications: Notification[] = []
 
   constructor(
     private notificationService: NotificationService,
@@ -19,16 +20,14 @@ export class NotificationsComponent implements OnInit{
     ) {
     this.defaultProfilePicture = userService.getDefaultProfilePicture()
   }
-  notifications: Notification[] = []
   
   ngOnInit() {
-    this.notificationService.getNotifications().subscribe({
-      next: (response) => {
-        this.spinner = false
-        const { notifications } = response
-        this.notifications.push(...notifications)
-     }
-   })
+    this.notificationService.getNotifications()
+    this.notificationService.notifications$.subscribe({
+      next: data => {
+        this.notifications = [...data, ...this.notifications]
+      }
+    })
   }
 
   toRead(_id: string) {

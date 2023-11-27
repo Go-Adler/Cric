@@ -1,10 +1,10 @@
 import { Types } from "mongoose"
-import { UserEntity } from "./../domain/user.schema"
+import { UserEntity } from "../domain/user.schema"
 import { PostEntity } from "../domain/user.postSchema"
 import { validateString } from "../../../utils/validateString.utils"
-import { handleError } from "../../../utils/handleError.utils"
-import { Notification } from '../../../shared/interfaces/user.notification.interface'
+import { ErrorHandling } from "../../../utils/handleError.utils"
 
+// User Data Access Class
 export class UserDataAccess {
   /**
    * Create a new user
@@ -16,7 +16,14 @@ export class UserDataAccess {
    * @param password - The password of the user
    * @returns The ID of the created user
    */
-  async createUser(name: string, userName: string, gender: string, email: string, phone: string, password: string) {
+  async createUser(
+    name: string,
+    userName: string,
+    gender: string,
+    email: string,
+    phone: string,
+    password: string
+  ) {
     try {
       // Validate input parameters
       validateString(name, "name")
@@ -35,11 +42,11 @@ export class UserDataAccess {
         phone,
         password,
       })
+
       // Return the user's ID
-      return user._id ? user.id : ''
+      return user._id ? user.id : ""
     } catch (error) {
-      // Handle errors and log messages
-      handleError(error)
+      ErrorHandling.processError("Error in createUser, userDataAccess", error)
     }
   }
 
@@ -56,23 +63,21 @@ export class UserDataAccess {
       // Find user by username using the UserEntity model
       return await UserEntity.findOne({ userName })
     } catch (error) {
-      // Handle errors and log messages
-      handleError(error)
+      ErrorHandling.processError("Error in getUserByUserName, userDataAccess", error)
     }
   }
 
   /**
- * Check if a username already exists
- * @param userName - The username to check
- * @returns True if the username exists, false otherwise
- */
+   * Check if a username already exists
+   * @param userName - The username to check
+   * @returns True if the username exists, false otherwise
+   */
   async checkUserByUserName(userName: string) {
     try {
       const user = await UserEntity.findOne({ userName })
       return user ? true : false
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in checkUserByUserName, userDataAccess", error)
     }
   }
 
@@ -85,9 +90,8 @@ export class UserDataAccess {
     try {
       const user = await UserEntity.findOne({ email })
       return user
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in getUserByEmail, userDataAccess", error)
     }
   }
 
@@ -100,24 +104,22 @@ export class UserDataAccess {
     try {
       const user = await UserEntity.findById(userId, { _id: 0, name: 1 })
       return user?.name ?? "User not found"
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in getNameById, userDataAccess", error)
     }
   }
 
   /**
-  * Get email by user ID
-  * @param userId - The ID of the user
-  * @returns The user's email or "User not found" if not found
-  */
+   * Get email by user ID
+   * @param userId - The ID of the user
+   * @returns The user's email or "User not found" if not found
+   */
   async getEmailById(userId: Types.ObjectId) {
     try {
       const user = await UserEntity.findById(userId, { _id: 0, email: 1 })
       return user?.email ?? "User not found"
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in getEmailById, userDataAccess", error)
     }
   }
 
@@ -130,9 +132,8 @@ export class UserDataAccess {
     try {
       const user = await UserEntity.findById(userId, { _id: 0, friends: 1 })
       return user?.friends.length || 0
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in getFriendsCountById, userDataAccess", error)
     }
   }
 
@@ -145,9 +146,8 @@ export class UserDataAccess {
     try {
       const user = await UserEntity.findById(userId, { _id: 0, userName: 1 })
       return user?.userName ?? "User not found"
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in getUserNameById, userDataAccess", error)
     }
   }
 
@@ -160,9 +160,8 @@ export class UserDataAccess {
     try {
       const user = await UserEntity.findOne({ email })
       return user?._id || null
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in getUserIdWithEmail, userDataAccess", error)
     }
   }
 
@@ -175,9 +174,8 @@ export class UserDataAccess {
     try {
       const user = await UserEntity.findOne({ email })
       return user?._id && !user?.isBlocked ? user?._id : false
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in checkUserByEmail, userDataAccess", error)
     }
   }
 
@@ -190,9 +188,8 @@ export class UserDataAccess {
     try {
       const user = await UserEntity.findOne({ phone })
       return user
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in getUserByPhone, userDataAccess", error)
     }
   }
 
@@ -205,9 +202,8 @@ export class UserDataAccess {
     try {
       const user = await UserEntity.findOne({ phone })
       return user ? true : false
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in checkUserByPhone, userDataAccess", error)
     }
   }
 
@@ -220,9 +216,8 @@ export class UserDataAccess {
     try {
       const user = await UserEntity.findOne({ email })
       return user?.password || ""
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in getUserPasswordByEmail, userDataAccess", error)
     }
   }
 
@@ -237,9 +232,8 @@ export class UserDataAccess {
         isVerified: boolean
       }>("isVerified")
       return isVerified
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in isVerified, userDataAccess", error)
     }
   }
 
@@ -250,9 +244,8 @@ export class UserDataAccess {
   async verifyUser(userId: Types.ObjectId) {
     try {
       await UserEntity.findByIdAndUpdate(userId, { isVerified: true })
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in verifyUser, userDataAccess", error)
     }
   }
 
@@ -264,9 +257,8 @@ export class UserDataAccess {
   async changePassword(userId: Types.ObjectId, password: string) {
     try {
       await UserEntity.findByIdAndUpdate(userId, { password })
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in changePassword, userDataAccess", error)
     }
   }
 
@@ -279,9 +271,8 @@ export class UserDataAccess {
     try {
       const userProfilePicture = await UserEntity.findById(id).select("profilePicture")
       return userProfilePicture?.profilePicture
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in getUserProfilePictureWithId, userDataAccess", error)
     }
   }
 
@@ -294,9 +285,8 @@ export class UserDataAccess {
     try {
       const userId = await UserEntity.find({ userName }).select("_id")
       return userId[0] || null
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in getUserIdWithUserName, userDataAccess", error)
     }
   }
 
@@ -308,9 +298,8 @@ export class UserDataAccess {
     try {
       const users = await UserEntity.find({ isAdmin: false })
       return users
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in getUsers, userDataAccess", error)
     }
   }
 
@@ -334,9 +323,8 @@ export class UserDataAccess {
       )
 
       return users
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in findUsers, userDataAccess", error)
     }
   }
 
@@ -349,9 +337,8 @@ export class UserDataAccess {
     try {
       const user = await UserEntity.findByIdAndUpdate(userId, { isBlocked: false }, { new: true })
       return user
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in unblockUser, userDataAccess", error)
     }
   }
 
@@ -364,9 +351,8 @@ export class UserDataAccess {
     try {
       const user = await UserEntity.findByIdAndUpdate(userId, { isBlocked: true }, { new: true })
       return user
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in blockUser, userDataAccess", error)
     }
   }
 
@@ -378,9 +364,8 @@ export class UserDataAccess {
   async addSocketId(userName: string, socketId: string) {
     try {
       await UserEntity.findOneAndUpdate({ userName }, { $push: { socketId } })
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in addSocketId, userDataAccess", error)
     }
   }
 
@@ -392,9 +377,8 @@ export class UserDataAccess {
   async removeSocketId(userName: string, socketId: string) {
     try {
       await UserEntity.findOneAndUpdate({ userName }, { $pull: { socketId } })
-    } catch (e: any) {
-      console.error(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in removeSocketId, userDataAccess", error)
     }
   }
 
@@ -402,40 +386,35 @@ export class UserDataAccess {
    * Check if a post belongs to the specified user
    * @param postId - The ID of the post
    * @param currentId - The ID of the current user
-   * @returns True if the post belongs to the user, false otherwise
+   * @returns false if the post belongs to the user, userId otherwise
    */
-  async checkDifferentUser(postId: Types.ObjectId, currentId: string) {
+  async checkDifferentUser(postId: Types.ObjectId, currentId: string): Promise<boolean | Types.ObjectId> {
     try {
-      // let currentIdConverted = new Types.ObjectId(currentId)
       const { userId } = (await PostEntity.findById(postId)) as { userId: Types.ObjectId }
       if (userId.toString() === currentId) {
         return false
       } else {
-        return userId.toString()
+        return userId
       }
-
-      // else return userId
-    } catch (e: any) {
-      console.log(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in checkDifferentUser, userDataAccess", error)
     }
   }
 
   /**
-   * Get socket connections of a user by user ID
-   * @param userId - The ID of the user
-   * @returns An array of socket connections or an empty array if not found
-   */
-  async getSocketsWithId(userId: string) {
+ * Get socket connections of a user by user ID
+ * @param userId - The ID of the user
+ * @returns An array of socket connections or an empty array if not found
+ */
+  async getSocketsWithId(userId: Types.ObjectId) {
     try {
-      const { socketId } = await UserEntity.findById(userId).select("socketId") as { socketId: [string] }
+      const { socketId } = (await UserEntity.findById(userId).select("socketId")) as {
+        socketId: string[]
+      }
 
       return socketId || []
-    } catch (e: any) {
-      console.log(e.message)
-      handleError(e)
+    } catch (error) {
+      ErrorHandling.processError("Error in getSocketsWithId, userDataAccess", error)
     }
   }
-
- 
 }

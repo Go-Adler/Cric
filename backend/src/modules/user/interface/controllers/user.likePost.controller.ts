@@ -1,6 +1,7 @@
 // Importing required modules
 import { NextFunction, Request, Response } from "express";
 import { JwtPayload } from "jsonwebtoken";
+import { Types } from 'mongoose'
 
 import { LikePostUseCase } from "../../application/useCases/user.likePost.useCase";
 import { UserDataUseCase } from "../../application/useCases/user.data.useCase"
@@ -44,7 +45,7 @@ export class PostLikeController {
       // Returns false or if user is present the user id
       const isDifferentUser =  await this.userDataUseCase.checkSameUser(postId, userId)
 
-      if (isDifferentUser) {
+      if (isDifferentUser instanceof Types.ObjectId) {
         // adding notification to user
         const notification = await this.notificationUseCase.addNotification(userId, 'like', postId, isDifferentUser)
 
