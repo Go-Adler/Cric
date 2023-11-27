@@ -7,7 +7,7 @@ export interface Notification extends Document {
     read: boolean
     timeStamp: Date
     postId: Types.ObjectId
-    profilePicture: string
+    profilePicture?: string
 }
 
 export interface NotificationMarkAsReadResponse {

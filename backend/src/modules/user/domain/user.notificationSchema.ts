@@ -13,7 +13,6 @@ export const notificationSchema = new Schema<Notification>({
   },
   profilePicture: {
     type: String,
-    required: true
   },
   read: {
     type: Boolean,
