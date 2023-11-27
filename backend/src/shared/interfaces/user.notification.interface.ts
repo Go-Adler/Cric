@@ -9,3 +9,9 @@ export interface Notification extends Document {
     postId: Types.ObjectId
     profilePicture: string
 }
+
+export interface NotificationMarkAsReadResponse {
+    success: boolean;
+    message: string;
+    updatedNotification: Notification;
+}

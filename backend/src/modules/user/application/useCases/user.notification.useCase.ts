@@ -1,8 +1,13 @@
 import { Types } from 'mongoose'
 import { NotificationDataAccess } from '../../data/user.notification.dataAccess'
-import { handleError } from '../../../../utils/handleError.utils'
 import { Notification } from '../../../../shared/interfaces/user.notification.interface'
+import { ErrorHandling } from '../../../../utils/handleError.utils'
 
+/**
+ * Notification Use Case
+ *
+ * Handles all interactions related to user notifications.
+ */
 export class NotificationUseCase {
   private notificationDataAccess: NotificationDataAccess
 
@@ -22,9 +27,8 @@ export class NotificationUseCase {
    async addNotification(userId: Types.ObjectId, type: string, postId: Types.ObjectId, postUserId: string) {
     try {
       return await this.notificationDataAccess.addNotification(userId, type, postId, postUserId);
-    } catch (e: any) {
-      console.error(`Error occurred while adding notification: ${e.message}`);
-      handleError(e.message)
+    } catch (error: any) {
+      ErrorHandling.logError('Error occurred while adding notification, useCase: ', error)
     }
    }
   
@@ -33,14 +37,13 @@ export class NotificationUseCase {
    * 
    * @param userId - The ID of the user
    * @returns Notifications of the user
+   * @throws Error if there's an issue while fetching notifications.
    */
   async getNotifications(userId: string): Promise<Notification[]> {
     try {
       return await this.notificationDataAccess.getNotifications(userId)
-    } catch (e: any) {
-      console.log(`Error occured while fetching notifications ${e.message}`);
-      handleError(e.message)
-      return []
+    } catch (error: any) {
+      ErrorHandling.logError('Error occured while fetching notifications, useCase: ', error)
     }
   }
 
@@ -49,9 +52,14 @@ export class NotificationUseCase {
    * 
    * @param userId - The ID of the user.
    * @param notificationId - The ID of the notification.
+   * @throws Error if there's an issue while marking notification as read.
    */
   async markAsRead(userId: string, notificationId: string) {
-
+    try {
+      return await this.notificationDataAccess.markAsRead(userId, notificationId)
+    } catch (error: any) {
+      ErrorHandling.logError('Error while marking notification as read, useCase: ', error) 
+    }
   }
 
   /**

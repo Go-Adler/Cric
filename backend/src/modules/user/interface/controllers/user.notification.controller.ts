@@ -3,6 +3,7 @@ import { JwtPayload } from 'jsonwebtoken'
 
 import { NotificationUseCase } from "../../application/useCases/user.notification.useCase"
 import { GetAwsUrlUseCase } from "../../application/useCases/user.getAwsUrl.useCase"
+import { NotificationMarkAsReadResponse } from '../../../../shared/interfaces/user.notification.interface'
 
 export class NotificationController {
   private notificationUseCase: NotificationUseCase
@@ -27,10 +28,10 @@ export class NotificationController {
 
   markAsRead = async (req: Request, res: Response, next: NextFunction) => {
     const { userId } = req.user as JwtPayload
+    const { notificationId } = req.body as { notificationId: string }
     try {
-      let notifications = await this.notificationUseCase.getNotifications(userId)
-      await this.getAwsUrlUseCase.getNotificationsWithProfileUrl(notifications)
-      res.json({ notifications })
+      const updatedNotification = await this.notificationUseCase.markAsRead(userId, notificationId)
+      res.json({ success: true, message: "Notification marked as read successfully", updatedNotification })
     } catch (e: any) {
       console.log(`Error in get notification, user data controller: ${e.message}`)
       return next(e)

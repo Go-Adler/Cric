@@ -116,7 +116,7 @@
     ></app-comment-section>
   </mat-card>
   <span
-    *ngIf="!posts[0] && firstFetch"
+    *ngIf="!(posts && posts[0]) && firstFetch"
     class="flex justify-center flex-col items-center gap-3 mt-10"
   >
     <span>No posts to show, create a new post, or follow someone.</span>

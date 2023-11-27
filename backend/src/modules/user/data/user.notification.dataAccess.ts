@@ -1,6 +1,6 @@
 import { Types } from 'mongoose'
 import { UserEntity } from '../domain/user.schema'
-import { handleError } from '../../../utils/handleError.utils'
+import { ErrorHandling } from '../../../utils/handleError.utils'
 import { Notification } from '../../../shared/interfaces/user.notification.interface'
 
 export class NotificationDataAccess {
@@ -14,8 +14,7 @@ export class NotificationDataAccess {
       const { notifications } = await UserEntity.findById(userId).select("notifications") as { notifications: [] }
       return notifications.length || 0
     } catch (e: any) {
-      console.log(e.message)
-      handleError(e)
+      ErrorHandling.processError()
     }
   }
 
@@ -58,27 +57,29 @@ export class NotificationDataAccess {
   async getNotifications(userId: string): Promise<Notification[]> {
     try {
       const userData = await UserEntity.findById(userId).select('notifications').sort({ 'notifications.timeStamp': -1 })
-      if (!userData?.notifications) return []
+      if (!userData?.notifications) throw new Error ('')
       let notifications = userData.notifications
       notifications = notifications.sort((a, b) => b.timeStamp.getTime() - a.timeStamp.getTime())
       return notifications
     } catch (e: any) {
       console.log(e.message)
       handleError(e)
-      return []
     }
   }
 
   /**
    * Method to mark notification as read
    * 
-   * @param 
+   * @param userId - The ID of the user.
+   * @param notificationId - The ID of the notification
    */
-  async markAsRead(userId: string, notificationId: string) {
+  async markAsRead(userId: string, notificationId: string): Promise<Notification> {
     try {
-      const updatedNotification = await UserEntity.updateOne({ _id: userId, 'notifications._id': notificationId}, 
-      { $set: { 'notifications.$.read': true } }, { new: true })
-      console.log(updatedNotification);
+      const updatedUserDocument = await UserEntity.findOneAndUpdate({ _id: userId, 'notifications._id': notificationId}, 
+      { $set: { 'notifications.$.read': true } },
+      { new: true, projection: { notifications: { $elemMatch: { _id: notificationId } } } })
+      if (!updatedUserDocument?.notifications[0]) throw new Error('Error marking notification as read')
+      return updatedUserDocument?.notifications[0]
     } catch(error: any) {
       console.error(error.message);
       handleError(error)
