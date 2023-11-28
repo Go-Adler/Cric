@@ -23,6 +23,11 @@ export class NotificationsComponent implements OnInit{
   
   ngOnInit() {
     this.notificationService.getNotifications()
+    this.notificationService.fetching$.subscribe({
+      next: data => {
+        this.spinner = data
+      }
+    })
     this.notificationService.notifications$.subscribe({
       next: data => {
         this.notifications = [...data, ...this.notifications]

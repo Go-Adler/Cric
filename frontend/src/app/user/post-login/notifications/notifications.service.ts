@@ -12,8 +12,10 @@ import { BehaviorSubject } from 'rxjs'
 export class NotificationService {
   private API_URL!: string
   private notifications = new BehaviorSubject<Array<Notification>>([])
+  private fetching = new BehaviorSubject<boolean>(true)
 
   notifications$: Observable<Array<Notification>> = this.notifications.asObservable()
+  fetching$: Observable<boolean> = this.fetching.asObservable()
 
   constructor (
     private configService: ConfigService,
@@ -27,6 +29,7 @@ export class NotificationService {
     this.http.get<NotificationResponse>(`${this.API_URL}/user/notifications`).subscribe({
       next: response => {
         this.notifications.next(response.notifications)
+        this.fetching.next(false)
       }
     })
   }
