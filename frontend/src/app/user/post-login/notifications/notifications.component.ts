@@ -11,18 +11,18 @@ import { environment } from 'src/environments/environment'
   styleUrls: ['./notifications.component.scss']
 })
 export class NotificationsComponent implements OnInit {
-  defaultProfilePicture: string
   spinner = true
-  notifications: Notification[] = []
   notificationIcon: string
   noNotificationIcon: string
+  defaultProfilePicture: string
+  notifications: Notification[] = []
 
 
   constructor(
-    private notificationService: NotificationService,
     private userService: UserService,
+    private notificationService: NotificationService,
   ) {
-    this.notificationIcon = environment.NOTIFICATION_ICON
+    this.notificationIcon = environment.NOTIFICATIONS_SPACE
     this.noNotificationIcon = environment.NO_NOTIFICATION_ICON
     this.defaultProfilePicture = userService.getDefaultProfilePicture()
   }

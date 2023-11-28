@@ -59,7 +59,10 @@ export class TopNavComponent implements OnInit{
   imports: [MatDialogModule, MatButtonModule],
 })
 export class DialogAnimationsExampleDialog {
-  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>, public logOutService: LogOutService) { }
+  logOutImage
+  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>, public logOutService: LogOutService) {
+    this.logOutImage = environment.LOG_OUT_IMAGE
+  }
 
   logOut() {
     this.logOutService.logOut()

@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FindUser } from '../post-log-in.interface';
-import { FormControl } from '@angular/forms';
-import { Observable, map, startWith } from 'rxjs';
-import { SearchService } from './search.service';
 import { Router } from '@angular/router'
+import { FormControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+
+import { SearchService } from './search.service';
+import { Observable, map, startWith } from 'rxjs';
+import { FindUser } from '../post-log-in.interface';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-search',
@@ -15,8 +18,11 @@ export class SearchComponent implements OnInit {
   options: FindUser[] = [];
   filteredOptions!: Observable<FindUser[]>;
   defaultProfilePicture: string = '';
+  searchIcon
 
-  constructor(private searchService: SearchService, private router: Router) {}
+  constructor(private searchService: SearchService, private router: Router) {
+    this.searchIcon = environment.FIND_FRIENDS_ICON
+  }
 
   ngOnInit() {
     this.defaultProfilePicture = this.searchService.getDefualtProfilePicture();

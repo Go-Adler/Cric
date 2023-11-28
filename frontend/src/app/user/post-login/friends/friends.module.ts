@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card'
 import { TimeagoModule } from 'ngx-timeago'
 import { LazyLoadImageModule } from 'ng-lazyload-image'
 import { HomeModule } from '../home/home.module'
+import { MatButtonModule } from '@angular/material/button'
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { HomeModule } from '../home/home.module'
     HomeModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    MatButtonModule,
     TimeagoModule.forRoot(),
     LazyLoadImageModule,
     FriendsRoutingModule,

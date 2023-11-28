@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { FriendsService } from './friends.service'
 import { NotificationService } from '../post-login.service'
+import { MatButtonModule } from '@angular/material/button'
 
 @Component({
   selector: 'app-friends',

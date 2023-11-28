@@ -3,6 +3,7 @@ import { UserEntity } from "../domain/user.schema"
 import { PostEntity } from "../domain/user.postSchema"
 import { validateString } from "../../../utils/validateString.utils"
 import { ErrorHandling } from "../../../utils/handleError.utils"
+import { User } from '../../../shared/interfaces/user.interface'
 
 // User Data Access Class
 export class UserDataAccess {
@@ -267,10 +268,9 @@ export class UserDataAccess {
    * @param id - The ID of the user
    * @returns The user's profile picture or null if not found
    */
-  async getUserProfilePictureWithId(id: string) {
+  async getUserProfilePictureWithId(id: Types.ObjectId):Promise<User> {
     try {
-      const userProfilePicture = await UserEntity.findById(id).select("profilePicture")
-      return userProfilePicture?.profilePicture
+      return await UserEntity.findById(id).select("profilePicture")
     } catch (error) {
       ErrorHandling.processError("Error in getUserProfilePictureWithId, userDataAccess", error)
     }
@@ -408,13 +408,21 @@ export class UserDataAccess {
  */
   async getSocketsWithId(userId: Types.ObjectId) {
     try {
-      const { socketId } = (await UserEntity.findById(userId).select("socketId")) as {
+      const { socketId } = await UserEntity.findById(userId).select("socketId") as {
         socketId: string[]
       }
 
       return socketId || []
     } catch (error) {
       ErrorHandling.processError("Error in getSocketsWithId, userDataAccess", error)
+    }
+  }
+
+  async checkUserExisting(userId: Types.ObjectId): Promise<User> {
+    try {
+      return await UserEntity.findById(userId).select('_id')
+    } catch (error) {
+      ErrorHandling.processError('Error in checkUserExisting, userGetDataUseCase', error)
     }
   }
 }

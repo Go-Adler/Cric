@@ -2,6 +2,7 @@ import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import { Post, PostResponse } from "../../../../shared/interfaces/userPost.interface"
 import { Notification } from '../../../../shared/interfaces/user.notification.interface'
+import { ErrorHandling } from "../../../../utils/handleError.utils"
 
 export class GetAwsUrlUseCase {
   private awsAccessKey
@@ -26,107 +27,132 @@ export class GetAwsUrlUseCase {
   }
 
   getPostsWithUrl = async (posts: Post[]) => {
-    for (const post of posts) {
-      if (post.content && post.content.multimedia && post.content.multimedia[0]) {
-        const getObjectParams = {
-          Bucket: this.bucketName,
-          Key: post.content.multimedia[0],
+    try {
+      for (const post of posts) {
+        if (post.content && post.content.multimedia && post.content.multimedia[0]) {
+          const getObjectParams = {
+            Bucket: this.bucketName,
+            Key: post.content.multimedia[0],
+          }
+          const command = new GetObjectCommand(getObjectParams)
+          const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+          post.content.multimedia[0] = url
         }
-        const command = new GetObjectCommand(getObjectParams)
-        const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
-        post.content.multimedia[0] = url
       }
+  
+      return posts
+    } catch (error) {
+      ErrorHandling.processError('Error in getPostsWithUrl, getAwsUrlUseCase', error)
     }
-
-    return posts
   }
 
   getImageUrl = async (image: string) => {
-    const getObjectParams = {
-      Bucket: this.bucketName,
-      Key: image,
-    }
-    const command = new GetObjectCommand(getObjectParams)
-    const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
-
-    return url
-  }
-
-  getImageUrlUsersFind = async (users: any) => {
-    for (const user of users) {
-      if (user.profilePicture) {
-        const getObjectParams = {
-          Bucket: this.bucketName,
-          Key: user.profilePicture,
-        }
-        const command = new GetObjectCommand(getObjectParams)
-        const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
-        user.profilePicture = url
-      }
-    }
-    return users
-  }
-
-  getUrl = async (post: Post | any) => {
-    if (post.content?.multimedia && post.content?.multimedia[0]) {
-      const imageName = post?.content?.multimedia[0]!
-
+    console.log(image, 50);
+    try {
       const getObjectParams = {
         Bucket: this.bucketName,
-        Key: imageName,
+        Key: image,
       }
       const command = new GetObjectCommand(getObjectParams)
       const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+  
+      return url
+    } catch (error) {
+      ErrorHandling.processError('Error in getImageUrl, getAwsUrlUseCase', error)
+    }
+  }
 
-      post.content.multimedia[0] = url
-      return post
-    } else {
-      return post
+  getImageUrlUsersFind = async (users: any) => {
+    try {
+      for (const user of users) {
+        if (user.profilePicture) {
+          const getObjectParams = {
+            Bucket: this.bucketName,
+            Key: user.profilePicture,
+          }
+          const command = new GetObjectCommand(getObjectParams)
+          const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+          user.profilePicture = url
+        }
+      }
+      return users
+    } catch (error) {
+      ErrorHandling.processError('Error in getImageUrlUsersFind, getAwsUrlUseCase', error)
+    }
+  }
+
+  getUrl = async (post: Post | any) => {
+    try {
+      if (post.content?.multimedia && post.content?.multimedia[0]) {
+        const imageName = post?.content?.multimedia[0]!
+  
+        const getObjectParams = {
+          Bucket: this.bucketName,
+          Key: imageName,
+        }
+        const command = new GetObjectCommand(getObjectParams)
+        const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+  
+        post.content.multimedia[0] = url
+        return post
+      } else {
+        return post
+      }
+    } catch (error) {
+      ErrorHandling.processError('Error in getUrl, getAwsUrlUseCase', error)
     }
   }
 
   getNotificationsWithProfileUrl = async (notifications: Notification[]) => {
-    for (const notification of notifications) {
-      if (notification?.profilePicture) {
-        const imageName = notification.profilePicture
-        const getObjectParams = {
-          Bucket: this.bucketName,
-          Key: imageName,
+    try {
+      for (const notification of notifications) {
+        if (notification?.profilePicture) {
+          const imageName = notification.profilePicture
+          const getObjectParams = {
+            Bucket: this.bucketName,
+            Key: imageName,
+          }
+          const command = new GetObjectCommand(getObjectParams)
+          const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+    
+          notification.profilePicture = url
         }
-        const command = new GetObjectCommand(getObjectParams)
-        const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
-  
-        notification.profilePicture = url
       }
+      return notifications
+    } catch (error) {
+      ErrorHandling.processError('Error in getNotificationsWithProfileUrl, getAwsUrlUseCase', error)
     }
-    return notifications
   }
 
   getPostWithUrl = async (postResponse: PostResponse) => {
-    if (postResponse.profilePicture) {
-      const imageName = postResponse.profilePicture
-        const getObjectParams = {
-          Bucket: this.bucketName,
-          Key: imageName,
-        }
-        const command = new GetObjectCommand(getObjectParams)
-        const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+    try {
+      if (postResponse.profilePicture) {
+        const imageName = postResponse.profilePicture
+          const getObjectParams = {
+            Bucket: this.bucketName,
+            Key: imageName,
+          }
+          const command = new GetObjectCommand(getObjectParams)
+          const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+    
+          postResponse.profilePicture = url
+      }
   
-        postResponse.profilePicture = url
-    }
-
-    if (postResponse.post.content?.multimedia && postResponse.post.content?.multimedia[0]) {
-      const imageName = postResponse.post.content.multimedia[0]
-        const getObjectParams = {
-          Bucket: this.bucketName,
-          Key: imageName,
-        }
-        const command = new GetObjectCommand(getObjectParams)
-        const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+      if (postResponse.post.content?.multimedia && postResponse.post.content?.multimedia[0]) {
+        const imageName = postResponse.post.content.multimedia[0]
+          const getObjectParams = {
+            Bucket: this.bucketName,
+            Key: imageName,
+          }
+          const command = new GetObjectCommand(getObjectParams)
+          const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+    
+          postResponse.post.content.multimedia[0] = url
+      }
   
-        postResponse.post.content.multimedia[0] = url
+      return postResponse
+    } catch (error) {
+      ErrorHandling.processError('Error in getPostWithUrl, getAwsUrlUseCase', error)
     }
-
-    return postResponse
   }
 }

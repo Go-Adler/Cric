@@ -9,11 +9,14 @@
       <!-- info area -->
       <span class="flex flex-col w-full ps-2 justify-start pt-2">
         <div class="text-lg">{{ name }}</div>
-        <div class="text-base text-stone-400">{{'@'}}{{ userName }}</div>
+        <div class="text-base text-stone-400">{{ "@" }}{{ userName }}</div>
 
         <span class="flex mt-5">
           <span class="text-sm">Friends {{ friendsCount }}</span>
         </span>
+        <div class="p-2">
+          <button mat-button color="warn" class="">Add Friend</button>
+        </div>
       </span>
 
       <!-- Edit profile -->
@@ -21,15 +24,6 @@
     <div class="p-5 gap-2 flex justify-center items-end" *ngIf="!fetchingData">
       <mat-spinner></mat-spinner>
     </div>
-   <div class="flex gap-3 ">
-    <button class="bg-red-300" (click)="addFriend()">Add friend</button>
-    <button class="bg-amber-500" (click)="start()">start</button>
-    <button class="bg-slate-300" (click)="connect()">connect</button>
-    <button class="bg-slate-300" (click)="disconnect()">Disconnect</button>
-
-
-
-   </div>
 
     <div class="flex p-1 border-b borderColor">
       <div

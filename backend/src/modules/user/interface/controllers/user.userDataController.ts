@@ -16,11 +16,11 @@ export class UserDataController {
     this.notificationUseCase = new NotificationUseCase()
   }
 
-  userBasicInfo = async (req: Request, res: Response, next: NextFunction) => {
+  userBasicInfo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { userId } = req.user as JwtPayload
     try {
       let profilePicture = await this.userDataUseCase.getProfilePicture(userId)
-      profilePicture = await this.getAwsUrlUseCase.getImageUrl(profilePicture)
+      if (profilePicture) profilePicture = await this.getAwsUrlUseCase.getImageUrl(profilePicture)
       const userName = await this.userDataUseCase.getUserName(userId)
       const friendsCount = await this.userDataUseCase.getFriendsCount(userId)
       const name = await this.userDataUseCase.getName(userId)

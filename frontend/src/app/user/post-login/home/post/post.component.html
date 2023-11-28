@@ -115,14 +115,17 @@
       [name]="name"
     ></app-comment-section>
   </mat-card>
-  <span
+  <div
     *ngIf="!(posts && posts[0]) && firstFetch"
     class="flex justify-center flex-col items-center gap-3 "
   >
-  <img [src]="emptyPostIcon" alt="">
-  <span>No posts to show, create a new post, or follow someone.</span>
+  <div class="w-8/12 lg:w-full">
+    <img [src]="emptyPostIcon" alt="">
+
+  </div>
+  <span class="">No posts to show, create a new post, or follow someone.</span>
     <span class="material-symbols-rounded"> empty_dashboard </span>
-  </span>
+</div>
   <!-- fetch posts -->
   <span
     *ngIf="posts[0] && !fetchingPosts && !postsEnd"

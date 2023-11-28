@@ -20,7 +20,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    // this.userService.getUserBasicInfo(); // remove later - helpful for development gokul
 
     // Get profile picture
     this.subscriptions.push(
