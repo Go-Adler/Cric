@@ -1,26 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
 
 import { NotificationService } from './notifications.service'
 import { UserService } from '../../../services/user.service'
-import { Notification } from 'src/app/models/responses/notification.model';
+import { Notification } from 'src/app/models/responses/notification.model'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.scss']
 })
-export class NotificationsComponent implements OnInit{
+export class NotificationsComponent implements OnInit {
   defaultProfilePicture: string
   spinner = true
   notifications: Notification[] = []
+  notificationIcon: string
+  noNotificationIcon: string
+
 
   constructor(
     private notificationService: NotificationService,
     private userService: UserService,
-    ) {
+  ) {
+    this.notificationIcon = environment.NOTIFICATION_ICON
+    this.noNotificationIcon = environment.NO_NOTIFICATION_ICON
     this.defaultProfilePicture = userService.getDefaultProfilePicture()
   }
-  
+
   ngOnInit() {
     this.notificationService.getNotifications()
     this.notificationService.fetching$.subscribe({
@@ -38,11 +44,11 @@ export class NotificationsComponent implements OnInit{
   toRead(_id: string) {
     this.notificationService.markAsRead(_id).subscribe({
       next: data => {
-        console.log(data, 37);
+        console.log(data, 37)
       }
     })
   }
   getProfilePicture(notification: any) {
-    return notification?.profilePicture || this.defaultProfilePicture;
+    return notification?.profilePicture || this.defaultProfilePicture
   }
 }

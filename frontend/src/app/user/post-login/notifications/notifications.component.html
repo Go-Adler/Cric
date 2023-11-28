@@ -1,13 +1,17 @@
 <div class="relative">
   <!-- Title bar - notifications -->
-  <div class="flex justify-start p-4 text-lg sticky top-16 titleBar gap-2">
-    <div class="material-symbols-rounded text-xl"> notifications </div>
+  <div
+    class="flex items-center justify-start p-4 text-lg sticky top-16 titleBar gap-4"
+  >
+    <!-- <div class="material-symbols-rounded text-xl"> notifications </div> -->
+    <div class="w-10">
+      <img [src]="notificationIcon" alt="" />
+    </div>
     <div>Notifications</div>
   </div>
   <div class="flex justify-center">
     <div class="">
       <mat-spinner [diameter]="40" *ngIf="spinner"></mat-spinner>
-
     </div>
   </div>
   <!-- Notifications list -->
@@ -17,15 +21,17 @@
     [ngClass]="[notification.read ? '' : 'bg-slate-800']"
     [class.border-b]="last"
     (click)="toRead(notification._id)"
-    [routerLink]="['/user/' + notification.userName + '/' + notification.postId]"
+    [routerLink]="[
+      '/user/' + notification.userName + '/' + notification.postId
+    ]"
   >
     <div class="flex gap-2 items-center">
       <div class="w-8">
         <img
-        [src]="getProfilePicture(notification)"
-        alt=""
-        class="rounded-full"
-      />
+          [src]="getProfilePicture(notification)"
+          alt=""
+          class="rounded-full"
+        />
       </div>
 
       <div class="p-2" *ngIf="notification.type === 'like'">
@@ -39,5 +45,11 @@
     <div>
       {{ notification.timeStamp | timeago }}
     </div>
+  </div>
+  <div *ngIf="notifications.length === 0" class="flex flex-col items-center">
+    <div class="w-8/12">
+      <img [src]="noNotificationIcon" alt="" />
+    </div>
+    <div class="text-base">No notifications to show</div>
   </div>
 </div>

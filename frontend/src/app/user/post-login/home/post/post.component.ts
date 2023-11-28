@@ -5,11 +5,12 @@ import {
   SimpleChanges,
   OnDestroy,
 } from '@angular/core'
+import { Subscription } from 'rxjs'
 import { PostService } from '../home.service'
 import { Router } from '@angular/router'
 import { UserService } from 'src/app/services/user.service'
 import { I_post } from 'src/app/models/responses/message.model'
-import { Subscription } from 'rxjs'
+import { environment } from 'src/environments/environment'
 
 const POSTS_LIMIT = 6
 
@@ -32,6 +33,7 @@ export class PostComponent implements OnChanges, OnDestroy {
   firstFetch = false;
   commentSection = false;
   postLoadingImage: string = '';
+  emptyPostIcon: string
 
   private subscriptions: Subscription[] = [];
 
@@ -41,7 +43,9 @@ export class PostComponent implements OnChanges, OnDestroy {
     private postService: PostService,
     private router: Router,
     private userService: UserService
-  ) { }
+  ) { 
+    this.emptyPostIcon = environment.EMPTY_POST
+  }
 
   ngOnInit(): void {
     this.userService.getUserBasicInfo()

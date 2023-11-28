@@ -117,9 +117,10 @@
   </mat-card>
   <span
     *ngIf="!(posts && posts[0]) && firstFetch"
-    class="flex justify-center flex-col items-center gap-3 mt-10"
+    class="flex justify-center flex-col items-center gap-3 "
   >
-    <span>No posts to show, create a new post, or follow someone.</span>
+  <img [src]="emptyPostIcon" alt="">
+  <span>No posts to show, create a new post, or follow someone.</span>
     <span class="material-symbols-rounded"> empty_dashboard </span>
   </span>
   <!-- fetch posts -->
