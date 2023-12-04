@@ -1,26 +1,45 @@
 <nav class="flex p-2 md:hidden">
-    <!-- Home tab -->
-    <div [title]="'Home'" [style.cursor]="'pointer'"
-      class="w-full flex justify-center items-center" [routerLink]="['/home']">
-      <span class="material-symbols-rounded text-3xl">
-        home
-      </span>
-    </div>
+  <!-- Home tab -->
+  <div
+    [title]="'Home'"
+    [style.cursor]="'pointer'"
+    routerLinkActive="selectedItem"
+    class="w-full flex justify-center items-center"
+    [routerLink]="['/home']"
+  >
+    <span class="material-symbols-rounded text-3xl"> home </span>
+  </div>
 
+  <!-- Search tab -->
+  <div
+    [title]="'Messages'"
+    [style.cursor]="'pointer'"
+    routerLinkActive="selectedItem"
+    class="w-full flex justify-center items-center"
+    [routerLink]="['/search']"
+  >
+    <span class="material-symbols-rounded text-3xl"> search </span>
+  </div>
 
-    <!-- Notification tab -->
-    <div [title]="'Notifications'" [style.cursor]="'pointer'"
-      class="w-full flex justify-center items-center">
-      <span class="material-symbols-rounded text-3xl">
-        notifications
-        </span>
-    </div>
+  <!-- Notification tab -->
+  <div
+    [title]="'Notifications'"
+    [style.cursor]="'pointer'"
+    [routerLink]="['/notifications']"
+    routerLinkActive="selectedItem"
+    class="w-full flex justify-center items-center"
+  >
+    <span class="material-symbols-rounded text-3xl"> notifications </span>
+  </div>
 
-    <!-- Messages tab -->
-    <div [title]="'Messages'" [style.cursor]="'pointer'"
-      class="w-full flex justify-center items-center">
-      <span class="material-symbols-rounded text-3xl">
-        chat_bubble
-        </span>
-    </div>
+  <!-- Messages tab -->
+  <div
+    [title]="'Messages'"
+    [style.cursor]="'pointer'"
+    routerLinkActive="selectedItem"
+    class="w-full flex justify-center items-center"
+    [routerLink]="['/messages']"
+  >
+    <span class="material-symbols-rounded text-3xl"> chat_bubble </span>
+  </div>
 </nav>

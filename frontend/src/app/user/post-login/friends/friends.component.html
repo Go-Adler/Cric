@@ -1,25 +1,38 @@
 <div class="min-h-screen">
-  <div class="sticky pt-14 top-0 nav z-10">
-    <div class="p-5 gap-2 flex" *ngIf="fetchingData">
+  <div class="sticky top-14 nav z-10">
+    <div class="p-5 gap-4 flex" *ngIf="fetchingData">
       <!-- profile picutre area -->
       <div class="flex w-4/12 flex-col items-end gap-2">
         <img class="rounded-md" [src]="profilePicture" alt="" />
       </div>
 
       <!-- info area -->
-      <span class="flex flex-col w-full ps-2 justify-start pt-2">
-        <div class="text-lg">{{ name }}</div>
-        <div class="text-base text-stone-400">{{ "@" }}{{ userName }}</div>
+      <span class="flex justify-between w-full">
+        <!-- left -->
+        <div class="w-full">
+          <div class="text-sm">{{ name }}</div>
+          <div class="text-xs text-stone-400">{{ "@" }}{{ userName }}</div>
+  
+          <span class="flex mt-5">
+            <span class="text-xs">Friends {{ friendsCount }}</span>
+          </span>
+        </div>
 
-        <span class="flex mt-5">
-          <span class="text-sm">Friends {{ friendsCount }}</span>
-        </span>
-        <div class="p-2">
-          <button mat-button color="warn" class="">Add Friend</button>
+        <!-- right -->
+        <div class="flex w-full justify-end">
+          <button
+          mat-stroked-button
+          color="warn"
+          class="md:flex addFriendButton p-2"
+        >
+          <div class="flex items-center gap-1">
+            <span class="material-symbols-rounded text-xl"> person_add </span>
+            <div class="hidden md:block ">Add Friend</div>
+          </div>
+        </button>
         </div>
       </span>
 
-      <!-- Edit profile -->
     </div>
     <div class="p-5 gap-2 flex justify-center items-end" *ngIf="!fetchingData">
       <mat-spinner></mat-spinner>

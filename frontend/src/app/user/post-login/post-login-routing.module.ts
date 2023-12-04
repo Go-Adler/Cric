@@ -4,6 +4,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component'
 import { SearchComponent } from './search/search.component'
 import { FriendsComponent } from './friends/friends.component'
 import { NotificationsComponent } from './notifications/notifications.component'
+import { MessagesComponent } from './messages/messages.component'
 const routes: Routes = [
   {
     path: 'user/:id',
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'notifications',
     component: NotificationsComponent
+  },
+  {
+    path: 'messages',
+    component: MessagesComponent
   },
 ];
 

@@ -16,13 +16,13 @@ import { SearchComponent } from './search/search.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input';
-import { FriendsComponent } from './friends/friends.component'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NotificationsComponent } from './notifications/notifications.component'
 import { TimeagoModule } from 'ngx-timeago';
 import { PostComponent } from './post/post.component'
 import { MatCardModule } from '@angular/material/card'
-import { LazyLoadImageModule } from 'ng-lazyload-image'
+import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { MessagesComponent } from './messages/messages.component'
 
 @NgModule({
   declarations: [
@@ -33,9 +33,9 @@ import { LazyLoadImageModule } from 'ng-lazyload-image'
     MatchInfoComponent,
     PostLoginComponent,
     SearchComponent,
-    FriendsComponent,
     NotificationsComponent,
     PostComponent,
+    MessagesComponent,
   ],
   imports: [
     HomeModule,

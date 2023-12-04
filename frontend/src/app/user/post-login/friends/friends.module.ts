@@ -9,11 +9,13 @@ import { TimeagoModule } from 'ngx-timeago'
 import { LazyLoadImageModule } from 'ng-lazyload-image'
 import { HomeModule } from '../home/home.module'
 import { MatButtonModule } from '@angular/material/button'
+import { FriendsComponent } from './friends.component'
 
 
 @NgModule({
   declarations: [
-    UserPostComponent
+    UserPostComponent,
+    FriendsComponent,
   ],
   imports: [
     CommonModule,
