@@ -144,4 +144,18 @@ export class GetUserDataUseCase {
     }
   }
 
+
+  /**
+   * Unblocks a user based on the user ID.
+   * @param userId - The ID of the user to be unblocked.
+   * @returns {Promise<any>} - A promise that resolves after unblocking the user.
+   */
+  async isFriend(personId: Types.ObjectId, userId: Types.ObjectId): Promise<any> {
+    try {
+      const isFriend = await this.userDataAccess.isFriend(personId, userId)
+      console.log(isFriend, 156);
+    } catch (error) {
+      ErrorHandling.processError('Error in unblock, userGetDataUseCase', error)
+    }
+  }
 }

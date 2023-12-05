@@ -37,4 +37,5 @@ export class NotificationService {
   markAsRead(notificationId: string): Observable<NotificationMarkAsReadResponse> {
     return this.http.patch<NotificationMarkAsReadResponse>(`${this.API_URL}/user/notifications/mark-as-read`, {notificationId})
   }
+
 }

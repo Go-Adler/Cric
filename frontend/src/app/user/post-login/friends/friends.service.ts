@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, ObservableLike } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { I_UserBasicInfo } from "src/app/models/responses/userResponses"
 import { ConfigService } from "src/app/services/config.service"
 import { environment } from "src/environments/environment";

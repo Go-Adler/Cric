@@ -19,8 +19,12 @@ export class NotificationDataAccess {
       if (!userData?.notifications) {
         throw new Error('Unable to retrieve notification count');
       }
+      const readNotifications = userData.notifications.filter(notification => notification.read === false);
 
-      return userData.notifications.length || 0;
+      // Get the count of read notifications
+      const readNotificationsCount = readNotifications.length;
+      
+      return readNotificationsCount
     } catch (error: any) {
       ErrorHandling.processError('Error in getNotificationsCount, dataAccess', error.message);
     }

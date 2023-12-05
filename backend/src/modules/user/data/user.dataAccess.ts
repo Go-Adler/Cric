@@ -418,9 +418,31 @@ export class UserDataAccess {
     }
   }
 
+  /**
+   * 
+   * @param userId - The ID of the user
+   * @returns User Id.
+   */
   async checkUserExisting(userId: Types.ObjectId): Promise<User> {
     try {
       return await UserEntity.findById(userId).select('_id')
+    } catch (error) {
+      ErrorHandling.processError('Error in checkUserExisting, userGetDataUseCase', error)
+    }
+  }
+
+
+  /**
+   * 
+   * @param userId - The ID of the user
+   * @returns User Id.
+   */
+  async isFriend(personId: Types.ObjectId, userId: Types.ObjectId): Promise<any> {
+    try {
+      return await UserEntity.find({
+        _id: userId,
+        friends: { $in: [personId] }
+      })
     } catch (error) {
       ErrorHandling.processError('Error in checkUserExisting, userGetDataUseCase', error)
     }

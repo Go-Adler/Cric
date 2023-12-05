@@ -40,14 +40,16 @@ export class UserDataController {
 
   friendBasicInfo = async (req: Request, res: Response, next: NextFunction) => {
     const { userName } = req.params
+    const { userId } = req.user as JwtPayload
     try {
-      const userId = await this.userDataUseCase.getUserId(userName)
+      const personId = await this.userDataUseCase.getUserId(userName)
 
-      let profilePicture = await this.userDataUseCase.getProfilePicture(userId)
+      let profilePicture = await this.userDataUseCase.getProfilePicture(personId)
 
       if (profilePicture) profilePicture = await this.getAwsUrlUseCase.getImageUrl(profilePicture)
-      const friendsCount = await this.userDataUseCase.getFriendsCount(userId)
-      const name = await this.userDataUseCase.getName(userId)
+      const friendsCount = await this.userDataUseCase.getFriendsCount(personId)
+      const isFriend = await this.userDataUseCase.isFriend(personId, userId)
+      const name = await this.userDataUseCase.getName(personId)
       res.json({
         profilePicture,
         name,

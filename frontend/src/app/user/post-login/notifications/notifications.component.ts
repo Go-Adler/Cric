@@ -42,6 +42,7 @@ export class NotificationsComponent implements OnInit {
   }
 
   toRead(_id: string) {
+    this.userService.countDownNotification()
     this.notificationService.markAsRead(_id).subscribe({
       next: data => {
         console.log(data, 37)

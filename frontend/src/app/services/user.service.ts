@@ -77,4 +77,10 @@ export class UserService {
     currentCount++
     this.notificationsCount.next(currentCount)
   }
+
+  countDownNotification() {
+    let currentCount = this.notificationsCount.value
+    currentCount--
+    this.notificationsCount.next(currentCount)
+  }
 }
