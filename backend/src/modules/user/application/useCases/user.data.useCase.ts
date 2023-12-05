@@ -1,23 +1,22 @@
-// Importing required modules and interfaces
-import { Types } from "mongoose";
-import { UserDataAccess } from "../../data/user.dataAccess";
-import { SocketDataAccess } from "../../data/user.socketDataAccess";
-import { SocketData } from "../../../../shared/interfaces/user.socketData.interface";
-import { ErrorHandling } from "../../../../utils/handleError.utils";
+import { Types } from "mongoose"
+import { UserDataAccess } from "../../data/user.dataAccess"
+import { SocketDataAccess } from "../../data/user.socketDataAccess"
+import { SocketData } from "../../../../shared/interfaces/user.socketData.interface"
+import { ErrorHandling } from "../../../../utils/handleError.utils"
 
 /**
  * Class to handle user data-related use cases.
  */
 export class UserDataUseCase {
-  private userDataAccess: UserDataAccess;
-  private socketDataAccess: SocketDataAccess;
+  private userDataAccess: UserDataAccess
+  private socketDataAccess: SocketDataAccess
 
   /**
    * Constructor to initialize UserDataAccess and SocketDataAccess instances.
    */
   constructor() {
-    this.userDataAccess = new UserDataAccess();
-    this.socketDataAccess = new SocketDataAccess();
+    this.userDataAccess = new UserDataAccess()
+    this.socketDataAccess = new SocketDataAccess()
   }
 
   /**
@@ -28,11 +27,11 @@ export class UserDataUseCase {
    */
   async setSocketConnection(userName: string, socketId: string): Promise<SocketData> {
     try {
-      await this.userDataAccess.addSocketId(userName, socketId);
-      await this.socketDataAccess.SocketAdd(userName, socketId);
-      return { userName, socketId };
+      await this.userDataAccess.addSocketId(userName, socketId)
+      await this.socketDataAccess.SocketAdd(userName, socketId)
+      return { userName, socketId }
     } catch (error) {
-      ErrorHandling.processError('Error while setting socket connection', error);
+      ErrorHandling.processError("Error while setting socket connection", error)
     }
   }
 
@@ -43,12 +42,12 @@ export class UserDataUseCase {
    */
   async removeSocketConnection(socketId: string): Promise<SocketData> {
     try {
-      const userName = await this.socketDataAccess.GetUserNameWithSocketId(socketId);
-      await this.userDataAccess.removeSocketId(userName, socketId);
-      await this.socketDataAccess.removeSocketId(socketId);
-      return { userName, socketId };
+      const userName = await this.socketDataAccess.GetUserNameWithSocketId(socketId)
+      await this.userDataAccess.removeSocketId(userName, socketId)
+      await this.socketDataAccess.removeSocketId(socketId)
+      return { userName, socketId }
     } catch (error) {
-      ErrorHandling.processError('Error while removing socket connection', error);
+      ErrorHandling.processError("Error while removing socket connection", error)
     }
   }
 
@@ -60,9 +59,9 @@ export class UserDataUseCase {
    */
   async checkSameUser(postId: Types.ObjectId, userId: string): Promise<boolean | Types.ObjectId> {
     try {
-      return await this.userDataAccess.checkDifferentUser(postId, userId);
+      return await this.userDataAccess.checkDifferentUser(postId, userId)
     } catch (error) {
-      ErrorHandling.processError('Error while checking user', error);
+      ErrorHandling.processError("Error while checking user", error)
     }
   }
 
@@ -73,9 +72,9 @@ export class UserDataUseCase {
    */
   async getSockets(userId: Types.ObjectId): Promise<string[]> {
     try {
-      return await this.userDataAccess.getSocketsWithId(userId);
+      return await this.userDataAccess.getSocketsWithId(userId)
     } catch (error) {
-      ErrorHandling.processError('Error while getting sockets', error);
+      ErrorHandling.processError("Error while getting sockets", error)
     }
   }
 }

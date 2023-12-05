@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { FriendsService } from './friends.service'
 import { NotificationService } from '../post-login.service'
-import { MatButtonModule } from '@angular/material/button'
 
 @Component({
   selector: 'app-friends',
@@ -12,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button'
 export class FriendsComponent implements OnInit, OnDestroy {
   profilePicture: string = '';
   name: string = '';
+  isFriend: boolean = false
   userName: string | null = '';
   friendsCount: string = '';
   fetchingData: boolean = false
@@ -45,6 +45,12 @@ export class FriendsComponent implements OnInit, OnDestroy {
       }
     })
 
+    this.friendsService.isFriend$.subscribe({
+      next: isFriend => {
+        this.isFriend = isFriend
+      }
+    })
+
     this.friendsService.profilePicture$.subscribe({
       next: profilePicture => {
         this.profilePicture = profilePicture
@@ -58,11 +64,6 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
   addFriend() {
     this.notificationService.emitLikeNotification('ss', 'ss')
-    console.log(57)
-  }
-
-  start() {
-    // this.notificationService.start().subscribe()
   }
 
   connect() {
@@ -72,4 +73,6 @@ export class FriendsComponent implements OnInit, OnDestroy {
   disconnect() {
     this.notificationService.emitLogout()
   }
+
 }
+

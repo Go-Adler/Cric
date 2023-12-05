@@ -5,7 +5,8 @@ export interface I_UserBasicInfo {
   name: string,
   userName: string,
   friendsCount: string,
-  notificationsCount: number
+  notificationsCount: number,
+  isFriend: boolean
 }
 
 export interface postSuccessResponse {

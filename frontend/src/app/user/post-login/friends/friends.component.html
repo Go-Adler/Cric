@@ -21,8 +21,10 @@
         <!-- right -->
         <div class="flex w-full justify-end">
           <button
+          (click)="addFriend()"
           mat-stroked-button
           color="warn"
+          [ngClass]="{'hidden': isFriend}"
           class="md:flex addFriendButton p-2"
         >
           <div class="flex items-center gap-1">

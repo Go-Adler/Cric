@@ -1,18 +1,18 @@
-import { Types } from "mongoose";
-import { UserDataAccess } from "../../data/user.dataAccess";
-import { ErrorHandling } from "../../../../utils/handleError.utils";
+import { Types } from "mongoose"
+import { UserDataAccess } from "../../data/user.dataAccess"
+import { ErrorHandling } from "../../../../utils/handleError.utils"
 
 /**
  * Class responsible for handling user data retrieval use cases.
  */
 export class GetUserDataUseCase {
-  private readonly userDataAccess: UserDataAccess;
+  private userDataAccess: UserDataAccess
 
   /**
    * Initializes the use case with a UserDataAccess instance.
    */
   constructor() {
-    this.userDataAccess = new UserDataAccess();
+    this.userDataAccess = new UserDataAccess()
   }
 
   /**
@@ -23,16 +23,16 @@ export class GetUserDataUseCase {
   async getProfilePicture(userId: Types.ObjectId): Promise<string | undefined> {
     try {
       const isUserExisting = await this.userDataAccess.checkUserExisting(userId)
-      
+
       if (!!isUserExisting) {
-        const userData =  await this.userDataAccess.getUserProfilePictureWithId(userId);
+        const userData = await this.userDataAccess.getUserProfilePictureWithId(userId)
         const { profilePicture } = userData
         return profilePicture
       }
 
-      throw new Error('User not found')
+      throw new Error("User not found")
     } catch (error) {
-      ErrorHandling.processError('Error in getProfilePicture, userGetDataUseCase', error)
+      ErrorHandling.processError("Error in getProfilePicture, userGetDataUseCase", error)
     }
   }
 
@@ -43,10 +43,10 @@ export class GetUserDataUseCase {
    */
   async getUserId(userName: string): Promise<any> {
     try {
-      const user = await this.userDataAccess.getUserIdWithUserName(userName);
-      return user?._id;
+      const user = await this.userDataAccess.getUserIdWithUserName(userName)
+      return user?._id
     } catch (error) {
-      ErrorHandling.processError('Error in getUserId, userGetDataUseCase', error)
+      ErrorHandling.processError("Error in getUserId, userGetDataUseCase", error)
     }
   }
 
@@ -57,9 +57,9 @@ export class GetUserDataUseCase {
    */
   async getName(userId: string): Promise<any> {
     try {
-      return await this.userDataAccess.getNameById(userId);
+      return await this.userDataAccess.getNameById(userId)
     } catch (error) {
-      ErrorHandling.processError('Error in getProfilePicture, userGetDataUseCase', error)
+      ErrorHandling.processError("Error in getProfilePicture, userGetDataUseCase", error)
     }
   }
 
@@ -70,9 +70,9 @@ export class GetUserDataUseCase {
    */
   async getUserName(userId: string): Promise<any> {
     try {
-      return await this.userDataAccess.getUserNameById(userId);
+      return await this.userDataAccess.getUserNameById(userId)
     } catch (error) {
-      ErrorHandling.processError('Error in getProfilePicture, userGetDataUseCase', error)
+      ErrorHandling.processError("Error in getProfilePicture, userGetDataUseCase", error)
     }
   }
 
@@ -83,10 +83,10 @@ export class GetUserDataUseCase {
    */
   async getFriendsCount(userId: Types.ObjectId): Promise<number> {
     try {
-      return await this.userDataAccess.getFriendsCountById(userId);
+      return await this.userDataAccess.getFriendsCountById(userId)
     } catch (error) {
-      ErrorHandling.processError('Error in getProfilePicture, userGetDataUseCase', error)
-      return 0;
+      ErrorHandling.processError("Error in getProfilePicture, userGetDataUseCase", error)
+      return 0
     }
   }
 
@@ -97,10 +97,10 @@ export class GetUserDataUseCase {
    */
   async getEmail(userId: Types.ObjectId): Promise<string> {
     try {
-      return await this.userDataAccess.getEmailById(userId);
+      return await this.userDataAccess.getEmailById(userId)
     } catch (error) {
-      ErrorHandling.processError('Error in getProfilePicture, userGetDataUseCase', error)
-      return "";
+      ErrorHandling.processError("Error in getProfilePicture, userGetDataUseCase", error)
+      return ""
     }
   }
 
@@ -110,23 +110,23 @@ export class GetUserDataUseCase {
    */
   async getAllUsers(): Promise<any[]> {
     try {
-      return await this.userDataAccess.getUsers();
+      return await this.userDataAccess.getUsers()
     } catch (error) {
-      ErrorHandling.processError('Error in getProfilePicture, userGetDataUseCase', error)
+      ErrorHandling.processError("Error in getProfilePicture, userGetDataUseCase", error)
     }
   }
 
-   /**
+  /**
    * Blocks a user based on the user ID.
    * @param userId - The ID of the user to be blocked.
    * @returns {Promise<any>} - A promise that resolves after blocking the user.
    */
-   async blockUser(userId: Types.ObjectId): Promise<any> {
+  async blockUser(userId: Types.ObjectId): Promise<any> {
     try {
-      const blockedUser = await this.userDataAccess.blockUser(userId);
-      return blockedUser;
+      const blockedUser = await this.userDataAccess.blockUser(userId)
+      return blockedUser
     } catch (error) {
-      ErrorHandling.processError('Error in blockUser, userGetDataUseCase', error)
+      ErrorHandling.processError("Error in blockUser, userGetDataUseCase", error)
     }
   }
 
@@ -137,25 +137,24 @@ export class GetUserDataUseCase {
    */
   async unblockUser(userId: Types.ObjectId): Promise<any> {
     try {
-      const unblockedUser = await this.userDataAccess.unblockUser(userId);
-      return unblockedUser;
+      const unblockedUser = await this.userDataAccess.unblockUser(userId)
+      return unblockedUser
     } catch (error) {
-      ErrorHandling.processError('Error in unblock, userGetDataUseCase', error)
+      ErrorHandling.processError("Error in unblock, userGetDataUseCase", error)
     }
   }
-
 
   /**
    * Unblocks a user based on the user ID.
    * @param userId - The ID of the user to be unblocked.
    * @returns {Promise<any>} - A promise that resolves after unblocking the user.
    */
-  async isFriend(personId: Types.ObjectId, userId: Types.ObjectId): Promise<any> {
+  async isFriend(personId: Types.ObjectId, userId: Types.ObjectId): Promise<boolean> {
     try {
-      const isFriend = await this.userDataAccess.isFriend(personId, userId)
-      console.log(isFriend, 156);
+      const searchFriend = await this.userDataAccess.isFriend(personId, userId)
+      return !!searchFriend
     } catch (error) {
-      ErrorHandling.processError('Error in unblock, userGetDataUseCase', error)
+      ErrorHandling.processError("Error in unblock, userGetDataUseCase", error)
     }
   }
 }

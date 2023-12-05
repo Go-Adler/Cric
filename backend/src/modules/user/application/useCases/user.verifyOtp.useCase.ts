@@ -2,6 +2,7 @@ import { UserOtpDataAccess } from '../../data/user.otpAccess'
 import { UserDataAccess } from '../../data/user.dataAccess'
 import { InvalidOtpError } from '../../../../shared/errors/invalidOtp.error'
 import { Types } from 'mongoose'
+import { ErrorHandling } from '../../../../utils/handleError.utils'
 
 export class UserVerifyOtpUseCase {
   private userOtpDataAccess: UserOtpDataAccess
@@ -24,7 +25,7 @@ export class UserVerifyOtpUseCase {
       await this.userDataAccess.verifyUser(userId)
       return true
     } catch (error) {
-      throw error
+      ErrorHandling.processError('Error in verifyOTP, UserVerifyOTPUseCase', error)
     }
   }
 }

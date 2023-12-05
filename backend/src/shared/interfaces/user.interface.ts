@@ -1,6 +1,5 @@
 import { Types } from 'mongoose'
-import { Notification } from './user.notification.interface';
-
+import { Notification } from './user.notification.interface'
 
 export interface User extends Document {
   name: string;

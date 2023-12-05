@@ -435,16 +435,17 @@ export class UserDataAccess {
   /**
    * 
    * @param userId - The ID of the user
-   * @returns User Id.
+   * @returns User Id if friend else null
    */
-  async isFriend(personId: Types.ObjectId, userId: Types.ObjectId): Promise<any> {
+  async isFriend(personId: Types.ObjectId, userId: Types.ObjectId): Promise<User> {
     try {
-      return await UserEntity.find({
+      return await UserEntity.findOne({
         _id: userId,
         friends: { $in: [personId] }
-      })
+      }).select('_id')
     } catch (error) {
       ErrorHandling.processError('Error in checkUserExisting, userGetDataUseCase', error)
     }
   }
+
 }

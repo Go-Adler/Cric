@@ -47,7 +47,7 @@ export class GetAwsUrlUseCase {
   }
 
   getImageUrl = async (image: string) => {
-    console.log(image, 50);
+    console.log(image, 50)
     try {
       const getObjectParams = {
         Bucket: this.bucketName,
@@ -84,7 +84,7 @@ export class GetAwsUrlUseCase {
   getUrl = async (post: Post | any) => {
     try {
       if (post.content?.multimedia && post.content?.multimedia[0]) {
-        const imageName = post?.content?.multimedia[0]!
+        const imageName = post?.content?.multimedia[0]
   
         const getObjectParams = {
           Bucket: this.bucketName,
@@ -128,26 +128,26 @@ export class GetAwsUrlUseCase {
     try {
       if (postResponse.profilePicture) {
         const imageName = postResponse.profilePicture
-          const getObjectParams = {
-            Bucket: this.bucketName,
-            Key: imageName,
-          }
-          const command = new GetObjectCommand(getObjectParams)
-          const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
-    
-          postResponse.profilePicture = url
+        const getObjectParams = {
+          Bucket: this.bucketName,
+          Key: imageName,
+        }
+        const command = new GetObjectCommand(getObjectParams)
+        const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+  
+        postResponse.profilePicture = url
       }
   
       if (postResponse.post.content?.multimedia && postResponse.post.content?.multimedia[0]) {
         const imageName = postResponse.post.content.multimedia[0]
-          const getObjectParams = {
-            Bucket: this.bucketName,
-            Key: imageName,
-          }
-          const command = new GetObjectCommand(getObjectParams)
-          const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
-    
-          postResponse.post.content.multimedia[0] = url
+        const getObjectParams = {
+          Bucket: this.bucketName,
+          Key: imageName,
+        }
+        const command = new GetObjectCommand(getObjectParams)
+        const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+  
+        postResponse.post.content.multimedia[0] = url
       }
   
       return postResponse
