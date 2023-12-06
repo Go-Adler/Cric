@@ -54,7 +54,11 @@ export class UserPostComponent implements OnChanges, OnDestroy {
     );
 
     // Get user name
-    this.userName = this.friendsService.getUserName();
+    this.friendsService.userName$.subscribe({
+      next: userName => {
+        this.userName = userName
+      }
+    })
 
     // Get profile picture
     this.subscriptions.push(
@@ -68,7 +72,7 @@ export class UserPostComponent implements OnChanges, OnDestroy {
     this.postLoadingImage = this.userPostService.getPostLoadingImage();
 
     // Get posts
-    this.userPostService.getPosts(this.skip).subscribe({
+    this.userPostService.getPosts(this.skip, this.userName).subscribe({
       next: (data) => {
         this.spinner = false;
         this.firstFetch = true;
@@ -97,7 +101,7 @@ export class UserPostComponent implements OnChanges, OnDestroy {
     this.fetchingPosts = true;
     this.skip += POSTS_LIMIT;
     this.subscriptions.push(
-      this.userPostService.getPosts(this.skip).subscribe({
+      this.userPostService.getPosts(this.skip, this.userName).subscribe({
         next: (data) => {
           this.fetchingPosts = false;
           const postExists = data.posts[0];

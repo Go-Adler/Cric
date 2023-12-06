@@ -18,9 +18,7 @@ export class UserPostService {
     this.API_URL = configService.getAPI_BaseURL()
   }
 
-  getPosts(skip: number): Observable<any> {
-    const userName = this.friendsService.getUserName()
-    
+  getPosts(skip: number, userName: string): Observable<any> {
     const postData = { skip, userName }
     return this.http.post<any>(`${this.API_URL}/user/posts/friends-posts`, postData);
   }

@@ -10,29 +10,27 @@ import { NotificationService } from '../post-login.service'
 })
 export class FriendsComponent implements OnInit, OnDestroy {
   name: string = ''
-  isFriend: boolean = false
+  userName: string
   friendsCount: string = ''
+  isFriend: boolean = false
   profilePicture: string = ''
-  userName: string | null = ''
   fetchingData: boolean = false
 
   constructor(
     private route: ActivatedRoute,
     private friendsService: FriendsService,
     private notificationService: NotificationService
-  ) { }
+  ) {
+    this.userName = this.route.snapshot.paramMap.get('user-name')!
+  }
 
   ngOnInit(): void {
+    this.friendsService.getFriendBasicInfo(this.userName)
+
     this.friendsService.fetchComplete$.subscribe({
       next: (fetchComplete) => {
         this.fetchingData = fetchComplete
       },
-    })
-
-    this.route.paramMap.subscribe((params) => {
-      const userId = this.route.snapshot.paramMap.get('id')
-      this.userName = userId!
-      this.friendsService.getFriendBasicInfo(this.userName)
     })
 
     this.friendsService.friendsCount$.subscribe({
@@ -65,7 +63,12 @@ export class FriendsComponent implements OnInit, OnDestroy {
   }
 
   addFriend() {
-    this.friendsService.addFriend()
+    this.friendsService.addFriend(this.userName).subscribe({
+      next: res => {
+        console.log(res, 71)
+        
+      }
+    })
   }
 
   connect() {

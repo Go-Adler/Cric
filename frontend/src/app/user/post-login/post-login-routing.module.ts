@@ -21,7 +21,7 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
   },
   {
-    path: 'user/:id',
+    path: 'user/:user-name',
     component: FriendsComponent,
     loadChildren: () => import('./friends/friends.module').then(m => m.FriendsModule)
   },

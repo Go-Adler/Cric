@@ -4,7 +4,8 @@ import { JwtPayload } from "jsonwebtoken"
 import { GetUserDataUseCase } from "../../application/useCases/user.getData.useCase"
 import { GetAwsUrlUseCase } from "../../application/useCases/user.getAwsUrl.useCase"
 import { NotificationUseCase } from "../../application/useCases/user.notification.useCase"
-import { UserDataResponse } from "../../../../shared/interfaces/userFriendDataResponse.interface"
+import { UserDataResponse } from "../../../../shared/interfaces/userDataResponse.interface"
+import { PersonDataResponse } from "../../../../shared/interfaces/personDataResponse.interface"
 
 export class UserDataController {
   private getAwsUrlUseCase: GetAwsUrlUseCase
@@ -68,7 +69,7 @@ export class UserDataController {
     try {
       const { userName } = req.params // Get username from request parameters
       const { userId } = req.user as JwtPayload // Extract user ID from JWT payload
-
+      
       // Get friend's user ID from username
       const personId = await this.userDataUseCase.getUserId(userName)
 
@@ -84,10 +85,10 @@ export class UserDataController {
       }
 
       // Build and send friend data response
-      const friendData: UserDataResponse = {
+      const friendData: PersonDataResponse = {
         name,
+        personId,
         isFriend,
-        userName,
         friendsCount,
         profilePicture,
       }

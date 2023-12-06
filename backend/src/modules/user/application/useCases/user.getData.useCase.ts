@@ -20,14 +20,14 @@ export class GetUserDataUseCase {
    * @param userId - The unique identifier of the user.
    * @returns A promise that resolves to the user's profile picture or null if an error occurs.
    */
-  async getProfilePicture(userId: Types.ObjectId): Promise<string | undefined> {
+  async getProfilePicture(userId: Types.ObjectId): Promise<string> {
     try {
       const isUserExisting = await this.userDataAccess.checkUserExisting(userId)
 
       if (!!isUserExisting) {
         const userData = await this.userDataAccess.getUserProfilePictureWithId(userId)
         const { profilePicture } = userData
-        return profilePicture
+        return profilePicture || ''
       }
 
       throw new Error("User not found")

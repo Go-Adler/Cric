@@ -1,15 +1,24 @@
 import { Post } from "../post.model"
 
 export interface I_UserBasicInfo {
-  profilePicture: string,
   name: string,
   userName: string,
   friendsCount: string,
+  profilePicture: string,
   notificationsCount: number,
-  isFriend: boolean
 }
 
 export interface postSuccessResponse {
   message: string,
   postContent: Post
+}
+
+export interface FriendBasicInfo {
+  name: string,
+  userName: string,
+  personId: string,
+  isFriend: boolean,
+  friendsCount: string,
+  profilePicture: string,
+  notificationsCount: number,
 }

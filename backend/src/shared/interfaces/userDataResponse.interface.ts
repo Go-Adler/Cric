@@ -5,5 +5,4 @@ export interface UserDataResponse {
   friendsCount: number;
   profilePicture?: string;
   notificationsCount?: number;
-  isFriend?: boolean; 
 }
