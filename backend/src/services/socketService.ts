@@ -9,7 +9,6 @@ const CONNECTION_EVENT = "connection"
 const DISCONNECT_REQUEST_EVENT = "disconnect-request"
 const DISCONNECT_EVENT = "disconnect"
 const NOTIFICATION_EVENT = "notification"
-const DEFAULT_MESSAGE = "a message"
 
 // Define interface for socket configuration
 interface SocketConfig {
@@ -96,7 +95,7 @@ export class SocketService {
   }
 
   // Send a notification to all sockets associated with the user
-  public async sendNotification(userId: Types.ObjectId, notification: any): Promise<void> {
+  public async sendNotification(userId: Types.ObjectId): Promise<void> {
     try {
       // Get sockets for the user
       const sockets = await this.userDataUseCase.getSockets(userId)
@@ -105,8 +104,8 @@ export class SocketService {
       if (sockets) {
         // Loop through each socket
         sockets.forEach((socket) => {
-          this.io.to(socket).emit(NOTIFICATION_EVENT, notification);
-        });
+          this.io.to(socket).emit(NOTIFICATION_EVENT)
+        })
         
       }
     } catch (error) {

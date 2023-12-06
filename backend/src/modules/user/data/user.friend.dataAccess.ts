@@ -4,17 +4,31 @@ import { ErrorHandling } from '../../../utils/handleError.utils'
 
 export class UserFriendDataAccess {
   /**
+   * Method to add a user as friend
    * 
-   * @param _id - ID of the user
+   * @param userId - ID of the user
    * @param personId - ID of the user to be add as friend
-   * @returns true if successfully added as friend
    */
-  async addToFriendsList(_id: Types.ObjectId, personId: Types.ObjectId): Promise<boolean> {
+  async addToFriendsList(userId: Types.ObjectId, personId: Types.ObjectId): Promise<void> {
     try {
-      await UserEntity.findOneAndUpdate({_id }, { $push: { friends: personId } })
-      return true
+      await UserEntity.findByIdAndUpdate({ userId }, { $addToSet: { friends: personId } })
     } catch (error) {
       ErrorHandling.processError('Error in addToFriendsList, UserFriendDataAccess', error)
+    }
+  }
+
+  /**
+   * Method to add a user to friend request list and friend request sent list
+   * 
+   * @param userId - ID of the user
+   * @param personId - ID of the user to be added as friend
+   */
+  async addToRequestList(userId: Types.ObjectId, personId: Types.ObjectId): Promise<void> {
+    try {
+      await UserEntity.findByIdAndUpdate(userId, { $addToSet: { friendRequestsSent: personId } })
+      await UserEntity.findByIdAndUpdate(personId, { $addToSet: { friendRequestsReceived: userId } })
+    } catch (error) {
+      ErrorHandling.processError('Error in addToRequestList, UserFriendDataAccess', error)
     }
   }
 }

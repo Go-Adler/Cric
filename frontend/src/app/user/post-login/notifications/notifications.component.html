@@ -15,37 +15,69 @@
     </div>
   </div>
   <!-- Notifications list -->
-  <div
-    *ngFor="let notification of notifications; let last = last"
-    class="p-4 flex justify-between items-center border-t cursor-pointer border-slate-600"
-    [ngClass]="[notification.read ? '' : 'bg-slate-800']"
-    [class.border-b]="last"
-    (click)="toRead(notification._id)"
-    [routerLink]="[
-      '/user/' + notification.userName + '/' + notification.postId
-    ]"
-  >
-    <div class="flex gap-2 items-center">
-      <div class="w-8">
-        <img
-          [src]="getProfilePicture(notification)"
-          alt=""
-          class="rounded-full"
-        />
+  <div *ngFor="let notification of notifications; let last = last">
+    <ng-container *ngIf="notification.type === 'like' || notification.type === 'comment'">
+      <div
+        class="p-4 flex justify-between items-center border-t cursor-pointer border-slate-600"
+        [ngClass]="[notification.read ? '' : 'bg-slate-800']"
+        [class.border-b]="last"
+        (click)="toRead(notification._id)"
+        [routerLink]="['/user/' + notification.userName + '/' + notification.postId]"
+      >
+        <div class="flex gap-2 items-center">
+          <div class="w-8">
+            <img
+              [src]="getProfilePicture(notification)"
+              alt=""
+              class="rounded-full"
+            />
+          </div>
+  
+          <div class="p-2" *ngIf="notification.type === 'like'">
+            {{ notification.userName }} liked your post
+          </div>
+          <div class="p-2" *ngIf="notification.type === 'comment'">
+            {{ notification.userName }} commented on your post
+          </div>
+        </div>
+  
+        <div>
+          {{ notification.timeStamp | timeago }}
+        </div>
       </div>
-
-      <div class="p-2" *ngIf="notification.type === 'like'">
-        {{ notification.userName }} liked your post
+    </ng-container>
+    <ng-container *ngIf="notification.type === 'requestReceived' || notification.type === 'requestAccepted'">
+      <div
+        class="p-4 flex justify-between items-center border-t cursor-pointer border-slate-600"
+        [ngClass]="[notification.read ? '' : 'bg-slate-800']"
+        [class.border-b]="last"
+        (click)="toRead(notification._id)"
+        [routerLink]="['/user/' + notification.userName]"
+      >
+        <div class="flex gap-2 items-center">
+          <div class="w-8">
+            <img
+              [src]="getProfilePicture(notification)"
+              alt=""
+              class="rounded-full"
+            />
+          </div>
+  
+          <div class="p-2" *ngIf="notification.type === 'requestReceived'">
+            {{ notification.userName }} sent you a friend request
+          </div>
+          <div class="p-2" *ngIf="notification.type === 'requestAccepted'">
+            {{ notification.userName }} accepted your friend request
+          </div>
+        </div>
+  
+        <div>
+          {{ notification.timeStamp | timeago }}
+        </div>
       </div>
-      <div class="p-2" *ngIf="notification.type === 'comment'">
-        {{ notification.userName }} commented on your post
-      </div>
-    </div>
-
-    <div>
-      {{ notification.timeStamp | timeago }}
-    </div>
+    </ng-container>
   </div>
+  
   <div *ngIf="notifications.length === 0" class="flex flex-col items-center">
     <div class="w-8/12">
       <img [src]="noNotificationIcon" alt="" />

@@ -1,3 +1,6 @@
+import { FriendStatus } from "./userResponses"
+
 export interface AddFriendResponse {
-    message: 'string'
+    message: 'string',
+    friendStatus: FriendStatus
 }

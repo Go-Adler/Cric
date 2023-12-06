@@ -5,6 +5,7 @@ import { profileRoutes } from "./profile.routes"
 import { notificationRoutes } from "./notification.routes"
 import { JwtMiddleware } from "../middleware/auth.middleware"
 import { UsersController } from "../controllers/user.users.controller"
+import { FriendController } from "../controllers/user.friend.controller"
 import { UserLoginController } from "../controllers/user.logIn.controller"
 import { UserDataController } from "../controllers/user.userDataController"
 import { UserSignUpController } from "../controllers/user.signUp.controller"
@@ -12,7 +13,6 @@ import { UserResendOtpController } from "../controllers/user.resendOtp.controlle
 import { UserSignUpOtpController } from "../controllers/user.signUpOtp.controller"
 import { UserForgotPasswordController } from "../controllers/user.forgotPassword.controller"
 import { UserChangePasswordController } from "../controllers/user.changePassword.controller"
-import { FriendController } from "../controllers/user.friendController"
 
 const { findUsers } = new UsersController()
 const { addFriend } = new FriendController()

@@ -1,7 +1,9 @@
-import mongoose from 'mongoose';
-import { notificationSchema } from './user.notificationSchema'
+import mongoose from 'mongoose'
 
-const userSchema = new mongoose.Schema({
+import { notificationSchema } from './user.notificationSchema'
+import { User } from '../../../shared/interfaces/user.interface'
+
+const userSchema = new mongoose.Schema<User>({
   name: {
     type: String,
     required: true,
@@ -58,6 +60,14 @@ const userSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     default: []
   },
+  friendRequestsReceived: {
+    type: [mongoose.Schema.Types.ObjectId],
+    default: []
+  },
+  friendRequestsSent: {
+    type: [mongoose.Schema.Types.ObjectId],
+    default: []
+  },
   socketId: {
     type: [String],
     default: []
@@ -66,7 +76,7 @@ const userSchema = new mongoose.Schema({
     type: [notificationSchema],
     default: []
   }
-});
+})
 
 
-export const UserEntity = mongoose.model('Users', userSchema);
+export const UserEntity = mongoose.model<User>('Users', userSchema)

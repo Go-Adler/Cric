@@ -18,7 +18,7 @@ export class SocketService {
       private http: HttpClient,
       private notificationService: NotificationService
     ) {
-    this.API_URL = configService.getAPI_BaseURL()
+    this.API_URL = this.configService.getAPI_BaseURL()
   }
 
   connect(userName: string) {
@@ -32,19 +32,16 @@ export class SocketService {
     return this.socket
   }
   notificationSocketOn() {
-    this.socket.on('connect', () => {
-      console.log(this.socket.id, 'socket connected', 20);
-    });
-
     this.socket.on('disconnect', () => {
       console.log('disconnected', this.socket.id);
     });
 
     // Handle incoming notifications
-    this.socket.on('notification', (data: any) => {
-      console.log(43, 'notification called'); 
+    this.socket.on('notification', () => {
       this.userService.updateNotificationsCount()
       this.notificationService.getNotifications()
+      console.log('not called');
+      
     });
 
   }

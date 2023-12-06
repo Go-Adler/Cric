@@ -13,12 +13,14 @@ export interface postSuccessResponse {
   postContent: Post
 }
 
+export type FriendStatus = 'friend' | 'stranger' | 'requestReceived' | 'requestSent'
+
 export interface FriendBasicInfo {
   name: string,
   userName: string,
   personId: string,
-  isFriend: boolean,
   friendsCount: string,
   profilePicture: string,
+  friendStatus: FriendStatus,
   notificationsCount: number,
 }

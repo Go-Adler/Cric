@@ -47,10 +47,10 @@ export class PostLikeController {
 
       if (isDifferentUser instanceof Types.ObjectId) {
         // adding notification to user
-        const notification = await this.notificationUseCase.addNotification(userId, "like", postId, isDifferentUser)
+        await this.notificationUseCase.addNotification(userId, "like", postId, isDifferentUser)
 
         // sending user id getting from checking the user
-        await this.socketService.sendNotification(isDifferentUser, notification)
+        await this.socketService.sendNotification(isDifferentUser)
       }
       // Send a response back to indicate success
       return res.status(200).json({ message: "Successfully liked the post" })

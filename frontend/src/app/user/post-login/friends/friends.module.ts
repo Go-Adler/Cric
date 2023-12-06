@@ -1,31 +1,31 @@
 import { NgModule } from '@angular/core';
+import { TimeagoModule } from 'ngx-timeago'
 import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card'
+import { MatButtonModule } from '@angular/material/button'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
+import { HomeModule } from '../home/home.module'
+import { FriendsComponent } from './friends.component'
+import { LazyLoadImageModule } from 'ng-lazyload-image'
 import { FriendsRoutingModule } from './friends-routing.module';
 import { UserPostComponent } from './user-post/user-post.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
-import { MatCardModule } from '@angular/material/card'
-import { TimeagoModule } from 'ngx-timeago'
-import { LazyLoadImageModule } from 'ng-lazyload-image'
-import { HomeModule } from '../home/home.module'
-import { MatButtonModule } from '@angular/material/button'
-import { FriendsComponent } from './friends.component'
 
 
 @NgModule({
   declarations: [
-    UserPostComponent,
     FriendsComponent,
+    UserPostComponent,
   ],
   imports: [
-    CommonModule,
     HomeModule,
-    MatProgressSpinnerModule,
+    CommonModule,
     MatCardModule,
     MatButtonModule,
-    TimeagoModule.forRoot(),
     LazyLoadImageModule,
-    FriendsRoutingModule,
+    FriendsRoutingModule, // routing
+    TimeagoModule.forRoot(),
+    MatProgressSpinnerModule,
   ]
 })
 export class FriendsModule { }

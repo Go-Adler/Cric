@@ -443,7 +443,39 @@ export class UserDataAccess {
         friends: { $in: [personId] }
       }).select('_id')
     } catch (error) {
-      ErrorHandling.processError('Error in checkUserExisting, userGetDataUseCase', error)
+      ErrorHandling.processError('Error in isFriend, userGetDataUseCase', error)
+    }
+  }
+
+  /**
+ * 
+ * @param userId - The ID of the user
+ * @returns User Id if friend else null
+ */
+  async isRequestedByUser(personId: Types.ObjectId, userId: Types.ObjectId): Promise<User> {
+    try {
+      return await UserEntity.findOne({
+        _id: personId,
+        friendRequestsReceived: { $in: [userId] }
+      }).select('_id')
+    } catch (error) {
+      ErrorHandling.processError('Error in isRequestedByUser, userGetDataUseCase', error)
+    }
+  }
+
+  /**
+ * 
+ * @param userId - The ID of the user
+ * @returns User Id if friend else null
+ */
+  async isRequestedByPerson(personId: Types.ObjectId, userId: Types.ObjectId): Promise<User> {
+    try {
+      return await UserEntity.findOne({
+        _id: personId,
+        friendRequestsSent: { $in: [userId] }
+      }).select('_id')
+    } catch (error) {
+      ErrorHandling.processError('Error in isRequestedByPerson, userGetDataUseCase', error)
     }
   }
 }

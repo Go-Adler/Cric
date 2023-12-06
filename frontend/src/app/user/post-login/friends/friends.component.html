@@ -20,26 +20,99 @@
 
         <!-- right -->
         <div class="flex w-full justify-end">
-          <button (click)="addFriend()" mat-stroked-button color="warn" [ngClass]="{'hidden': isFriend}"
-            class="md:flex addFriendButton p-2">
+          <!-- Stranger -->
+          <button
+            *ngIf="friendStatus === 'stranger'"
+            (click)="addFriend()"
+            mat-stroked-button
+            color="warn"
+            class="md:flex addFriendButton p-2"
+          >
             <div class="flex items-center gap-1">
+              <div class="hidden md:block">Add Friend</div>
               <span class="material-symbols-rounded text-xl"> person_add </span>
-              <div class="hidden md:block ">Add Friend</div>
+            </div>
+          </button>
+
+          <!-- Request sent -->
+          <button
+            *ngIf="friendStatus === 'requestSent'"
+            (click)="addFriend()"
+            mat-stroked-button
+            color="warn"
+            class="md:flex addFriendButton p-2"
+          >
+            <div class="flex items-center gap-1">
+              <div class="hidden md:block">Request Sent</div>
+              <span class="material-symbols-rounded text-xl text-orange-400"> pending </span>
+            </div>
+          </button>
+
+          <!-- Request received-->
+          <div *ngIf="friendStatus === 'requestReceived'" class="flex flex-col gap-2 w-10/12">
+          <button
+            (click)="addFriend()"
+            mat-stroked-button
+            color="warn"
+            class="md:flex addFriendButton p-2"
+          >
+            <div class="flex items-center gap-1">
+              <div class="hidden md:block">Requested</div>
+              <span class="material-symbols-rounded"> call_received </span>
+            </div>
+          </button>
+          <div class="flex gap-2">
+            <button mat-stroked-button >
+              <div class="flex items-center gap-1">
+                <div>Accept</div>
+              <span class="material-symbols-rounded text-xl text-green-400"> check_circle </span>
+              </div>
+            </button>
+
+            <button mat-stroked-button >
+              <div class="flex items-center gap-1">
+                <div>Reject</div>
+              <span class="material-symbols-rounded text-xl text-red-400"> cancel </span>
+              </div>
+            </button>
+
+          </div>
+
+          </div>
+
+          <!-- Friend -->
+          <button
+            *ngIf="friendStatus === 'friend'"
+            (click)="addFriend()"
+            mat-stroked-button
+            color="warn"
+            class="md:flex addFriendButton p-2"
+          >
+            <div class="flex items-center gap-1">
+              <div class="hidden md:block">Friends</div>
+              <span class="material-symbols-rounded text-xl text-blue-400">
+                person_check
+              </span>
             </div>
           </button>
         </div>
       </span>
-
     </div>
     <div class="p-5 gap-2 flex justify-center items-end" *ngIf="!fetchingData">
       <mat-spinner></mat-spinner>
     </div>
 
     <div class="flex p-1 border-b borderColor">
-      <div routerLink="posts" class="w-full flex justify-center border-r borderColor cursor-pointer">
+      <div
+        routerLink="posts"
+        class="w-full flex justify-center border-r borderColor cursor-pointer"
+      >
         Posts
       </div>
-      <div routerLink="friends" class="w-full flex justify-center border-r borderColor cursor-pointer">
+      <div
+        routerLink="friends"
+        class="w-full flex justify-center border-r borderColor cursor-pointer"
+      >
         Friends
       </div>
       <div routerLink="saved" class="w-full flex justify-center cursor-pointer">

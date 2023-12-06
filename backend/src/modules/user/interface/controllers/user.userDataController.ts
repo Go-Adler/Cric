@@ -75,10 +75,9 @@ export class UserDataController {
 
       // Fetch friend data using use cases
       const name = await this.userDataUseCase.getName(personId)
-      const isFriend = await this.userDataUseCase.isFriend(personId, userId)
       const friendsCount = await this.userDataUseCase.getFriendsCount(personId)
+      let friendStatus = await this.userDataUseCase.isFriend(personId, userId)
       let profilePicture = await this.userDataUseCase.getProfilePicture(personId)
-
       // Generate pre-signed URL for profile picture if available
       if (profilePicture) {
         profilePicture = await this.getAwsUrlUseCase.getImageUrl(profilePicture)
@@ -88,7 +87,7 @@ export class UserDataController {
       const friendData: PersonDataResponse = {
         name,
         personId,
-        isFriend,
+        friendStatus,
         friendsCount,
         profilePicture,
       }

@@ -1,7 +1,7 @@
-import { Types } from 'mongoose';
-import { UserEntity } from '../domain/user.schema';
-import { ErrorHandling } from '../../../utils/handleError.utils';
-import { Notification } from '../../../shared/interfaces/user.notification.interface';
+import { Types } from "mongoose"
+import { UserEntity } from "../domain/user.schema"
+import { ErrorHandling } from "../../../utils/handleError.utils"
+import { Notification } from "../../../shared/interfaces/user.notification.interface"
 
 /**
  * NotificationDataAccess class responsible for handling user notifications
@@ -14,19 +14,19 @@ export class NotificationDataAccess {
    */
   async getNotificationsCount(userId: Types.ObjectId): Promise<number> {
     try {
-      const userData = await UserEntity.findById(userId).select('notifications');
+      const userData = await UserEntity.findById(userId).select("notifications")
 
       if (!userData?.notifications) {
-        throw new Error('Unable to retrieve notification count');
+        throw new Error("Unable to retrieve notification count")
       }
-      const readNotifications = userData.notifications.filter(notification => notification.read === false);
+      const readNotifications = userData.notifications.filter((notification) => notification.read === false)
 
       // Get the count of read notifications
-      const readNotificationsCount = readNotifications.length;
-      
+      const readNotificationsCount = readNotifications.length
+
       return readNotificationsCount
     } catch (error: any) {
-      ErrorHandling.processError('Error in getNotificationsCount, dataAccess', error.message);
+      ErrorHandling.processError("Error in getNotificationsCount, dataAccess", error.message)
     }
   }
 
@@ -38,41 +38,34 @@ export class NotificationDataAccess {
    * @param postUserId The identifier of the post's owner
    * @returns The newly created notification object
    */
-  async addNotification(
-    userId: Types.ObjectId,
-    type: string,
-    postId: Types.ObjectId,
-    postUserId: Types.ObjectId
-  ): Promise<Notification> {
+  async addNotification(userId: Types.ObjectId, type: string, postId: Types.ObjectId, postUserId: Types.ObjectId): Promise<void> {
     try {
-      const userData = await UserEntity.findById(userId).select('userName profilePicture');
+      const userData = await UserEntity.findById(userId).select("userName profilePicture")
 
-      if (!(userData)) {
-        throw new Error('User does not exist. Unable to add notification');
+      if (!userData) {
+        throw new Error("User does not exist. Unable to add notification")
       }
 
-      const { userName, profilePicture } = userData;
+      const { userName, profilePicture } = userData
 
-      const userUpdatedData = await UserEntity.findByIdAndUpdate(postUserId, {
-        $push: {
-          notifications: {
-            type,
-            userName,
-            postId,
-            profilePicture,
-            userId,
-            timeStamp: Date.now(),
-            read: false,
+      await UserEntity.findByIdAndUpdate(
+        postUserId,
+        {
+          $push: {
+            notifications: {
+              type,
+              userName,
+              postId,
+              profilePicture,
+              userId,
+              timeStamp: Date.now(),
+              read: false,
+            },
           },
         },
-      }, { new: true, select: { notifications: { $slice: -1 } } })
-
-      if (!(userUpdatedData && userUpdatedData?.notifications[0])) throw new Error('Error adding notification')
-      const newNotification = userUpdatedData?.notifications[0]
-
-      return newNotification
+      )
     } catch (error: any) {
-      ErrorHandling.processError('Error in addNotification, dataAccess', error.message);
+      ErrorHandling.processError("Error in addNotification, dataAccess", error.message)
     }
   }
 
@@ -83,16 +76,15 @@ export class NotificationDataAccess {
    */
   async getNotifications(userId: Types.ObjectId): Promise<Notification[]> {
     try {
-      const userData = await UserEntity.findById(userId).select('notifications').sort({ 'notifications.timeStamp': -1 });
+      const userData = await UserEntity.findById(userId).select("notifications").sort({ "notifications.timeStamp": -1 })
 
       if (!userData?.notifications) {
-        throw new Error('Unable to retrieve notifications');
+        throw new Error("Unable to retrieve notifications")
       }
 
-      return userData.notifications.sort((a, b) => new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime());
-
+      return userData.notifications.sort((a, b) => new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime())
     } catch (error: any) {
-      ErrorHandling.processError('Error in getNotifications, dataAccess', error.message);
+      ErrorHandling.processError("Error in getNotifications, dataAccess", error.message)
     }
   }
 
@@ -105,19 +97,19 @@ export class NotificationDataAccess {
   async markAsRead(userId: Types.ObjectId, notificationId: Types.ObjectId): Promise<Notification> {
     try {
       const updatedUserDocument = await UserEntity.findOneAndUpdate(
-        { _id: userId, 'notifications._id': notificationId },
-        { $set: { 'notifications.$.read': true } },
+        { _id: userId, "notifications._id": notificationId },
+        { $set: { "notifications.$.read": true } },
         { new: true, projection: { notifications: { $elemMatch: { _id: notificationId } } } }
-      );
+      )
 
       if (!updatedUserDocument?.notifications[0]) {
-        throw new Error('Unable to mark notification as read');
+        throw new Error("Unable to mark notification as read")
       }
 
-      return updatedUserDocument.notifications[0];
+      return updatedUserDocument.notifications[0]
     } catch (error: any) {
-      ErrorHandling.processError('Error in markAsRead, dataAccess', error.message);
-      throw new Error('Unable to mark notification as read');
+      ErrorHandling.processError("Error in markAsRead, dataAccess", error.message)
+      throw new Error("Unable to mark notification as read")
     }
   }
 }

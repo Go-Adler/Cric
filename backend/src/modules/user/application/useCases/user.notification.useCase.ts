@@ -15,22 +15,22 @@ export class NotificationUseCase {
     this.notificationDataAccess = new NotificationDataAccess()
   }
 
-   /**
-   * Method to add notification to user.
-   *
-   * @param userId - The ID of the user who interacts.
-   * @param type - The type of interaction.
-   * @param postId - The ID of the post interacted with.
-   * @returns added notification
-   * @throws Error if there's an issue while liking the post.
-   */
-   async addNotification(userId: Types.ObjectId, type: string, postId: Types.ObjectId, postUserId: Types.ObjectId) {
+  /**
+ * Method to add notification to user.
+ *
+ * @param userId - The ID of the user who interacts.
+ * @param type - The type of interaction.
+ * @param postId - The ID of the post interacted with.
+ * @returns added notification
+ * @throws Error if there's an issue while liking the post.
+ */
+  async addNotification(userId: Types.ObjectId, type: string, postId: Types.ObjectId, postUserId: Types.ObjectId) {
     try {
-      return await this.notificationDataAccess.addNotification(userId, type, postId, postUserId);
+      await this.notificationDataAccess.addNotification(userId, type, postId, postUserId)
     } catch (error: any) {
       ErrorHandling.processError('Error in addNotification, useCase: ', error)
     }
-   }
+  }
   
   /**
    * Method to get notifications of user.

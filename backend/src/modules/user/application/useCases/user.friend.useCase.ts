@@ -9,9 +9,9 @@ export class UserFriendUseCase {
   }
 
 
-  async addFriend(userId: Types.ObjectId, personId: Types.ObjectId): Promise<boolean> {
+  async addRequest(userId: Types.ObjectId, personId: Types.ObjectId): Promise<void> {
     try {
-      return await this.friendDataAccess.addToFriendsList(userId, personId)
+      await this.friendDataAccess.addToRequestList(userId, personId)
     } catch(error) {
       ErrorHandling.processError('Erron in addFreind, UserFriendUseCase', error)
     }

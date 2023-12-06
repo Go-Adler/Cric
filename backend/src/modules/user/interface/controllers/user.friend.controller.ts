@@ -1,11 +1,15 @@
 import { Request, Response, NextFunction } from "express"
 import { JwtPayload } from "jsonwebtoken"
 import { UserFriendUseCase } from "../../application/useCases/user.friend.useCase"
+import { SocketService } from "../../../../services/socketService"
 
 export class FriendController {
   private friendUseCase: UserFriendUseCase
+  private socketService: SocketService
+
   constructor() {
     this.friendUseCase = new UserFriendUseCase()
+    this.socketService = SocketService.getInstance()
   }
   
   /**
@@ -19,9 +23,9 @@ export class FriendController {
     try {
       const { userId } = req.user as JwtPayload // Extract user ID from JWT payload
       const { personId } = req.body
-      await this.friendUseCase.addFriend(userId, personId)
-      
-      res.json({ message: 'Successfully added as friend' })
+      await this.friendUseCase.addRequest(userId, personId)
+      await this.socketService.sendNotification(personId)
+      res.json({ message: 'Request successful', friendStatus: 'requestSent' })
     } catch(error) {
       next(error)
     }

@@ -1,6 +1,7 @@
 import { Types } from "mongoose"
 import { UserDataAccess } from "../../data/user.dataAccess"
 import { ErrorHandling } from "../../../../utils/handleError.utils"
+import { FriendStatus } from "../../../../shared/interfaces/personDataResponse.interface"
 
 /**
  * Class responsible for handling user data retrieval use cases.
@@ -149,10 +150,12 @@ export class GetUserDataUseCase {
    * @param userId - The ID of the user to be unblocked.
    * @returns {Promise<any>} - A promise that resolves after unblocking the user.
    */
-  async isFriend(personId: Types.ObjectId, userId: Types.ObjectId): Promise<boolean> {
+  async isFriend(personId: Types.ObjectId, userId: Types.ObjectId): Promise<FriendStatus> {
     try {
-      const searchFriend = await this.userDataAccess.isFriend(personId, userId)
-      return !!searchFriend
+      if (await this.userDataAccess.isFriend(personId, userId)) return 'friend'
+      if (await this.userDataAccess.isRequestedByUser(personId, userId)) return 'requestSent'
+      if (await this.userDataAccess.isRequestedByPerson(personId, userId)) return 'requestReceived'
+      else return 'stranger'
     } catch (error) {
       ErrorHandling.processError("Error in unblock, userGetDataUseCase", error)
     }

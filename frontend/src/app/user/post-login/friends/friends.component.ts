@@ -1,5 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import {
+  MatSnackBar,
+  MatSnackBarVerticalPosition,
+  MatSnackBarHorizontalPosition,
+} from '@angular/material/snack-bar'
 import { ActivatedRoute } from '@angular/router'
+import { Component, OnDestroy, OnInit } from '@angular/core'
+
 import { FriendsService } from './friends.service'
 import { NotificationService } from '../post-login.service'
 
@@ -11,15 +17,20 @@ import { NotificationService } from '../post-login.service'
 export class FriendsComponent implements OnInit, OnDestroy {
   name: string = ''
   userName: string
+  userId: string = ''
   friendsCount: string = ''
-  isFriend: boolean = false
+  friendStatus: string = ''
   profilePicture: string = ''
   fetchingData: boolean = false
 
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+
   constructor(
     private route: ActivatedRoute,
+    private _snackBar: MatSnackBar,
     private friendsService: FriendsService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {
     this.userName = this.route.snapshot.paramMap.get('user-name')!
   }
@@ -45,9 +56,9 @@ export class FriendsComponent implements OnInit, OnDestroy {
       },
     })
 
-    this.friendsService.isFriend$.subscribe({
-      next: (isFriend) => {
-        this.isFriend = isFriend
+    this.friendsService.friendStatus$.subscribe({
+      next: (friendStatus) => {
+        this.friendStatus = friendStatus
       },
     })
 
@@ -56,6 +67,12 @@ export class FriendsComponent implements OnInit, OnDestroy {
         this.profilePicture = profilePicture
       },
     })
+
+    this.friendsService.userId$.subscribe({
+      next: userId => {
+        this.userId = userId
+      }
+    })
   }
 
   ngOnDestroy(): void {
@@ -63,12 +80,19 @@ export class FriendsComponent implements OnInit, OnDestroy {
   }
 
   addFriend() {
-    this.friendsService.addFriend(this.userName).subscribe({
+    this.friendsService.sendFriendRequest(this.userId).subscribe({
       next: res => {
-        console.log(res, 71)
-        
+      this.friendStatus = res.friendStatus
+        this.openSnackBar()
       }
     })
+  }
+
+  openSnackBar() {
+    this._snackBar.open('Request sent', 'Done', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   connect() {
