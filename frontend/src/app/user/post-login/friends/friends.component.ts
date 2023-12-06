@@ -83,23 +83,34 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.friendsService.sendFriendRequest(this.userId).subscribe({
       next: res => {
       this.friendStatus = res.friendStatus
-        this.openSnackBar()
+        this.openSnackBar('Request sent')
       }
     })
   }
 
-  openSnackBar() {
-    this._snackBar.open('Request sent', 'Done', {
+  acceptRequest() {
+    this.friendsService.acceptRequest(this.userId).subscribe({
+      next: res => {
+        console.log(res.friendStatus);
+        this.friendStatus = res.friendStatus
+        this.openSnackBar('Request accepted')
+      }
+    })
+  }
+
+  rejectRequest() {
+    this.friendsService.rejectRequest(this.userId).subscribe({
+      next: res => {
+      this.friendStatus = res.friendStatus
+        this.openSnackBar('Request rejected')
+      }
+    })
+  }
+  
+  openSnackBar(Message: string) {
+    this._snackBar.open(Message, 'Done', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
     });
-  }
-
-  connect() {
-    this.notificationService.notificationSocketOn()
-  }
-
-  disconnect() {
-    this.notificationService.emitLogout()
   }
 }

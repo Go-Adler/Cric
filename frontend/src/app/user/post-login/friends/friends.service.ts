@@ -61,4 +61,12 @@ export class FriendsService {
   sendFriendRequest(personId: string): Observable<AddFriendResponse> {
     return this.http.post<AddFriendResponse>(`${this.API_URL}/user/friend/add-friend`, { personId })
   }
+  
+  acceptRequest(personId: string): Observable<AddFriendResponse> {
+    return this.http.post<AddFriendResponse>(`${this.API_URL}/user/friend/accept-friend`, { personId })
+  }
+
+  rejectRequest(personId: string): Observable<AddFriendResponse> {
+    return this.http.post<AddFriendResponse>(`${this.API_URL}/user/friend/reject-friend`, { personId })
+  }
 }

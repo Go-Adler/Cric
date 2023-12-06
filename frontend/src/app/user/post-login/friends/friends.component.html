@@ -44,40 +44,49 @@
           >
             <div class="flex items-center gap-1">
               <div class="hidden md:block">Request Sent</div>
-              <span class="material-symbols-rounded text-xl text-orange-400"> pending </span>
+              <span class="material-symbols-rounded text-xl text-orange-400">
+                pending
+              </span>
             </div>
           </button>
 
           <!-- Request received-->
-          <div *ngIf="friendStatus === 'requestReceived'" class="flex flex-col gap-2 w-10/12">
-          <button
-            (click)="addFriend()"
-            mat-stroked-button
-            color="warn"
-            class="md:flex addFriendButton p-2"
+          <div
+            *ngIf="friendStatus === 'requestReceived'"
+            class="flex flex-col gap-4 w-10/12"
           >
-            <div class="flex items-center gap-1">
-              <div class="hidden md:block">Requested</div>
-              <span class="material-symbols-rounded"> call_received </span>
+            <button
+              disabled
+              mat-stroked-button
+              color="warn"
+              class="md:flex addFriendButton p-2"
+            >
+              <div class="flex items-center gap-1">
+                <div class="hidden md:block text-xs">Requested</div>
+                <span class="material-symbols-rounded text-base">
+                  call_received
+                </span>
+              </div>
+            </button>
+            <div class="flex gap-4">
+              <button mat-stroked-button class="p-2" (click)="acceptRequest()">
+                <div class="flex items-center justify-center gap-2 p-2">
+                  <div class="text-xs">Accept</div>
+                  <span class="material-symbols-rounded text-base text-green-400">
+                    check_circle
+                  </span>
+                </div>
+              </button>
+
+              <button mat-stroked-button class="p-2" (click)="rejectRequest()">
+                <div class="flex items-center justify-center gap-2 p-2">
+                  <div class="text-xs">Reject</div>
+                  <span class="material-symbols-rounded text-base text-red-400">
+                    cancel
+                  </span>
+                </div>
+              </button>
             </div>
-          </button>
-          <div class="flex gap-2">
-            <button mat-stroked-button >
-              <div class="flex items-center gap-1">
-                <div>Accept</div>
-              <span class="material-symbols-rounded text-xl text-green-400"> check_circle </span>
-              </div>
-            </button>
-
-            <button mat-stroked-button >
-              <div class="flex items-center gap-1">
-                <div>Reject</div>
-              <span class="material-symbols-rounded text-xl text-red-400"> cancel </span>
-              </div>
-            </button>
-
-          </div>
-
           </div>
 
           <!-- Friend -->

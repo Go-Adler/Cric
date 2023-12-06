@@ -17,7 +17,7 @@ export class FriendController {
   }
   
   /**
-   * Add a user as friend
+   * Method to add friend request
    * 
    * @param req Express request object containing username and JWT payload with user ID.
    * @param res Express response object to send success message.
@@ -27,13 +27,52 @@ export class FriendController {
     try {
       const { userId } = req.user as JwtPayload // Extract user ID from JWT payload
       const { personId } = req.body
-      console.log(31);
       await this.friendUseCase.addRequest(userId, personId)
-      console.log(31);
-      
       await this.notificationUseCase.addNotification(personId, 'requestReceived', userId)
       await this.socketService.sendNotification(personId)
       res.json({ message: 'Request successful', friendStatus: 'requestSent' })
+    } catch(error) {
+      next(error)
+    }
+  }
+
+  /**
+ * Method to accept user as friend
+ * 
+ * @param req Express request object containing username and JWT payload with user ID.
+ * @param res Express response object to send success message.
+ * @param next Express next function for error handling.
+ */
+  acceptFriend = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { userId } = req.user as JwtPayload // Extract user ID from JWT payload
+      const { personId } = req.body
+
+      await this.friendUseCase.acceptRequest(userId, personId)
+      await this.notificationUseCase.addNotification(personId, 'requestReceived', userId)
+      await this.socketService.sendNotification(personId)
+      res.json({ message: 'Request successful', friendStatus: 'friend' })
+    } catch(error) {
+      next(error)
+    }
+  }
+
+  /**
+ * Method to reject user as friend
+ * 
+ * @param req Express request object containing username and JWT payload with user ID.
+ * @param res Express response object to send success message.
+ * @param next Express next function for error handling.
+ */
+  rejectFriend = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { userId } = req.user as JwtPayload // Extract user ID from JWT payload
+      const { personId } = req.body
+
+      await this.friendUseCase.rejectRequest(userId, personId)
+      await this.notificationUseCase.addNotification(personId, 'requestReceived', userId)
+      await this.socketService.sendNotification(personId)
+      res.json({ message: 'Request successful', friendStatus: 'stranger' })
     } catch(error) {
       next(error)
     }
