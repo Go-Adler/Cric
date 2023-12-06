@@ -1,20 +1,20 @@
 import { Request, Response, NextFunction } from "express"
-import { UserExistingUseCase } from "../../application/useCases/user.existing.useCase"
-import { UserLoginUseCase } from "../../application/useCases/user.logIn.useCase"
 import { TokenUseCase } from "../../application/useCases/user.token.useCase"
+import { UserLoginUseCase } from "../../application/useCases/user.logIn.useCase"
 import { SendOTP_UseCase } from "../../application/useCases/user.sendOTP.useCase"
+import { UserExistingUseCase } from "../../application/useCases/user.existing.useCase"
 
 export class UserLoginController {
-  private userExistingUseCase: UserExistingUseCase
-  private userLogInUseCase: UserLoginUseCase
   private tokenUseCase: TokenUseCase
   private sendOtpUseCase: SendOTP_UseCase
+  private userLogInUseCase: UserLoginUseCase
+  private userExistingUseCase: UserExistingUseCase
 
   constructor() {
-    this.userExistingUseCase = new UserExistingUseCase()
-    this.userLogInUseCase = new UserLoginUseCase()
     this.tokenUseCase = new TokenUseCase()
     this.sendOtpUseCase = new SendOTP_UseCase()
+    this.userLogInUseCase = new UserLoginUseCase()
+    this.userExistingUseCase = new UserExistingUseCase()
   }
 
   userLogin = async (req: Request, res: Response, next: NextFunction) => {

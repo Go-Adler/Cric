@@ -12,8 +12,10 @@ import { UserResendOtpController } from "../controllers/user.resendOtp.controlle
 import { UserSignUpOtpController } from "../controllers/user.signUpOtp.controller"
 import { UserForgotPasswordController } from "../controllers/user.forgotPassword.controller"
 import { UserChangePasswordController } from "../controllers/user.changePassword.controller"
+import { FriendController } from "../controllers/user.friendController"
 
 const { findUsers } = new UsersController()
+const { addFriend } = new FriendController()
 const { userLogin } = new UserLoginController()
 const { userSignUp } = new UserSignUpController()
 const { verifyOtp } = new UserSignUpOtpController()
@@ -40,7 +42,7 @@ router.post("/find", verifyJwt, findUsers)
 router.post("/forgot-password", forgotPassword)
 router.post("/forgot-password-otp", verifyVerifyToken)
 router.post("/verification", verifyVerifyToken, verifyOtp)
-router.post("/friend/add-friend", verifyJwt, friendBasicInfo)
+router.post("/friend/add-friend", verifyJwt, addFriend)
 router.post("/changePassword", verifyVerifyToken, changePassword)
 
 export { router as userRoutes }

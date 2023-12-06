@@ -431,7 +431,6 @@ export class UserDataAccess {
     }
   }
 
-
   /**
    * 
    * @param userId - The ID of the user
@@ -447,5 +446,4 @@ export class UserDataAccess {
       ErrorHandling.processError('Error in checkUserExisting, userGetDataUseCase', error)
     }
   }
-
 }

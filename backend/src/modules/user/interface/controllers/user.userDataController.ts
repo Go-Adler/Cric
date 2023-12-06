@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express"
+
 import { JwtPayload } from "jsonwebtoken"
 import { GetUserDataUseCase } from "../../application/useCases/user.getData.useCase"
 import { GetAwsUrlUseCase } from "../../application/useCases/user.getAwsUrl.useCase"
@@ -23,10 +24,10 @@ export class UserDataController {
    * @param res Express response object to send user data.
    * @param next Express next function for error handling.
    */
-  async userBasicInfo(req: Request, res: Response, next: NextFunction): Promise<void> {
+  userBasicInfo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { userId } = req.user as JwtPayload // Extract user ID from JWT payload
-      
+
       // Fetch user data using use cases
       const name = await this.userDataUseCase.getName(userId)
       const userName = await this.userDataUseCase.getUserName(userId)
@@ -63,7 +64,7 @@ export class UserDataController {
    * @param res Express response object to send friend data.
    * @param next Express next function for error handling.
    */
-  async friendBasicInfo(req: Request, res: Response, next: NextFunction): Promise<void> {
+  friendBasicInfo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { userName } = req.params // Get username from request parameters
       const { userId } = req.user as JwtPayload // Extract user ID from JWT payload

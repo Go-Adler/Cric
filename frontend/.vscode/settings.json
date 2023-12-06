@@ -2,5 +2,14 @@
   "workbench.list.scrollByPage": true,
   "workbench.editor.openPositioning": "right",
   "workbench.editor.revealIfOpen": true,
-  "workbench.editor.openSideBySideDirection": "right"
+  "workbench.editor.openSideBySideDirection": "right",
+  "prettier.semi": false,
+  "editor.defaultFormatter": "vscode.typescript-language-features",
+  "javascript.format.insertSpaceAfterSemicolonInForStatements": false,
+  "typescript.format.insertSpaceAfterSemicolonInForStatements": false,
+  "javascript.format.semicolons": "remove",
+  "typescript.format.semicolons": "remove",
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }
