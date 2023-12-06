@@ -24,9 +24,9 @@ export class NotificationUseCase {
  * @returns added notification
  * @throws Error if there's an issue while liking the post.
  */
-  async addNotification(userId: Types.ObjectId, type: string, postId: Types.ObjectId, postUserId: Types.ObjectId) {
+  async addNotification(userId: Types.ObjectId, type: string, postUserId: Types.ObjectId, postId?: Types.ObjectId) {
     try {
-      await this.notificationDataAccess.addNotification(userId, type, postId, postUserId)
+      await this.notificationDataAccess.addNotification(userId, type, postUserId, postId)
     } catch (error: any) {
       ErrorHandling.processError('Error in addNotification, useCase: ', error)
     }

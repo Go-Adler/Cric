@@ -24,7 +24,6 @@ export const notificationSchema = new Schema<Notification>({
   },
   postId: {
     type: Schema.Types.ObjectId,
-    required: true,
   },
   userId: {
     type: Schema.Types.ObjectId,

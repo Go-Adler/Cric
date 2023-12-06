@@ -1,7 +1,10 @@
 import { Document, Types } from 'mongoose'
 
+export type NotificationTypes = 'like' | 'comment' | 'requestReceived' | 'requestAccepted'
+
+
 export interface Notification extends Document {
-    type: string
+    type: NotificationTypes,
     userName: string,
     userId: Types.ObjectId,
     read: boolean

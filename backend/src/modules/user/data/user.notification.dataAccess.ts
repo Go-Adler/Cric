@@ -38,7 +38,7 @@ export class NotificationDataAccess {
    * @param postUserId The identifier of the post's owner
    * @returns The newly created notification object
    */
-  async addNotification(userId: Types.ObjectId, type: string, postId: Types.ObjectId, postUserId: Types.ObjectId): Promise<void> {
+  async addNotification(userId: Types.ObjectId, type: string, postUserId: Types.ObjectId, postId?: Types.ObjectId): Promise<void> {
     try {
       const userData = await UserEntity.findById(userId).select("userName profilePicture")
 

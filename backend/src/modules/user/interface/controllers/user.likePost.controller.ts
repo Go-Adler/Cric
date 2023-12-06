@@ -47,7 +47,7 @@ export class PostLikeController {
 
       if (isDifferentUser instanceof Types.ObjectId) {
         // adding notification to user
-        await this.notificationUseCase.addNotification(userId, "like", postId, isDifferentUser)
+        await this.notificationUseCase.addNotification(userId, "like", isDifferentUser, postId)
 
         // sending user id getting from checking the user
         await this.socketService.sendNotification(isDifferentUser)

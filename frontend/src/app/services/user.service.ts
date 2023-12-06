@@ -33,9 +33,6 @@ export class UserService {
     private http: HttpClient,
   ) {
     this.API_URL = this.configService.getAPI_BaseURL()
-    if (!this.userName) {
-      this.getUserBasicInfo()
-    }
   }
 
   getUserBasicInfo() {
