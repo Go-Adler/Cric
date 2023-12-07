@@ -52,4 +52,18 @@ export class UserFriendUseCase {
       ErrorHandling.processError('Erron in rejectRequest, UserFriendUseCase', error)
     }
   }
+
+  /**
+ * Method to remove friend
+ * 
+ * @param userId - The ID of the user who accept request
+ * @param personId - The ID of the user who need to be removed
+ */
+  async removeFriend(userId: Types.ObjectId, personId: Types.ObjectId): Promise<void> {
+    try {
+      await this.friendDataAccess.removeFromFriendList(userId, personId)
+    } catch(error) {
+      ErrorHandling.processError('Erron in removeFriend, UserFriendUseCase', error)
+    }
+  }
 }

@@ -81,8 +81,8 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
   addFriend() {
     this.friendsService.sendFriendRequest(this.userId).subscribe({
-      next: res => {
-      this.friendStatus = res.friendStatus
+      next: response => {
+      this.friendStatus = response.friendStatus
         this.openSnackBar('Request sent')
       }
     })
@@ -90,9 +90,9 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
   acceptRequest() {
     this.friendsService.acceptRequest(this.userId).subscribe({
-      next: res => {
-        console.log(res.friendStatus);
-        this.friendStatus = res.friendStatus
+      next: response => {
+        console.log(response.friendStatus);
+        this.friendStatus = response.friendStatus
         this.openSnackBar('Request accepted')
       }
     })
@@ -100,8 +100,8 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
   rejectRequest() {
     this.friendsService.rejectRequest(this.userId).subscribe({
-      next: res => {
-      this.friendStatus = res.friendStatus
+      next: response => {
+      this.friendStatus = response.friendStatus
         this.openSnackBar('Request rejected')
       }
     })
@@ -112,5 +112,14 @@ export class FriendsComponent implements OnInit, OnDestroy {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
     });
+  }
+
+  removeFriend() {
+    this.friendsService.removeFriend(this.userId).subscribe({
+      next: response => {
+        this.friendStatus = response.friendStatus
+        this.openSnackBar('Friend removed')
+      }
+    })
   }
 }

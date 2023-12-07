@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { FriendBasicInfo, I_UserBasicInfo } from "src/app/models/responses/userResponses"
 import { ConfigService } from "src/app/services/config.service"
 import { environment } from "src/environments/environment";
-import { AddFriendResponse } from "src/app/models/responses/friend.model";
+import { FriendResponse } from "src/app/models/responses/friend.model";
 import { FriendStatus } from "src/app/models/responses/userResponses";
 
 @Injectable({
@@ -58,15 +58,19 @@ export class FriendsService {
     this.profilePicture.next(this.defaultProfilePicture)
   }
 
-  sendFriendRequest(personId: string): Observable<AddFriendResponse> {
-    return this.http.post<AddFriendResponse>(`${this.API_URL}/user/friend/add-friend`, { personId })
+  sendFriendRequest(personId: string): Observable<FriendResponse> {
+    return this.http.post<FriendResponse>(`${this.API_URL}/user/friend/add-friend`, { personId })
   }
   
-  acceptRequest(personId: string): Observable<AddFriendResponse> {
-    return this.http.post<AddFriendResponse>(`${this.API_URL}/user/friend/accept-friend`, { personId })
+  acceptRequest(personId: string): Observable<FriendResponse> {
+    return this.http.post<FriendResponse>(`${this.API_URL}/user/friend/accept-friend`, { personId })
   }
 
-  rejectRequest(personId: string): Observable<AddFriendResponse> {
-    return this.http.post<AddFriendResponse>(`${this.API_URL}/user/friend/reject-friend`, { personId })
+  rejectRequest(personId: string): Observable<FriendResponse> {
+    return this.http.post<FriendResponse>(`${this.API_URL}/user/friend/reject-friend`, { personId })
+  }
+
+  removeFriend(personId: string): Observable<FriendResponse> {
+    return this.http.post<FriendResponse>(`${this.API_URL}/user/friend/remove-friend`, { personId })
   }
 }

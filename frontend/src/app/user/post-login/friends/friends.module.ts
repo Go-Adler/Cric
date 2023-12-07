@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { TimeagoModule } from 'ngx-timeago'
 import { CommonModule } from '@angular/common';
+import {MatMenuModule} from '@angular/material/menu'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
@@ -20,6 +21,7 @@ import { UserPostComponent } from './user-post/user-post.component';
   imports: [
     HomeModule,
     CommonModule,
+    MatMenuModule,
     MatCardModule,
     MatButtonModule,
     LazyLoadImageModule,
