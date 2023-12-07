@@ -3,6 +3,8 @@ import { instrument } from "@socket.io/admin-ui"
 import { Server } from "http"
 import { Types } from "mongoose"
 import { UserDataUseCase } from "../modules/user/application/useCases/user.data.useCase"
+import { SocketUseCase } from "../modules/user/application/useCases/user.socket.useCase"
+import { ErrorHandling } from "../utils/handleError.utils"
 
 // Define constants
 const CONNECTION_EVENT = "connection"
@@ -25,6 +27,7 @@ export class SocketService {
   private static instance: SocketService
 
   // User data use case
+  private socketUseCase: SocketUseCase
   private userDataUseCase: UserDataUseCase
 
   // Socket server
@@ -32,6 +35,7 @@ export class SocketService {
 
   // Private constructor
   private constructor() {
+    this.socketUseCase = new SocketUseCase()
     this.userDataUseCase = new UserDataUseCase()
   }
 
@@ -64,30 +68,26 @@ export class SocketService {
           // Get user name and socket id from handshake query
           const userName = socket.handshake.query.userName as string
           const socketId = socket.id
-          console.log(userName, socketId, 67)
           
           // Set up user data for the connection
-          this.userDataUseCase.setSocketConnection(userName, socketId)
+          this.socketUseCase.setSocketConnection(userName, socketId)
 
           // Handle disconnect-request event
-          socket.on(DISCONNECT_REQUEST_EVENT, (userName) => {
-            console.log(userName, 73)
+          socket.on(DISCONNECT_REQUEST_EVENT, () => {
 
             // Disconnect the socket
             socket.disconnect()
           })
 
           // Handle disconnect event
-          socket.on(DISCONNECT_EVENT, (userName) => {
+          socket.on(DISCONNECT_EVENT, () => {
             const socketId = socket.id
-            console.log(userName, 80)
 
             // Remove user data for the connection
-            this.userDataUseCase.removeSocketConnection(socketId)
+            this.socketUseCase.removeSocketConnection(socketId)
           })
-        } catch (e: any) {
-          console.error(`Error handling socket connection event: ${e.message}`)
-          throw new Error(e.message)
+        } catch (error) {
+          ErrorHandling.processError('Error in setUpSocketIo, SocketService', error)
         }
       })
 

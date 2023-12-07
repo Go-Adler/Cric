@@ -1,7 +1,6 @@
 import { Types } from "mongoose"
 import { UserDataAccess } from "../../data/user.dataAccess"
-import { SocketDataAccess } from "../../data/user.socketDataAccess"
-import { SocketData } from "../../../../shared/interfaces/user.socketData.interface"
+import { SocketDataAccess } from "../../data/user.socket.dataAccess"
 import { ErrorHandling } from "../../../../utils/handleError.utils"
 
 /**
@@ -17,38 +16,6 @@ export class UserDataUseCase {
   constructor() {
     this.userDataAccess = new UserDataAccess()
     this.socketDataAccess = new SocketDataAccess()
-  }
-
-  /**
-   * Method to establish a socket connection for a user.
-   * @param userName - User's name.
-   * @param socketId - Socket ID.
-   * @returns A promise that resolves to the socket data or rejects with an error.
-   */
-  async setSocketConnection(userName: string, socketId: string): Promise<SocketData> {
-    try {
-      await this.userDataAccess.addSocketId(userName, socketId)
-      await this.socketDataAccess.SocketAdd(userName, socketId)
-      return { userName, socketId }
-    } catch (error) {
-      ErrorHandling.processError("Error while setting socket connection", error)
-    }
-  }
-
-  /**
-   * Method to remove a socket connection based on the socket ID.
-   * @param socketId - Socket ID to be removed.
-   * @returns A promise that resolves to the socket data or rejects with an error.
-   */
-  async removeSocketConnection(socketId: string): Promise<SocketData> {
-    try {
-      await this.socketDataAccess.removeSocketId(socketId)
-      const userName = await this.socketDataAccess.GetUserNameWithSocketId(socketId)
-      await this.userDataAccess.removeSocketId(userName, socketId)
-      return { userName, socketId }
-    } catch (error) {
-      ErrorHandling.processError("Error while removing socket connection", error)
-    }
   }
 
   /**

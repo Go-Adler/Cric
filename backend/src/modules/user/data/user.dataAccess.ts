@@ -346,27 +346,26 @@ export class UserDataAccess {
   }
 
   /**
-   * Add a socket connection to a user
-   * @param userName - The username of the user
+   * Add socket ID to user
+   * 
+   * @param userName - The user name of the user
    * @param socketId - The ID of the socket connection
    */
   async addSocketId(userName: string, socketId: string) {
     try {
-      await UserEntity.findOneAndUpdate({ userName }, { $push: { socketId } })
+      await UserEntity.findOneAndUpdate({ userName }, { $addToSet: { socketId } })
     } catch (error) {
       ErrorHandling.processError("Error in addSocketId, userDataAccess", error)
     }
   }
 
   /**
-   * Remove a socket connection from a user
+   * Remove socket id from user
    * @param userName - The username of the user
    * @param socketId - The ID of the socket connection to remove
    */
   async removeSocketId(userName: string, socketId: string) {
     try {
-      console.log(379, userName)
-
       await UserEntity.findOneAndUpdate({ userName }, { $pull: { socketId } })
     } catch (error) {
       ErrorHandling.processError("Error in removeSocketId, userDataAccess", error)
