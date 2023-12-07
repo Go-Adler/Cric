@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 
-import { UserPostDataAccess } from '../../data/user.postDataAccess';
+import { UserPostDataAccess } from '../../data/user.post.dataAccess';
 
 // Class to handle the use case of liking a post
 export class LikePostUseCase {

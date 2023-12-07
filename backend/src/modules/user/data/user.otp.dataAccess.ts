@@ -1,5 +1,5 @@
 import { Types } from 'mongoose'
-import { UserEntity } from './../domain/user.schema';
+import { UserEntity } from '../domain/user.schema';
 
 export class UserOtpDataAccess {
   // store otp data

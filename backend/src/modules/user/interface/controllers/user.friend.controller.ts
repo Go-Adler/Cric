@@ -28,7 +28,7 @@ export class FriendController {
       const { userId } = req.user as JwtPayload // Extract user ID from JWT payload
       const { personId } = req.body
       await this.friendUseCase.addRequest(userId, personId)
-      await this.notificationUseCase.addNotification(personId, 'requestReceived', userId)
+      await this.notificationUseCase.addNotification(userId, 'requestReceived', personId)
       await this.socketService.sendNotification(personId)
       res.json({ message: 'Request successful', friendStatus: 'requestSent' })
     } catch(error) {
@@ -49,7 +49,7 @@ export class FriendController {
       const { personId } = req.body
 
       await this.friendUseCase.acceptRequest(userId, personId)
-      await this.notificationUseCase.addNotification(personId, 'requestReceived', userId)
+      await this.notificationUseCase.addNotification(userId, 'requestAccepted', personId)
       await this.socketService.sendNotification(personId)
       res.json({ message: 'Request successful', friendStatus: 'friend' })
     } catch(error) {
@@ -70,8 +70,6 @@ export class FriendController {
       const { personId } = req.body
 
       await this.friendUseCase.rejectRequest(userId, personId)
-      await this.notificationUseCase.addNotification(personId, 'requestReceived', userId)
-      await this.socketService.sendNotification(personId)
       res.json({ message: 'Request successful', friendStatus: 'stranger' })
     } catch(error) {
       next(error)
@@ -91,8 +89,6 @@ export class FriendController {
       const { personId } = req.body
 
       await this.friendUseCase.removeFriend(userId, personId)
-      await this.notificationUseCase.addNotification(personId, 'r', userId)
-      await this.socketService.sendNotification(personId)
       res.json({ message: 'Request successful', friendStatus: 'stranger' })
     } catch(error) {
       next(error)

@@ -1,4 +1,4 @@
-import { UserOtpDataAccess } from '../../data/user.otpAccess'
+import { UserOtpDataAccess } from '../../data/user.otp.dataAccess'
 import { UserDataAccess } from '../../data/user.dataAccess'
 import { InvalidOtpError } from '../../../../shared/errors/invalidOtp.error'
 import { Types } from 'mongoose'

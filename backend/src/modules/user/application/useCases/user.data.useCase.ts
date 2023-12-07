@@ -42,9 +42,9 @@ export class UserDataUseCase {
    */
   async removeSocketConnection(socketId: string): Promise<SocketData> {
     try {
+      await this.socketDataAccess.removeSocketId(socketId)
       const userName = await this.socketDataAccess.GetUserNameWithSocketId(socketId)
       await this.userDataAccess.removeSocketId(userName, socketId)
-      await this.socketDataAccess.removeSocketId(socketId)
       return { userName, socketId }
     } catch (error) {
       ErrorHandling.processError("Error while removing socket connection", error)

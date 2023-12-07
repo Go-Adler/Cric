@@ -1,5 +1,5 @@
 import { Types } from "mongoose"
-import { UserProfileDataAccess } from "../../data/user.profileDataAccess"
+import { UserProfileDataAccess } from "../../data/user.profile.dataAccess"
 
 export class UserProfileUseCase {
   private userProfileDataAccess: UserProfileDataAccess

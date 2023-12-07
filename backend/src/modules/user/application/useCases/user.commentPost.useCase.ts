@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 import { Post } from "../../../../shared/interfaces/userPost.interface";
-import CommentsDataAccess from "../../data/user.commentDataAccess";
+import CommentsDataAccess from "../../data/user.comment.dataAccess";
 
 const ERROR_MESSAGES = {
   INVALID_ID: "Invalid ID",

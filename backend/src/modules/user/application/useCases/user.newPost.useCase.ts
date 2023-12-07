@@ -1,6 +1,6 @@
 import { Types } from "mongoose" 
 import { Post } from "../../../../shared/interfaces/userPost.interface"
-import { UserPostDataAccess } from "../../data/user.postDataAccess"
+import { UserPostDataAccess } from "../../data/user.post.dataAccess"
 
 export class CreatePostUseCase {
   private userPostDataAccess: UserPostDataAccess

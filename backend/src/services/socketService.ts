@@ -1,7 +1,7 @@
 import { Server as SocketServer, Socket } from "socket.io"
 import { instrument } from "@socket.io/admin-ui"
 import { Server } from "http"
-import { Types } from 'mongoose'
+import { Types } from "mongoose"
 import { UserDataUseCase } from "../modules/user/application/useCases/user.data.useCase"
 
 // Define constants
@@ -64,23 +64,28 @@ export class SocketService {
           // Get user name and socket id from handshake query
           const userName = socket.handshake.query.userName as string
           const socketId = socket.id
-
+          console.log(userName, socketId, 67)
+          
           // Set up user data for the connection
           this.userDataUseCase.setSocketConnection(userName, socketId)
 
           // Handle disconnect-request event
-          socket.on(DISCONNECT_REQUEST_EVENT, () => {
+          socket.on(DISCONNECT_REQUEST_EVENT, (userName) => {
+            console.log(userName, 73)
+
             // Disconnect the socket
             socket.disconnect()
           })
 
           // Handle disconnect event
-          socket.on(DISCONNECT_EVENT, () => {
+          socket.on(DISCONNECT_EVENT, (userName) => {
             const socketId = socket.id
+            console.log(userName, 80)
+
             // Remove user data for the connection
             this.userDataUseCase.removeSocketConnection(socketId)
           })
-        } catch (e:any) {
+        } catch (e: any) {
           console.error(`Error handling socket connection event: ${e.message}`)
           throw new Error(e.message)
         }
@@ -106,7 +111,6 @@ export class SocketService {
         sockets.forEach((socket) => {
           this.io.to(socket).emit(NOTIFICATION_EVENT)
         })
-        
       }
     } catch (error) {
       // Handle error

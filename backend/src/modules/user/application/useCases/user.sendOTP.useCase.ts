@@ -1,4 +1,4 @@
-import { UserOtpDataAccess } from '../../data/user.otpAccess';
+import { UserOtpDataAccess } from '../../data/user.otp.dataAccess';
 import { generateOTP } from '../../../../utils/generateOTP.utils';
 import { AwsSesService } from '../../../../services/awsSes.service';
 

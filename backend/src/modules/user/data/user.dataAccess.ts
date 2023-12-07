@@ -3,7 +3,7 @@ import { UserEntity } from "../domain/user.schema"
 import { PostEntity } from "../domain/user.postSchema"
 import { validateString } from "../../../utils/validateString.utils"
 import { ErrorHandling } from "../../../utils/handleError.utils"
-import { User } from '../../../shared/interfaces/user.interface'
+import { User } from "../../../shared/interfaces/user.interface"
 
 // User Data Access Class
 export class UserDataAccess {
@@ -17,14 +17,7 @@ export class UserDataAccess {
    * @param password - The password of the user
    * @returns The ID of the created user
    */
-  async createUser(
-    name: string,
-    userName: string,
-    gender: string,
-    email: string,
-    phone: string,
-    password: string
-  ) {
+  async createUser(name: string, userName: string, gender: string, email: string, phone: string, password: string) {
     try {
       // Validate input parameters
       validateString(name, "name")
@@ -268,7 +261,7 @@ export class UserDataAccess {
    * @param id - The ID of the user
    * @returns The user's profile picture or null if not found
    */
-  async getUserProfilePictureWithId(id: Types.ObjectId):Promise<User> {
+  async getUserProfilePictureWithId(id: Types.ObjectId): Promise<User> {
     try {
       return await UserEntity.findById(id).select("profilePicture")
     } catch (error) {
@@ -313,11 +306,7 @@ export class UserDataAccess {
       const users = await UserEntity.find(
         {
           isAdmin: false,
-          $or: [
-            { userName: { $regex: input, $options: "i" } },
-            { email: { $regex: input, $options: "i" } },
-            { name: { $regex: input, $options: "i" } },
-          ],
+          $or: [{ userName: { $regex: input, $options: "i" } }, { email: { $regex: input, $options: "i" } }, { name: { $regex: input, $options: "i" } }],
         },
         "_id userName profilePicture name"
       )
@@ -376,6 +365,8 @@ export class UserDataAccess {
    */
   async removeSocketId(userName: string, socketId: string) {
     try {
+      console.log(379, userName)
+
       await UserEntity.findOneAndUpdate({ userName }, { $pull: { socketId } })
     } catch (error) {
       ErrorHandling.processError("Error in removeSocketId, userDataAccess", error)
@@ -402,13 +393,13 @@ export class UserDataAccess {
   }
 
   /**
- * Get socket connections of a user by user ID
- * @param userId - The ID of the user
- * @returns An array of socket connections or an empty array if not found
- */
+   * Get socket connections of a user by user ID
+   * @param userId - The ID of the user
+   * @returns An array of socket connections or an empty array if not found
+   */
   async getSocketsWithId(userId: Types.ObjectId) {
     try {
-      const { socketId } = await UserEntity.findById(userId).select("socketId") as {
+      const { socketId } = (await UserEntity.findById(userId).select("socketId")) as {
         socketId: string[]
       }
 
@@ -419,20 +410,20 @@ export class UserDataAccess {
   }
 
   /**
-   * 
+   *
    * @param userId - The ID of the user
    * @returns User Id.
    */
   async checkUserExisting(userId: Types.ObjectId): Promise<User> {
     try {
-      return await UserEntity.findById(userId).select('_id')
+      return await UserEntity.findById(userId).select("_id")
     } catch (error) {
-      ErrorHandling.processError('Error in checkUserExisting, userGetDataUseCase', error)
+      ErrorHandling.processError("Error in checkUserExisting, userGetDataUseCase", error)
     }
   }
 
   /**
-   * 
+   *
    * @param userId - The ID of the user
    * @returns User Id if friend else null
    */
@@ -440,42 +431,42 @@ export class UserDataAccess {
     try {
       return await UserEntity.findOne({
         _id: userId,
-        friends: { $in: [personId] }
-      }).select('_id')
+        friends: { $in: [personId] },
+      }).select("_id")
     } catch (error) {
-      ErrorHandling.processError('Error in isFriend, userGetDataUseCase', error)
+      ErrorHandling.processError("Error in isFriend, userGetDataUseCase", error)
     }
   }
 
   /**
- * 
- * @param userId - The ID of the user
- * @returns User Id if friend else null
- */
+   *
+   * @param userId - The ID of the user
+   * @returns User Id if friend else null
+   */
   async isRequestedByUser(personId: Types.ObjectId, userId: Types.ObjectId): Promise<User> {
     try {
       return await UserEntity.findOne({
         _id: personId,
-        friendRequestsReceived: { $in: [userId] }
-      }).select('_id')
+        friendRequestsReceived: { $in: [userId] },
+      }).select("_id")
     } catch (error) {
-      ErrorHandling.processError('Error in isRequestedByUser, userGetDataUseCase', error)
+      ErrorHandling.processError("Error in isRequestedByUser, userGetDataUseCase", error)
     }
   }
 
   /**
- * 
- * @param userId - The ID of the user
- * @returns User Id if friend else null
- */
+   *
+   * @param userId - The ID of the user
+   * @returns User Id if friend else null
+   */
   async isRequestedByPerson(personId: Types.ObjectId, userId: Types.ObjectId): Promise<User> {
     try {
       return await UserEntity.findOne({
         _id: personId,
-        friendRequestsSent: { $in: [userId] }
-      }).select('_id')
+        friendRequestsSent: { $in: [userId] },
+      }).select("_id")
     } catch (error) {
-      ErrorHandling.processError('Error in isRequestedByPerson, userGetDataUseCase', error)
+      ErrorHandling.processError("Error in isRequestedByPerson, userGetDataUseCase", error)
     }
   }
 }
