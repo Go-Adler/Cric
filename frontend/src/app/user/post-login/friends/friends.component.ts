@@ -22,6 +22,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
   friendStatus: string = ''
   profilePicture: string = ''
   fetchingData: boolean = false
+  requestProgressBar: boolean = false
 
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
@@ -80,18 +81,21 @@ export class FriendsComponent implements OnInit, OnDestroy {
   }
 
   addFriend() {
+    this.requestProgressBar = true
     this.friendsService.sendFriendRequest(this.userId).subscribe({
       next: response => {
-      this.friendStatus = response.friendStatus
+        this.requestProgressBar = false
+        this.friendStatus = response.friendStatus
         this.openSnackBar('Request sent')
       }
     })
   }
 
   acceptRequest() {
+    this.requestProgressBar = true
     this.friendsService.acceptRequest(this.userId).subscribe({
       next: response => {
-        console.log(response.friendStatus);
+        this.requestProgressBar = false
         this.friendStatus = response.friendStatus
         this.openSnackBar('Request accepted')
       }
@@ -99,8 +103,10 @@ export class FriendsComponent implements OnInit, OnDestroy {
   }
 
   rejectRequest() {
+    this.requestProgressBar = true
     this.friendsService.rejectRequest(this.userId).subscribe({
       next: response => {
+      this.requestProgressBar = false
       this.friendStatus = response.friendStatus
         this.openSnackBar('Request rejected')
       }
@@ -115,8 +121,10 @@ export class FriendsComponent implements OnInit, OnDestroy {
   }
 
   removeFriend() {
+    this.requestProgressBar = true
     this.friendsService.removeFriend(this.userId).subscribe({
       next: response => {
+        this.requestProgressBar = false
         this.friendStatus = response.friendStatus
         this.openSnackBar('Friend removed')
       }

@@ -22,55 +22,75 @@
         <div class="flex flex-col w-full items-end justify-between">
           <div class="flex w-full justify-end">
             <!-- Stranger -->
-            <button
-              *ngIf="friendStatus === 'stranger'"
-              (click)="addFriend()"
-              mat-stroked-button
-              color="warn"
-              class="md:flex addFriendButton p-2"
-            >
-              <div class="flex items-center gap-1">
-                <div class="hidden md:block text-xs">Add Friend</div>
-                <span class="material-symbols-rounded text-xl">
-                  person_add
-                </span>
-              </div>
-            </button>
-
-            <!-- Request sent -->
-            <button
-              *ngIf="friendStatus === 'requestSent'"
-              (click)="addFriend()"
-              mat-stroked-button
-              color="warn"
-              class="md:flex addFriendButton p-2"
-            >
-              <div class="flex items-center gap-1">
-                <div class="hidden md:block text-xs">Request Sent</div>
-                <span class="material-symbols-rounded text-xl text-orange-400">
-                  pending
-                </span>
-              </div>
-            </button>
-
-            <!-- Request received-->
-            <div
-              *ngIf="friendStatus === 'requestReceived'"
-              class="flex flex-col gap-4 w-10/12"
-            >
+            <div>
               <button
-                disabled
+                *ngIf="friendStatus === 'stranger'"
+                (click)="addFriend()"
                 mat-stroked-button
                 color="warn"
                 class="md:flex addFriendButton p-2"
               >
                 <div class="flex items-center gap-1">
-                  <div class="hidden md:block text-xs">Requested</div>
-                  <span class="material-symbols-rounded text-base">
-                    call_received
+                  <div class="hidden md:block text-xs">Add Friend</div>
+                  <span class="material-symbols-rounded text-xl">
+                    person_add
                   </span>
                 </div>
               </button>
+              <mat-progress-bar
+                *ngIf="requestProgressBar"
+                mode="indeterminate"
+              ></mat-progress-bar>
+            </div>
+
+            <!-- Request sent -->
+            <div>
+              <button
+                *ngIf="friendStatus === 'requestSent'"
+                (click)="addFriend()"
+                mat-stroked-button
+                color="warn"
+                class="md:flex addFriendButton p-2"
+              >
+                <div class="flex items-center gap-1">
+                  <div class="hidden md:block text-xs">Request Sent</div>
+                  <span
+                    class="material-symbols-rounded text-xl text-orange-400"
+                  >
+                    pending
+                  </span>
+                </div>
+              </button>
+              <mat-progress-bar
+                *ngIf="requestProgressBar"
+                mode="indeterminate"
+              ></mat-progress-bar>
+            </div>
+
+            <!-- Request received-->
+            <div *ngIf="friendStatus === 'requestReceived'" class="flex flex-col gap-4 w-9/12">
+              <div
+                class="w-full"
+                
+              >
+                <button
+                  disabled
+                  mat-stroked-button
+                  color="warn"
+                  class="md:flex addFriendButton p-2 w-full"
+                >
+                  <div class="flex items-center gap-1">
+                    <div class="hidden md:block text-xs">Requested</div>
+                    <span class="material-symbols-rounded text-base">
+                      call_received
+                    </span>
+                  </div>
+                </button>
+                <mat-progress-bar
+                  *ngIf="requestProgressBar"
+                  mode="indeterminate"
+                ></mat-progress-bar>
+              </div>
               <div class="flex gap-4">
                 <button
                   mat-stroked-button
@@ -105,20 +125,26 @@
             </div>
 
             <!-- Friend -->
-            <button
-              *ngIf="friendStatus === 'friend'"
-              disabled
-              mat-stroked-button
-              color="warn"
-              class="md:flex addFriendButton p-2"
-            >
-              <div class="flex items-center gap-1">
-                <div class="hidden md:block text-xs">Friends</div>
-                <span class="material-symbols-rounded text-xl text-blue-400">
-                  person_check
-                </span>
-              </div>
-            </button>
+            <div>
+              <button
+                *ngIf="friendStatus === 'friend'"
+                disabled
+                mat-stroked-button
+                color="warn"
+                class="md:flex addFriendButton p-2"
+              >
+                <div class="flex items-center gap-1">
+                  <div class="hidden md:block text-xs">Friends</div>
+                  <span class="material-symbols-rounded text-xl text-blue-400">
+                    person_check
+                  </span>
+                </div>
+              </button>
+              <mat-progress-bar
+                *ngIf="requestProgressBar"
+                mode="indeterminate"
+              ></mat-progress-bar>
+            </div>
           </div>
           <span
             [matMenuTriggerFor]="menu"
@@ -133,9 +159,15 @@
                 <span class="text-xs">Block</span>
               </div>
             </button>
-            <button mat-menu-item *ngIf="friendStatus === 'friend'" (click)="removeFriend()">
+            <button
+              mat-menu-item
+              *ngIf="friendStatus === 'friend'"
+              (click)="removeFriend()"
+            >
               <div class="flex gap-2 items-center justify-center">
-                <span class="material-symbols-rounded text-xl"> person_remove </span>
+                <span class="material-symbols-rounded text-xl">
+                  person_remove
+                </span>
                 <span class="text-xs">Remove friend</span>
               </div>
             </button>
