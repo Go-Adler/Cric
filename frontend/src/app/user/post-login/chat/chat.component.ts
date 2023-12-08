@@ -27,8 +27,8 @@ export class ChatComponent {
 
     this.friendsService.name$.subscribe({
       next: name => {
-        this.isFetching = false
         this.name = name
+        if (this.name) this.isFetching = false
       }
     })
 

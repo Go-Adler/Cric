@@ -1,23 +1,32 @@
-<div class="titleBar p-2">
-  <div class="flex gap-2">
-    <!-- Profile Picture -->
-    <div class="w-1/12">
-    <img [src]="profilePicture" alt="" class="rounded-lg"/>
-  
-    </div>
-    <div class="flex flex-col gap-1">
-      <div class="flex gap-1 items-center">
-        <div class="text-xs">{{ name }}</div>
-        <span
-          *ngIf="isOnline"
-          class="material-symbols-rounded text-xs fillIcon text-green-600"
-        >
-          circle
-        </span>
+<div class="h-screen">
+  <div class="titleBar p-3 sticky top-16" *ngIf="!isFetching">
+    <div class="flex gap-2">
+      <!-- Profile Picture -->
+      <div class="w-1/12">
+      <img [src]="profilePicture" alt="" class="rounded-lg"/>
+    
       </div>
-      <div class="text-xs text-stone-500">{{'@'}}{{ userName }}</div>
+      <div class="flex flex-col gap-1">
+        <div class="flex gap-1 items-center">
+          <div class="text-xs">{{ name }}</div>
+          <span
+            *ngIf="isOnline"
+            class="material-symbols-rounded text-xs fillIcon text-green-600"
+          >
+            circle
+          </span>
+        </div>
+        <div class="text-xs text-stone-500">{{'@'}}{{ userName }}</div>
+      </div>
     </div>
   </div>
+  <div *ngIf="!isFetching" class="p-2 flex flex-col h-full bg-red-400 justify-between">
+    <div>ChatArea</div>
+    <div>Input</div>
+  </div>
+  
+  <div *ngIf="isFetching" class="flex items-center justify-center mt-20">
+    <mat-spinner diameter="30"></mat-spinner>
+  </div>
+  
 </div>
-
-d
