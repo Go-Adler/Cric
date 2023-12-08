@@ -41,4 +41,21 @@ export class SocketUseCase {
       ErrorHandling.processError("Error while removing socket connection", error)
     }
   }
+
+  /**
+ * Method to remove all socket connections once server restarts. // Can be removed in production
+ * 
+ */
+  async removeAllSocketConnections(): Promise<void> {
+    try {
+      
+      const sockets = await this.socketDataAccess.getAllSockets()
+
+      for (const socket of sockets) {
+        await this.removeSocketConnection(socket.socketId)
+      }
+    } catch (error) {
+      ErrorHandling.processError("Error while removing socket connection", error)
+    }
+  }
 }

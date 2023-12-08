@@ -48,7 +48,7 @@ export class SocketService {
   }
 
   // Set up Socket.IO with server and configuration
-  public setUpSocketIo(server: Server): void {
+  public async setUpSocketIo(server: Server): Promise<void> {
     try {
       // Create socket configuration object
       const socketConfig: SocketConfig = {
@@ -61,30 +61,30 @@ export class SocketService {
 
       // Create socket server
       this.io = new SocketServer(server, socketConfig)
+      await this.socketUseCase.removeAllSocketConnections()
 
       // Handle socket connection event
-      this.io.on(CONNECTION_EVENT, (socket: Socket) => {
+      this.io.on(CONNECTION_EVENT, async (socket: Socket) => {
         try {
           // Get user name and socket id from handshake query
           const userName = socket.handshake.query.userName as string
           const socketId = socket.id
-          
+
           // Set up user data for the connection
-          this.socketUseCase.setSocketConnection(userName, socketId)
+          await this.socketUseCase.setSocketConnection(userName, socketId)
 
           // Handle disconnect-request event
           socket.on(DISCONNECT_REQUEST_EVENT, () => {
-
             // Disconnect the socket
             socket.disconnect()
           })
 
           // Handle disconnect event
-          socket.on(DISCONNECT_EVENT, () => {
+          socket.on(DISCONNECT_EVENT, async () => {
             const socketId = socket.id
 
             // Remove user data for the connection
-            this.socketUseCase.removeSocketConnection(socketId)
+            await this.socketUseCase.removeSocketConnection(socketId)
           })
         } catch (error) {
           ErrorHandling.processError('Error in setUpSocketIo, SocketService', error)

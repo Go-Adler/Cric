@@ -8,6 +8,8 @@ import { UserService } from 'src/app/services/user.service'
   providedIn: 'root',
 })
 export class LogOutService {
+  userName!: string
+  
   constructor(
     private authService: AuthService,
     private userService: UserService,

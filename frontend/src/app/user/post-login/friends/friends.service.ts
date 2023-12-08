@@ -19,8 +19,8 @@ export class FriendsService {
   private userName = new BehaviorSubject<string>('')
   private friendsCount = new BehaviorSubject<string>('')
   private fetchComplete = new BehaviorSubject<boolean>(false)
-  private friendStatus = new BehaviorSubject<FriendStatus>('stranger')
   private profilePicture = new BehaviorSubject<string>(this.defaultProfilePicture);
+  friendStatus = new BehaviorSubject<FriendStatus>('stranger')
 
   name$: Observable<string> = this.name.asObservable()
   userId$: Observable<string> = this.userId.asObservable()

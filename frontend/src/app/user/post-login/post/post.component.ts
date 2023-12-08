@@ -65,6 +65,5 @@ export class PostComponent {
 
   handleImageError() {
     console.log('lazy loading image error')
-
   }
 }

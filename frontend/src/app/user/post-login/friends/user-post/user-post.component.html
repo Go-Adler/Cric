@@ -1,4 +1,4 @@
-<div class="mb-10 pt-4 min-h-screen px-8 md:px-14">
+<div class="mb-10 pt-4 min-h-screen px-8 md:px-14" *ngIf="friendStatus === 'friend'">
   <span class="flex justify-center" *ngIf="spinner"
     ><mat-spinner diameter="30" color="primary"></mat-spinner
   ></span>
@@ -38,7 +38,7 @@
     <!-- image -->
     <img
       *ngIf="post.content?.multimedia[0]"
-      [defaultImage]="postLoadingImage"
+      [defaultImage]="POST_LOADING_IMAGE"
       [lazyLoad]="post.content?.multimedia[0]"
       alt="Post Image"
       class="rounded-md"
@@ -149,4 +149,11 @@
     <span class="text-xs">No more posts</span>
   </span>
   </div>
+</div>
+<div *ngIf="friendStatus !== 'friend'" class="flex flex-col items-center pt-10">
+  <div class="w-7/12">
+  <img [src]="POSTS_PROTECTED" alt="">
+
+  </div>
+  <div class="flex gap-1">Add <div class="text-blue-500">{{ userName }}</div> as friend to see posts</div>
 </div>

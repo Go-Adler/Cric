@@ -8,6 +8,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 
 import { FriendsService } from './friends.service'
 import { NotificationService } from '../post-login.service'
+import { FriendStatus } from 'src/app/models/responses/userResponses'
 
 @Component({
   selector: 'app-friends',
@@ -19,10 +20,10 @@ export class FriendsComponent implements OnInit, OnDestroy {
   userName: string
   userId: string = ''
   friendsCount: string = ''
-  friendStatus: string = ''
   profilePicture: string = ''
   fetchingData: boolean = false
   requestProgressBar: boolean = false
+  friendStatus: FriendStatus = 'stranger'
 
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
@@ -96,8 +97,9 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.friendsService.acceptRequest(this.userId).subscribe({
       next: response => {
         this.requestProgressBar = false
-        this.friendStatus = response.friendStatus
         this.openSnackBar('Request accepted')
+        this.friendStatus = response.friendStatus
+        this.friendsService.friendStatus.next(this.friendStatus)
       }
     })
   }
@@ -117,6 +119,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this._snackBar.open(Message, 'Done', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
+      duration: 3000,
     });
   }
 
@@ -125,8 +128,9 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.friendsService.removeFriend(this.userId).subscribe({
       next: response => {
         this.requestProgressBar = false
-        this.friendStatus = response.friendStatus
         this.openSnackBar('Friend removed')
+        this.friendStatus = response.friendStatus
+        this.friendsService.friendStatus.next(this.friendStatus)
       }
     })
   }

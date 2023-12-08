@@ -170,6 +170,5 @@ export class PostComponent implements OnChanges, OnDestroy {
 
   handleImageError() {
     console.log('lazy loading image error')
-
   }
 }

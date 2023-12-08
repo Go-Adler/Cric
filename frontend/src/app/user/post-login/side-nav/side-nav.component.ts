@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { MatButtonModule } from '@angular/material/button'
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog'
-import { MatMenuTrigger } from '@angular/material/menu';
-import { UserService } from 'src/app/services/user.service';
-import { LogOutService } from '../../auth/log-in/log-out.service';
+import { MatMenuTrigger } from '@angular/material/menu'
+import { UserService } from 'src/app/services/user.service'
+import { LogOutService } from '../../auth/log-in/log-out.service'
 import { SocketService } from 'src/app/services/socket.service'
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-side-nav',
@@ -19,21 +19,20 @@ export class SideNavComponent implements OnInit {
   userName: string = '';
   logOutPill: boolean = false;
   friendsActive: boolean = false
-  private socket: any = ''
   logOutImage = environment.LOG_OUT_IMAGE
 
 
-  @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
+  @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger
 
   // Injecting UserService and MatDialog in the constructor
-  constructor(
-    private userService: UserService,
-    public dialog: MatDialog,
-    private socketService: SocketService) {
-}
+  constructor (
+      private userService: UserService,
+      public dialog: MatDialog
+    ) {
+
+  }
 
   ngOnInit(): void {
-
     this.userService.notificationsCount$.subscribe({
       next: (notificationCount) => {
         this.notificationCount = notificationCount
@@ -43,26 +42,23 @@ export class SideNavComponent implements OnInit {
     // Subscribing to profilePicture$ observable to get the profile picture
     this.userService.profilePicture$.subscribe({
       next: (profilePicture) => {
-        this.profilePicture = profilePicture;
+        this.profilePicture = profilePicture
       }
-    });
+    })
 
     // Subscribing to name$ observable to get the name
     this.userService.name$.subscribe({
       next: (name) => {
-        this.name = name;
+        this.name = name
       }
-    });
+    })
 
     // Get user name
     this.userService.userName$.subscribe({
       next: (userName) => {
-        this.userName = userName;
-        if (this.socket?.id === undefined && userName) {
-          this.socket = this.socketService.connect(userName)
-        }
+        this.userName = userName
       }
-    });
+    })
   }
 
   showLogOut() {
@@ -74,7 +70,7 @@ export class SideNavComponent implements OnInit {
       width: '250px',
       enterAnimationDuration,
       exitAnimationDuration,
-    });
+    })
   }
 
 }
