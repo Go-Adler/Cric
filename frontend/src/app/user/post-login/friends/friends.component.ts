@@ -3,7 +3,7 @@ import {
   MatSnackBarVerticalPosition,
   MatSnackBarHorizontalPosition,
 } from '@angular/material/snack-bar'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { Component, OnDestroy, OnInit } from '@angular/core'
 
 import { FriendsService } from './friends.service'
@@ -29,6 +29,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private _snackBar: MatSnackBar,
     private friendsService: FriendsService,
@@ -141,5 +142,9 @@ export class FriendsComponent implements OnInit, OnDestroy {
         this.friendsService.friendStatus.next(this.friendStatus)
       }
     })
+  }
+
+  goToMessage() {
+    this.router.navigate(['/messages', this.userName])
   }
 }

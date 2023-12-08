@@ -1,18 +1,23 @@
 <div class="min-h-screen">
   <div class="sticky top-14 nav z-10">
     <div class="p-5 gap-4 flex" *ngIf="fetchingData">
-      <!-- profile picutre area -->
+      <!-- Profile picutre area -->
       <div class="flex w-4/12 flex-col items-end gap-2">
         <img class="rounded-md" [src]="profilePicture" alt="" />
       </div>
 
-      <!-- info area -->
+      <!-- Info area -->
       <span class="flex justify-between w-full">
-        <!-- left -->
+        <!-- Left -->
         <div class="w-full">
           <div class="flex gap-3 items-center">
             <div class="text-sm">{{ name }}</div>
-            <span *ngIf="isOnline" class="material-symbols-rounded text-xs fillIcon text-green-600"> circle </span>
+            <span
+              *ngIf="isOnline"
+              class="material-symbols-rounded text-xs fillIcon text-green-600"
+            >
+              circle
+            </span>
           </div>
           <div class="text-xs text-stone-400">{{ "@" }}{{ userName }}</div>
 
@@ -21,9 +26,9 @@
           </span>
         </div>
 
-        <!-- right -->
+        <!-- Right -->
         <div class="flex flex-col w-full items-end justify-between">
-          <!-- friendship status -->
+          <!-- Rriendship status -->
           <div class="flex w-full justify-end">
             <!-- Stranger -->
             <div>
@@ -130,31 +135,45 @@
 
             <!-- Friend -->
             <div class="flex gap-2" *ngIf="friendStatus === 'friend'">
-              <button mat-raised-button>Message</button>
-             <div>
-              <button
-            [matMenuTriggerFor]="menuButton"
-              mat-stroked-button
-              color="warn"
-              class="md:flex addFriendButton p-2"
-            >
-              <div class="flex items-center gap-1">
-                <div class="hidden md:block text-xs">Friends</div>
-                <span class="material-symbols-rounded text-xl text-blue-400">
-                  person_check
-                </span>
+              <!-- Message button -->
+              <button mat-stroked-button (click)="goToMessage()">
+                <div class="flex gap-2 items-center">
+                  <div class="text-xs hidden md:block">Message</div>
+                  <span class="material-symbols-rounded text-lg"> chat_bubble </span>
+                </div>
+              </button>
+
+              <!-- Friend options button -->
+              <div>
+                <!-- Button -->
+                <button
+                  (click)="friendOptions.click()"
+                  mat-stroked-button
+                  color="warn"
+                  class="md:flex addFriendButton p-2"
+                >
+                  <div class="flex items-center gap-1">
+                    <div class="hidden md:block text-xs">Friends</div>
+                    <span
+                      class="material-symbols-rounded text-xl text-blue-400"
+                    >
+                      person_check
+                    </span>
+                  </div>
+                </button>
+
+                <!-- Progress bar -->
+                <mat-progress-bar
+                  *ngIf="requestProgressBar"
+                  mode="indeterminate"
+                ></mat-progress-bar>
               </div>
-            </button>
-            <mat-progress-bar
-              *ngIf="requestProgressBar"
-              mode="indeterminate"
-            ></mat-progress-bar>
-             </div>
             </div>
           </div>
 
-          <!-- options -->
+          <!-- Options -->
           <span
+            #friendOptions
             [matMenuTriggerFor]="menu"
             class="material-symbols-rounded hover:text-blue-500 cursor-pointer"
           >
@@ -180,25 +199,6 @@
               </div>
             </button>
           </mat-menu>
-
-          <mat-menu #menuButton="matMenu" class="bg-red-100">
-           <div>
-            <button
-            mat-menu-item
-            *ngIf="friendStatus === 'friend'"
-            (click)="removeFriend()"
-          >
-            <div class="flex gap-2 items-center justify-center">
-              <span class="material-symbols-rounded text-xl">
-                person_remove
-              </span>
-              <span class="text-xs">Remove friend</span>
-            </div>
-          </button>
-           </div>
-          </mat-menu>
-
-          
         </div>
       </span>
     </div>
