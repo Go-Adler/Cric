@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { FriendsService } from '../friends/friends.service'
 
@@ -13,14 +13,29 @@ export class ChatComponent {
   isOnline!: boolean
   isFetching!: boolean
   profilePicture!: string
+  end!: ElementRef
   // arrays: any = [1,1,1,1,1,1,,1,1]
   arrays: any = [1,1,1,1,1,1,,1,1,1,1,1,1,1,1,1,,1,1,1,1,1,,1,1,1,1,1,1,1,1,1,1,1,1,,1,1]
   
+  @ViewChild('scoll') scroll!:ElementRef
   constructor(
     private route: ActivatedRoute,
     private friendsService: FriendsService
     ) {
       this.userName = this.route.snapshot.paramMap.get('user-name')!
+    }
+
+    ngAfterViewInit() {
+      this.scrollToBottom();
+    }
+
+    scrollToBottom(): void {
+      try {
+        this.scroll.nativeElement.scrollTop = this.scroll.nativeElement.scrollHeight;
+      } catch (err) {
+        console.log(35);
+        
+      }
     }
 
   ngOnInit() {
@@ -46,5 +61,15 @@ export class ChatComponent {
         this.profilePicture = profilePicture
       }
     })
+    
+    setTimeout(() => {
+      if (this.scroll) {
+      this.scroll.nativeElement.scrollIntoView({behaviour: 'smooth'})
+
+      }
+    }, 200);
+
+    this.scrollToBottom();
+
   }
 }
