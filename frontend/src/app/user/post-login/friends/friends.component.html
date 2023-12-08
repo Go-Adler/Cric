@@ -10,7 +10,10 @@
       <span class="flex justify-between w-full">
         <!-- left -->
         <div class="w-full">
-          <div class="text-sm">{{ name }}</div>
+          <div class="flex gap-3 items-center">
+            <div class="text-sm">{{ name }}</div>
+            <span *ngIf="isOnline" class="material-symbols-rounded text-xs fillIcon text-green-600"> circle </span>
+          </div>
           <div class="text-xs text-stone-400">{{ "@" }}{{ userName }}</div>
 
           <span class="flex mt-5">
@@ -68,11 +71,11 @@
             </div>
 
             <!-- Request received-->
-            <div *ngIf="friendStatus === 'requestReceived'" class="flex flex-col gap-4 w-9/12">
-              <div
-                class="w-full"
-                
-              >
+            <div
+              *ngIf="friendStatus === 'requestReceived'"
+              class="flex flex-col gap-4 w-9/12"
+            >
+              <div class="w-full">
                 <button
                   disabled
                   mat-stroked-button

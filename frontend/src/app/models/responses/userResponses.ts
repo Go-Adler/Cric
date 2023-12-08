@@ -19,6 +19,7 @@ export interface FriendBasicInfo {
   name: string,
   userName: string,
   personId: string,
+  isOnline: boolean,
   friendsCount: number,
   profilePicture: string,
   friendStatus: FriendStatus,

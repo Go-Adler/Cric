@@ -18,6 +18,7 @@ export class FriendsService {
   private userId = new BehaviorSubject<string>('')
   private userName = new BehaviorSubject<string>('')
   private friendsCount = new BehaviorSubject<number>(0)
+  private isOnline = new BehaviorSubject<boolean>(false)
   private fetchComplete = new BehaviorSubject<boolean>(false)
   private profilePicture = new BehaviorSubject<string>(this.defaultProfilePicture);
   friendStatus = new BehaviorSubject<FriendStatus>('stranger')
@@ -25,6 +26,7 @@ export class FriendsService {
   name$: Observable<string> = this.name.asObservable()
   userId$: Observable<string> = this.userId.asObservable()
   userName$: Observable<string> = this.userName.asObservable()
+  isOnline$: Observable<boolean> = this.isOnline.asObservable()
   friendsCount$: Observable<number> = this.friendsCount.asObservable()
   fetchComplete$: Observable<boolean> = this.fetchComplete.asObservable()
   profilePicture$: Observable<string> = this.profilePicture.asObservable()
@@ -43,6 +45,7 @@ export class FriendsService {
         next: response => {
           this.fetchComplete.next(true)
           this.name.next(response.name)
+          this.isOnline.next(response.isOnline)
           this.userId.next(response.personId)
           this.friendStatus.next(response.friendStatus)
           this.friendsCount.next(response.friendsCount)

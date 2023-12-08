@@ -7,7 +7,6 @@ import { ActivatedRoute } from '@angular/router'
 import { Component, OnDestroy, OnInit } from '@angular/core'
 
 import { FriendsService } from './friends.service'
-import { NotificationService } from '../post-login.service'
 import { FriendStatus } from 'src/app/models/responses/userResponses'
 
 @Component({
@@ -16,15 +15,15 @@ import { FriendStatus } from 'src/app/models/responses/userResponses'
   styleUrls: ['./friends.component.scss'],
 })
 export class FriendsComponent implements OnInit, OnDestroy {
-  name: string = ''
+  name!: string
   userName: string
   userId!: string
   isOnline!: boolean
   friendsCount!: number
-  profilePicture: string = ''
-  fetchingData: boolean = false
-  requestProgressBar: boolean = false
-  friendStatus: FriendStatus = 'stranger'
+  fetchingData!: boolean
+  profilePicture!: string
+  friendStatus!: FriendStatus
+  requestProgressBar!: boolean
 
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
@@ -73,6 +72,13 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.friendsService.userId$.subscribe({
       next: userId => {
         this.userId = userId
+      }
+    })
+
+    this.friendsService.isOnline$.subscribe({
+      next: isOnline => {
+        console.log(isOnline);
+        this.isOnline = isOnline
       }
     })
   }
