@@ -18,8 +18,9 @@ import { FriendStatus } from 'src/app/models/responses/userResponses'
 export class FriendsComponent implements OnInit, OnDestroy {
   name: string = ''
   userName: string
-  userId: string = ''
-  friendsCount: string = ''
+  userId!: string
+  isOnline!: boolean
+  friendsCount!: number
   profilePicture: string = ''
   fetchingData: boolean = false
   requestProgressBar: boolean = false
@@ -32,7 +33,6 @@ export class FriendsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private _snackBar: MatSnackBar,
     private friendsService: FriendsService,
-    private notificationService: NotificationService,
   ) {
     this.userName = this.route.snapshot.paramMap.get('user-name')!
   }
@@ -97,6 +97,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.friendsService.acceptRequest(this.userId).subscribe({
       next: response => {
         this.requestProgressBar = false
+        this.friendsCount++
         this.openSnackBar('Request accepted')
         this.friendStatus = response.friendStatus
         this.friendsService.friendStatus.next(this.friendStatus)
@@ -128,6 +129,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.friendsService.removeFriend(this.userId).subscribe({
       next: response => {
         this.requestProgressBar = false
+        this.friendsCount--
         this.openSnackBar('Friend removed')
         this.friendStatus = response.friendStatus
         this.friendsService.friendStatus.next(this.friendStatus)

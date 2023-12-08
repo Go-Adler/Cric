@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
-import { FriendBasicInfo, I_UserBasicInfo } from "src/app/models/responses/userResponses"
+import { FriendBasicInfo } from "src/app/models/responses/userResponses"
 import { ConfigService } from "src/app/services/config.service"
 import { environment } from "src/environments/environment";
 import { FriendResponse } from "src/app/models/responses/friend.model";
@@ -17,7 +17,7 @@ export class FriendsService {
   private name = new BehaviorSubject<string>('')
   private userId = new BehaviorSubject<string>('')
   private userName = new BehaviorSubject<string>('')
-  private friendsCount = new BehaviorSubject<string>('')
+  private friendsCount = new BehaviorSubject<number>(0)
   private fetchComplete = new BehaviorSubject<boolean>(false)
   private profilePicture = new BehaviorSubject<string>(this.defaultProfilePicture);
   friendStatus = new BehaviorSubject<FriendStatus>('stranger')
@@ -25,7 +25,7 @@ export class FriendsService {
   name$: Observable<string> = this.name.asObservable()
   userId$: Observable<string> = this.userId.asObservable()
   userName$: Observable<string> = this.userName.asObservable()
-  friendsCount$: Observable<string> = this.friendsCount.asObservable()
+  friendsCount$: Observable<number> = this.friendsCount.asObservable()
   fetchComplete$: Observable<boolean> = this.fetchComplete.asObservable()
   profilePicture$: Observable<string> = this.profilePicture.asObservable()
   friendStatus$: Observable<FriendStatus> = this.friendStatus.asObservable()
@@ -54,7 +54,7 @@ export class FriendsService {
 
   changeToDefault() {
     this.name.next('')
-    this.friendsCount.next('')
+    this.friendsCount.next(0)
     this.profilePicture.next(this.defaultProfilePicture)
   }
 

@@ -347,7 +347,7 @@ export class UserDataAccess {
 
   /**
    * Add socket ID to user
-   * 
+   *
    * @param userName - The user name of the user
    * @param socketId - The ID of the socket connection
    */
@@ -464,6 +464,20 @@ export class UserDataAccess {
         _id: personId,
         friendRequestsSent: { $in: [userId] },
       }).select("_id")
+    } catch (error) {
+      ErrorHandling.processError("Error in isRequestedByPerson, userGetDataUseCase", error)
+    }
+  }
+
+  /**
+   *  Method to check user socket exists
+   *
+   * @param personId - The ID of the user to be checked
+   * @returns The length of socketId array
+   */
+  async socketExists(personId: Types.ObjectId): Promise<User> {
+    try {
+      return await UserEntity.findById(personId).select("socketId")
     } catch (error) {
       ErrorHandling.processError("Error in isRequestedByPerson, userGetDataUseCase", error)
     }

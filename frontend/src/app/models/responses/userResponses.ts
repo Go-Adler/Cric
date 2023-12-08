@@ -19,7 +19,7 @@ export interface FriendBasicInfo {
   name: string,
   userName: string,
   personId: string,
-  friendsCount: string,
+  friendsCount: number,
   profilePicture: string,
   friendStatus: FriendStatus,
   notificationsCount: number,

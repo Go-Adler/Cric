@@ -4,8 +4,8 @@ import { JwtPayload } from "jsonwebtoken"
 import { GetUserDataUseCase } from "../../application/useCases/user.getData.useCase"
 import { GetAwsUrlUseCase } from "../../application/useCases/user.getAwsUrl.useCase"
 import { NotificationUseCase } from "../../application/useCases/user.notification.useCase"
-import { UserDataResponse } from "../../../../shared/interfaces/userDataResponse.interface"
-import { PersonDataResponse } from "../../../../shared/interfaces/personDataResponse.interface"
+import { UserBasicInfoResponse } from "../../../../shared/interfaces/userDataResponse.interface"
+import { PersonBasicInfoResponse } from "../../../../shared/interfaces/personDataResponse.interface"
 
 export class UserDataController {
   private getAwsUrlUseCase: GetAwsUrlUseCase
@@ -44,7 +44,7 @@ export class UserDataController {
       }
 
       // Build and send user data response
-      const userData: UserDataResponse = {
+      const userData: UserBasicInfoResponse = {
         name,
         userName,
         friendsCount,
@@ -75,8 +75,9 @@ export class UserDataController {
 
       // Fetch friend data using use cases
       const name = await this.userDataUseCase.getName(personId)
+      const isOnline = await this.userDataUseCase.isOnline(personId)
       const friendsCount = await this.userDataUseCase.getFriendsCount(personId)
-      let friendStatus = await this.userDataUseCase.isFriend(personId, userId)
+      const friendStatus = await this.userDataUseCase.isFriend(personId, userId)
       let profilePicture = await this.userDataUseCase.getProfilePicture(personId)
       // Generate pre-signed URL for profile picture if available
       if (profilePicture) {
@@ -84,9 +85,10 @@ export class UserDataController {
       }
 
       // Build and send friend data response
-      const friendData: PersonDataResponse = {
+      const friendData: PersonBasicInfoResponse = {
         name,
         personId,
+        isOnline,
         friendStatus,
         friendsCount,
         profilePicture,

@@ -51,6 +51,22 @@ export class GetUserDataUseCase {
     }
   }
 
+
+  /**
+  * Method to check a person is online
+  * 
+  * @param userName - The username of the user.
+  * @returns A promise that resolves to the user's ID or null if not found.
+  */
+  async isOnline(userId: Types.ObjectId): Promise<any> {
+    try {
+      const user = await this.userDataAccess.socketExists(userId)
+      return !!user?.socketId.length
+    } catch (error) {
+      ErrorHandling.processError("Error in getUserId, userGetDataUseCase", error)
+    }
+  }
+
   /**
    * Retrieves the name of a user by their ID.
    * @param userId - The unique identifier of the user.
