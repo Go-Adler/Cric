@@ -62,6 +62,7 @@ export class SocketService {
       // Create socket server
       this.io = new SocketServer(server, socketConfig)
       await this.socketUseCase.removeAllSocketConnections()
+      this.io.disconnectSockets()
 
       // Handle socket connection event
       this.io.on(CONNECTION_EVENT, async (socket: Socket) => {
