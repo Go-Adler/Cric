@@ -13,6 +13,8 @@ export class ChatComponent {
   isOnline!: boolean
   isFetching!: boolean
   profilePicture!: string
+  arrays: any = [1,1,1,1,1,1,,1,1]
+  // arrays: any = [1,1,1,1,1,1,,1,1,1,1,1,1,1,1,1,,1,1,1,1,1,,1,1,1,1,1,1,1,1,1,1,1,1,,1,1]
   
   constructor(
     private route: ActivatedRoute,
@@ -22,6 +24,7 @@ export class ChatComponent {
     }
 
   ngOnInit() {
+    this.arrays.lenght = 50
     this.isFetching = true
     this.friendsService.getFriendBasicInfo(this.userName)
 

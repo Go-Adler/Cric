@@ -1,5 +1,5 @@
-<div class="h-screen">
-  <div class="titleBar p-3 sticky top-16" *ngIf="!isFetching">
+<div class="h-auto flex justify-between flex-col" *ngIf="!isFetching">
+  <div class="titleBar z-50 top-16 sticky p-3">
     <div class="flex gap-2">
       <!-- Profile Picture -->
       <div class="w-1/12">
@@ -20,13 +20,17 @@
       </div>
     </div>
   </div>
-  <div *ngIf="!isFetching" class="p-2 flex flex-col h-full bg-red-400 justify-between">
-    <div>ChatArea</div>
-    <div>Input</div>
+  <div class="p-2 pb-8 pt-16 z-40 min-h-80 flex flex-col bg-red-400 sticky bottom-24 justify-between">
+    <div>start</div>
+    <div *ngFor="let k of arrays" class="">sis</div>
+    <div>end</div>
+  </div>
+  <div class="fixed bottom-16 z-50">
+    <input type="text">sss
   </div>
   
-  <div *ngIf="isFetching" class="flex items-center justify-center mt-20">
-    <mat-spinner diameter="30"></mat-spinner>
-  </div>
   
+</div>
+<div *ngIf="isFetching" class="flex items-center justify-center mt-20">
+  <mat-spinner diameter="30"></mat-spinner>
 </div>
