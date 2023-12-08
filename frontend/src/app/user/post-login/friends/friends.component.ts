@@ -145,6 +145,6 @@ export class FriendsComponent implements OnInit, OnDestroy {
   }
 
   goToMessage() {
-    this.router.navigate(['/messages', this.userName])
+    this.router.navigate(['/chat', this.userName])
   }
 }

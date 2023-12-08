@@ -1,0 +1,23 @@
+<div class="titleBar p-2">
+  <div class="flex gap-2">
+    <!-- Profile Picture -->
+    <div class="w-1/12">
+    <img [src]="profilePicture" alt="" class="rounded-lg"/>
+  
+    </div>
+    <div class="flex flex-col gap-1">
+      <div class="flex gap-1 items-center">
+        <div class="text-xs">{{ name }}</div>
+        <span
+          *ngIf="isOnline"
+          class="material-symbols-rounded text-xs fillIcon text-green-600"
+        >
+          circle
+        </span>
+      </div>
+      <div class="text-xs text-stone-500">{{'@'}}{{ userName }}</div>
+    </div>
+  </div>
+</div>
+
+d

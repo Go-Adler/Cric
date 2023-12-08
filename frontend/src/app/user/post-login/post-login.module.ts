@@ -23,7 +23,8 @@ import { RightAreaComponent } from './right-area/right-area.component'
 import { UserProfileModule } from './user-profile/user-profile.module'
 import { NotificationsComponent } from './notifications/notifications.component'
 import { MatchInfoComponent } from './right-area/match-info/match-info.component'
-import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ChatComponent } from './chat/chat.component'
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
     MatchInfoComponent,
     PostLoginComponent,
     NotificationsComponent,
+    ChatComponent,
   ],
   imports: [
     NgFor,
