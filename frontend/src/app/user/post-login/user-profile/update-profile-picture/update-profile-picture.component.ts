@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser'
 import { ProfileService } from '../user-profile.service'
+import { environment } from 'src/environments/environment'
 import { UserService } from 'src/app/services/user.service'
 
 
@@ -16,13 +17,14 @@ import { UserService } from 'src/app/services/user.service'
   styleUrls: ['./update-profile-picture.component.scss'],
 })
 export class UpdateProfilePictureComponent {
-  imageChangedEvent: any = '';
   croppedImage: any = '';
   uploadingImage: any = '';
-  isSubmitDisabled: boolean = true;
-  pictureUpdated: boolean = false
-  pictureUpdateFailed: boolean = false
   isUpdating: boolean = false
+  imageChangedEvent: any = '';
+  pictureUpdated: boolean = false
+  isSubmitDisabled: boolean = true;
+  pictureUpdateFailed: boolean = false
+  successIcon = environment.SUCCESS_ICON
 
   @Output() closeComponentStatusEvent = new EventEmitter<boolean>();
   @ViewChild('fileInput') fileInputRef!: ElementRef;

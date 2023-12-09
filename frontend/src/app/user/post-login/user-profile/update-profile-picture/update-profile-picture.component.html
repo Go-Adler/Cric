@@ -88,11 +88,16 @@
       </button>
     </span>
 
-    <div *ngIf="!pictureUpdateFailed" class="text-stone-500 flex justify-center items-center gap-2 text-lg">
-      Picture updated successfully
-      <span class="material-symbols-rounded text-green-500">
-        check_circle
-      </span>
+    <div *ngIf="!pictureUpdateFailed" class="text-stone-500 flex gap-2 justify-center flex-col items-center gap-2 text-lg">
+      <div class="w-4/12">
+        <img [src]="successIcon" alt="">
+      </div>
+       <div class="flex gap-2">
+        <div>Picture updated successfully</div>
+        <span class="material-symbols-rounded text-green-500">
+          check_circle
+        </span>
+       </div>
     </div>
 
     <div *ngIf="pictureUpdateFailed" class="text-stone-500 flex justify-center items-center gap-2 text-lg">

@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
   profilePicture: string = '';
-  addProfilePicture: boolean = false;
+  addProfilePicture: boolean = true;
   selectedImage: string | undefined;
   name = '';
   userName = '';
