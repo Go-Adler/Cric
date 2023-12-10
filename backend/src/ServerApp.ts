@@ -4,12 +4,12 @@ import express, { Application, Request, Response } from "express"
 import morgan from "morgan"
 import cors from "cors"
 import http from "http"
-import rateLimit from "express-rate-limit";
+import rateLimit from "express-rate-limit"
 
+import { mongo } from "./config/database"
 import { userRoutes } from "./modules/user/interface/routes/user.routes"
 import { adminRoutes } from "./modules/admin/interface/routes/admin.routes"
-import { mongo } from "./config/database"
-import { SocketService } from "./services/socketService";
+import { SocketService } from "./services/socketService"
 
 export class ServerApp {
   private app: Application
@@ -32,8 +32,8 @@ export class ServerApp {
   private initializeMiddlewares() {
     const limiter = rateLimit({
       windowMs: 15 * 60 * 1000,
-      max: 1000, 
-    });
+      max: 1000,
+    })
     this.app.use(cors())
     this.app.use(morgan("dev"))
     this.app.use(express.json())
@@ -56,7 +56,7 @@ export class ServerApp {
       res.status(500).json({ error: "Internal Server Error" })
     })
   }
-  
+
   public startServer() {
     this.server.listen(this.port, () => {
       console.log(`Server is running on http://localhost:${this.port}`)

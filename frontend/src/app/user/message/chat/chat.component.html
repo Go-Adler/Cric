@@ -1,5 +1,5 @@
-<div class="h-full flex flex-col justify-between bg-green-300">
-  <div class="titleBar h-16 p-3">
+<div class="h-screen flex flex-col justify-between">
+  <div class="titleBarChat sticky top-0 h-16 p-3">
     <div class="flex gap-2">
       <div class="w-1/12">
         <img [src]="profilePicture" alt="" class="rounded-lg" />
@@ -18,8 +18,25 @@
       </div>
     </div>
   </div>
-  
- <div class="h-full bg-red-500">
-  k
- </div> 
+
+  <div class="flex overflow-hidden flex-col justify-between">
+    <div class="overflow-auto chatArea">
+      <div *ngClass="">User</div>
+      <div>Kohlie</div>
+    </div>
+    <div class="h-20">
+      <form action="">
+        <div class="flex items-start gap-2 p-2">
+          <mat-form-field appearance="fill" class="w-full">
+            <input matInput placeholder="Message..." />
+          </mat-form-field>
+          <button mat-fab class="flex items-center sendButton">
+            <div class="flex items-center">
+              <span class="material-symbols-rounded"> send </span>
+            </div>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

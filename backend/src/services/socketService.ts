@@ -61,8 +61,7 @@ export class SocketService {
 
       // Create socket server
       this.io = new SocketServer(server, socketConfig)
-      await this.socketUseCase.removeAllSocketConnections()
-      this.io.disconnectSockets()
+      await this.removeAll()
 
       // Handle socket connection event
       this.io.on(CONNECTION_EVENT, async (socket: Socket) => {
@@ -123,5 +122,10 @@ export class SocketService {
   private log(message: any): void {
     // TODO: Use a logger for logging instead of console.log
     console.log(message)
+  }
+
+  async removeAll() {
+    await this.socketUseCase.removeAllSocketConnections()
+    this.io.disconnectSockets()
   }
 }

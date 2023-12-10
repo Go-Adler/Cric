@@ -6,6 +6,8 @@ import { MessageComponent } from './message.component'
 import { PostLoginModule } from '../post-login/post-login.module';
 import { ChatComponent } from './chat/chat.component'
 import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+import { MatButtonModule } from '@angular/material/button'
 
 @NgModule({
   declarations: [
@@ -14,9 +16,11 @@ import { MatFormFieldModule } from '@angular/material/form-field'
   ],
   imports: [
     CommonModule,
-    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
     PostLoginModule,
-    MessageRoutingModule
+    MatFormFieldModule,
+    MessageRoutingModule,
   ]
 })
 export class MessageModule { }
