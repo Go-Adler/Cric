@@ -27,14 +27,20 @@
         </div>
       </div>
     </div>
-    <div class="h-20 mb-16 md:mb-0">
-      <form>
+    <div class="h-20 mb-16 md:mb-1">
+      <form [formGroup]="chatForm" (ngSubmit)="onSubmit()">
         <div class="flex items-start gap-2 p-2">
           <mat-form-field appearance="fill" class="w-full">
-            <input matInput placeholder="Message..." />
+            <input matInput placeholder="Message..." formControlName="message"/>
+            <mat-error
+            *ngIf="(chatForm.get('message')?.invalid && (chatForm.get('message')?.dirty || chatForm.get('message')?.touched)) && (chatForm.get('message')?.errors?.['required'])"
+            class="p-0">Message cannot be empty</mat-error>
+            <mat-error
+            *ngIf="(chatForm.get('message')?.invalid && (chatForm.get('message')?.dirty || chatForm.get('message')?.touched)) && (chatForm.get('message')?.errors?.['pattern'])">Please
+            input message in the correct format</mat-error>
           </mat-form-field>
-          <button mat-fab class="flex items-center sendButton">
-            <div class="flex items-center">
+          <button mat-fab class="flex items-center sendButton" [disabled]="!chatForm.valid">
+            <div class="flex items-center justify-center pl-1">
               <span class="material-symbols-rounded"> send </span>
             </div>
           </button>

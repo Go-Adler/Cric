@@ -8,6 +8,7 @@ import { ChatComponent } from './chat/chat.component'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
+import { ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { MatButtonModule } from '@angular/material/button'
     MatButtonModule,
     PostLoginModule,
     MatFormFieldModule,
+    ReactiveFormsModule,
     MessageRoutingModule,
   ]
 })

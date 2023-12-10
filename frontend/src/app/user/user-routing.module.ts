@@ -20,12 +20,6 @@ const routes: Routes = [
     loadChildren: () => import('./post-login/post-login.module').then(m => m.PostLoginModule),
   },
   {
-    path: 'chat',
-    pathMatch: 'prefix',
-    component: MessageComponent,
-    loadChildren: () => import('./message/message.module').then(m => m.MessageModule)
-  },
-  {
     path: 'auth',
     pathMatch: 'full',
     redirectTo: '/auth/log-in'
@@ -35,8 +29,14 @@ const routes: Routes = [
     canActivate: [LogInGuard],
     component: AuthComponent,
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
-  }
-
+  },
+  {
+    path: 'chat',
+    pathMatch: 'prefix',
+    canActivate: [AuthGuard],
+    component: MessageComponent,
+    loadChildren: () => import('./message/message.module').then(m => m.MessageModule)
+  },
 ];
 
 @NgModule({

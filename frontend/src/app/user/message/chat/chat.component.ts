@@ -41,7 +41,7 @@ export class ChatComponent {
 
   ngOnInit() {
     this.chatForm = this.fb.group({
-      chat: ['', [Validators.required, Validators.pattern()]]
+      message: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9 .,!?'"-]{1,256}$/)]]
     })
     
     this.isFetching = true
@@ -75,5 +75,11 @@ export class ChatComponent {
 
     this.scrollToBottom();
 
+  }
+
+  onSubmit() {
+    if (this.chatForm.valid) {
+      
+    }
   }
 }

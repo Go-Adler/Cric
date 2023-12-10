@@ -41,4 +41,6 @@ $cricBlue: #1A2938;
   background-color: $cricBlue;
 }
 
-
+.sendButton:disabled {
+  color: rgb(102, 102, 102);
+}

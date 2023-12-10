@@ -28,7 +28,6 @@ import {MatProgressBarModule} from '@angular/material/progress-bar'
   ],
   imports: [
     CommonModule,
-    FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatIconModule,
