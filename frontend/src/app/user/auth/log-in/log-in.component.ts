@@ -27,7 +27,6 @@ export class LogInComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private userService: UserService,
-    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {

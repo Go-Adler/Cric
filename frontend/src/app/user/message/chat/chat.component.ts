@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { FriendsService } from '../../post-login/friends/friends.service'; 
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-chat',
@@ -12,13 +13,13 @@ export class ChatComponent {
   userName: string
   isOnline!: boolean
   isFetching!: boolean
+  chatForm!: FormGroup
   profilePicture!: string
-  end!: ElementRef
-  // arrays: any = [1,1,1,1,1,1,,1,1]
-  arrays: any = [1,1,1,1,1,1,,1,1,1,1,1,1,1,1,1,,1,1,1,1,1,,1,1,1,1,1,1,1,1,1,1,1,1,,1,1]
+  messages: any = [{userType:'sender'}, { userType: 'receiver'}]
   
   @ViewChild('scoll') scroll!:ElementRef
   constructor(
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private friendsService: FriendsService
     ) {
@@ -39,7 +40,10 @@ export class ChatComponent {
     }
 
   ngOnInit() {
-    this.arrays.lenght = 50
+    this.chatForm = this.fb.group({
+      chat: ['', [Validators.required, Validators.pattern()]]
+    })
+    
     this.isFetching = true
     this.friendsService.getFriendBasicInfo(this.userName)
 
