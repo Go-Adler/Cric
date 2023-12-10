@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { FriendsService } from '../../post-login/friends/friends.service'; 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { ChatService } from './chat.service'
 
 @Component({
   selector: 'app-chat',
@@ -21,6 +22,7 @@ export class ChatComponent {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private chatService: ChatService,
     private friendsService: FriendsService
     ) {
       this.userName = this.route.snapshot.paramMap.get('user-name')!
@@ -79,7 +81,8 @@ export class ChatComponent {
 
   onSubmit() {
     if (this.chatForm.valid) {
-      
+      const  { message } = this.chatForm.value
+      this.chatService.sendMessage(message)
     }
   }
 }
