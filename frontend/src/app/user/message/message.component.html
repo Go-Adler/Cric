@@ -1,0 +1,23 @@
+<div class="flex justify-center appArea">
+  <div class="h-auto w-full lg:w-8/12 flex justify-center">
+    <!-- side -->
+    <div class="w-20 hidden md:block lg:w-6/12">
+      <app-side-nav></app-side-nav>
+    </div>
+
+    <!-- top + router -->
+    <div class="w-full h-auto">
+
+        <!-- router -->
+        <router-outlet></router-outlet>
+    </div>
+
+    <!-- right -->
+    <div class="w-7/12 hidden lg:block">
+      <app-right-area></app-right-area>
+    </div>
+
+    <!-- botton -->
+    <app-nav></app-nav>
+  </div>
+</div>

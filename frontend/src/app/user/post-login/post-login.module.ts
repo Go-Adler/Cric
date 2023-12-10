@@ -24,7 +24,7 @@ import { UserProfileModule } from './user-profile/user-profile.module'
 import { NotificationsComponent } from './notifications/notifications.component'
 import { MatchInfoComponent } from './right-area/match-info/match-info.component'
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { ChatComponent } from './chat/chat.component'
+import { MatButtonModule } from '@angular/material/button'
 
 @NgModule({
   declarations: [
@@ -38,7 +38,6 @@ import { ChatComponent } from './chat/chat.component'
     MatchInfoComponent,
     PostLoginComponent,
     NotificationsComponent,
-    ChatComponent,
   ],
   imports: [
     NgFor,
@@ -49,6 +48,7 @@ import { ChatComponent } from './chat/chat.component'
     CommonModule,
     MatCardModule,
     MatInputModule,
+    MatButtonModule,
     UserProfileModule,
     MatSnackBarModule,
     MatFormFieldModule,
@@ -58,6 +58,11 @@ import { ChatComponent } from './chat/chat.component'
     PostLoginRoutingModule, // routing
     TimeagoModule.forRoot(),
     MatProgressSpinnerModule,
+  ],
+  exports: [
+    NavComponent,
+    SideNavComponent,
+    RightAreaComponent,
   ]
 })
 export class PostLoginModule { }

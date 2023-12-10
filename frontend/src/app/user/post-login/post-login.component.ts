@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router'
 import { SocketService } from 'src/app/services/socket.service'
 import { UserService } from 'src/app/services/user.service'
 
@@ -14,7 +15,8 @@ export class PostLoginComponent {
   constructor(
     private userService: UserService,
     private socketService: SocketService
-  ) {}
+  ) {
+  }
   
   ngOnInit() {
     this.userService.getUserBasicInfo()
@@ -26,6 +28,9 @@ export class PostLoginComponent {
     })
   }
 
+  showTopNav = true;
+
+ 
   ngOnDestroy() {
     this.socketService.emitLogout()
   }

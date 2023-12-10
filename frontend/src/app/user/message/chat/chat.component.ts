@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
-import { FriendsService } from '../friends/friends.service'
+import { FriendsService } from '../../post-login/friends/friends.service'; 
 
 @Component({
   selector: 'app-chat',
