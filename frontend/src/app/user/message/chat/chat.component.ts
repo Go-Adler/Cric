@@ -80,9 +80,15 @@ export class ChatComponent {
   }
 
   onSubmit() {
+    
     if (this.chatForm.valid) {
       const  { message } = this.chatForm.value
-      this.chatService.sendMessage(message)
+        this.chatService.sendMessage(message).subscribe({
+          next: res => {
+            console.log(res, 88);
+            this.chatForm.reset()
+          }
+      })
     }
   }
 }

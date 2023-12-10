@@ -10,7 +10,6 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { PostService } from './new-post.service';
 import { UserService } from 'src/app/services/user.service';
 import { I_post } from 'src/app/models/responses/message.model';
-import { SearchService } from '../../search/search.service';
 
 @Component({
   selector: 'app-new-post',

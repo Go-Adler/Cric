@@ -13,6 +13,7 @@ import { UserResendOtpController } from "../controllers/user.resendOtp.controlle
 import { UserSignUpOtpController } from "../controllers/user.signUpOtp.controller"
 import { UserForgotPasswordController } from "../controllers/user.forgotPassword.controller"
 import { UserChangePasswordController } from "../controllers/user.changePassword.controller"
+import { UserMessageController } from "../controllers/user.message.controller"
 
 const { findUsers } = new UsersController()
 const { userLogin } = new UserLoginController()
@@ -30,6 +31,7 @@ router.use("/posts", postRoutes)
 router.use("/profile", profileRoutes)
 router.use("/friend", friendRoutes)
 router.use("/notifications", notificationRoutes)
+router.use()
 
 router.get("/basic-info", verifyJwt, userBasicInfo)
 router.get("/resend-otp", verifyVerifyToken, resendOtp)

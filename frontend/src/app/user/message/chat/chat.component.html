@@ -39,7 +39,7 @@
             *ngIf="(chatForm.get('message')?.invalid && (chatForm.get('message')?.dirty || chatForm.get('message')?.touched)) && (chatForm.get('message')?.errors?.['pattern'])">Please
             input message in the correct format</mat-error>
           </mat-form-field>
-          <button mat-fab class="flex items-center sendButton" [disabled]="!chatForm.valid">
+          <button type="submit" mat-fab class="flex items-center sendButton" [disabled]="!chatForm.valid">
             <div class="flex items-center justify-center pl-1">
               <span class="material-symbols-rounded"> send </span>
             </div>
