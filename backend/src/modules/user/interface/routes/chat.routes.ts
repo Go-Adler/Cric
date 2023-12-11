@@ -10,4 +10,6 @@ const { sendMessage } = new UserMessageController()
 
 router.use(verifyJwt)
 
-router.get('/message', sendMessage)
+router.post('/send-message', sendMessage)
+
+export { router as chatRoutes }

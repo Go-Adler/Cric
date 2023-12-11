@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 
 import { notificationSchema } from './user.notificationSchema'
+import { chatSchema } from './user.chat.schema'
 import { User } from '../../../shared/interfaces/user.interface'
 
 const userSchema = new mongoose.Schema<User>({
@@ -74,6 +75,10 @@ const userSchema = new mongoose.Schema<User>({
   },
   notifications: {
     type: [notificationSchema],
+    default: []
+  },
+  chats: {
+    type: [chatSchema],
     default: []
   }
 })

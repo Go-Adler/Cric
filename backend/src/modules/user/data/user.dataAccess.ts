@@ -482,4 +482,8 @@ export class UserDataAccess {
       ErrorHandling.processError("Error in isRequestedByPerson, userGetDataUseCase", error)
     }
   }
+
+  async addMessage(userId: Types.ObjectId) {
+    await UserEntity.findByIdAndUpdate(userId, {})
+  }
 }

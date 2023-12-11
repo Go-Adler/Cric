@@ -16,6 +16,6 @@ export class ChatService {
   }
 
   sendMessage(message: string) {
-    return this.http.post(`${this.API_URL}/user/send-message`, { message })
+    return this.http.post(`${this.API_URL}/user/message/send-message`, { message })
   }
 }

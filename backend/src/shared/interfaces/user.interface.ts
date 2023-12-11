@@ -1,11 +1,13 @@
 import { Types, Document } from "mongoose"
 import { Notification } from "./user.notification.interface"
+import { IChat } from './user.message.interface'
 
 export interface User extends Document {
   name: string
   otp?: number
   email: string
-  phone: string
+  phone: string,
+  chats: IChat[]
   gender: string
   password: string
   userName: string

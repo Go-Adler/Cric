@@ -21,7 +21,7 @@
         class="p-4 flex justify-between items-center border-t cursor-pointer border-slate-600"
         [ngClass]="[notification.read ? '' : 'bg-slate-800']"
         [class.border-b]="last"
-        (click)="toRead(notification._id)"
+        (click)="toRead(notification._id, notification.read)"
         [routerLink]="['/user/' + notification.userName + '/' + notification.postId]"
       >
         <div class="flex gap-2 items-center">
@@ -51,7 +51,7 @@
         class="p-4 flex justify-between items-center border-t cursor-pointer border-slate-600"
         [ngClass]="[notification.read ? '' : 'bg-slate-800']"
         [class.border-b]="last"
-        (click)="toRead(notification._id)"
+        (click)="toRead(notification._id, notification.read)"
         [routerLink]="['/user/' + notification.userName]"
       >
         <div class="flex gap-2 items-center">

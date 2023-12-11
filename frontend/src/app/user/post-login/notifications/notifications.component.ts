@@ -41,8 +41,8 @@ export class NotificationsComponent implements OnInit {
     })
   }
 
-  toRead(_id: string) {
-    this.userService.countDownNotification()
+  toRead(_id: string, read: boolean) {
+    if (!read) this.userService.countDownNotification()
     this.notificationService.markAsRead(_id).subscribe({
       next: data => {
       }

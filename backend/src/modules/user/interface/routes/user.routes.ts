@@ -1,6 +1,7 @@
 import express from "express"
 
 import { postRoutes } from "./post.routes"
+import { chatRoutes } from "./chat.routes"
 import { profileRoutes } from "./profile.routes"
 import { friendRoutes } from "./userFriend.routes"
 import { notificationRoutes } from "./notification.routes"
@@ -13,25 +14,24 @@ import { UserResendOtpController } from "../controllers/user.resendOtp.controlle
 import { UserSignUpOtpController } from "../controllers/user.signUpOtp.controller"
 import { UserForgotPasswordController } from "../controllers/user.forgotPassword.controller"
 import { UserChangePasswordController } from "../controllers/user.changePassword.controller"
-import { UserMessageController } from "../controllers/user.message.controller"
 
 const { findUsers } = new UsersController()
 const { userLogin } = new UserLoginController()
 const { userSignUp } = new UserSignUpController()
+const { userBasicInfo } = new UserDataController()
 const { verifyOtp } = new UserSignUpOtpController()
 const { resendOtp } = new UserResendOtpController()
 const { forgotPassword } = new UserForgotPasswordController()
 const { changePassword } = new UserChangePasswordController()
-const { userBasicInfo } = new UserDataController()
 const { verifyJwt, verifyToken, verifyVerifyToken } = new JwtMiddleware()
 
 const router = express.Router()
 
 router.use("/posts", postRoutes)
-router.use("/profile", profileRoutes)
+router.use("/message", chatRoutes)
 router.use("/friend", friendRoutes)
+router.use("/profile", profileRoutes)
 router.use("/notifications", notificationRoutes)
-router.use()
 
 router.get("/basic-info", verifyJwt, userBasicInfo)
 router.get("/resend-otp", verifyVerifyToken, resendOtp)
