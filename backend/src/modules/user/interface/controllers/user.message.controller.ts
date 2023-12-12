@@ -1,9 +1,23 @@
 import { NextFunction, Request, Response } from "express"
+import { SendMessageUseCase } from "../../application/useCases/user.sendMessage.useCase"
+import { JwtPayload } from "jsonwebtoken"
 
 export class UserMessageController {
-  constructor() {}
+  private sendMessageUseCase: SendMessageUseCase
+
+  constructor() {
+    this.sendMessageUseCase = new SendMessageUseCase()
+  }
 
   sendMessage = async(req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body, 7)
+    try {
+      const { userId } = req.user as JwtPayload
+      const { message, userName }  = req.body
+      
+      await this.sendMessageUseCase.sendMessage(message, userId, userName)
+      
+    } catch(error) {
+      next(error)
+    }
   }
 }

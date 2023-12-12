@@ -15,7 +15,7 @@ export class ChatService {
     this.API_URL = configService.getAPI_BaseURL()
   }
 
-  sendMessage(message: string) {
-    return this.http.post(`${this.API_URL}/user/message/send-message`, { message })
+  sendMessage(message: string, userName: string) {
+    return this.http.post(`${this.API_URL}/user/message/send-message`, { message, userName })
   }
 }

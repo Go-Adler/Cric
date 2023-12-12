@@ -19,6 +19,7 @@ const chatTextSchema = new mongoose.Schema<IChatText>({
   sendByUser: {
     type: Boolean,
     required: true,
+    default: true
   }
 })
 

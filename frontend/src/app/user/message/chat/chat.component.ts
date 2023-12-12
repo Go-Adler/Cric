@@ -66,7 +66,7 @@ export class ChatComponent {
       next: profilePicture => {
         this.profilePicture = profilePicture
       }
-    })
+  })
     
     setTimeout(() => {
       if (this.scroll) {
@@ -83,7 +83,7 @@ export class ChatComponent {
     
     if (this.chatForm.valid) {
       const  { message } = this.chatForm.value
-        this.chatService.sendMessage(message).subscribe({
+        this.chatService.sendMessage(message, this.userName).subscribe({
           next: res => {
             console.log(res, 88);
             this.chatForm.reset()

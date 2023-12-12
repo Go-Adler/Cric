@@ -274,10 +274,9 @@ export class UserDataAccess {
    * @param userName - The user name
    * @returns The user ID or null if not found
    */
-  async getUserIdWithUserName(userName: string) {
+  async getUserIdWithUserName(userName: string): Promise<User> {
     try {
-      const userId = await UserEntity.find({ userName }).select("_id")
-      return userId[0] || null
+      return await UserEntity.findOne({ userName }).select("_id")
     } catch (error) {
       ErrorHandling.processError("Error in getUserIdWithUserName, userDataAccess", error)
     }
@@ -483,7 +482,23 @@ export class UserDataAccess {
     }
   }
 
-  async addMessage(userId: Types.ObjectId) {
-    await UserEntity.findByIdAndUpdate(userId, {})
+  async addMessage(message: string, userId: Types.ObjectId, personId: Types.ObjectId, sendByUser: boolean) {
+    console.log(userId, personId);
+    const special = '64f043ffe7d8d36151f8598e'
+    const personIdToFind = new Types.ObjectId(special)
+    const userWithChat = await UserEntity.findOne(
+      { _id: userId },
+      { chats: { $elemMatch: { personId: personIdToFind } } }
+    );
+    console.log(userWithChat, 494)
+    // const filter = { _id: userId, 'chats.personId': personId }
+    // const update = {
+    //   $push: { 'chats.$.chatTexts': message }
+    // }
+    // const options = { new: true, upsert: true }
+
+    // const updatedUser = await UserEntity.findOneAndUpdate(filter, update, options)
+    // console.log(updatedUser);
+    
   }
 }
