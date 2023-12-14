@@ -15,7 +15,7 @@ export class UserMessageController {
       const { message, userName }  = req.body
       
       await this.sendMessageUseCase.sendMessage(message, userId, userName)
-      
+      res.json({ message: 'Message sent successfully'})
     } catch(error) {
       next(error)
     }

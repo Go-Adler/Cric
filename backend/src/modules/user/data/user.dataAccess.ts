@@ -1,9 +1,9 @@
 import { Types } from "mongoose"
 import { UserEntity } from "../domain/user.schema"
 import { PostEntity } from "../domain/user.postSchema"
-import { validateString } from "../../../utils/validateString.utils"
 import { ErrorHandling } from "../../../utils/handleError.utils"
 import { User } from "../../../shared/interfaces/user.interface"
+import { validateString } from "../../../utils/validateString.utils"
 
 // User Data Access Class
 export class UserDataAccess {
@@ -480,25 +480,5 @@ export class UserDataAccess {
     } catch (error) {
       ErrorHandling.processError("Error in isRequestedByPerson, userGetDataUseCase", error)
     }
-  }
-
-  async addMessage(message: string, userId: Types.ObjectId, personId: Types.ObjectId, sendByUser: boolean) {
-    console.log(userId, personId);
-    const special = '64f043ffe7d8d36151f8598e'
-    const personIdToFind = new Types.ObjectId(special)
-    const userWithChat = await UserEntity.findOne(
-      { _id: userId },
-      { chats: { $elemMatch: { personId: personIdToFind } } }
-    );
-    console.log(userWithChat, 494)
-    // const filter = { _id: userId, 'chats.personId': personId }
-    // const update = {
-    //   $push: { 'chats.$.chatTexts': message }
-    // }
-    // const options = { new: true, upsert: true }
-
-    // const updatedUser = await UserEntity.findOneAndUpdate(filter, update, options)
-    // console.log(updatedUser);
-    
   }
 }
