@@ -1,5 +1,5 @@
 <div class="h-screen flex flex-col justify-between">
-  <div class="titleBarChat sticky top-0 h-16 p-3">
+  <div *ngIf="!isFetching" class="titleBarChat sticky top-0 h-16 p-3">
     <div class="flex gap-2">
       <div class="w-1/12">
         <img [src]="profilePicture" alt="" class="rounded-lg" />
@@ -17,6 +17,9 @@
         <div class="text-xs text-stone-500">{{ "@" }}{{ userName }}</div>
       </div>
     </div>
+  </div>
+  <div class="flex p-2 justify-center">
+    <mat-spinner diameter="40"></mat-spinner>
   </div>
 
   <div class="flex overflow-hidden flex-col justify-between">

@@ -1,6 +1,6 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { FriendsService } from '../../post-login/friends/friends.service'; 
+import { FriendsService } from '../../post-login/friends/friends.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ChatService } from './chat.service'
 
@@ -16,36 +16,22 @@ export class ChatComponent {
   isFetching!: boolean
   chatForm!: FormGroup
   profilePicture!: string
-  messages: any = [{userType:'sender'}, { userType: 'receiver'}]
-  
-  @ViewChild('scoll') scroll!:ElementRef
+  messages: any = [{ userType: 'sender' }, { userType: 'receiver' }]
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private chatService: ChatService,
     private friendsService: FriendsService
-    ) {
-      this.userName = this.route.snapshot.paramMap.get('user-name')!
-    }
-
-    ngAfterViewInit() {
-      this.scrollToBottom();
-    }
-
-    scrollToBottom(): void {
-      try {
-        this.scroll.nativeElement.scrollTop = this.scroll.nativeElement.scrollHeight;
-      } catch (err) {
-        console.log(35);
-        
-      }
-    }
+  ) {
+    this.userName = this.route.snapshot.paramMap.get('user-name')!
+  }
 
   ngOnInit() {
     this.chatForm = this.fb.group({
       message: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9 .,!?'"-]{1,256}$/)]]
     })
-    
+
     this.isFetching = true
     this.friendsService.getFriendBasicInfo(this.userName)
 
@@ -66,28 +52,17 @@ export class ChatComponent {
       next: profilePicture => {
         this.profilePicture = profilePicture
       }
-  })
-    
-    setTimeout(() => {
-      if (this.scroll) {
-      this.scroll.nativeElement.scrollIntoView({behaviour: 'smooth'})
-
-      }
-    }, 200);
-
-    this.scrollToBottom();
-
+    })
   }
 
   onSubmit() {
-    
     if (this.chatForm.valid) {
-      const  { message } = this.chatForm.value
-        this.chatService.sendMessage(message, this.userName).subscribe({
-          next: res => {
-            console.log(res, 88);
-            this.chatForm.reset()
-          }
+      const { message } = this.chatForm.value
+      this.chatService.sendMessage(message, this.userName).subscribe({
+        next: res => {
+          console.log(res, 88)
+          this.chatForm.reset()
+        }
       })
     }
   }
