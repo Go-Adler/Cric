@@ -32,4 +32,16 @@ export class UserMessageController {
       next(error)
     }
   }
+
+  getMessagesList = async(req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userId } = req.user as JwtPayload
+      console.log(39);
+      
+      const messages = await this.messageUseCase.getMessagesList(userId)
+      res.json({ messages })
+    } catch (error) {
+      next(error)
+    }
+  }
 }

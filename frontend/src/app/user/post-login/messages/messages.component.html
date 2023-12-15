@@ -17,6 +17,14 @@
       </div>   
       <div>No messages to show!</div>   
     </div>
-    <div *ngIF="messages && messages[0]">k{{ messages[0]}}</div>
+    <div *ngIf="messages && messages[0]">k{{ messages[0]}}</div>
+  </div>
+  <div class="bg-red-500 flex flex-col">
+    <div class="bg-green-400" *ngFor="let message of messages">
+      <div><img [src]="" alt=""></div>
+      <div>User name</div>
+      <div>Message</div>
+      <div>Count</div>
+    </div>
   </div>
 </div>

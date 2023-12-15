@@ -77,4 +77,49 @@ export class MessageDataAccess {
       ErrorHandling.processError('Error in getMessages, CheckChatExists', error)
     }
   }
+
+  async getMessagesList(userId: Types.ObjectId) {
+    try {
+      const lastChatMessages = await UserEntity.aggregate([
+        { $match: { _id: new Types.ObjectId(userId) } },
+        { $unwind: '$chats' },
+        {
+          $addFields: {
+            'chats.chatTexts': {
+              $slice: ['$chats.chatTexts', -1],
+            },
+          },
+        },
+        {
+          $lookup: {
+            from: 'Users',
+            localField: 'chats.personId',
+            foreignField: '_id',
+            as: 'userDetails',
+          },
+        },
+        {
+          $unwind: '$userDetails',
+        },
+        {
+          $project: {
+            _id: 1,
+            personId: '$chats.personId',
+            chatText: { $arrayElemAt: ['$chats.chatTexts', 0] },
+            username: '$userDetails.userName',
+            email: '$userDetails.email',
+          },
+        },
+      ]);
+      
+                        
+  
+      console.log(lastChatMessages)
+      // return result[0].chats
+    } catch (error) {
+      ErrorHandling.processError('Error in getMessages, CheckChatExists', error)
+    }
+  }
+
+  
 }

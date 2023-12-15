@@ -59,4 +59,13 @@ export class MessageUseCase {
       ErrorHandling.processError('Error in getMessages, MessageUseCase', error)
     }
   }
+
+  getMessagesList = async (userId: Types.ObjectId) => {
+    try {
+      await this.messageDataAccess.getMessagesList(userId)
+
+    } catch (error) {
+      ErrorHandling.processError('Error in getMessages, MessageUseCase', error)
+    }
+  }
 }

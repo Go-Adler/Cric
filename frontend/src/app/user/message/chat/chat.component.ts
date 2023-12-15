@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router'
 import { FriendsService } from '../../post-login/friends/friends.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ChatService } from './chat.service'
+import { ChatFormMessage, IChatText } from 'src/app/models/responses/messages.model'
 
 @Component({
   selector: 'app-chat',
@@ -16,8 +17,10 @@ export class ChatComponent {
   isFetching!: boolean
   chatForm!: FormGroup
   profilePicture!: string
-  messages: any = [{ userType: 'sender' }, { userType: 'receiver' }]
+  isFetchingChats!: boolean
+  messages!: IChatText[]
 
+  @ViewChild('chatArea', { static: false }) chatArea!: ElementRef
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -38,7 +41,19 @@ export class ChatComponent {
     this.friendsService.name$.subscribe({
       next: name => {
         this.name = name
-        if (this.name) this.isFetching = false
+        if (this.name) {
+          this.isFetching = false
+          this.isFetchingChats = true
+          this.friendsService.fetchChats(this.userName).subscribe({
+            next: res => {
+              this.isFetchingChats = false
+              this.messages = res.messages
+              setTimeout(() => {
+                this.scrollToBottom()
+              }, 50);
+            }
+          })
+        }
       }
     })
 
@@ -57,13 +72,25 @@ export class ChatComponent {
 
   onSubmit() {
     if (this.chatForm.valid) {
-      const { message } = this.chatForm.value
+      const { message }: ChatFormMessage = this.chatForm.value
+      this.messages.push({ message, time: new Date, sendByUser: true })
+      this.chatForm.reset()
+      setTimeout(() => {
+        this.scrollToBottom()
+      }, 50);
       this.chatService.sendMessage(message, this.userName).subscribe({
         next: res => {
           console.log(res, 88)
-          this.chatForm.reset()
         }
       })
     }
+  }
+
+  private scrollToBottom() {
+    // Use nativeElement to access the DOM element
+    const chatAreaElement: HTMLElement = this.chatArea.nativeElement
+
+    // Scroll to the bottom
+    chatAreaElement.scrollTop = chatAreaElement.scrollHeight
   }
 }

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 import { IChat, IChatText } from '../../../shared/interfaces/user.message.interface'
 
 const chatTextSchema = new mongoose.Schema<IChatText>({
@@ -24,6 +24,9 @@ const chatTextSchema = new mongoose.Schema<IChatText>({
 })
 
 export const chatSchema = new mongoose.Schema<IChat>({
-  personId: mongoose.Types.ObjectId,
+  personId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users'
+  },
   chatTexts: [chatTextSchema],
 })

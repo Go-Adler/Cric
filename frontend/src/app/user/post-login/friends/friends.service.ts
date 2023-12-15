@@ -6,6 +6,7 @@ import { ConfigService } from "src/app/services/config.service"
 import { environment } from "src/environments/environment";
 import { FriendResponse } from "src/app/models/responses/friend.model";
 import { FriendStatus } from "src/app/models/responses/userResponses";
+import { MessageResponse } from "src/app/models/responses/messages.model"
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,10 @@ export class FriendsService {
         }
       }
     )
+  }
+
+  fetchChats(userName: string) {
+    return this.http.post<MessageResponse>(`${this.API_URL}/user/message/get-messages`, { userName })
   }
 
   changeToDefault() {
