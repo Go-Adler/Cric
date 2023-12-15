@@ -4,7 +4,7 @@ import { UserDataAccess } from '../../data/user.dataAccess'
 import { ErrorHandling } from '../../../../utils/handleError.utils'
 import { MessageDataAccess } from '../../data/user.message.dataAccess'
 
-export class SendMessageUseCase {
+export class MessageUseCase {
   private messageDataAccess: MessageDataAccess
   private userDataAccess: UserDataAccess
 
@@ -44,6 +44,19 @@ export class SendMessageUseCase {
       }
     } catch (error) {
       ErrorHandling.processError('Error in sendMessage, SendMessageUseCase', Error)
+    }
+  }
+
+  getMessages = async (userId: Types.ObjectId, userName: string) => {
+    try {
+      const { _id: personId } = await this.userDataAccess.getUserIdWithUserName(userName)
+      
+      const chatExists = await this.messageDataAccess.checkChatExists(userId, personId)
+
+      if (!chatExists) return []
+      return await this.messageDataAccess.getMessages(userId, personId)
+    } catch (error) {
+      ErrorHandling.processError('Error in getMessages, MessageUseCase', error)
     }
   }
 }

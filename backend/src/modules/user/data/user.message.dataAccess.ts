@@ -50,4 +50,31 @@ export class MessageDataAccess {
       ErrorHandling.processError("Error in addMessageToChat, MessageDataAccess", error)
     }
   }
+
+  async getMessages(userId: Types.ObjectId, personId: Types.ObjectId) {
+    try {
+      const result = await UserEntity.aggregate([
+        { $match: { _id: new Types.ObjectId(userId) } },
+        { $unwind: '$chats' },
+        { $match: { 'chats.personId': personId } },
+        { $unwind: '$chats.chatTexts' },
+        { $sort: {'chats.chatTexts.time': -1 } },
+        { $limit: 20 },
+        { $group: {
+          _id: '$_id',
+          chats: { $push: '$chats.chatTexts' }
+        }},
+        { $project: {
+          _id: 0,
+          chats: 1
+        }},
+        { $project: {
+          chats: { $reverseArray: '$chats' }
+        }}
+      ])
+      return result[0].chats
+    } catch (error) {
+      ErrorHandling.processError('Error in getMessages, CheckChatExists', error)
+    }
+  }
 }

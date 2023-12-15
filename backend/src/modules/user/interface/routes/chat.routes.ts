@@ -6,10 +6,13 @@ import { UserMessageController } from '../controllers/user.message.controller'
 const router = express.Router()
 
 const { verifyJwt } = new JwtMiddleware()
-const { sendMessage } = new UserMessageController()
+const { sendMessage, getMessages } = new UserMessageController()
 
 router.use(verifyJwt)
 
+router.get('/get-messages', getMessages)
+
+router.post('/get-messages', getMessages)
 router.post('/send-message', sendMessage)
 
 export { router as chatRoutes }

@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express"
-import { SendMessageUseCase } from "../../application/useCases/user.sendMessage.useCase"
+import { MessageUseCase } from "../../application/useCases/user.message.useCase"
 import { JwtPayload } from "jsonwebtoken"
 
 export class UserMessageController {
-  private sendMessageUseCase: SendMessageUseCase
+  private messageUseCase: MessageUseCase
 
   constructor() {
-    this.sendMessageUseCase = new SendMessageUseCase()
+    this.messageUseCase = new MessageUseCase()
   }
 
   sendMessage = async(req: Request, res: Response, next: NextFunction) => {
@@ -14,9 +14,21 @@ export class UserMessageController {
       const { userId } = req.user as JwtPayload
       const { message, userName }  = req.body
       
-      await this.sendMessageUseCase.sendMessage(message, userId, userName)
+      await this.messageUseCase.sendMessage(message, userId, userName)
       res.json({ message: 'Message sent successfully'})
     } catch(error) {
+      next(error)
+    }
+  }
+
+  getMessages = async(req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userId } = req.user as JwtPayload
+      const { userName } = req.body
+
+      const messages = await this.messageUseCase.getMessages(userId, userName)
+      res.json({ messages })
+    } catch (error) {
       next(error)
     }
   }
