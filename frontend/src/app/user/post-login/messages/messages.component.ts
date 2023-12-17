@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { MessageService } from './message.service'
+import { ResultItem } from 'src/app/models/responses/user.messageList.model'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-messages',
@@ -10,11 +12,23 @@ import { MessageService } from './message.service'
 export class MessagesComponent {
   messagesIcon  = environment.MESSAGES_ICON
   noMessagesIcon = environment.NO_MESSAGES_ICON
-  messages: any[] = [1, 2, 3, 4, 55,5,5,5,5,5,,5,]
+  defualtProfilePicture = environment.DEFAULT_PROFILE_PICTURE
+  messageList: ResultItem[] = []
 
-  constructor(private messageService: MessageService) {}
+  constructor(
+    private messageService: MessageService,
+    private router: Router
+    ) {}
 
   ngOnInit() {
-    this.messageService.getMessages().subscribe()
+    this.messageService.getMessages().subscribe({
+      next: res => {
+        this.messageList = res.messages
+      }
+    })
+  }
+
+  goToChat(userName: string) {
+    this.router.navigate(['/chat', userName])
   }
 }

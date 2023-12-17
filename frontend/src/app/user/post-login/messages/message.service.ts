@@ -16,6 +16,6 @@ export class MessageService {
     }
 
   getMessages() {
-   return this.http.get(`${this.API_URL}/user/message/get-messages`)
+   return this.http.get<any>(`${this.API_URL}/user/message/get-messages`)
   }
 }

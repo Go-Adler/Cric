@@ -4,6 +4,7 @@ import { FriendsService } from '../../post-login/friends/friends.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ChatService } from './chat.service'
 import { ChatFormMessage, IChatText } from 'src/app/models/responses/messages.model'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-chat',
@@ -16,7 +17,7 @@ export class ChatComponent {
   isOnline!: boolean
   isFetching!: boolean
   chatForm!: FormGroup
-  profilePicture!: string
+  profilePicture: string = environment.DEFAULT_PROFILE_PICTURE
   isFetchingChats!: boolean
   messages!: IChatText[]
 
@@ -31,10 +32,14 @@ export class ChatComponent {
   }
 
   ngOnInit() {
+    console.log(35);
+    this.name = ''
+    
     this.chatForm = this.fb.group({
       message: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9 .,!?'"-]{1,256}$/)]]
     })
 
+    this.profilePicture = environment.DEFAULT_PROFILE_PICTURE
     this.isFetching = true
     this.friendsService.getFriendBasicInfo(this.userName)
 

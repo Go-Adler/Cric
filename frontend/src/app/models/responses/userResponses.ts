@@ -1,5 +1,5 @@
-import { Post } from "../post.model"
 
+import { Post } from "../post.model"
 export interface I_UserBasicInfo {
   name: string,
   userName: string,

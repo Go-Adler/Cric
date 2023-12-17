@@ -2,29 +2,48 @@
   <!-- title bar -->
   <div class="titleBar flex items-center gap-2 px-2">
     <div class="w-20">
-      <img [src]="messagesIcon" alt="">
+      <img [src]="messagesIcon" alt="" />
     </div>
-    <div class="text-base md:text-lg">
-      Messages
-    </div>
+    <div class="text-base md:text-lg">Messages</div>
   </div>
 
   <!-- messages -->
   <div>
-    <div *ngIf="!messages[0]" class="pt-20 gap-3 flex flex-col items-center">
+    <div *ngIf="!messageList[0]" class="pt-20 gap-3 flex flex-col items-center">
       <div class="w-8/12">
-        <img [src]="noMessagesIcon" alt="">
-      </div>   
-      <div>No messages to show!</div>   
+        <img [src]="noMessagesIcon" alt="" />
+      </div>
+      <div>No messages to show!</div>
     </div>
-    <div *ngIf="messages && messages[0]">k{{ messages[0]}}</div>
   </div>
-  <div class="bg-red-500 flex flex-col">
-    <div class="bg-green-400" *ngFor="let message of messages">
-      <div><img [src]="" alt=""></div>
-      <div>User name</div>
-      <div>Message</div>
-      <div>Count</div>
+  <div class="flex flex-col">
+    <div
+      class="cursor-pointer"
+      (click)="goToChat(chat.personDetails.userName)"
+      *ngFor="let chat of messageList"
+    >
+      <!-- chat list item -->
+      <div class="flex items-center justify-between p-2 gap-2">
+        <div class="flex gap-2">
+          <!-- profile picture -->
+          <div class="w-10">
+            <img
+              class="rounded-md"
+              [src]="chat.personDetails.profilePicture || defualtProfilePicture"
+              alt=""
+            />
+          </div>
+
+          <!-- user Nam div -->
+          <div class="flex flex-col justify-start gap-1">
+            <div class="font-medium text-xs">{{ chat.personDetails.name }}</div>
+            <div class="font-extralight text-xs">
+              {{ chat.latestChatText.message }}
+            </div>
+          </div>
+        </div>
+        <div *ngIf="chat.personDetails.socketId && chat.personDetails.socketId[0]" class="text-xs text-green-500">online</div>
+      </div>
     </div>
   </div>
 </div>

@@ -3,6 +3,7 @@ import { Types } from "mongoose"
 import { UserEntity } from "../domain/user.schema"
 import { ErrorHandling } from "../../../utils/handleError.utils"
 import { MongoExists } from "../../../shared/interfaces/user.shared.interface"
+import { ResultMessageList } from "../../../shared/interfaces/user.messageList.interface"
 
 export class MessageDataAccess {
   /**
@@ -21,7 +22,7 @@ export class MessageDataAccess {
   }
 
   /**
-   * 
+   *
    * @param userId - The ID of the user
    * @param personId - The ID of the person who received message
    * @param message - The message text
@@ -32,17 +33,16 @@ export class MessageDataAccess {
       await UserEntity.findOneAndUpdate(userId, { $push: { chats: { personId, chatTexts: [{ message, sendByUser }] } } }, { new: true })
     } catch (error) {
       ErrorHandling.processError("Error in createChat, MessageDataAccess", error)
-
     }
   }
 
   /**
- * 
- * @param userId - The ID of the user
- * @param personId - The ID of the person who received message
- * @param message - The message text
- * @param sendByUser - boolean, send by user or not
- */
+   *
+   * @param userId - The ID of the user
+   * @param personId - The ID of the person who received message
+   * @param message - The message text
+   * @param sendByUser - boolean, send by user or not
+   */
   async addMessageToChat(userId: Types.ObjectId, personId: Types.ObjectId, message: string, sendByUser: boolean) {
     try {
       await UserEntity.findOneAndUpdate({ _id: userId, chats: { $elemMatch: { personId } } }, { $push: { "chats.$.chatTexts": { message, sendByUser } } })
@@ -55,71 +55,71 @@ export class MessageDataAccess {
     try {
       const result = await UserEntity.aggregate([
         { $match: { _id: new Types.ObjectId(userId) } },
-        { $unwind: '$chats' },
-        { $match: { 'chats.personId': personId } },
-        { $unwind: '$chats.chatTexts' },
-        { $sort: {'chats.chatTexts.time': -1 } },
+        { $unwind: "$chats" },
+        { $match: { "chats.personId": personId } },
+        { $unwind: "$chats.chatTexts" },
+        { $sort: { "chats.chatTexts.time": -1 } },
         { $limit: 20 },
-        { $group: {
-          _id: '$_id',
-          chats: { $push: '$chats.chatTexts' }
-        }},
-        { $project: {
-          _id: 0,
-          chats: 1
-        }},
-        { $project: {
-          chats: { $reverseArray: '$chats' }
-        }}
-      ])
-      return result[0].chats
-    } catch (error) {
-      ErrorHandling.processError('Error in getMessages, CheckChatExists', error)
-    }
-  }
-
-  async getMessagesList(userId: Types.ObjectId) {
-    try {
-      const lastChatMessages = await UserEntity.aggregate([
-        { $match: { _id: new Types.ObjectId(userId) } },
-        { $unwind: '$chats' },
         {
-          $addFields: {
-            'chats.chatTexts': {
-              $slice: ['$chats.chatTexts', -1],
-            },
+          $group: {
+            _id: "$_id",
+            chats: { $push: "$chats.chatTexts" },
           },
-        },
-        {
-          $lookup: {
-            from: 'Users',
-            localField: 'chats.personId',
-            foreignField: '_id',
-            as: 'userDetails',
-          },
-        },
-        {
-          $unwind: '$userDetails',
         },
         {
           $project: {
-            _id: 1,
-            personId: '$chats.personId',
-            chatText: { $arrayElemAt: ['$chats.chatTexts', 0] },
-            username: '$userDetails.userName',
-            email: '$userDetails.email',
+            _id: 0,
+            chats: 1,
           },
         },
-      ]);
-      
-                        
-  
-      console.log(lastChatMessages)
-      // return result[0].chats
+        {
+          $project: {
+            chats: { $reverseArray: "$chats" },
+          },
+        },
+      ])
+      return result[0].chats
     } catch (error) {
-      ErrorHandling.processError('Error in getMessages, CheckChatExists', error)
+      ErrorHandling.processError("Error in getMessages, CheckChatExists", error)
     }
   }
 
-  
+  async getMessagesList(userId: Types.ObjectId): Promise<ResultMessageList[]> {
+    try {
+      return await UserEntity.aggregate([
+        { $match: { _id: new Types.ObjectId(userId) } },
+        { $unwind: '$chats' },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'chats.personId',
+            foreignField: '_id',
+            as: 'personDetails'
+          }
+        },
+        {
+          $unwind: {
+            path: '$personDetails',
+            preserveNullAndEmptyArrays: true
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            'personDetails.name': 1,
+            'personDetails.email': 1,
+            'personDetails.userName': 1,
+            'personDetails.socketId': 1,
+            'personDetails.profilePicture': 1,
+            latestChatText: {
+              $arrayElemAt: ['$chats.chatTexts', -1] // Get the last element of the chatTexts array
+            }
+          }
+        },
+        { $sort: { 'latestChatText.time': -1 } }
+      ])
+    } catch (error) {
+      ErrorHandling.processError("Error in getMessages, CheckChatExists", error)
+    }
+  }
 }

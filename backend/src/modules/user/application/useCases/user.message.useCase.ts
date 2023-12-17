@@ -3,6 +3,7 @@ import { Types } from 'mongoose'
 import { UserDataAccess } from '../../data/user.dataAccess'
 import { ErrorHandling } from '../../../../utils/handleError.utils'
 import { MessageDataAccess } from '../../data/user.message.dataAccess'
+import { ResultMessageList } from '../../../../shared/interfaces/user.messageList.interface'
 
 export class MessageUseCase {
   private messageDataAccess: MessageDataAccess
@@ -60,9 +61,9 @@ export class MessageUseCase {
     }
   }
 
-  getMessagesList = async (userId: Types.ObjectId) => {
+  getMessagesList = async (userId: Types.ObjectId): Promise<ResultMessageList[]> => {
     try {
-      await this.messageDataAccess.getMessagesList(userId)
+      return await this.messageDataAccess.getMessagesList(userId)
 
     } catch (error) {
       ErrorHandling.processError('Error in getMessages, MessageUseCase', error)

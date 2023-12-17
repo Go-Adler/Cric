@@ -3,6 +3,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import { Post, PostResponse } from "../../../../shared/interfaces/userPost.interface"
 import { Notification } from '../../../../shared/interfaces/user.notification.interface'
 import { ErrorHandling } from "../../../../utils/handleError.utils"
+import { ResultMessageList } from "../../../../shared/interfaces/user.messageList.interface"
 
 export class GetAwsUrlUseCase {
   private awsAccessKey
@@ -47,7 +48,6 @@ export class GetAwsUrlUseCase {
   }
 
   getImageUrl = async (image: string) => {
-    console.log(image, 50)
     try {
       const getObjectParams = {
         Bucket: this.bucketName,
@@ -153,6 +153,27 @@ export class GetAwsUrlUseCase {
       return postResponse
     } catch (error) {
       ErrorHandling.processError('Error in getPostWithUrl, getAwsUrlUseCase', error)
+    }
+  }
+
+  getMessageWithUrl = async (messageList: ResultMessageList[]) => {
+    try {
+      for (const message of messageList) {
+        if (message.personDetails && message.personDetails.profilePicture) {
+          const imageName = message.personDetails.profilePicture
+          const getObjectParams = {
+            Bucket: this.bucketName,
+            Key: imageName,
+          }
+          const command = new GetObjectCommand(getObjectParams)
+          const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+    
+          message.personDetails.profilePicture = url
+        }
+      }
+      return messageList
+    } catch (error) {
+      ErrorHandling.processError('Error in getMessageWithUrl, GetAwsUrlCase', error)
     }
   }
 }

@@ -39,7 +39,10 @@ export class FriendsService {
 
   getFriendBasicInfo(userName: string) {
     this.userName.next(userName)
+    this.name.next('')
+    this.isOnline.next(false)
     this.fetchComplete.next(false)
+    this.profilePicture.next('')
     this.http.get<FriendBasicInfo>(`${this.API_URL}/user/friend/basic-info/${userName}`)
     .subscribe(
       {
@@ -51,6 +54,7 @@ export class FriendsService {
           this.friendStatus.next(response.friendStatus)
           this.friendsCount.next(response.friendsCount)
           if(response.profilePicture) this.profilePicture.next(response.profilePicture)
+          else this.profilePicture.next(this.defaultProfilePicture)
         }
       }
     )
