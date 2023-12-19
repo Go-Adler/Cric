@@ -94,7 +94,7 @@ export class UserDataAccess {
    * @param userId - The ID of the user
    * @returns The user's name or "User not found" if not found
    */
-  async getNameById(userId: string) {
+  async getNameById(userId: Types.ObjectId) {
     try {
       const user = await UserEntity.findById(userId, { _id: 0, name: 1 })
       return user?.name ?? "User not found"
@@ -136,7 +136,7 @@ export class UserDataAccess {
    * @param userId - The ID of the user
    * @returns The user's name or "User not found" if not found
    */
-  async getUserNameById(userId: string) {
+  async getUserNameById(userId: Types.ObjectId) {
     try {
       const user = await UserEntity.findById(userId, { _id: 0, userName: 1 })
       return user?.userName ?? "User not found"
@@ -477,6 +477,20 @@ export class UserDataAccess {
   async socketExists(personId: Types.ObjectId): Promise<User> {
     try {
       return await UserEntity.findById(personId).select("socketId")
+    } catch (error) {
+      ErrorHandling.processError("Error in isRequestedByPerson, userGetDataUseCase", error)
+    }
+  }
+
+  /**
+ *  Method to check user socket exists
+ *
+ * @param personId - The ID of the user to be checked
+ * @returns The length of socketId array
+ */
+  async removeAllSockets(): Promise<void> {
+    try {
+      await UserEntity.updateMany({}, { $set: { socketId: [] } })
     } catch (error) {
       ErrorHandling.processError("Error in isRequestedByPerson, userGetDataUseCase", error)
     }

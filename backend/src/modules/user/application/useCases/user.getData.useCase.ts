@@ -2,6 +2,7 @@ import { Types } from "mongoose"
 import { UserDataAccess } from "../../data/user.dataAccess"
 import { ErrorHandling } from "../../../../utils/handleError.utils"
 import { FriendStatus } from "../../../../shared/interfaces/personDataResponse.interface"
+import { UserBasicInfo } from "../../../../shared/interfaces/userDataResponse.interface"
 
 /**
  * Class responsible for handling user data retrieval use cases.
@@ -51,7 +52,6 @@ export class GetUserDataUseCase {
     }
   }
 
-
   /**
   * Method to check a person is online
   * 
@@ -72,7 +72,7 @@ export class GetUserDataUseCase {
    * @param userId - The unique identifier of the user.
    * @returns A promise that resolves to the user's name or null if an error occurs.
    */
-  async getName(userId: string): Promise<any> {
+  async getName(userId: Types.ObjectId): Promise<any> {
     try {
       return await this.userDataAccess.getNameById(userId)
     } catch (error) {
@@ -85,7 +85,7 @@ export class GetUserDataUseCase {
    * @param userId - The unique identifier of the user.
    * @returns A promise that resolves to the user's username or null if an error occurs.
    */
-  async getUserName(userId: string): Promise<any> {
+  async getUserName(userId: Types.ObjectId): Promise<any> {
     try {
       return await this.userDataAccess.getUserNameById(userId)
     } catch (error) {
@@ -174,6 +174,32 @@ export class GetUserDataUseCase {
       else return 'stranger'
     } catch (error) {
       ErrorHandling.processError("Error in unblock, userGetDataUseCase", error)
+    }
+  }
+
+  /**
+   * 
+   * @param userId - The ID of the user
+   * @returns object containing user-name, name, profilePicture, friendsCount
+   */
+  async getBasicInfo(userId: Types.ObjectId): Promise<UserBasicInfo> {
+    try {
+      const isUserExisting = await this.userDataAccess.checkUserExisting(userId)
+    
+      if (!!isUserExisting) {
+        const userName =  await this.userDataAccess.getUserNameById(userId)
+        const name =  await this.userDataAccess.getNameById(userId)
+        const userData = await this.userDataAccess.getUserProfilePictureWithId(userId)
+        const friendsCount =  await this.userDataAccess.getFriendsCountById(userId)
+
+        let { profilePicture } = userData
+        if (!profilePicture) profilePicture = ''
+        return { userName, name, profilePicture, friendsCount }
+      }
+
+      throw new Error("User not found")
+    } catch (error) {
+      ErrorHandling.processError('Error in getBasicInfo, GetUserDataUseCase', error)
     }
   }
 }

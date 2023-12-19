@@ -3,6 +3,7 @@ import { Post } from "../post.model"
 export interface I_UserBasicInfo {
   name: string,
   userName: string,
+  messageCount: number,
   friendsCount: string,
   profilePicture: string,
   notificationsCount: number,

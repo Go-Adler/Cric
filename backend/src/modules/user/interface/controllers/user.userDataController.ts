@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express"
+import { Types } from 'mongoose'
 
 import { JwtPayload } from "jsonwebtoken"
 import { GetUserDataUseCase } from "../../application/useCases/user.getData.useCase"
@@ -6,13 +7,16 @@ import { GetAwsUrlUseCase } from "../../application/useCases/user.getAwsUrl.useC
 import { NotificationUseCase } from "../../application/useCases/user.notification.useCase"
 import { UserBasicInfoResponse } from "../../../../shared/interfaces/userDataResponse.interface"
 import { PersonBasicInfoResponse } from "../../../../shared/interfaces/personDataResponse.interface"
+import { MessageUseCase } from "../../application/useCases/user.message.useCase"
 
 export class UserDataController {
+  private messageUseCase: MessageUseCase
   private getAwsUrlUseCase: GetAwsUrlUseCase
   private userDataUseCase: GetUserDataUseCase
   private notificationUseCase: NotificationUseCase
 
   constructor() {
+    this.messageUseCase = new MessageUseCase()
     this.getAwsUrlUseCase = new GetAwsUrlUseCase()
     this.userDataUseCase = new GetUserDataUseCase()
     this.notificationUseCase = new NotificationUseCase()
@@ -27,26 +31,26 @@ export class UserDataController {
    */
   userBasicInfo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const { userId } = req.user as JwtPayload // Extract user ID from JWT payload
+      let { userId } = req.user as JwtPayload // Extract user ID from JWT payload
+      userId = new Types.ObjectId(userId)
 
+      let profilePicture = ''
+      
       // Fetch user data using use cases
-      const name = await this.userDataUseCase.getName(userId)
-      const userName = await this.userDataUseCase.getUserName(userId)
-      let profilePicture = await this.userDataUseCase.getProfilePicture(userId)
-
-      // Get friend count and notification count
-      const friendsCount = await this.userDataUseCase.getFriendsCount(userId)
+      const { friendsCount, name, userName, profilePicture: profilePictureWithOutUrl } = await this.userDataUseCase.getBasicInfo(userId)
       const notificationsCount = await this.notificationUseCase.getNotificationsCount(userId)
+      const messageCount  = await this.messageUseCase.getMessageCount(userId)
 
       // Generate pre-signed URL for profile picture if available
-      if (profilePicture) {
-        profilePicture = await this.getAwsUrlUseCase.getImageUrl(profilePicture)
+      if (profilePictureWithOutUrl) {
+        profilePicture = await this.getAwsUrlUseCase.getImageUrl(profilePictureWithOutUrl)
       }
 
       // Build and send user data response
       const userData: UserBasicInfoResponse = {
         name,
         userName,
+        messageCount,
         friendsCount,
         profilePicture,
         notificationsCount,

@@ -43,6 +43,11 @@ export class SocketService {
       this.userService.updateNotificationsCount()
       this.notificationService.getNotifications()
     });
+
+    this.socket.on('message', () => {
+      this.userService.updateNotificationsCount()
+      this.notificationService.getNotifications()
+    });
   }
 
   }

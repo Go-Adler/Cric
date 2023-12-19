@@ -2,14 +2,18 @@ import { NextFunction, Request, Response } from "express"
 import { MessageUseCase } from "../../application/useCases/user.message.useCase"
 import { JwtPayload } from "jsonwebtoken"
 import { GetAwsUrlUseCase } from "../../application/useCases/user.getAwsUrl.useCase"
+import { SocketService } from "../../../../services/socketService"
 
 export class UserMessageController {
   private messageUseCase: MessageUseCase
   private awsUrlUseCase: GetAwsUrlUseCase
+  private socketService: SocketService
+
 
   constructor() {
     this.messageUseCase = new MessageUseCase()
     this.awsUrlUseCase = new GetAwsUrlUseCase()
+    this.socketService = SocketService.getInstance()
   }
 
   sendMessage = async(req: Request, res: Response, next: NextFunction) => {
@@ -17,7 +21,8 @@ export class UserMessageController {
       const { userId } = req.user as JwtPayload
       const { message, userName }  = req.body
       
-      await this.messageUseCase.sendMessage(message, userId, userName)
+      const personId = await this.messageUseCase.sendMessage(message, userId, userName)
+      await this.socketService.sendMessage(personId, message)
       res.json({ message: 'Message sent successfully'})
     } catch(error) {
       next(error)

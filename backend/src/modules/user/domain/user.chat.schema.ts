@@ -11,11 +11,6 @@ const chatTextSchema = new mongoose.Schema<IChatText>({
     require: true,
     default: Date.now,
   },
-  read: {
-    type: Boolean,
-    default: false,
-    required: true,
-  },
   sendByUser: {
     type: Boolean,
     required: true,
@@ -27,6 +22,11 @@ export const chatSchema = new mongoose.Schema<IChat>({
   personId: {
     type: Schema.Types.ObjectId,
     ref: 'Users'
+  },
+  read: {
+    type: Boolean,
+    default: false,
+    required: true,
   },
   chatTexts: [chatTextSchema],
 })

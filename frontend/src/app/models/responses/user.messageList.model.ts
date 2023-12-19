@@ -19,4 +19,5 @@ interface PersonDetails {
 export interface ResultItem {
   personDetails: PersonDetails;
   latestChatText: Chat;
+  read: boolean
 }

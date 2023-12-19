@@ -45,6 +45,12 @@ export class MessageDataAccess {
    */
   async addMessageToChat(userId: Types.ObjectId, personId: Types.ObjectId, message: string, sendByUser: boolean) {
     try {
+      // Mark as unread
+      await UserEntity.findOneAndUpdate(
+        { _id: userId, chats: { $elemMatch: { personId } } }, { $set: { "chats.$.read": false } } 
+      )
+      
+      // Add message
       await UserEntity.findOneAndUpdate({ _id: userId, chats: { $elemMatch: { personId } } }, { $push: { "chats.$.chatTexts": { message, sendByUser } } })
     } catch (error) {
       ErrorHandling.processError("Error in addMessageToChat, MessageDataAccess", error)
@@ -53,6 +59,12 @@ export class MessageDataAccess {
 
   async getMessages(userId: Types.ObjectId, personId: Types.ObjectId) {
     try {
+      //  Mark as read
+      await UserEntity.findOneAndUpdate(
+        { _id: userId, chats: { $elemMatch: { personId } } }, { $set: { "chats.$.read": true } } 
+      )
+
+      // Get messages
       const result = await UserEntity.aggregate([
         { $match: { _id: new Types.ObjectId(userId) } },
         { $unwind: "$chats" },
@@ -111,6 +123,7 @@ export class MessageDataAccess {
             'personDetails.userName': 1,
             'personDetails.socketId': 1,
             'personDetails.profilePicture': 1,
+            read: '$chats.read', 
             latestChatText: {
               $arrayElemAt: ['$chats.chatTexts', -1] // Get the last element of the chatTexts array
             }
@@ -120,6 +133,29 @@ export class MessageDataAccess {
       ])
     } catch (error) {
       ErrorHandling.processError("Error in getMessages, CheckChatExists", error)
+    }
+  }
+
+  /**
+   *
+   * @param userId - The ID of the user
+   * @param personId - The ID of the person who received message
+   * @param message - The message text
+   * @param sendByUser - boolean, send by user or not
+   */
+  async getMessageCount(userId: Types.ObjectId) {
+    try {
+      const result = await UserEntity.aggregate([
+        { $match: { _id: userId } },
+        { $unwind: '$chats' },
+        { $match: { 'chats.read': false } },
+        { $group: { _id: null, count: { $sum: 1 } } }
+      ])
+
+      return result.length > 0 ? result[0].count : 0
+      
+    } catch (error) {
+      ErrorHandling.processError("Error in createChat, MessageDataAccess", error)
     }
   }
 }

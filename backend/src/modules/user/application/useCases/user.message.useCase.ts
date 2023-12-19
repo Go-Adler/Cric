@@ -20,7 +20,7 @@ export class MessageUseCase {
    * @param userId - The ID of the user
    * @param userName - The userName of the person who receives message
    */
-  sendMessage = async (message: string, userId: Types.ObjectId, userName: string) => {
+  sendMessage = async (message: string, userId: Types.ObjectId, userName: string): Promise<string> => {
     try {
       // get person Id with user name
       const { _id: personId } = await this.userDataAccess.getUserIdWithUserName(userName)
@@ -43,6 +43,8 @@ export class MessageUseCase {
       } else {
         await this.messageDataAccess.createChat(personId, userId, message, sendByUser)
       }
+
+      return personId
     } catch (error) {
       ErrorHandling.processError('Error in sendMessage, SendMessageUseCase', Error)
     }
@@ -64,6 +66,15 @@ export class MessageUseCase {
   getMessagesList = async (userId: Types.ObjectId): Promise<ResultMessageList[]> => {
     try {
       return await this.messageDataAccess.getMessagesList(userId)
+
+    } catch (error) {
+      ErrorHandling.processError('Error in getMessages, MessageUseCase', error)
+    }
+  }
+  
+  getMessageCount = async (userId: Types.ObjectId): Promise<any> => {
+    try {
+      return await this.messageDataAccess.getMessageCount(userId)
 
     } catch (error) {
       ErrorHandling.processError('Error in getMessages, MessageUseCase', error)

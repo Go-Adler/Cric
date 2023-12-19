@@ -54,6 +54,7 @@ export class SocketUseCase {
       for (const socket of sockets) {
         await this.removeSocketConnection(socket.socketId)
       }
+      await this.userDataAccess.removeAllSockets()
     } catch (error) {
       ErrorHandling.processError("Error while removing socket connection", error)
     }

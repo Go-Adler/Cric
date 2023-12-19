@@ -121,16 +121,17 @@ export class SocketService {
 
 
   // Send a notification to all sockets associated with the user
-  public async sendMessage(userId: Types.ObjectId, message: string): Promise<void> {
+  public async sendMessage(userId: string, message: string): Promise<void> {
     try {
       // Get sockets for the user
-      const sockets = await this.userDataUseCase.getSockets(userId)
+      const userIdObj = new Types.ObjectId(userId)
+      const sockets = await this.userDataUseCase.getSockets(userIdObj)
 
       // Check if sockets exist
       if (sockets) {
         // Loop through each socket
         sockets.forEach((socket) => {
-          this.io.to(socket).emit(MESSAGE_EVENT)
+          this.io.to(socket).emit(MESSAGE_EVENT, { message })
         })
       }
     } catch (error) {

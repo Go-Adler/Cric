@@ -23,7 +23,7 @@
       *ngFor="let chat of messageList"
     >
       <!-- chat list item -->
-      <div class="flex items-center justify-between p-2 gap-2">
+      <div class="flex items-center justify-between border-b p-2 gap-2" [ngClass]="{'bg-slate-700': !chat.read}">
         <div class="flex gap-2">
           <!-- profile picture -->
           <div class="w-10">
