@@ -36,7 +36,7 @@ export class ChatComponent {
     this.name = ''
     
     this.chatForm = this.fb.group({
-      message: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9 .,!?'"-]{1,256}$/)]]
+      message: ['', [Validators.required]]
     })
 
     this.profilePicture = environment.DEFAULT_PROFILE_PICTURE

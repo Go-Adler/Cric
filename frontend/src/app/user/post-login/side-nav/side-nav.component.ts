@@ -13,11 +13,12 @@ import { environment } from 'src/environments/environment'
   styleUrls: ['./side-nav.component.scss'],
 })
 export class SideNavComponent implements OnInit {
-  notificationCount: number = 0
-  profilePicture: string = '';
-  name: string = '';
-  userName: string = '';
-  logOutPill: boolean = false;
+  name = ''
+  userName = ''
+  logOutPill = false
+  profilePicture = ''
+  messagesCount = 0
+  notificationCount = 0
   friendsActive: boolean = false
   logOutImage = environment.LOG_OUT_IMAGE
 
@@ -36,6 +37,12 @@ export class SideNavComponent implements OnInit {
     this.userService.notificationsCount$.subscribe({
       next: (notificationCount) => {
         this.notificationCount = notificationCount
+      }
+    })
+
+    this.userService.messagesCount$.subscribe({
+      next: (messagesCount) => {
+        this.messagesCount = messagesCount
       }
     })
 

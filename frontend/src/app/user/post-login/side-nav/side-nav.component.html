@@ -43,8 +43,13 @@
         class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-center gap-4 p-3"
         routerLink="/messages"
       >
-        <span class="material-symbols-rounded text-3xl"> forum </span>
-        <span class="sideItem text-xl hidden lg:block">Messages</span>
+      <span class="material-symbols-rounded text-3xl relative"> 
+        forum
+        <div class="rounded-full text-xs flex absolute -top-1 left-4 w-6 p-1 justify-center items-center bg-white" *ngIf="messagesCount">
+          <span class="notificationCount">{{ messagesCount }}</span>
+        </div>
+      </span>
+      <span class="sideItem text-xl hidden lg:block">Messages</span>
       </div>
       <div
         class="flex justify-start sideItemArea ps-5 rounded-full cursor-pointer items-center gap-4 p-3"

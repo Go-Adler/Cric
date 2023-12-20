@@ -46,9 +46,11 @@ export class MessageDataAccess {
   async addMessageToChat(userId: Types.ObjectId, personId: Types.ObjectId, message: string, sendByUser: boolean) {
     try {
       // Mark as unread
-      await UserEntity.findOneAndUpdate(
-        { _id: userId, chats: { $elemMatch: { personId } } }, { $set: { "chats.$.read": false } } 
-      )
+      if (!sendByUser) {
+        await UserEntity.findOneAndUpdate(
+          { _id: userId, chats: { $elemMatch: { personId } } }, { $set: { "chats.$.read": false } } 
+        )
+      }
       
       // Add message
       await UserEntity.findOneAndUpdate({ _id: userId, chats: { $elemMatch: { personId } } }, { $push: { "chats.$.chatTexts": { message, sendByUser } } })

@@ -20,12 +20,14 @@ export class UserService {
   private name = new BehaviorSubject<string>(this.defaultName)
   private userName = new BehaviorSubject<string>(this.defaultUserName)
   private notificationsCount = new BehaviorSubject<number>(0)
+  private messagesCount = new BehaviorSubject<number>(0)
 
   name$: Observable<string> = this.name.asObservable();
   friendsCount$: Observable<string> = this.friendsCount.asObservable()
   profilePicture$: Observable<string> = this.profilePicture.asObservable();
   userName$: Observable<string> = this.userName.asObservable();
   notificationsCount$: Observable<number> = this.notificationsCount.asObservable()
+  messagesCount$: Observable<number> = this.messagesCount.asObservable()
 
   private API_URL!: string
 
@@ -45,6 +47,7 @@ export class UserService {
             this.name.next(response.name)
             this.userName.next(response.userName)
             this.friendsCount.next(response.friendsCount)
+            this.messagesCount.next(response.messageCount)
             if (response.notificationsCount) {
               this.notificationsCount.next(response.notificationsCount)
             }
@@ -82,5 +85,11 @@ export class UserService {
     let currentCount = this.notificationsCount.value
     currentCount--
     this.notificationsCount.next(currentCount)
+  }
+
+  countDownMessages() {
+    let currentCount = this.messagesCount.value
+    currentCount--
+    this.messagesCount.next(currentCount)
   }
 }
