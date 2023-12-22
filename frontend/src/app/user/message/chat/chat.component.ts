@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ChatService } from './chat.service'
 import { ChatFormMessage, IChatText } from 'src/app/models/responses/messages.model'
 import { environment } from 'src/environments/environment'
+import { MessageService } from '../../post-login/messages/messages.service'
 
 @Component({
   selector: 'app-chat',
@@ -15,26 +16,26 @@ export class ChatComponent {
   name!: string
   userName: string
   isOnline!: boolean
-  isFetching!: boolean
   chatForm!: FormGroup
-  profilePicture: string = environment.DEFAULT_PROFILE_PICTURE
-  isFetchingChats!: boolean
+  isFetching!: boolean
   messages!: IChatText[]
+  isFetchingChats!: boolean
+  profilePicture: string = environment.DEFAULT_PROFILE_PICTURE
 
   @ViewChild('chatArea', { static: false }) chatArea!: ElementRef
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private chatService: ChatService,
-    private friendsService: FriendsService
+    private friendsService: FriendsService,
+    private messageService: MessageService,
   ) {
     this.userName = this.route.snapshot.paramMap.get('user-name')!
+    this.chatService.updateCurrentChat(this.userName)
   }
 
   ngOnInit() {
-    console.log(35);
     this.name = ''
-    
     this.chatForm = this.fb.group({
       message: ['', [Validators.required]]
     })
@@ -49,15 +50,19 @@ export class ChatComponent {
         if (this.name) {
           this.isFetching = false
           this.isFetchingChats = true
-          this.friendsService.fetchChats(this.userName).subscribe({
-            next: res => {
-              this.isFetchingChats = false
-              this.messages = res.messages
-              setTimeout(() => {
-                this.scrollToBottom()
-              }, 50);
-            }
-          })
+          this.chatService.fetchChats(this.userName)
+        }
+      }
+    })
+
+    this.chatService.messages$.subscribe({
+      next: data => {
+        this.messages = [...data]
+        if (this.messages) {
+          this.isFetchingChats = false
+          setTimeout(() => {
+            this.scrollToBottom()
+          }, 50);
         }
       }
     })
@@ -78,7 +83,7 @@ export class ChatComponent {
   onSubmit() {
     if (this.chatForm.valid) {
       const { message }: ChatFormMessage = this.chatForm.value
-      this.messages.push({ message, time: new Date, sendByUser: true })
+      this.chatService.addNewMessage(message, true)
       this.chatForm.reset()
       setTimeout(() => {
         this.scrollToBottom()
@@ -97,5 +102,9 @@ export class ChatComponent {
 
     // Scroll to the bottom
     chatAreaElement.scrollTop = chatAreaElement.scrollHeight
+  }
+
+  ngOnDestroy() {
+    this.chatService.removeCurrentChat()
   }
 }

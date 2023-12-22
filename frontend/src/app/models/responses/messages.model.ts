@@ -4,7 +4,6 @@ import { Document, Types } from 'mongoose'
 export interface IChatText {
   message: string;
   time: Date;
-  read?: boolean;
   sendByUser: boolean;
 }
 

@@ -121,7 +121,7 @@ export class SocketService {
 
 
   // Send a notification to all sockets associated with the user
-  public async sendMessage(userId: string, message: string): Promise<void> {
+  public async sendMessage(userId: string, message: string, userName: string): Promise<void> {
     try {
       // Get sockets for the user
       const userIdObj = new Types.ObjectId(userId)
@@ -131,7 +131,7 @@ export class SocketService {
       if (sockets) {
         // Loop through each socket
         sockets.forEach((socket) => {
-          this.io.to(socket).emit(MESSAGE_EVENT, { message })
+          this.io.to(socket).emit(MESSAGE_EVENT, { message, userName, userId })
         })
       }
     } catch (error) {

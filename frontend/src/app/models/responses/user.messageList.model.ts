@@ -2,7 +2,6 @@ import { Types } from "mongoose";
 
 interface Chat {
   message: string;
-  read: boolean;
   sendByUser: boolean;
   _id: Types.ObjectId;
   time: Date;

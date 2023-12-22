@@ -5,6 +5,7 @@ import { Socket, io } from 'socket.io-client';
 import { UserService } from './user.service'
 import { ConfigService } from 'src/app/services/config.service';
 import { NotificationService } from '../user/post-login/notifications/notifications.service';
+import { MessageService } from '../user/post-login/messages/messages.service'
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +17,9 @@ export class SocketService {
   constructor(
     private http: HttpClient,
     private userService: UserService,
-      private configService: ConfigService,
-      private notificationService: NotificationService
+    private configService: ConfigService,
+    private messageService: MessageService,
+    private notificationService: NotificationService
     ) {
     this.API_URL = this.configService.getAPI_BaseURL()
   }
@@ -36,6 +38,8 @@ export class SocketService {
   notificationSocketOn() {
   if (this.socket) {
     this.socket.on('disconnect', () => {
+      console.log('disconnected');
+      
     });
 
     // Handle incoming notifications
@@ -44,8 +48,8 @@ export class SocketService {
       this.notificationService.getNotifications()
     });
 
-    this.socket.on('message', (message) => {
-      console.log(message, '48');
+    this.socket.on('message', (res) => {
+      this.messageService.addMessage(res)
     });
   }
 

@@ -1,5 +1,6 @@
 import { UserDataAccess } from '../../data/user.dataAccess'
 import { UserExistingError } from '../../../../shared/errors/userExisting.error'
+import { ErrorHandling } from '../../../../utils/handleError.utils'
 
 export class UserExistingUseCase {
   private userDataAccess: UserDataAccess
@@ -33,7 +34,7 @@ export class UserExistingUseCase {
 
       return true
     } catch (error) {
-      throw error
+      ErrorHandling.processError('Error in userExisting, UserExistingUseCase', error)
     }
   }
 

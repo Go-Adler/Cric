@@ -1,6 +1,5 @@
 import { Types } from "mongoose"
 import { UserDataAccess } from "../../data/user.dataAccess"
-import { SocketDataAccess } from "../../data/user.socket.dataAccess"
 import { ErrorHandling } from "../../../../utils/handleError.utils"
 
 /**
@@ -8,14 +7,12 @@ import { ErrorHandling } from "../../../../utils/handleError.utils"
  */
 export class UserDataUseCase {
   private userDataAccess: UserDataAccess
-  private socketDataAccess: SocketDataAccess
 
   /**
    * Constructor to initialize UserDataAccess and SocketDataAccess instances.
    */
   constructor() {
     this.userDataAccess = new UserDataAccess()
-    this.socketDataAccess = new SocketDataAccess()
   }
 
   /**

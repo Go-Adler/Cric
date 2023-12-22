@@ -11,11 +11,11 @@ import { BehaviorSubject } from 'rxjs'
 })
 export class NotificationService {
   private API_URL!: string
-  private notifications = new BehaviorSubject<Array<Notification>>([])
   private fetching = new BehaviorSubject<boolean>(true)
+  private notifications = new BehaviorSubject<Array<Notification>>([])
 
-  notifications$: Observable<Array<Notification>> = this.notifications.asObservable()
   fetching$: Observable<boolean> = this.fetching.asObservable()
+  notifications$: Observable<Array<Notification>> = this.notifications.asObservable()
 
   constructor (
     private configService: ConfigService,
