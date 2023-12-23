@@ -120,6 +120,9 @@
     *ngIf="!posts[0] && firstFetch"
     class="flex justify-center flex-col items-center gap-3 mt-10"
   >
+    <div class="w-8/12">
+      <img [src]="EMPTY_POST" alt="">
+    </div>
     <span>User not created a post yet.</span>
     <span class="material-symbols-rounded"> empty_dashboard </span>
   </span>
@@ -150,7 +153,7 @@
   </span>
   </div>
 </div>
-<div *ngIf="friendStatus !== 'friend'" class="flex flex-col items-center pt-10">
+<div *ngIf="friendStatus !== 'friend'" class="flex flex-col gap-8 items-center pt-10">
   <div class="w-7/12">
   <img [src]="POSTS_PROTECTED" alt="">
 

@@ -1,7 +1,7 @@
-import mongoose, { Types } from "mongoose";
-import { CommentEntity } from "../domain/post.commentSchema";
-import { PostEntity } from "../domain/user.postSchema";
-import { Post } from "../../../shared/interfaces/userPost.interface";
+import mongoose, { Types } from "mongoose"
+import { CommentEntity } from "../domain/post.commentSchema"
+import { PostEntity } from "../domain/user.postSchema"
+import { Post } from "../../../shared/interfaces/userPost.interface"
 
 const ERROR_MESSAGES = {
   INVALID_ID: "Invalid ID",
@@ -9,9 +9,9 @@ const ERROR_MESSAGES = {
   FETCH_COMMENTS: "Error fetching comments",
   LIKE_COMMENT: "Error liking comment",
   UNLIKE_COMMENT: "Error unliking comment",
-};
+}
 
-const DEFAULT_COMMENT_LIMIT = 6;
+const DEFAULT_COMMENT_LIMIT = 6
 
 /**
  * Class for handling comment data access
@@ -24,7 +24,7 @@ class CommentsDataAccess {
    */
   private validateObjectId(id: Types.ObjectId) {
     if (!Types.ObjectId.isValid(id)) {
-      throw new Error(ERROR_MESSAGES.INVALID_ID);
+      throw new Error(ERROR_MESSAGES.INVALID_ID)
     }
   }
 
@@ -36,15 +36,15 @@ class CommentsDataAccess {
    * @throws {Error} if an error occurs during comment creation
    */
   async createComment(postId: Types.ObjectId, postData: Post): Promise<Post> {
-    this.validateObjectId(postId);
+    this.validateObjectId(postId)
 
     try {
-      const comment = await CommentEntity.create(postData);
-      await PostEntity.findByIdAndUpdate(postId, { $push: { replies: comment._id } });
-      return comment;
-    } catch (error:any) {
-      console.error(`${ERROR_MESSAGES.COMMENT_CREATION}: ${error.message}`);
-      throw new Error(ERROR_MESSAGES.COMMENT_CREATION);
+      const comment = await CommentEntity.create(postData)
+      await PostEntity.findByIdAndUpdate(postId, { $push: { replies: comment._id } })
+      return comment
+    } catch (error: any) {
+      console.error(`${ERROR_MESSAGES.COMMENT_CREATION}: ${error.message}`)
+      throw new Error(ERROR_MESSAGES.COMMENT_CREATION)
     }
   }
 
@@ -56,7 +56,7 @@ class CommentsDataAccess {
    * @throws {Error} if an error occurs while fetching comments
    */
   async getComments(postId: Types.ObjectId, skip = 0): Promise<Post[]> {
-    this.validateObjectId(postId);
+    this.validateObjectId(postId)
 
     try {
       const commentsResult = await PostEntity.aggregate([
@@ -67,13 +67,13 @@ class CommentsDataAccess {
         { $limit: DEFAULT_COMMENT_LIMIT },
         { $group: { _id: null, replies: { $push: "$replies" } } },
         { $project: { _id: 0, replies: 1 } },
-      ]);
+      ])
 
-      const comments = await CommentEntity.find({ _id: { $in: commentsResult[0]?.replies || [] } }).sort({ createdAt: -1 });
-      return comments;
-    } catch (error:any) {
-      console.error(`${ERROR_MESSAGES.FETCH_COMMENTS}: ${error.message}`);
-      throw new Error(ERROR_MESSAGES.FETCH_COMMENTS);
+      const comments = await CommentEntity.find({ _id: { $in: commentsResult[0]?.replies || [] } }).sort({ createdAt: -1 })
+      return comments
+    } catch (error: any) {
+      console.error(`${ERROR_MESSAGES.FETCH_COMMENTS}: ${error.message}`)
+      throw new Error(ERROR_MESSAGES.FETCH_COMMENTS)
     }
   }
 
@@ -84,17 +84,17 @@ class CommentsDataAccess {
    * @throws {Error} if an error occurs while liking the comment
    */
   async likeComment(userId: Types.ObjectId, commentId: Types.ObjectId): Promise<void> {
-    this.validateObjectId(userId);
-    this.validateObjectId(commentId);
+    this.validateObjectId(userId)
+    this.validateObjectId(commentId)
 
     try {
       await CommentEntity.findByIdAndUpdate(commentId, {
         $push: { usersLiked: userId },
         $inc: { "actions.likes": 1 },
-      });
-    } catch (error:any) {
-      console.error(`${ERROR_MESSAGES.LIKE_COMMENT}: ${error.message}`);
-      throw new Error(ERROR_MESSAGES.LIKE_COMMENT);
+      })
+    } catch (error: any) {
+      console.error(`${ERROR_MESSAGES.LIKE_COMMENT}: ${error.message}`)
+      throw new Error(ERROR_MESSAGES.LIKE_COMMENT)
     }
   }
 
@@ -105,19 +105,19 @@ class CommentsDataAccess {
    * @throws {Error} if an error occurs while unliking the comment
    */
   async unlikeComment(userId: Types.ObjectId, commentId: Types.ObjectId): Promise<void> {
-    this.validateObjectId(userId);
-    this.validateObjectId(commentId);
+    this.validateObjectId(userId)
+    this.validateObjectId(commentId)
 
     try {
       await CommentEntity.findByIdAndUpdate(commentId, {
         $pull: { usersLiked: userId },
         $inc: { "actions.likes": -1 },
-      });
-    } catch (error:any) {
-      console.error(`${ERROR_MESSAGES.UNLIKE_COMMENT}: ${error.message}`);
-      throw new Error(ERROR_MESSAGES.UNLIKE_COMMENT);
+      })
+    } catch (error: any) {
+      console.error(`${ERROR_MESSAGES.UNLIKE_COMMENT}: ${error.message}`)
+      throw new Error(ERROR_MESSAGES.UNLIKE_COMMENT)
     }
   }
 }
 
-export default CommentsDataAccess;
+export default CommentsDataAccess

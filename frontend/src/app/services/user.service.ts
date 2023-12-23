@@ -42,7 +42,7 @@ export class UserService {
       .subscribe(
         {
           next: response => {
-            this.profilePicture.next(response.profilePicture)
+            if (response.profilePicture) this.profilePicture.next(response.profilePicture)
             if (!response.profilePicture) this.profilePicture.next(environment.DEFAULT_PROFILE_PICTURE)
             this.name.next(response.name)
             this.userName.next(response.userName)

@@ -8,6 +8,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 
 import { FriendsService } from './friends.service'
 import { FriendStatus } from 'src/app/models/responses/userResponses'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-friends',

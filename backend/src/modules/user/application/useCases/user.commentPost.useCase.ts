@@ -1,6 +1,6 @@
-import { Types } from "mongoose";
-import { Post } from "../../../../shared/interfaces/userPost.interface";
-import CommentsDataAccess from "../../data/user.comment.dataAccess";
+import { Types } from "mongoose"
+import { Post } from "../../../../shared/interfaces/userPost.interface"
+import CommentsDataAccess from "../../data/user.comment.dataAccess"
 
 const ERROR_MESSAGES = {
   INVALID_ID: "Invalid ID",
@@ -8,16 +8,16 @@ const ERROR_MESSAGES = {
   FETCH_COMMENTS: "Error fetching comments",
   LIKE_COMMENT: "Error liking comment",
   UNLIKE_COMMENT: "Error unliking comment",
-};
+}
 
 /**
  * Class for handling comment post use case
  */
 export class CommentPostUseCase {
-  private commentDataAccess: CommentsDataAccess;
+  private commentDataAccess: CommentsDataAccess
 
   constructor() {
-    this.commentDataAccess = new CommentsDataAccess();
+    this.commentDataAccess = new CommentsDataAccess()
   }
 
   /**
@@ -29,10 +29,10 @@ export class CommentPostUseCase {
    */
   async createComment(postId: Types.ObjectId, commentData: Post): Promise<Post> {
     try {
-      return this.commentDataAccess.createComment(postId, commentData);
+      return this.commentDataAccess.createComment(postId, commentData)
     } catch (error) {
-      console.error(`${ERROR_MESSAGES.COMMENT_CREATION}: ${error}`);
-      throw new Error(ERROR_MESSAGES.COMMENT_CREATION);
+      console.error(`${ERROR_MESSAGES.COMMENT_CREATION}: ${error}`)
+      throw new Error(ERROR_MESSAGES.COMMENT_CREATION)
     }
   }
 
@@ -45,10 +45,10 @@ export class CommentPostUseCase {
    */
   async getComments(postId: Types.ObjectId, skip = 0): Promise<Post[]> {
     try {
-      return this.commentDataAccess.getComments(postId, skip);
+      return this.commentDataAccess.getComments(postId, skip)
     } catch (error) {
-      console.error(`${ERROR_MESSAGES.FETCH_COMMENTS}: ${error}`);
-      throw new Error(ERROR_MESSAGES.FETCH_COMMENTS);
+      console.error(`${ERROR_MESSAGES.FETCH_COMMENTS}: ${error}`)
+      throw new Error(ERROR_MESSAGES.FETCH_COMMENTS)
     }
   }
 
@@ -60,10 +60,10 @@ export class CommentPostUseCase {
    */
   async likeComment(userId: Types.ObjectId, commentId: Types.ObjectId): Promise<void> {
     try {
-      await this.commentDataAccess.likeComment(userId, commentId);
+      await this.commentDataAccess.likeComment(userId, commentId)
     } catch (error) {
-      console.error(`${ERROR_MESSAGES.LIKE_COMMENT}: ${error}`);
-      throw new Error(ERROR_MESSAGES.LIKE_COMMENT);
+      console.error(`${ERROR_MESSAGES.LIKE_COMMENT}: ${error}`)
+      throw new Error(ERROR_MESSAGES.LIKE_COMMENT)
     }
   }
 
@@ -75,10 +75,10 @@ export class CommentPostUseCase {
    */
   async unlikeComment(userId: Types.ObjectId, commentId: Types.ObjectId): Promise<void> {
     try {
-      await this.commentDataAccess.unlikeComment(userId, commentId);
+      await this.commentDataAccess.unlikeComment(userId, commentId)
     } catch (error) {
-      console.error(`${ERROR_MESSAGES.UNLIKE_COMMENT}: ${error}`);
-      throw new Error(ERROR_MESSAGES.UNLIKE_COMMENT);
+      console.error(`${ERROR_MESSAGES.UNLIKE_COMMENT}: ${error}`)
+      throw new Error(ERROR_MESSAGES.UNLIKE_COMMENT)
     }
   }
 }

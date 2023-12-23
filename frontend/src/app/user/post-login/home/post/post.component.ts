@@ -19,7 +19,7 @@ const POSTS_LIMIT = 6
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss'],
 })
-export class PostComponent implements OnChanges, OnDestroy {
+export class PostComponent {
   posts: any[] = [];
   spinner = true;
   profilePicture = '';

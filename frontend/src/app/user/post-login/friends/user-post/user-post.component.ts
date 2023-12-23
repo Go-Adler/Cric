@@ -33,6 +33,8 @@ export class UserPostComponent implements OnChanges, OnDestroy {
   fetchingPosts = false
   commentSection = false
   friendStatus: FriendStatus = 'stranger'
+  
+  EMPTY_POST = environment.EMPTY_POST
   POSTS_PROTECTED = environment.POSTS_PROTECTED
   POST_LOADING_IMAGE = environment.POST_LOADING_IMAGE
 

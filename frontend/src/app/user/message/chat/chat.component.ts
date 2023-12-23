@@ -75,7 +75,7 @@ export class ChatComponent {
 
     this.friendsService.profilePicture$.subscribe({
       next: profilePicture => {
-        this.profilePicture = profilePicture
+        if (profilePicture) this.profilePicture = profilePicture
       }
     })
   }

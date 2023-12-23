@@ -119,11 +119,11 @@
     *ngIf="!(posts && posts[0]) && firstFetch"
     class="flex justify-center flex-col items-center gap-3 "
   >
-  <div class="w-8/12 lg:w-full">
+  <div class="w-8/12">
     <img [src]="emptyPostIcon" alt="">
 
   </div>
-  <span class="">No posts to show, create a new post, or follow someone.</span>
+  <span class="text-center">No posts to show, create a new post, or follow someone.</span>
     <span class="material-symbols-rounded"> empty_dashboard </span>
 </div>
   <!-- fetch posts -->
