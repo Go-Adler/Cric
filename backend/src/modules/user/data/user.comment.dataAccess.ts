@@ -91,6 +91,8 @@ class CommentsDataAccess {
             'content': 1,
             'timestamp': 1,
             'actions': 1,
+            'engagement': 1,
+            'usersLiked': 1,
             'personDetails.name': 1,
             'personDetails.userName': 1,
             'personDetails.profilePicture': 1
