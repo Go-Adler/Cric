@@ -34,7 +34,6 @@ export class FriendsService {
 
   constructor(private configService: ConfigService, private http: HttpClient) {
     this.API_URL = this.configService.getAPI_BaseURL()
-    console.log('friendservie');
   }
 
   getFriendBasicInfo(userName: string) {

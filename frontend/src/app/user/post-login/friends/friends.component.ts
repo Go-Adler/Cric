@@ -79,7 +79,6 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
     this.friendsService.isOnline$.subscribe({
       next: isOnline => {
-        console.log(isOnline);
         this.isOnline = isOnline
       }
     })

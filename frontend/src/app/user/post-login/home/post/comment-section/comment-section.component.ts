@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CommentService } from './new-comment/new-comment.service';
-import { I_post } from 'src/app/models/responses/message.model';
+import { UserService } from 'src/app/services/user.service'
 
 const POSTS_LIMIT = 6;
 
@@ -18,15 +18,18 @@ export class CommentSectionComponent implements OnInit {
   firstFetch = false;
   fetchingPosts = false;
   postsEnd = false;
+  profilePicture!: string
+  userName!: string
+  name!: string
 
-  @Input() userName!: string;
-  @Input() name!: string;
-  @Input() profilePicture!: string;
   @Input() postId!: string;
 
   newPostData: any;
 
-  constructor(private commentsService: CommentService) {}
+  constructor(
+    private userService: UserService,
+    private commentsService: CommentService
+    ) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -42,6 +45,10 @@ export class CommentSectionComponent implements OnInit {
         },
       })
     );
+
+    this.userService.name$.subscribe({ next: name => this.name = name })
+    this.userService.userName$.subscribe({ next: userName => this.userName = userName })
+    this.userService.profilePicture$.subscribe({ next: profilePicture => this.profilePicture = profilePicture})
   }
 
   // Load more posts
@@ -97,6 +104,12 @@ export class CommentSectionComponent implements OnInit {
   }
 
   newPostSuccess(postData: any) {
+    const personDetails = {
+      name: this.name,
+      userName: this.userName,
+      profilePicture: this.profilePicture
+    }
+    postData.personDetails = personDetails
     this.posts.unshift(postData);
   }
 }

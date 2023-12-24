@@ -11,19 +11,19 @@ import { PostActionsUseCase } from "../../application/useCases/user.postActionsC
  * Controller class for handling user comments.
  */
 export class CommentController {
-  private commentPostUseCase: CommentPostUseCase
-  private imageValidationUseCase: ImageValidationUseCase
   private awsUploadUseCase: AwsUploadUseCase
   private getAwsUrlUseCase: GetAwsUrlUseCase
   private postActionsUseCase: PostActionsUseCase
+  private commentPostUseCase: CommentPostUseCase
+  private imageValidationUseCase: ImageValidationUseCase
 
   constructor() {
     // Initialize use cases
-    this.commentPostUseCase = new CommentPostUseCase()
-    this.imageValidationUseCase = new ImageValidationUseCase()
     this.awsUploadUseCase = new AwsUploadUseCase()
     this.getAwsUrlUseCase = new GetAwsUrlUseCase()
+    this.commentPostUseCase = new CommentPostUseCase()
     this.postActionsUseCase = new PostActionsUseCase()
+    this.imageValidationUseCase = new ImageValidationUseCase()
   }
 
   /**
@@ -62,9 +62,7 @@ export class CommentController {
       const postData = { userId, content: { text, multimedia: [multimedia] } } as Post
 
       const postWithoutUrl = await this.commentPostUseCase.createComment(postId, postData)
-
       const post = await this.getAwsUrlUseCase.getUrl(postWithoutUrl)
-
       res.json({ post })
     } catch (error) {
       next(error)
@@ -108,7 +106,6 @@ export class CommentController {
       const { postId } = req.body
 
       await this.commentPostUseCase.likeComment(userId, postId)
-
       res.json({ message: "Successfully liked the comment" })
     } catch (error) {
       next(error)

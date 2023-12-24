@@ -51,8 +51,8 @@ export class NewCommentComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private userService: UserService,
     private commentService: CommentService,
-    private userService: UserService
   ) {}
 
   ngOnInit(): void {

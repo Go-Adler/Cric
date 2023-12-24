@@ -8,11 +8,17 @@ export interface messageResponse {
   otpSent?: boolean;
 }
 
+interface PersonDetails {
+  name: string,
+  userName: string,
+  profilePicture: string
+}
+
 export interface I_postResponse {
-  uploadFailed?: boolean;
   post?: I_post;
   message?: string
   comments?: I_post 
+  uploadFailed?: boolean;
 }
 
 export interface I_post {
@@ -27,6 +33,7 @@ export interface I_post {
     timestamp: Date;
   };
   _id?: string;
+  personDetails: PersonDetails
 }
 
 

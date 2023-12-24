@@ -39,6 +39,16 @@ export class GetAwsUrlUseCase {
           const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
           post.content.multimedia[0] = url
         }
+
+        if (post.personDetails && post.personDetails.profilePicture) {
+          const getObjectParams = {
+            Bucket: this.bucketName,
+            Key: post.personDetails.profilePicture,
+          }
+          const command = new GetObjectCommand(getObjectParams)
+          const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+          post.personDetails.profilePicture = url
+        }
       }
   
       return posts

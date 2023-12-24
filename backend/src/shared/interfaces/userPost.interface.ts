@@ -9,6 +9,12 @@ export interface Content {
   multimedia?: string[];
 }
 
+interface PersonDetails {
+  name: string,
+  userName: string,
+  profilePicture: string
+}
+
 // Define an interface for the engagement status of a user on a post
 export interface Engagement {
   liked?: boolean;
@@ -38,6 +44,7 @@ export interface Post extends Document {
   userId?: Types.ObjectId;
   engagement?: Engagement;
   replies?: Types.ObjectId[];
+  personDetails?: PersonDetails
   usersLiked?: Types.ObjectId[];
   additionalInfo?: AdditionalInfo;
 }
@@ -48,3 +55,4 @@ export interface PostResponse {
   userName: string
   profilePicture?: string,
 }
+

@@ -55,13 +55,14 @@ class CommentsDataAccess {
    * @returns {Promise<Post[]>} The comments of the post
    * @throws {Error} if an error occurs while fetching comments
    */
-  async getComments(postId: Types.ObjectId, skip = 0): Promise<Post[]> {
+  async getComments(postId: Types.ObjectId, skip: number = 0): Promise<Post[]> {
     this.validateObjectId(postId)
 
     try {
       const commentsResult = await PostEntity.aggregate([
         { $match: { _id: new mongoose.Types.ObjectId(postId) } },
         { $unwind: "$replies" },
+       
         { $sort: { "replies.createdAt": -1 } },
         { $skip: skip },
         { $limit: DEFAULT_COMMENT_LIMIT },
@@ -69,7 +70,35 @@ class CommentsDataAccess {
         { $project: { _id: 0, replies: 1 } },
       ])
 
-      const comments = await CommentEntity.find({ _id: { $in: commentsResult[0]?.replies || [] } }).sort({ createdAt: -1 })
+      const comments = await CommentEntity.aggregate([
+        { $match: { _id: { $in: commentsResult[0]?.replies || [] } } },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'userId',
+            foreignField: '_id',
+            as: 'personDetails'
+          }
+        },
+        {
+          $unwind: {
+            path: '$personDetails',
+            preserveNullAndEmptyArrays: true
+          }
+        },
+        { 
+          $project: {
+            'content': 1,
+            'timestamp': 1,
+            'actions': 1,
+            'personDetails.name': 1,
+            'personDetails.userName': 1,
+            'personDetails.profilePicture': 1
+          }
+        },
+        { $sort: { createdAt: -1 } }
+      ])
+      
       return comments
     } catch (error: any) {
       console.error(`${ERROR_MESSAGES.FETCH_COMMENTS}: ${error.message}`)
@@ -89,7 +118,7 @@ class CommentsDataAccess {
 
     try {
       await CommentEntity.findByIdAndUpdate(commentId, {
-        $push: { usersLiked: userId },
+        $addToSet: { usersLiked: userId },
         $inc: { "actions.likes": 1 },
       })
     } catch (error: any) {

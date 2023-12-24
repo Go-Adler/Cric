@@ -6,7 +6,7 @@
     *ngFor="let post of posts"
   >
     <span class="w-10">
-      <img [src]="profilePicture" alt="" class="rounded-full" />
+      <img [src]="post.personDetails.profilePicture" alt="" class="rounded-full" />
     </span>
 
     <div class="w-full h-auto">
@@ -15,7 +15,7 @@
         <span class="">
           <!-- Name and time stamp -->
           <span class="flex items-center gap-2">
-            <span class="md:text-sm">{{ name }}</span>
+            <span class="md:text-sm">{{ post.personDetails.name }}</span>
             <span
               class="text-xs font-light md:font-normal md:text-sm text-stone-500"
               >{{ post.timestamp | timeago }}</span
@@ -24,7 +24,7 @@
 
           <!-- User name -->
           <span class="">
-            <span class="text-sm font-light">@{{ userName }}</span>
+            <span class="text-sm font-light">@{{ post.personDetails.userName }}</span>
           </span>
         </span>
       </div>
@@ -49,7 +49,7 @@
             class="rounded-md"
           />
         </div>
-
+        {{ post | json}}
         <!-- reactions -->
         <div class="md:pt-3 pt-2 flex justify-end items-end">
           <!-- favourite -->
