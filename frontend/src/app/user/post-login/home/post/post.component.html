@@ -39,10 +39,11 @@
       *ngIf="post.content?.multimedia[0]"
       [defaultImage]="postLoadingImage"
       [lazyLoad]="post.content?.multimedia[0]"
+      [errorImage]="errorLoading"
       alt="Post Image"
       class="rounded-md"
       (click)="selectedPost(post._id)"
-      (error)="handleImageError()"
+      (error)="handleImageError($event)"
     />
     <!-- reactions -->
     <div class="md:pt-3 pt-2 flex justify-between">

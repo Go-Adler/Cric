@@ -6,6 +6,7 @@ import { ChatService } from './chat.service'
 import { ChatFormMessage, IChatText } from 'src/app/models/responses/messages.model'
 import { environment } from 'src/environments/environment'
 import { MessageService } from '../../post-login/messages/messages.service'
+import { Howl } from 'howler'
 
 @Component({
   selector: 'app-chat',
@@ -13,6 +14,7 @@ import { MessageService } from '../../post-login/messages/messages.service'
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent {
+  private sound!: Howl;
   name!: string
   userName: string
   isOnline!: boolean
@@ -32,9 +34,11 @@ export class ChatComponent {
   ) {
     this.userName = this.route.snapshot.paramMap.get('user-name')!
     this.chatService.updateCurrentChat(this.userName)
+   
   }
 
   ngOnInit() {
+    this.messageService.updateChatName(this.userName)
     this.name = ''
     this.chatForm = this.fb.group({
       message: ['', [Validators.required]]
@@ -81,6 +85,7 @@ export class ChatComponent {
   }
 
   onSubmit() {
+   this.soundPlay()
     if (this.chatForm.valid) {
       const { message }: ChatFormMessage = this.chatForm.value
       this.chatService.addNewMessage(message, true)
@@ -90,7 +95,6 @@ export class ChatComponent {
       }, 50);
       this.chatService.sendMessage(message, this.userName).subscribe({
         next: res => {
-          console.log(res, 88)
         }
       })
     }
@@ -106,5 +110,15 @@ export class ChatComponent {
 
   ngOnDestroy() {
     this.chatService.removeCurrentChat()
+    this.messageService.removeChatName()
   }
+
+  soundPlay () {
+    this.sound = new Howl({
+      src: ['assets/sent.mp3'],
+      autoplay: false
+    });
+    this.sound.play()
+  }
+
 }

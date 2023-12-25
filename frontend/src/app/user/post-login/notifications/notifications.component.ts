@@ -51,4 +51,8 @@ export class NotificationsComponent implements OnInit {
   getProfilePicture(notification: any) {
     return notification?.profilePicture || this.defaultProfilePicture
   }
+
+  ngOnDestroy() {
+    this.notifications = []
+  }
 }

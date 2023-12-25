@@ -160,4 +160,22 @@ export class MessageDataAccess {
       ErrorHandling.processError("Error in createChat, MessageDataAccess", error)
     }
   }
+
+  /**
+   *
+   * @param userId - The ID of the user
+   * @param personId - The ID of the person who received message
+   */
+  async markAsRead(userId: Types.ObjectId, personId: Types.ObjectId) {
+    try {
+      //  Mark as read
+      await UserEntity.findOneAndUpdate(
+        { _id: userId, chats: { $elemMatch: { personId } } }, { $set: { "chats.$.read": true } } 
+      )
+      
+    } catch (error) {
+      ErrorHandling.processError("Error in markAsRead, MessageDataAccess", error)
+    }
+  }
+
 }

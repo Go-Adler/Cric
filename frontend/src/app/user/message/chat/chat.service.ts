@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { BehaviorSubject, Observable } from "rxjs"
-import { IChatText, MessageResponse } from "src/app/models/responses/messages.model"
+import { IChatText, MessageResponse, MarkAsReadResponse } from "src/app/models/responses/messages.model"
 import { ConfigService } from "src/app/services/config.service"
 
 @Injectable({
@@ -58,5 +58,12 @@ export class ChatService {
 
   updateCurrentChat(userName: string) {
     this.currentChat.next(userName)
+  }
+
+  markAsRead(userName: string) {
+    this.http.post<MarkAsReadResponse>(`${this.API_URL}/user/message/mark-as-read`, { userName }).subscribe({
+      next: res => {
+      }
+    })
   }
 }

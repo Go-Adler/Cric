@@ -80,4 +80,14 @@ export class MessageUseCase {
       ErrorHandling.processError('Error in getMessages, MessageUseCase', error)
     }
   }
+
+  markAsRead = async (userId: Types.ObjectId, userName: string): Promise<any> => {
+    try {
+      const { _id: personId } = await this.userDataAccess.getUserIdWithUserName(userName)
+      await this.messageDataAccess.markAsRead(userId, personId)
+
+    } catch (error) {
+      ErrorHandling.processError('Error in markAsRead, MessageUseCase', error)
+    }
+  }
 }

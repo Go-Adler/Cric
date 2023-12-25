@@ -20,20 +20,21 @@ const POSTS_LIMIT = 6
   styleUrls: ['./post.component.scss'],
 })
 export class PostComponent {
-  posts: any[] = [];
-  spinner = true;
-  profilePicture = '';
   name = '';
-  userName = '';
-  postContent = '';
-  fetchingPosts = false;
   skip = 0;
-  postsEnd = false;
   posti = false;
+  userName = '';
+  spinner = true;
+  postsEnd = false;
+  postContent = '';
   firstFetch = false;
+  posts: any[] = [];
+  profilePicture = '';
+  fetchingPosts = false;
+  emptyPostIcon: string
   commentSection = false;
   postLoadingImage: string = '';
-  emptyPostIcon: string
+  errorLoading = environment.ERROR_LOADING
 
   private subscriptions: Subscription[] = [];
 
@@ -43,7 +44,7 @@ export class PostComponent {
     private postService: PostService,
     private router: Router,
     private userService: UserService
-  ) { 
+  ) {
     this.emptyPostIcon = environment.EMPTY_POST
   }
 
@@ -168,7 +169,8 @@ export class PostComponent {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
   }
 
-  handleImageError() {
+
+  handleImageError(event: any) {
     console.log('lazy loading image error')
   }
 }

@@ -57,4 +57,18 @@ export class UserMessageController {
       next(error)
     }
   }
+
+  markAsRead = async(req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userId } = req.user as JwtPayload
+      const { userName } = req.body
+      
+      await this.messageUseCase.markAsRead(userId, userName)
+
+      
+      res.json({ message: 'Mark as read success.' })
+    } catch (error) {
+      next(error)
+    }
+  }
 }

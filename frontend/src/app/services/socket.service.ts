@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Socket, io } from 'socket.io-client';
+import { Howl } from 'howler'
 import { UserService } from './user.service'
 import { ConfigService } from 'src/app/services/config.service';
 import { NotificationService } from '../user/post-login/notifications/notifications.service';
@@ -77,5 +78,9 @@ export class SocketService {
 
   getSocket() {
     return this.socket;
+  }
+
+  playSound() {
+
   }
 }

@@ -20,3 +20,7 @@ export interface MessageResponse {
 export interface ChatFormMessage {
   message: string
 }
+
+export interface MarkAsReadResponse {
+  message: string
+}
