@@ -25,7 +25,7 @@ export class VerifySignUpOtpComponent {
   otpResent: boolean = false;
   timer: any;
   timerValue: number = 5;
-  logo = environment
+  logo = environment.CRIC_LOGO
 
   constructor(
     private fb: FormBuilder,
