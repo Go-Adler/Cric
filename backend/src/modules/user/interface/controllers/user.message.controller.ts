@@ -65,7 +65,6 @@ export class UserMessageController {
       
       await this.messageUseCase.markAsRead(userId, userName)
 
-      
       res.json({ message: 'Mark as read success.' })
     } catch (error) {
       next(error)

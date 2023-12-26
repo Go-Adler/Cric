@@ -33,7 +33,8 @@ export class UserExistingUseCase {
       }
 
       return true
-    } catch (error) {
+    } catch (error: any) {
+      if (error instanceof UserExistingError) throw  new UserExistingError(error.message)
       ErrorHandling.processError('Error in userExisting, UserExistingUseCase', error)
     }
   }

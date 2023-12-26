@@ -38,7 +38,7 @@ export class UserSignUpController {
       const verifyToken = this.tokenUseCase.generateTokenWithUserId(userId, false)
 
       return res.status(200).json({ message: "User sign-up successful", verifyToken })
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof UserExistingError) {
         return res.status(200).json({ error: error.message })
       }

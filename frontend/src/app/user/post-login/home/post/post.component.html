@@ -125,8 +125,8 @@
     <span class="material-symbols-rounded"> empty_dashboard </span>
 </div>
   <!-- fetch posts -->
-  <span
-    *ngIf="posts[0] && !fetchingPosts && !postsEnd"
+  <ng-container
+    *ngIf="posts && posts[0] && !fetchingPosts && !postsEnd"
     class="flex flex-col gap-1 justify-center items-center p-3 cursor-pointer flex-column mt-2 text-4xl border-t cursor fetchPosts"
     (click)="loadMore()"
   >
@@ -134,7 +134,7 @@
       add_circle
     </span>
     <span class="text-xs">Load more</span>
-  </span>
+  </ng-container>
   <span
     *ngIf="fetchingPosts"
     class="flex justify-center items-center flex-col mt-2 cursor gap-2"

@@ -27,8 +27,7 @@ export class AwsSesService {
 
   async sendOtpVerificationEmail(recipient: string, OTP: number) {
     try {
-      recipient = "gokul_adler@outlook.com"
-      recipient = 'gokuladler@gmail.com'
+      recipient = 'goadler.cloud@gmail.com'
 
       const params = {
         Source: this.source,
