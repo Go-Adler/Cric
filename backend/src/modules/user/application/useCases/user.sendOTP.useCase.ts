@@ -1,14 +1,17 @@
 import { UserOtpDataAccess } from "../../data/user.otp.dataAccess"
 import { generateOTP } from "../../../../utils/generateOTP.utils"
 import { AwsSesService } from "../../../../services/awsSes.service"
+import { NodeMailerService } from "../../../../services/nodeMailer.service"
 
 export class SendOTP_UseCase {
   private awsSesService: AwsSesService
   private userOtpDataAccess: UserOtpDataAccess
+  private nodeMailerService: NodeMailerService
 
   constructor() {
-    this.userOtpDataAccess = new UserOtpDataAccess()
     this.awsSesService = new AwsSesService()
+    this.nodeMailerService = new NodeMailerService()
+    this.userOtpDataAccess = new UserOtpDataAccess()
   }
 
   /**
@@ -22,8 +25,10 @@ export class SendOTP_UseCase {
       // Generate a one-time password (OTP)
       const otp = generateOTP()
 
-      // Send the OTP verification email
-      await this.awsSesService.sendOtpVerificationEmail(email, otp)
+      // Send the OTP verification email - aws ses
+      // await this.awsSesService.sendOtpVerificationEmail(email, otp)
+      await this.nodeMailerService.sendMail(email, otp)
+
 
       // Store the OTP in the data access layer
       await this.userOtpDataAccess.addOtp(email, otp)
