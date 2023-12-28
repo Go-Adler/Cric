@@ -14,6 +14,10 @@ export class GetUserPostsUseCase {
     return posts
   }
 
+  getFeedPosts = async (userId: Types.ObjectId, skip: number) => {
+    const posts = await this.userPostDataAccess.getUserPosts(userId, skip)
+    return posts
+  }
   
   getUserPost = async (postId: Types.ObjectId): Promise<PostResponse> => {
     return await this.userPostDataAccess.getUserPost(postId)

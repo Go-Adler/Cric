@@ -63,6 +63,40 @@ export class UserPostDataAccess {
   }
 
   /**
+   * Get posts for a specific user and return the posts
+   * @param id - The ID of the user
+   * @param skip - The number of posts to skip (default is 0)
+   * @returns The posts of the user
+   */
+  async getFeedPosts(id: Types.ObjectId, skip: number = 0): Promise<Post[]> {
+    try {
+      if (!Types.ObjectId.isValid(id)) {
+        throw new Error("Invalid user id")
+      }
+      const friends = await UserEntity.aggregate([{ $match: { _id: new mongoose.Types.ObjectId() } }, { $project: { friends: 1 } }])
+      console.log(friends, 77)
+
+      const postsResult = await UserEntity.aggregate([
+        { $match: { _id: new mongoose.Types.ObjectId(id) } },
+        { $unwind: "$postIds" },
+        { $sort: { postIds: -1 } },
+        { $skip: skip },
+        { $limit: 6 },
+        { $group: { _id: null, postIds: { $push: "$postIds" } } },
+        { $project: { _id: 0, postIds: 1 } },
+      ])
+
+      const { postIds } = postsResult[0] || { postIds: [] }
+
+      const posts = await PostEntity.find({ _id: { $in: postIds } }).sort({ _id: -1 })
+      return posts
+    } catch (error: any) {
+      console.error(`Error fetching user posts: ${error.message}`)
+      throw new Error("Error fetching user posts")
+    }
+  }
+
+  /**
    * Get post with id
    * @param postId - The ID of the post
    * @returns the post requested
@@ -72,11 +106,11 @@ export class UserPostDataAccess {
       if (!Types.ObjectId.isValid(postId)) {
         throw new Error("Invalid post id")
       }
-      
-      const post =  await PostEntity.findById(postId)
-      if (!post) throw new Error('Post fetch failed')
-      const userData = await UserEntity.findById(post.userId).select('profilePicture name userName')
-      if (!userData) throw new Error('Cannot find user')
+
+      const post = await PostEntity.findById(postId)
+      if (!post) throw new Error("Post fetch failed")
+      const userData = await UserEntity.findById(post.userId).select("profilePicture name userName")
+      if (!userData) throw new Error("Cannot find user")
       const { profilePicture, name, userName } = userData
       return { post, profilePicture, name, userName }
     } catch (error: any) {

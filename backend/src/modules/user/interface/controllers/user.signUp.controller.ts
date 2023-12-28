@@ -21,6 +21,7 @@ export class UserSignUpController {
   userSignUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { userName, phone, email } = req.body
+      console.log(req.body)
 
       // Ensure email is in lowercase for consistency
       const userData = { ...req.body, email: email.toLowerCase(), userName: userName.toLowerCase() }

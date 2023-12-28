@@ -37,7 +37,7 @@
              <mat-error *ngIf="otpInvalid">Wrong otp try again</mat-error>
               </ng-container>
             </p>
-            <span class="flex justify-end mb-2 gap-2"><button class="underline" type="button" [disabled]="!isResendEnabled" (click)="resendOtp()" [ngClass]="{'disabledButton': !isResendEnabled, 'underline': !isResendEnabled }"><span class="underline">Resend otp?</span></button><span class="" *ngIf="!isResendEnabled">({{ formatTime(timerValue) }})</span></span>
+            <span class="flex justify-end mb-2 gap-2"><button class="underline" type="button" [disabled]="!isResendEnabled" (click)="resendOtp()" [ngClass]="{'disabledButton': !isResendEnabled, 'underline': !isResendEnabled }"><span class="underline" [ngClass]="{'text-stone-600': !isResendEnabled, 'cursor-default': !isResendEnabled}">Resend otp?</span></button><span class="" *ngIf="!isResendEnabled">({{ formatTime(timerValue) }})</span></span>
 
           </div>
         </div>
@@ -55,8 +55,11 @@
     </div>
 
     <!-- after submit -->
-    <div *ngIf="verified" class="flex flex-col mt-40 items-center text-lg">
+    <div *ngIf="verified" class="flex flex-col mt-4 items-center text-lg">
       <div class="flex flex-col gap-4 items-center  w-full">
+        <div class="w-6/12">
+          <img [src]="success" alt="">
+        </div>
         <span class="flex justify-center gap-2 items-center">Verification success <i
             class="fa-regular fa-thumbs-up"></i></span>
         <div class="w-full">
