@@ -11,6 +11,7 @@ const { addFriend, acceptFriend, rejectFriend, removeFriend } = new FriendContro
 
 router.use(verifyJwt)
 
+router.get("/list", addFriend)
 router.get("/basic-info/:userName", friendBasicInfo)
 
 router.post("/add-friend", addFriend)

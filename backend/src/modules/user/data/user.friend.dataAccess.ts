@@ -62,4 +62,23 @@ export class UserFriendDataAccess {
       ErrorHandling.processError('Error in removeFromFriendList, UserFriendDataAccess', error)
     }
   }
+
+
+  /**
+   * Method to get all friends
+   * 
+   * @param userId - ID of the user
+   */
+  async getAllFriends(userId: Types.ObjectId) {
+    try {
+      return await UserEntity.aggregate([
+        { $match: { _id: new Types.ObjectId(userId) } },
+        { $pr}
+      ])
+      await UserEntity.findByIdAndUpdate(personId, { $pull: { friends: userId } })
+      await UserEntity.findByIdAndUpdate(userId, { $pull: { friends: personId } })
+    } catch (error) {
+      ErrorHandling.processError('Error in removeFromFriendList, UserFriendDataAccess', error)
+    }
+  }
 }

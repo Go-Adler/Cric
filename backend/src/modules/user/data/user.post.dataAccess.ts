@@ -1,9 +1,8 @@
-import mongoose from "mongoose"
 import { Types } from "mongoose"
 
 import { UserEntity } from "../domain/user.schema"
 import { PostEntity } from "../domain/user.postSchema"
-import { Post, PostResponse } from "../../../shared/interfaces/userPost.interface"
+import { FeedPost, Post, PostResponse } from "../../../shared/interfaces/userPost.interface"
 
 /**
  * UserPostDataAccess class for handling user post related operations
@@ -43,7 +42,7 @@ export class UserPostDataAccess {
       }
 
       const postsResult = await UserEntity.aggregate([
-        { $match: { _id: new mongoose.Types.ObjectId(id) } },
+        { $match: { _id: new Types.ObjectId(id) } },
         { $unwind: "$postIds" },
         { $sort: { postIds: -1 } },
         { $skip: skip },
@@ -68,28 +67,36 @@ export class UserPostDataAccess {
    * @param skip - The number of posts to skip (default is 0)
    * @returns The posts of the user
    */
-  async getFeedPosts(id: Types.ObjectId, skip: number = 0): Promise<Post[]> {
+  async getFeedPosts(id: Types.ObjectId, skip: number = 0): Promise<FeedPost[]> {
     try {
       if (!Types.ObjectId.isValid(id)) {
         throw new Error("Invalid user id")
       }
-      const friends = await UserEntity.aggregate([{ $match: { _id: new mongoose.Types.ObjectId() } }, { $project: { friends: 1 } }])
-      console.log(friends, 77)
-
-      const postsResult = await UserEntity.aggregate([
-        { $match: { _id: new mongoose.Types.ObjectId(id) } },
-        { $unwind: "$postIds" },
-        { $sort: { postIds: -1 } },
+      const userFriendsAndPosts = await UserEntity.aggregate([
+        { $match: { _id: new Types.ObjectId(id) } },
+        { $project: { friends: 1, postIds: 1 } },
+        { $unwind: "$friends" },
+        { $lookup: { from: "users", localField: "friends", foreignField: "_id", as: "friendDetails" } },
+        { $unwind: "$friendDetails" },
+        { $project: { "friendDetails.postIds": 1 } },
+        { $unwind: "$friendDetails.postIds" },
+        { $group: { _id: "$_id", postIdsAllUsers: { $push: "$friendDetails.postIds" } } },
+        { $unwind: "$postIdsAllUsers" },
+        { $sort: { postIdsAllUsers: -1 } },
         { $skip: skip },
-        { $limit: 6 },
-        { $group: { _id: null, postIds: { $push: "$postIds" } } },
-        { $project: { _id: 0, postIds: 1 } },
+        { $limit: 10 },
+        { $lookup: { from: "posts", localField: "postIdsAllUsers", foreignField: "_id", as: "posts" } },
+        { $unwind: "$posts" },
+        { $lookup: { from: "users", localField: "posts.userId", foreignField: "_id", as: "postUser" } }, // Add this lookup stage
+        { $unwind: "$postUser" }, // Unwind the postUser array
+        { $addFields: { "posts.userName": "$postUser.userName", "posts.name": "$postUser.name","posts.profilePicture": "$postUser.profilePicture" } }, // Add the userName to each post
+        { $sort: { "posts._id": -1 } },
+        { $group: { _id: "$_id", posts: { $push: "$posts" } } },
       ])
 
-      const { postIds } = postsResult[0] || { postIds: [] }
+      console.log(userFriendsAndPosts[0]?.posts)
 
-      const posts = await PostEntity.find({ _id: { $in: postIds } }).sort({ _id: -1 })
-      return posts
+      return userFriendsAndPosts[0]?.posts || []
     } catch (error: any) {
       console.error(`Error fetching user posts: ${error.message}`)
       throw new Error("Error fetching user posts")

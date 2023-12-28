@@ -5,6 +5,7 @@ import { JwtPayload } from "jsonwebtoken"
 import { GetAwsUrlUseCase } from "../../application/useCases/user.getAwsUrl.useCase"
 import { PostActionsUseCase } from "../../application/useCases/user.postActionsCheck.useCase"
 import { GetUserDataUseCase } from "../../application/useCases/user.getData.useCase"
+import { FeedPost, Post } from "../../../../shared/interfaces/userPost.interface"
 
 export class GetUserPostsController {
   private getUserPostsUseCase: GetUserPostsUseCase
@@ -37,8 +38,8 @@ export class GetUserPostsController {
     const { userId } = req.user as JwtPayload
     const { skip } = req.body
     try {
-      const postsWithoutUrl = await this.getUserPostsUseCase.getUserPosts(userId, skip)
-      let posts = await this.getAwsUrlUseCase.getPostsWithUrl(postsWithoutUrl)
+      const postsWithoutUrl = await this.getUserPostsUseCase.getFeedPosts(userId, skip)
+      let posts: Post[] | FeedPost = await this.getAwsUrlUseCase.getFeedPostsWithUrl(postsWithoutUrl)
       posts = this.postActionsUseCase.likedPosts(userId, posts)
 
       res.json({ posts })

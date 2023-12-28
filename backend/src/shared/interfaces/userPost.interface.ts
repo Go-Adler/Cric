@@ -49,6 +49,12 @@ export interface Post extends Document {
   additionalInfo?: AdditionalInfo;
 }
 
+export interface FeedPost extends Post {
+  profilePicture: string,
+  userName: string,
+  name: string
+}
+
 export interface PostResponse {
   post: Post,
   name: string,

@@ -94,4 +94,22 @@ export class FriendController {
       next(error)
     }
   }
+
+  /**
+ * Method to get all friends
+ * 
+ * @param req Express request object containing username and JWT payload with user ID.
+ * @param res Express response object to send success message.
+ * @param next Express next function for error handling.
+ */
+  getFriends = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { userId } = req.user as JwtPayload // Extract user ID from JWT payload
+
+      await this.friendUseCase.removeFriend(userId, personId)
+      res.json({ message: 'Request successful', friendStatus: 'stranger' })
+    } catch(error) {
+      next(error)
+    }
+  }
 } 

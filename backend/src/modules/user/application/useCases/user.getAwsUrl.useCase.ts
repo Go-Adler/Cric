@@ -1,6 +1,6 @@
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
-import { Post, PostResponse } from "../../../../shared/interfaces/userPost.interface"
+import { Post, PostResponse, FeedPost } from "../../../../shared/interfaces/userPost.interface"
 import { Notification } from '../../../../shared/interfaces/user.notification.interface'
 import { ErrorHandling } from "../../../../utils/handleError.utils"
 import { ResultMessageList } from "../../../../shared/interfaces/user.messageList.interface"
@@ -27,7 +27,7 @@ export class GetAwsUrlUseCase {
     })
   }
 
-  getPostsWithUrl = async (posts: Post[]) => {
+  getPostsWithUrl = async (posts: Post[]): Promise<Post[]> => {
     try {
       for (const post of posts) {
         if (post.content && post.content.multimedia && post.content.multimedia[0]) {
@@ -48,6 +48,36 @@ export class GetAwsUrlUseCase {
           const command = new GetObjectCommand(getObjectParams)
           const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
           post.personDetails.profilePicture = url
+        }
+      }
+  
+      return posts
+    } catch (error) {
+      ErrorHandling.processError('Error in getPostsWithUrl, getAwsUrlUseCase', error)
+    }
+  }
+
+  getFeedPostsWithUrl = async (posts: FeedPost[]) => {
+    try {
+      for (const post of posts) {
+        if (post.content && post.content.multimedia && post.content.multimedia[0]) {
+          const getObjectParams = {
+            Bucket: this.bucketName,
+            Key: post.content.multimedia[0],
+          }
+          const command = new GetObjectCommand(getObjectParams)
+          const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+          post.content.multimedia[0] = url
+        }
+
+        if (post.profilePicture) {
+          const getObjectParams = {
+            Bucket: this.bucketName,
+            Key: post.profilePicture,
+          }
+          const command = new GetObjectCommand(getObjectParams)
+          const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+          post.profilePicture = url
         }
       }
   

@@ -66,4 +66,18 @@ export class UserFriendUseCase {
       ErrorHandling.processError('Erron in removeFriend, UserFriendUseCase', error)
     }
   }
+
+
+  /**
+ * Method to get friend list
+ * 
+ * @param userId - The ID of the user who accept request
+ */
+  async getAll(userId: Types.ObjectId) {
+    try {
+      await this.friendDataAccess.removeFromFriendList(userId)
+    } catch(error) {
+      ErrorHandling.processError('Erron in removeFriend, UserFriendUseCase', error)
+    }
+  }
 }

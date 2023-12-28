@@ -15,7 +15,7 @@ export class GetUserPostsUseCase {
   }
 
   getFeedPosts = async (userId: Types.ObjectId, skip: number) => {
-    const posts = await this.userPostDataAccess.getUserPosts(userId, skip)
+    const posts = await this.userPostDataAccess.getFeedPosts(userId, skip)
     return posts
   }
   
