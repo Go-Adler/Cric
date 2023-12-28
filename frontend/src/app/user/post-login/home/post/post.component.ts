@@ -20,20 +20,21 @@ const POSTS_LIMIT = 6
   styleUrls: ['./post.component.scss'],
 })
 export class PostComponent {
-  name = '';
-  skip = 0;
-  posti = false;
-  userName = '';
-  spinner = true;
-  postsEnd = false;
-  postContent = '';
-  firstFetch = false;
-  posts: any[] = [];
-  profilePicture = '';
-  fetchingPosts = false;
+  name = ''
+  skip = 0
+  posti = false
+  userName = ''
+  spinner = true
+  postsEnd = false
+  sameUser = false
+  postContent = ''
+  posts: any[] = []
+  firstFetch = false
+  profilePicture = ''
+  fetchingPosts = false
   emptyPostIcon: string
-  commentSection = false;
-  postLoadingImage: string = '';
+  commentSection = false
+  postLoadingImage: string = ''
   errorLoading = environment.ERROR_LOADING
 
   private subscriptions: Subscription[] = [];
@@ -79,19 +80,37 @@ export class PostComponent {
     this.postLoadingImage = this.postService.getPostLoadingImage()
 
     // Get posts
-    this.subscriptions.push(
-      this.postService.getPosts(this.skip).subscribe({
-        next: (data) => {
-          this.spinner = false
-          this.firstFetch = true
-          this.posts = data.posts
-        },
-        error: (error) => {
-          console.error(error)
-          this.spinner = false
-        },
-      })
-    )
+    if (this.router.url === '/profile/posts') {
+      this.sameUser = true
+      this.subscriptions.push(
+        this.postService.getPosts(this.skip).subscribe({
+          next: (data) => {
+            this.spinner = false
+            this.firstFetch = true
+            this.posts = data.posts
+          },
+          error: (error) => {
+            console.error(error)
+            this.spinner = false
+          },
+        })
+      )
+    } else {
+      this.sameUser = false
+      this.subscriptions.push(
+        this.postService.getFeedPosts(this.skip).subscribe({
+          next: (data) => {
+            this.spinner = false
+            this.firstFetch = true
+            this.posts = data.posts
+          },
+          error: (error) => {
+            console.error(error)
+            this.spinner = false
+          },
+        })
+      )
+    }
   }
 
   // Navigate to post
@@ -109,23 +128,45 @@ export class PostComponent {
   loadMore(): void {
     this.fetchingPosts = true
     this.skip += POSTS_LIMIT
-    this.subscriptions.push(
-      this.postService.getPosts(this.skip).subscribe({
-        next: (data) => {
-          this.fetchingPosts = false
-          const postExists = data.posts[0]
-          if (postExists) {
-            this.posts = [...this.posts, ...data.posts]
-          } else {
-            this.postsEnd = true
-          }
-        },
-        error: (error) => {
-          console.error(error)
-          this.fetchingPosts = false
-        },
-      })
-    )
+
+    if (this.router.url === '/profile/posts') {
+      this.subscriptions.push(
+        this.postService.getPosts(this.skip).subscribe({
+          next: (data) => {
+            this.fetchingPosts = false
+            const postExists = data.posts[0]
+            if (postExists) {
+              this.posts = [...this.posts, ...data.posts]
+            } else {
+              this.postsEnd = true
+            }
+          },
+          error: (error) => {
+            console.error(error)
+            this.fetchingPosts = false
+          },
+        })
+      )
+    } else {
+      this.subscriptions.push(
+        this.postService.getFeedPosts(this.skip).subscribe({
+          next: (data) => {
+            this.fetchingPosts = false
+            const postExists = data.posts[0]
+            if (postExists) {
+              this.posts = [...this.posts, ...data.posts]
+            } else {
+              this.postsEnd = true
+            }
+          },
+          error: (error) => {
+            console.error(error)
+            this.fetchingPosts = false
+          },
+        })
+      )
+    }
+    
   }
 
   // Select a post

@@ -20,6 +20,11 @@ export class PostService {
 
   getPosts(skip: number): Observable<any> {
     const postData = { skip }
+    return this.http.post<any>(`${this.API_URL}/user/posts`, postData);
+  }
+
+  getFeedPosts(skip: number): Observable<any> {
+    const postData = { skip }
     return this.http.post<any>(`${this.API_URL}/user/posts/feed`, postData);
   }
 

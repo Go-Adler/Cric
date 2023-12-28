@@ -1,5 +1,7 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
+import { Observable } from "rxjs"
+import { UserFriend } from "src/app/models/responses/friendList.model"
 import { ConfigService } from "src/app/services/config.service"
 
 @Injectable({
@@ -15,7 +17,7 @@ export class FriendsService {
     this.API_URL = configService.getAPI_BaseURL()
   }
 
-  getFriendsList(){
-    return this.http.get(`${this.API_URL}/user/friend/list`)
+  getFriendsList(): Observable<UserFriend> {
+    return this.http.get<UserFriend>(`${this.API_URL}/user/friend/list`)
   }
 }

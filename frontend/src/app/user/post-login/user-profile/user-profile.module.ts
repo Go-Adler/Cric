@@ -10,13 +10,15 @@ import { MatCardModule } from '@angular/material/card'
 import { ImageCropperModule } from 'ngx-image-cropper'
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SavedComponent } from './saved/saved.component'
+import { FriendsComponent } from './friends/friends.component'
 
 
 @NgModule({
   declarations: [
     UserProfileComponent,
     UpdateProfilePictureComponent,
-    SavedComponent
+    SavedComponent,
+    FriendsComponent
   ],
   imports: [
     MatProgressBarModule,
@@ -25,7 +27,7 @@ import { SavedComponent } from './saved/saved.component'
     MatButtonModule,
     MatCardModule,
     ImageCropperModule,
-    UserProfileRoutingModule,
+    UserProfileRoutingModule, // routing
   ]
 })
 export class UserProfileModule { }

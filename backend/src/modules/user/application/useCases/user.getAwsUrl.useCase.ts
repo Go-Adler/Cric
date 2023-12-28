@@ -1,9 +1,11 @@
-import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
-import { Post, PostResponse, FeedPost } from "../../../../shared/interfaces/userPost.interface"
-import { Notification } from '../../../../shared/interfaces/user.notification.interface'
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3"
+
 import { ErrorHandling } from "../../../../utils/handleError.utils"
+import { Friend } from '../../../../shared/interfaces/friendsList.interface'
+import { Notification } from '../../../../shared/interfaces/user.notification.interface'
 import { ResultMessageList } from "../../../../shared/interfaces/user.messageList.interface"
+import { Post, PostResponse, FeedPost } from "../../../../shared/interfaces/userPost.interface"
 
 export class GetAwsUrlUseCase {
   private awsAccessKey
@@ -212,6 +214,27 @@ export class GetAwsUrlUseCase {
         }
       }
       return messageList
+    } catch (error) {
+      ErrorHandling.processError('Error in getMessageWithUrl, GetAwsUrlCase', error)
+    }
+  }
+
+  getFriendWithUrl = async (friends: Friend[]) => {
+    try {
+      for (const friend of friends) {
+        if (friend.profilePicture) {
+          const imageName = friend.profilePicture
+          const getObjectParams = {
+            Bucket: this.bucketName,
+            Key: imageName,
+          }
+          const command = new GetObjectCommand(getObjectParams)
+          const url = await getSignedUrl(this.s3, command, { expiresIn: 10 })
+    
+          friend.profilePicture = url
+        }
+      }
+      return friends
     } catch (error) {
       ErrorHandling.processError('Error in getMessageWithUrl, GetAwsUrlCase', error)
     }

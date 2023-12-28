@@ -75,7 +75,7 @@ export class UserFriendUseCase {
  */
   async getAll(userId: Types.ObjectId) {
     try {
-      await this.friendDataAccess.removeFromFriendList(userId)
+      return await this.friendDataAccess.getAllFriends(userId)
     } catch(error) {
       ErrorHandling.processError('Erron in removeFriend, UserFriendUseCase', error)
     }

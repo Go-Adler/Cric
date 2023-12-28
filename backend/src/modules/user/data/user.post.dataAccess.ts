@@ -40,21 +40,35 @@ export class UserPostDataAccess {
       if (!Types.ObjectId.isValid(id)) {
         throw new Error("Invalid user id")
       }
-
-      const postsResult = await UserEntity.aggregate([
+      const post = await UserEntity.aggregate([
         { $match: { _id: new Types.ObjectId(id) } },
-        { $unwind: "$postIds" },
-        { $sort: { postIds: -1 } },
-        { $skip: skip },
-        { $limit: 6 },
-        { $group: { _id: null, postIds: { $push: "$postIds" } } },
-        { $project: { _id: 0, postIds: 1 } },
+        {
+          $project: {
+            postIds: 1,
+          },
+        },
+        { $lookup: { from: "posts", localField: "postIds", foreignField: "_id", as: "posts" } },
+        {
+          $unwind: "$posts",
+        },
+        {
+          $project: {
+            posts: 1,
+          },
+        },
+        {
+          $sort: { "posts._id": -1 },
+        },
+        {
+          $skip: skip,
+        },
+        {
+          $limit: 6,
+        },
+        { $group: { _id: "$_id", posts: { $push: "$posts" } } },
       ])
 
-      const { postIds } = postsResult[0] || { postIds: [] }
-
-      const posts = await PostEntity.find({ _id: { $in: postIds } }).sort({ _id: -1 })
-      return posts
+      return post[0]?.posts || []
     } catch (error: any) {
       console.error(`Error fetching user posts: ${error.message}`)
       throw new Error("Error fetching user posts")
@@ -89,12 +103,10 @@ export class UserPostDataAccess {
         { $unwind: "$posts" },
         { $lookup: { from: "users", localField: "posts.userId", foreignField: "_id", as: "postUser" } }, // Add this lookup stage
         { $unwind: "$postUser" }, // Unwind the postUser array
-        { $addFields: { "posts.userName": "$postUser.userName", "posts.name": "$postUser.name","posts.profilePicture": "$postUser.profilePicture" } }, // Add the userName to each post
+        { $addFields: { "posts.userName": "$postUser.userName", "posts.name": "$postUser.name", "posts.profilePicture": "$postUser.profilePicture" } }, // Add the userName to each post
         { $sort: { "posts._id": -1 } },
         { $group: { _id: "$_id", posts: { $push: "$posts" } } },
       ])
-
-      console.log(userFriendsAndPosts[0]?.posts)
 
       return userFriendsAndPosts[0]?.posts || []
     } catch (error: any) {

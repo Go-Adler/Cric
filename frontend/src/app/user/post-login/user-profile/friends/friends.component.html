@@ -1,1 +1,16 @@
-<p>friends works!</p>
+<div class="pt-6">
+  <div class="flex flex-col gap-2">
+    <ng-container *ngFor="let friend of friendsList">
+      <div class="flex gap-2 border-b pb-2 border-zinc-800 cursor-pointer" (click)="goToFriendProfile(friend.userName)">
+        <div class="w-2/12">
+          <img class="w-10/12 rounded-lg" [src]="friend.profilePicture || defaultProfilePicture" alt="" />
+        </div>
+        <div>
+          <div>{{ friend.name }}</div>
+          <div class="text-stone-500 font-normal">{{'@'}}{{ friend.userName }}</div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  
+</div>

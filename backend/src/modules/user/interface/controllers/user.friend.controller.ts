@@ -4,14 +4,17 @@ import { JwtPayload } from "jsonwebtoken"
 import { SocketService } from "../../../../services/socketService"
 import { UserFriendUseCase } from "../../application/useCases/user.friend.useCase"
 import { NotificationUseCase } from "../../application/useCases/user.notification.useCase"
+import { GetAwsUrlUseCase } from "../../application/useCases/user.getAwsUrl.useCase"
 
 export class FriendController {
   private socketService: SocketService
   private friendUseCase: UserFriendUseCase
+  private getAwsUrlUseCase: GetAwsUrlUseCase
   private notificationUseCase: NotificationUseCase
 
   constructor() {
     this.friendUseCase = new UserFriendUseCase()
+    this.getAwsUrlUseCase = new GetAwsUrlUseCase()
     this.socketService = SocketService.getInstance()
     this.notificationUseCase = new NotificationUseCase()
   }
@@ -106,8 +109,9 @@ export class FriendController {
     try {
       const { userId } = req.user as JwtPayload // Extract user ID from JWT payload
 
-      await this.friendUseCase.removeFriend(userId, personId)
-      res.json({ message: 'Request successful', friendStatus: 'stranger' })
+      let friends = await this.friendUseCase.getAll(userId)
+      friends = await this.getAwsUrlUseCase.getFriendWithUrl(friends)
+      res.json({ friends })
     } catch(error) {
       next(error)
     }

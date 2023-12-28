@@ -7,11 +7,11 @@ const router = express.Router()
 
 const { verifyJwt } = new JwtMiddleware()
 const { friendBasicInfo } = new UserDataController()
-const { addFriend, acceptFriend, rejectFriend, removeFriend } = new FriendController()
+const { addFriend, acceptFriend, rejectFriend, removeFriend, getFriends } = new FriendController()
 
 router.use(verifyJwt)
 
-router.get("/list", addFriend)
+router.get("/list", getFriends)
 router.get("/basic-info/:userName", friendBasicInfo)
 
 router.post("/add-friend", addFriend)
