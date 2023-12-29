@@ -27,4 +27,4 @@ jobs:
     - run: |
         cd backend
         touch .env
-        echo "{{ secrets.CRICENV }}" > .env
+        echo "${{ secrets.CRICENV }}" > .env
