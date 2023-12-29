@@ -14,17 +14,17 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3  # This action checks out your repository into the workspace
+    - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Navigate to the backend directory
-      run: cd backend  # Assuming the backend directory is at the root level of your repository
-    - run: npm ci
+    - run: cd backend && npm ci
     - run: |
+        cd backend
         touch .env
         echo "{{ secrets.PROD_ENV_FILE }}" > .env
