@@ -27,7 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
 
-    - run: cd $GITHUB_WORKSPACE/backend
+    - run: cd backend
     - run: npm install
     - run: |
         touch .env
