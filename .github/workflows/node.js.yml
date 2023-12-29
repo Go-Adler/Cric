@@ -1,7 +1,3 @@
-User
-- run: echo "GitHub Workspace: $GITHUB_WORKSPACE"
-- run: ls -la $GITHUB_WORKSPACE
-
 name: Node.js CI
 
 on:
