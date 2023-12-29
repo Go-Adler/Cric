@@ -22,7 +22,6 @@ import { PostLoginRoutingModule } from './post-login-routing.module'
 import { RightAreaComponent } from './right-area/right-area.component'
 import { UserProfileModule } from './user-profile/user-profile.module'
 import { NotificationsComponent } from './notifications/notifications.component'
-import { MatchInfoComponent } from './right-area/match-info/match-info.component'
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button'
 
@@ -35,7 +34,6 @@ import { MatButtonModule } from '@angular/material/button'
     SideNavComponent,
     MessagesComponent,
     RightAreaComponent,
-    MatchInfoComponent,
     PostLoginComponent,
     NotificationsComponent,
   ],
