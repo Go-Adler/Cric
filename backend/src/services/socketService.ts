@@ -54,7 +54,7 @@ export class SocketService {
       // Create socket configuration object
       const socketConfig: SocketConfig = {
         cors: {
-          origin: ["http://localhost:4200", "https://admin.socket.io"],
+          origin: ["http://localhost:4200", "https://admin.socket.io", 'https://cric-connect.netlify.app'],
           methods: ["GET", "POST"],
           credentials: true,
         },
