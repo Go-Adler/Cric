@@ -23,8 +23,8 @@ export class PostComponent {
   ){
     this.postId = this.route.snapshot.paramMap.get('id')
     this.postLoadingImage = this.userPostService.getPostLoadingImage();
-
   }
+  
   ngOnInit() {
     if (this.postId) {
      this.postService.getPost(this.postId).subscribe({

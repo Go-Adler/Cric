@@ -110,6 +110,8 @@ export class NewPostComponent implements OnInit {
           this.postSuccess = true;
           this.postForm.reset();
           this.selectedImage = null;
+          console.log(response.post, 113);
+          response.post.sameUser = true
           this.newPostEvent.emit(response.post);
     
           setTimeout(() => {

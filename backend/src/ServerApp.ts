@@ -35,7 +35,7 @@ export class ServerApp {
       max: 1000,
     })
     const corsOptions = {
-      origin:["https://cric-connect.netlify.app", 'http://localhost:4200'],
+      origin:["https://cric-connect.netlify.app", 'http://localhost:4200', "https://cric.uno"],
       optionsSuccessStatus: 200,
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       credentials: true, // This allows session cookies to be sent back and forth
