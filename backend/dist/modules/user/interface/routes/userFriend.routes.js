@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.friendRoutes = void 0;
+const express_1 = __importDefault(require("express"));
+const auth_middleware_1 = require("../middleware/auth.middleware");
+const user_friend_controller_1 = require("../controllers/user.friend.controller");
+const user_userDataController_1 = require("../controllers/user.userDataController");
+const router = express_1.default.Router();
+exports.friendRoutes = router;
+const { verifyJwt } = new auth_middleware_1.JwtMiddleware();
+const { friendBasicInfo } = new user_userDataController_1.UserDataController();
+const { addFriend, acceptFriend, rejectFriend, removeFriend, getFriends } = new user_friend_controller_1.FriendController();
+router.use(verifyJwt);
+router.get("/list", getFriends);
+router.get("/basic-info/:userName", friendBasicInfo);
+router.post("/add-friend", addFriend);
+router.post("/accept-friend", acceptFriend);
+router.post("/reject-friend", rejectFriend);
+router.post("/remove-friend", removeFriend);
