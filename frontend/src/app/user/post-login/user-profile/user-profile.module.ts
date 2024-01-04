@@ -11,22 +11,30 @@ import { ImageCropperModule } from 'ngx-image-cropper'
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SavedComponent } from './saved/saved.component'
 import { FriendsComponent } from './friends/friends.component'
+import { LazyLoadImageModule } from 'ng-lazyload-image'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { TimeagoModule } from 'ngx-timeago'
+import { HomeModule } from '../home/home.module'
 
 
 @NgModule({
   declarations: [
+    SavedComponent,
+    FriendsComponent,
     UserProfileComponent,
     UpdateProfilePictureComponent,
-    SavedComponent,
-    FriendsComponent
   ],
   imports: [
-    MatProgressBarModule,
+    HomeModule,
     CommonModule,
     MatIconModule,
-    MatButtonModule,
     MatCardModule,
+    MatButtonModule,
     ImageCropperModule,
+    LazyLoadImageModule,
+    MatProgressBarModule,
+    TimeagoModule.forRoot(),
+    MatProgressSpinnerModule,
     UserProfileRoutingModule, // routing
   ]
 })

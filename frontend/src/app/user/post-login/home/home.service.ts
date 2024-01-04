@@ -23,6 +23,12 @@ export class PostService {
     return this.http.post<any>(`${this.API_URL}/user/posts`, postData);
   }
 
+
+  getBookmarks(skip: number): Observable<any> {
+    const postData = { skip }
+    return this.http.post<any>(`${this.API_URL}/user/posts/bookmarked`, postData);
+  }
+
   getFeedPosts(skip: number): Observable<any> {
     const postData = { skip }
     return this.http.post<any>(`${this.API_URL}/user/posts/feed`, postData);
@@ -45,7 +51,7 @@ export class PostService {
   bookmark(postId: string) {
     return this.http.post(`${this.API_URL}/user/posts/bookmark`, { postId })
   }
-
+  
   removeBookmark(postId: string) {
     return this.http.post(`${this.API_URL}/user/posts/remove-bookmark`, { postId })
   }

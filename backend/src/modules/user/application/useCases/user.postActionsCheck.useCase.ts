@@ -15,6 +15,20 @@ export class PostActionsUseCase {
         post.engagement.liked = true
       }
     }
+    for (const post of posts) {
+      const isLiked = (userId: Types.ObjectId, usersLiked: Types.ObjectId[]) => {
+        return usersLiked.some(function (element: any) {
+          return element.equals(userId)
+        })
+      }
+
+      const usersBookmarked = post.usersSaved!
+      if (usersBookmarked) {
+        if (post.engagement && isLiked(userId, usersBookmarked)) {
+          post.engagement.bookmarked = true
+        }
+      }
+    }
     return posts
   }
 }

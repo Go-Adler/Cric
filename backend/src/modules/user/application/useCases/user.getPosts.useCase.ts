@@ -23,4 +23,9 @@ export class GetUserPostsUseCase {
     return await this.userPostDataAccess.getUserPost(postId)
   }
 
+  getBookmarks = async (userId: Types.ObjectId, skip: number) => {
+    const posts = await this.userPostDataAccess.getBookmarks(userId, skip)
+    return posts
+  }
+
 }

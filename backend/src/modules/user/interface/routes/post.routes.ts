@@ -7,7 +7,7 @@ import { CommentController } from '../controllers/user.comment.controller'
 import { MulterMiddleware } from '../middleware/multer.middleware'
 import { JwtMiddleware } from '../middleware/auth.middleware'
 
-const { getUserPosts, getFriendsPosts, getPost, getFeedPosts } = new GetUserPostsController()
+const { getUserPosts, getFriendsPosts, getPost, getFeedPosts, getBookmarks } = new GetUserPostsController()
 const { likeComment, comment, getComments } = new CommentController()
 const { likePost, unlikePost, bookmark, removeBookmark } = new PostLikeController()
 const { userNewPost } = new UserNewPostController()
@@ -32,5 +32,7 @@ router.post('/new-comment', memoryStorage, comment)
 router.post('/comments', memoryStorage, getComments)
 
 router.get('/:id', getPost)
+router.post('/bookmarked', getBookmarks)
+
 
 export { router as postRoutes } 

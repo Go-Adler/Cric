@@ -72,6 +72,7 @@
       <!-- bookmark -->
       <div class="gap-1 flex md:gap-3 justify-center items-center actionArea">
         <span
+        [ngClass]="{ fillIcon: post?.engagement?.bookmarked}"
           class="text-lg lg:text-xl material-symbols-rounded cursor-pointer"
         >
           bookmark

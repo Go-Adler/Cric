@@ -40,7 +40,7 @@ export class UserPostService {
   bookmark(postId: string) {
     return this.http.post(`${this.API_URL}/user/posts/bookmark`, { postId })
   }
-
+  
   removeBookmark(postId: string) {
     return this.http.post(`${this.API_URL}/user/posts/remove-bookmark`, { postId })
   }

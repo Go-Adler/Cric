@@ -212,20 +212,18 @@ export class PostComponent {
 
 
   toggleBookMark(isBookmarked: boolean, postId: string): void {
-    console.log(215);
     
     const post = this.posts.find((post) => post._id === postId)
     if (isBookmarked) {
       post.engagement.bookmarked = false
       post.actions.bookmarks--
-      this.postService.removeBookmark(post).subscribe({
-
+      this.postService.removeBookmark(postId).subscribe({
       })
     } else {
       post.engagement.bookmarked = true
       if (!post.actions.bookmarks)post.actions.bookmarks = 0
       post.actions.bookmarks++
-      this.postService.bookmark(post).subscribe({
+      this.postService.bookmark(postId).subscribe({
 
       })
     }

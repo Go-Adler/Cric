@@ -216,6 +216,8 @@ export class UserPostDataAccess {
           $inc: { "actions.bookmarks": -1 },
         })
       }
+      await UserEntity.findByIdAndUpdate(userId, { $pull: { savedPosts: postId } })
+
     } catch (error: any) {
       console.error(`Error unliking post: ${error.message}`)
       throw new Error("Error unliking post")
@@ -244,9 +246,56 @@ export class UserPostDataAccess {
           $inc: { "actions.bookmarks": 1 },
         })
       }
+
+      await UserEntity.findByIdAndUpdate(userId, { $addToSet: { savedPosts: postId } })
     } catch (error: any) {
       console.error(`Error liking post: ${error.message}`)
       throw new Error("Error liking post")
+    }
+  }
+
+  /**
+   * Get posts for a specific user and return the posts
+   * @param id - The ID of the user
+   * @param skip - The number of posts to skip (default is 0)
+   * @returns The posts of the user
+   */
+  async getBookmarks(id: Types.ObjectId, skip: number = 0): Promise<Post[]> {
+    try {
+      if (!Types.ObjectId.isValid(id)) {
+        throw new Error("Invalid user id")
+      }
+      const post = await UserEntity.aggregate([
+        { $match: { _id: new Types.ObjectId(id) } },
+        {
+          $project: {
+            savedPosts: 1,
+          },
+        },
+        { $lookup: { from: "posts", localField: "savedPosts", foreignField: "_id", as: "posts" } },
+        {
+          $unwind: "$posts",
+        },
+        {
+          $project: {
+            posts: 1,
+          },
+        },
+        {
+          $sort: { "posts._id": -1 },
+        },
+        {
+          $skip: skip,
+        },
+        {
+          $limit: 6,
+        },
+        { $group: { _id: "$_id", posts: { $push: "$posts" } } },
+      ])
+      return post[0]?.posts || []
+    } catch (error: any) {
+      console.error(`Error fetching user posts: ${error.message}`)
+      throw new Error("Error fetching user posts")
     }
   }
 }

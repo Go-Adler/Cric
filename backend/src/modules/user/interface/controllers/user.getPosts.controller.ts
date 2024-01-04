@@ -63,6 +63,19 @@ export class GetUserPostsController {
     }
   }
 
+  getBookmarks = async (req: Request, res: Response, next: NextFunction) => {
+    const { skip } = req.body
+    const { userId } = req.user as JwtPayload
+    try {
+      const postsWithoutUrl = await this.getUserPostsUseCase.getBookmarks(userId, skip)
+      let posts = await this.getAwsUrlUseCase.getPostsWithUrl(postsWithoutUrl)
+      posts = this.postActionsUseCase.likedPosts(userId, posts)
+      res.json({ posts })
+    } catch (error) {
+      return next(error)
+    }
+  }
+
   getPost = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params
