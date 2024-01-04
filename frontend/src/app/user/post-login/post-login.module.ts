@@ -23,7 +23,8 @@ import { RightAreaComponent } from './right-area/right-area.component'
 import { UserProfileModule } from './user-profile/user-profile.module'
 import { NotificationsComponent } from './notifications/notifications.component'
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatButtonModule } from '@angular/material/button'
+import { MatButtonModule } from '@angular/material/button';
+import { SettingsComponent } from './settings/settings.component'
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { MatButtonModule } from '@angular/material/button'
     RightAreaComponent,
     PostLoginComponent,
     NotificationsComponent,
+    SettingsComponent,
   ],
   imports: [
     NgFor,

@@ -11,11 +11,6 @@ const routes: Routes = [
     redirectTo: '/profile/friends'
   },
   {
-    path: '',
-    pathMatch: 'prefix',
-    redirectTo:'posts'
-  },
-  {
     path: 'posts',
     component: PostComponent
   },

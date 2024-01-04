@@ -206,6 +206,5 @@ export class SavedComponent {
     }
   }
   handleImageError(event: any) {
-    console.log('lazy loading image error')
   }
 }

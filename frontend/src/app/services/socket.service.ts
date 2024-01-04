@@ -39,8 +39,6 @@ export class SocketService {
   notificationSocketOn() {
   if (this.socket) {
     this.socket.on('disconnect', () => {
-      console.log('disconnected');
-      
     });
 
     // Handle incoming notifications

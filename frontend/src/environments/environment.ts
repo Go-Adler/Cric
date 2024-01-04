@@ -1,6 +1,7 @@
 const BUCKET_BASE_URL = 'https://cric-public-v2.s3.ap-south-1.amazonaws.com/assets/'
 
 export const environment = {
+  GEAR: `${BUCKET_BASE_URL}gear.png`,  
   CRIC_LOGO: `${BUCKET_BASE_URL}cricLogo.png`,  
   EMPTY_POST: `${BUCKET_BASE_URL}noPosts.png`, 
   SUCCESS_ICON: `${BUCKET_BASE_URL}success.png`, 

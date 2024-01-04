@@ -37,7 +37,7 @@ export class UserDataController {
       let profilePicture = ''
       
       // Fetch user data using use cases
-      const { friendsCount, name, userName, profilePicture: profilePictureWithOutUrl } = await this.userDataUseCase.getBasicInfo(userId)
+      const { friendsCount, name, userName, profilePicture: profilePictureWithOutUrl,email, phone } = await this.userDataUseCase.getBasicInfo(userId)
       const notificationsCount = await this.notificationUseCase.getNotificationsCount(userId)
       const messageCount  = await this.messageUseCase.getMessageCount(userId)
 
@@ -49,6 +49,8 @@ export class UserDataController {
       // Build and send user data response
       const userData: UserBasicInfoResponse = {
         name,
+        email,
+        phone,
         userName,
         messageCount,
         friendsCount,

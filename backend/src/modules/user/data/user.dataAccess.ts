@@ -45,6 +45,30 @@ export class UserDataAccess {
   }
 
   /**
+   * Create a new user
+   * @param name - The name of the user
+   * @param userName - The username of the user
+   * @param gender - The gender of the user
+   * @param email - The email of the user
+   * @param phone - The phone number of the user
+   * @param password - The password of the user
+   * @returns The ID of the created user
+   */
+  async editUser(userId: string, name: string, userName: string, email: string, phone: string) {
+    try {
+      // Validate input parameters
+      validateString(name, "name")
+      validateString(userName, "userName")
+      validateString(email, "email")
+      validateString(phone, "phone")
+
+      await UserEntity.findByIdAndUpdate(userId, { name, userName, email, phone })
+    } catch (error) {
+      ErrorHandling.processError("Error in createUser, userDataAccess", error)
+    }
+  }
+
+  /**
    * Retrieve user data by username
    * @param userName - The username of the user
    * @returns The user data or null if not found
@@ -112,6 +136,20 @@ export class UserDataAccess {
     try {
       const user = await UserEntity.findById(userId, { _id: 0, email: 1 })
       return user?.email ?? "User not found"
+    } catch (error) {
+      ErrorHandling.processError("Error in getEmailById, userDataAccess", error)
+    }
+  }
+
+  /**
+   * Get email by user ID
+   * @param userId - The ID of the user
+   * @returns The user's email or "User not found" if not found
+   */
+  async getPhoneById(userId: Types.ObjectId) {
+    try {
+      const user = await UserEntity.findById(userId, { _id: 0, phone: 1 })
+      return user?.phone ?? "User not found"
     } catch (error) {
       ErrorHandling.processError("Error in getEmailById, userDataAccess", error)
     }
@@ -483,11 +521,11 @@ export class UserDataAccess {
   }
 
   /**
- *  Method to check user socket exists
- *
- * @param personId - The ID of the user to be checked
- * @returns The length of socketId array
- */
+   *  Method to check user socket exists
+   *
+   * @param personId - The ID of the user to be checked
+   * @returns The length of socketId array
+   */
   async removeAllSockets(): Promise<void> {
     try {
       await UserEntity.updateMany({}, { $set: { socketId: [] } })

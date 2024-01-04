@@ -11,18 +11,24 @@ import { environment } from "src/environments/environment"
 })
 export class UserService {
   private defaultName = ''
+  private defaultEmail = ''
   private defaultUserName = ''
   private defualtFriendsCount = ''
   private defaultProfilePicture = environment.DEFAULT_PROFILE_PICTURE
 
   private profilePicture = new BehaviorSubject<string>(this.defaultProfilePicture);
+  private email = new BehaviorSubject<string>(this. defaultEmail)
   private friendsCount = new BehaviorSubject<string>(this.defualtFriendsCount)
   private name = new BehaviorSubject<string>(this.defaultName)
   private userName = new BehaviorSubject<string>(this.defaultUserName)
+  private phone = new BehaviorSubject<number>(0)
   private notificationsCount = new BehaviorSubject<number>(0)
   private messagesCount = new BehaviorSubject<number>(0)
 
+
   name$: Observable<string> = this.name.asObservable();
+  phone$: Observable<number> = this.phone.asObservable()
+  email$: Observable<string> = this.email.asObservable()
   friendsCount$: Observable<string> = this.friendsCount.asObservable()
   profilePicture$: Observable<string> = this.profilePicture.asObservable();
   userName$: Observable<string> = this.userName.asObservable();
@@ -45,6 +51,8 @@ export class UserService {
             if (response.profilePicture) this.profilePicture.next(response.profilePicture)
             if (!response.profilePicture) this.profilePicture.next(environment.DEFAULT_PROFILE_PICTURE)
             this.name.next(response.name)
+            this.email.next(response.email)
+            this.phone.next(response.phone)
             this.userName.next(response.userName)
             this.friendsCount.next(response.friendsCount)
             this.messagesCount.next(response.messageCount)

@@ -17,4 +17,8 @@ export class ProfileService {
   updateProfilePicture(formData: FormData): Observable<any> {
     return this.http.post<any>(`${this.API_URL}/user/profile/update/profile-picture`, formData);
   }
+
+  updateUserInfo(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.API_URL}/user/profile/update/user-info`, formData);
+  }
 }

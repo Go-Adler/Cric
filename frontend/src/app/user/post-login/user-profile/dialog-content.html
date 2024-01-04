@@ -1,0 +1,93 @@
+<div class="p-10" *ngIf="formComplete">
+  <form [formGroup]="editForm" class="text-stone-500">
+    <div
+    *ngIf="errorMessage"
+    class="w-full flex justify-center gap-2 errorMessage mb-2"
+  >{{ errorMessage }}</div>
+    <!-- Name -->
+    <div class="row d-flex justify-content-center">
+      <div class="col-8 col-xl-6 d-flex flex-column p-0">
+        <p class="m-0">
+          <mat-form-field appearance="fill" hideRequiredMarker="true">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" />
+            <mat-error
+              *ngIf="
+                  editForm.get('name')?.invalid &&
+                  (editForm.get('name')?.dirty ||
+                    editForm.get('name')?.touched)
+                "
+            >
+              <ng-container *ngIf="editForm.get('name')?.errors?.['required']"
+                >Name cannot be empty</ng-container
+              >
+              <ng-container *ngIf="editForm.get('name')?.errors?.['pattern']"
+                >Please input name in the correct format</ng-container
+              >
+            </mat-error>
+          </mat-form-field>
+        </p>
+      </div>
+    </div>
+  
+    <!-- User name -->
+    <div class="row d-flex justify-content-center">
+      <div class="col-8 col-xl-6 d-flex flex-column p-0">
+        <p class="m-0">
+          <mat-form-field appearance="fill" hideRequiredMarker="true">
+            <mat-label>User Name</mat-label>
+            <input matInput formControlName="userName" />
+            <mat-error> </mat-error>
+          </mat-form-field>
+        </p>
+      </div>
+    </div>
+  
+    <!-- Email -->
+    <div class="row d-flex justify-content-center">
+      <div class="col-8 col-xl-6 d-flex flex-column p-0">
+        <p class="m-0">
+          <mat-form-field appearance="fill" hideRequiredMarker="true">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" />
+            <mat-error
+              *ngIf="(editForm.get('email')?.invalid && (editForm.get('email')?.dirty || editForm.get('email')?.touched)) && (editForm.get('email')?.errors?.['required'])"
+              class="p-0"
+              >Email cannot be empty</mat-error
+            >
+            <mat-error
+              *ngIf="(editForm.get('email')?.invalid && (editForm.get('email')?.dirty || editForm.get('email')?.touched)) && (editForm.get('email')?.errors?.['pattern'])"
+              >Please input email in the correct format</mat-error
+            >
+          </mat-form-field>
+        </p>
+      </div>
+    </div>
+  
+    <!-- Phone -->
+    <div class="row d-flex justify-content-center">
+      <div class="col-8 col-xl-6 d-flex flex-column p-0">
+        <p class="m-0">
+          <mat-form-field appearance="fill" hideRequiredMarker="true">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone" />
+            <mat-error
+              *ngIf="(editForm.get('phone')?.invalid && (editForm.get('phone')?.dirty || editForm.get('phone')?.touched)) && (editForm.get('phone')?.errors?.['required'])"
+              class="p-0"
+              >Phone cannot be empty</mat-error
+            >
+            <mat-error
+              *ngIf="(editForm.get('phone')?.invalid && (editForm.get('phone')?.dirty || editForm.get('phone')?.touched)) && (editForm.get('phone')?.errors?.['pattern'])"
+              >Please input phone in the correct format</mat-error
+            >
+          </mat-form-field>
+        </p>
+      </div>
+    </div>
+    <div class="flex justify-between gap-2">
+      <button mat-stroked-button color="warn" class="w-full" mat-dialog-close>cancel</button>
+      <button mat-raised-button   class="w-full">Submit</button>
+    </div>
+  </form>
+  
+</div>

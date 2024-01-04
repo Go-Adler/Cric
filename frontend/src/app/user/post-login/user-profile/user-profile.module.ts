@@ -15,6 +15,9 @@ import { LazyLoadImageModule } from 'ng-lazyload-image'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { TimeagoModule } from 'ngx-timeago'
 import { HomeModule } from '../home/home.module'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
 
 
 @NgModule({
@@ -35,6 +38,13 @@ import { HomeModule } from '../home/home.module'
     MatProgressBarModule,
     TimeagoModule.forRoot(),
     MatProgressSpinnerModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
     UserProfileRoutingModule, // routing
   ]
 })

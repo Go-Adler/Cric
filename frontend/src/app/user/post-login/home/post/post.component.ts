@@ -80,7 +80,7 @@ export class PostComponent {
     this.postLoadingImage = this.postService.getPostLoadingImage()
 
     // Get posts
-    if (this.router.url === '/profile/posts') {
+    if (this.router.url === '/profile/posts' || this.router.url === '/profile') {
       this.sameUser = true
       this.subscriptions.push(
         this.postService.getPosts(this.skip).subscribe({
@@ -229,6 +229,5 @@ export class PostComponent {
     }
   }
   handleImageError(event: any) {
-    console.log('lazy loading image error')
   }
 }

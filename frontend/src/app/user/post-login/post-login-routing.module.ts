@@ -5,6 +5,7 @@ import { SearchComponent } from './search/search.component'
 import { FriendsComponent } from './friends/friends.component'
 import { NotificationsComponent } from './notifications/notifications.component'
 import { MessagesComponent } from './messages/messages.component'
+import { SettingsComponent } from './settings/settings.component'
 const routes: Routes = [
   {
     path: 'user/:id',
@@ -13,6 +14,12 @@ const routes: Routes = [
   },
   {
     path: 'profile',
+    pathMatch: 'full',
+    redirectTo:'profile/posts'
+  },
+  {
+    path: 'profile',
+    pathMatch: 'prefix',
     component: UserProfileComponent,
     loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileModule)
   },
@@ -36,6 +43,10 @@ const routes: Routes = [
   {
     path: 'messages',
     component: MessagesComponent,
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
   },
 ];
 

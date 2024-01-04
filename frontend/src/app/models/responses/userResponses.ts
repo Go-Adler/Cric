@@ -2,6 +2,8 @@
 import { Post } from "../post.model"
 export interface I_UserBasicInfo {
   name: string,
+  phone: number,
+  email: string,
   userName: string,
   messageCount: number,
   friendsCount: string,

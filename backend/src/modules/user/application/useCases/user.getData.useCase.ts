@@ -191,10 +191,12 @@ export class GetUserDataUseCase {
         const name =  await this.userDataAccess.getNameById(userId)
         const userData = await this.userDataAccess.getUserProfilePictureWithId(userId)
         const friendsCount =  await this.userDataAccess.getFriendsCountById(userId)
+        const email =  await this.userDataAccess.getEmailById(userId)
+        const phone = await this.userDataAccess.getPhoneById(userId)
 
         let { profilePicture } = userData
         if (!profilePicture) profilePicture = ''
-        return { userName, name, profilePicture, friendsCount }
+        return { userName, name, profilePicture, friendsCount, email, phone }
       }
 
       throw new Error("User not found")

@@ -64,7 +64,6 @@ export class PostComponent {
   }
 
   handleImageError() {
-    console.log('lazy loading image error')
   }
 
   toggleBookMark(isBookmarked: boolean, postId: string): void {

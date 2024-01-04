@@ -1,24 +1,36 @@
-import { Request, Response, NextFunction } from 'express'
-import { UserProfileUseCase } from '../../application/useCases/user.profile.userCase'
-import { AwsUploadUseCase } from '../../application/useCases/user.awsUpload.useCase'
-import { JwtPayload } from 'jsonwebtoken'
-import { ImageValidationUseCase } from '../../application/useCases/user.imageValidation.useCase'
-import { GetAwsUrlUseCase } from '../../application/useCases/user.getAwsUrl.useCase'
+import { Request, Response, NextFunction } from "express"
+import { UserProfileUseCase } from "../../application/useCases/user.profile.userCase"
+import { AwsUploadUseCase } from "../../application/useCases/user.awsUpload.useCase"
+import { JwtPayload } from "jsonwebtoken"
+import { ImageValidationUseCase } from "../../application/useCases/user.imageValidation.useCase"
+import { GetAwsUrlUseCase } from "../../application/useCases/user.getAwsUrl.useCase"
+import { GetUserDataUseCase } from "../../application/useCases/user.getData.useCase"
+import { SendOTP_UseCase } from "../../application/useCases/user.sendOTP.useCase"
+import { UserExistingUseCase } from "../../application/useCases/user.existing.useCase"
+import { CreateUserUseCase } from "../../application/useCases/user.createUser.useCase"
 
 // Define the controller class for user new post
 export class UserProfileController {
   // Declare the private fields for the use cases
   private userProfileUseCase: UserProfileUseCase
+  private userDataUseCase: GetUserDataUseCase
   private imageValidationUseCase: ImageValidationUseCase
   private awsUploadUseCase: AwsUploadUseCase
+  private sendOTP_UseCase: SendOTP_UseCase
   private getAwsUrlUseCase: GetAwsUrlUseCase
+  private createUserUseCase: CreateUserUseCase
+  private userExistingUseCase: UserExistingUseCase
 
   // Initialize the fields in the constructor
   constructor() {
+    this.userExistingUseCase = new UserExistingUseCase()
     this.userProfileUseCase = new UserProfileUseCase()
+    this.userDataUseCase = new GetUserDataUseCase()
+    this.sendOTP_UseCase = new SendOTP_UseCase()
     this.imageValidationUseCase = new ImageValidationUseCase()
     this.awsUploadUseCase = new AwsUploadUseCase()
     this.getAwsUrlUseCase = new GetAwsUrlUseCase()
+    this.createUserUseCase = new CreateUserUseCase()
   }
 
   // Define the method for user new post
@@ -31,7 +43,7 @@ export class UserProfileController {
       const imageFile = req.file
 
       // Initialize the multimedia field
-      let profilePicture: string = ''
+      let profilePicture: string = ""
 
       // If image exists, validate and upload it
       if (imageFile) {
@@ -56,13 +68,47 @@ export class UserProfileController {
         // Set the multimedia field to the file name
         profilePicture = uploadInfo
       }
-      
+
       // Create the post without url using the use case
       await this.userProfileUseCase.updateProfilePicture(userId, profilePicture)
       profilePicture = await this.getAwsUrlUseCase.getImageUrl(profilePicture)
 
       // Send the post as response to the client
       res.json({ profilePicture })
+    } catch (error) {
+      // Pass the error to the next middleware
+      next(error)
+    }
+  }
+
+  // Define the method for user new post
+  updateUserInfo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      // Get the user id and the text from the request
+      const { userId } = req.user as JwtPayload
+
+      const { userName, phone, email } = req.body
+
+      const emailStored = this.userDataUseCase.getEmail(userId)
+
+      // Ensure email is in lowercase for consistency
+      const userData = { ...req.body, email: email.toLowerCase(), userName: userName.toLowerCase() }
+
+      // Check if the user already exists
+      await this.userExistingUseCase.userExisting(userName, phone, email)
+
+      if (emailStored !== email) {
+        await this.sendOTP_UseCase.sendOTP(email)
+      }
+
+      // Create the user
+      await this.createUserUseCase.updateUser(userId, userData)
+
+      // Send OTP to the user's email
+
+      res.status(200).json({ message: "User update successful" })
+
+      // Send the post as response to the client
     } catch (error) {
       // Pass the error to the next middleware
       next(error)

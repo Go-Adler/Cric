@@ -31,7 +31,6 @@ export class MessageService {
   ngOnInit () {
     this.chatService.currentChat$.subscribe({
       next: chatName => {
-        console.log(chatName, 30);
         this.currentChat = chatName
       }
     })

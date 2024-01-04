@@ -1,4 +1,4 @@
-<div class="min-h-screen">
+<div class="min-h-screen" >
   <div class="sticky pt-14 top-0 nav z-10">
     <div class="p-5 gap-2 flex">
       <!-- profile picutre area -->
@@ -26,7 +26,7 @@
 
       <!-- Edit profile -->
       <span class="flex justify-end w-full">
-        <button mat-stroked-button>Edit</button>
+        <button mat-stroked-button (click)="editProfile()" [disabled]="!fetchComplete">Edit</button>
       </span>
     </div>
     <div class="flex p-1 border-b borderColor">

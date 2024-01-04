@@ -34,5 +34,4 @@ router.post('/comments', memoryStorage, getComments)
 router.get('/:id', getPost)
 router.post('/bookmarked', getBookmarks)
 
-
 export { router as postRoutes } 

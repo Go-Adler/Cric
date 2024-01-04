@@ -6,12 +6,13 @@ import { UserProfileController } from "../controllers/user.profile.controller"
 
 const { verifyJwt } = new JwtMiddleware()
 const { memoryStorageProfile } = new MulterMiddleware()
-const { updateProfilePicture } = new UserProfileController()
+const { updateProfilePicture, updateUserInfo } = new UserProfileController()
 
 const router = express.Router()
 
 router.use(verifyJwt)
 
 router.post('/update/profile-picture', memoryStorageProfile, updateProfilePicture)
+router.post('/update/user-info', updateUserInfo)
 
 export { router as profileRoutes }
