@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input'
 import { Subscription } from 'rxjs'
 import { UserService } from 'src/app/services/user.service'
 import { ProfileService } from './user-profile.service'
+import { MatProgressBarModule } from '@angular/material/progress-bar'
 
 @Component({
   selector: 'app-user-profile',
@@ -31,7 +32,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    
+
     // Get profile picture
     this.subscriptions.push(
       this.userService.profilePicture$.subscribe({
@@ -93,7 +94,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   selector: 'dialog-content-example-dialog',
   templateUrl: 'dialog-content.html',
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule, MatFormFieldModule, CommonModule, MatInputModule],
+  imports: [MatDialogModule, MatButtonModule, ReactiveFormsModule, MatFormFieldModule, MatProgressBarModule, CommonModule, MatInputModule],
 })
 export class DialogContentExampleDialog {
   editForm!: FormGroup
@@ -158,7 +159,7 @@ export class DialogContentExampleDialog {
         this.userName = userName
       })
     )
-    
+
     if (this.userName) {
       this.editForm = this.fb.group(
         {
@@ -175,7 +176,6 @@ export class DialogContentExampleDialog {
             ],
           ],
           phone: [this.phone, [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-          gender: ['', Validators.required],
         },
       )
       this.formComplete = true
@@ -188,31 +188,30 @@ export class DialogContentExampleDialog {
 
   onSubmit() {
     if (this.editForm.valid) {
-      this.isSigningUp = true;
-      this.errorMessage = '';
+      this.isSigningUp = true
+      this.errorMessage = ''
 
-      const formData = { ...this.editForm.value };
-      delete formData.confirmPassword;
+      const formData = { ...this.editForm.value }
 
       this.userProfileService.updateUserInfo(formData).subscribe({
         next: (response) => {
-          this.isSigningUp = false;
+          this.isSigningUp = false
           if (response.error) {
-            this.errorMessage = response.error;
+            this.errorMessage = response.error
           } else {
-           this.updateSuccess = true
-          
+            this.updateSuccess = true
+
           }
         },
         error: (error) => {
-          this.errorMessage = error.error.message;
+          this.errorMessage = error.error.message
         },
-      });
+      })
     } else {
       this.errorMessage = 'Please fill the form correctly'
       setTimeout(() => {
         this.errorMessage = ''
-      }, 3000);
+      }, 3000)
     }
   }
 }

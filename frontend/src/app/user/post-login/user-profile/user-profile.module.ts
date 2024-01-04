@@ -39,6 +39,7 @@ import { MatInputModule } from '@angular/material/input'
     TimeagoModule.forRoot(),
     MatProgressSpinnerModule,
     ReactiveFormsModule,
+    MatProgressBarModule,
     MatFormFieldModule,
     MatInputModule,
     MatFormFieldModule,

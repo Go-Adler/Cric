@@ -121,6 +121,21 @@ export class GetUserDataUseCase {
     }
   }
 
+
+  /**
+   * Retrieves the email of a user by their ID.
+   * @param userId - The unique identifier of the user.
+   * @returns A promise that resolves to the user's email or an empty string if an error occurs.
+   */
+  async getPhone(userId: Types.ObjectId): Promise<string> {
+    try {
+      return await this.userDataAccess.getPhoneById(userId)
+    } catch (error) {
+      ErrorHandling.processError("Error in getProfilePicture, userGetDataUseCase", error)
+      return ""
+    }
+  }
+
   /**
    * Retrieves all users in the system.
    * @returns A promise that resolves to an array of users or an empty array if an error occurs.

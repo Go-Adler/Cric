@@ -31,12 +31,34 @@ export class CreateUserUseCase {
     return userId
   }
 
-  updateUser = async (userId: string, userData: User) => {
-    // Destructure the user data object into variables for easier access
-    const { name, userName, email, phone } = userData
-
+  editUserName = async (userId: string, userName: string) => {
     // Call the data access method to create a user in the database
-    await this.userDataAccess.editUser(userId, name, userName, email, phone)
+    await this.userDataAccess.editUserName(userId, userName)
+
+    // Return true to indicate successful user creation
+    return userId
+  }
+
+
+  editEmail = async (userId: string, email: string) => {
+    // Call the data access method to create a user in the database
+    await this.userDataAccess.editEmail(userId, email)
+
+    // Return true to indicate successful user creation
+    return userId
+  }
+
+  editName = async (userId: string, name: string) => {
+    // Call the data access method to create a user in the database
+    await this.userDataAccess.editName(userId, name)
+
+    // Return true to indicate successful user creation
+    return userId
+  }
+
+  editPhone = async (userId: string, phone: number) => {
+    // Call the data access method to create a user in the database
+    await this.userDataAccess.editNumber(userId, phone)
 
     // Return true to indicate successful user creation
     return userId

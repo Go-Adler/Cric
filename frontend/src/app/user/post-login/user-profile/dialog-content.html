@@ -21,7 +21,7 @@
               <ng-container *ngIf="editForm.get('name')?.errors?.['required']"
                 >Name cannot be empty</ng-container
               >
-              <ng-container *ngIf="editForm.get('name')?.errors?.['pattern']"
+              <ng-container class="text-red" *ngIf="editForm.get('name')?.errors?.['pattern']"
                 >Please input name in the correct format</ng-container
               >
             </mat-error>
@@ -86,7 +86,11 @@
     </div>
     <div class="flex justify-between gap-2">
       <button mat-stroked-button color="warn" class="w-full" mat-dialog-close>cancel</button>
-      <button mat-raised-button   class="w-full">Submit</button>
+      <button mat-raised-button   class="w-full" (click)="onSubmit()">Submit</button>
+    </div>
+    <div class="w-full mt-2">
+    <mat-progress-bar mode="indeterminate" *ngIf="isSigningUp"></mat-progress-bar>
+
     </div>
   </form>
   

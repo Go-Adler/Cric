@@ -54,20 +54,68 @@ export class UserDataAccess {
    * @param password - The password of the user
    * @returns The ID of the created user
    */
-  async editUser(userId: string, name: string, userName: string, email: string, phone: string) {
+  async editUserName(userId: string, userName: string) {
     try {
-      // Validate input parameters
-      validateString(name, "name")
-      validateString(userName, "userName")
-      validateString(email, "email")
-      validateString(phone, "phone")
-
-      await UserEntity.findByIdAndUpdate(userId, { name, userName, email, phone })
+      await UserEntity.findByIdAndUpdate(userId, { userName })
     } catch (error) {
       ErrorHandling.processError("Error in createUser, userDataAccess", error)
     }
   }
 
+  /**
+   * Create a new user
+   * @param name - The name of the user
+   * @param userName - The username of the user
+   * @param gender - The gender of the user
+   * @param email - The email of the user
+   * @param phone - The phone number of the user
+   * @param password - The password of the user
+   * @returns The ID of the created user
+   */
+  async editName(userId: string, name: string) {
+    try {
+      await UserEntity.findByIdAndUpdate(userId, { name })
+    } catch (error) {
+      ErrorHandling.processError("Error in createUser, userDataAccess", error)
+    }
+  }
+
+  /**
+   * Create a new user
+   * @param name - The name of the user
+   * @param userName - The username of the user
+   * @param gender - The gender of the user
+   * @param email - The email of the user
+   * @param phone - The phone number of the user
+   * @param password - The password of the user
+   * @returns The ID of the created user
+   */
+  async editEmail(userId: string, email: string) {
+    try {
+      await UserEntity.findByIdAndUpdate(userId, { email })
+    } catch (error) {
+      ErrorHandling.processError("Error in createUser, userDataAccess", error)
+    }
+  }
+
+  /**
+   * Create a new user
+   * @param name - The name of the user
+   * @param userName - The username of the user
+   * @param gender - The gender of the user
+   * @param email - The email of the user
+   * @param phone - The phone number of the user
+   * @param password - The password of the user
+   * @returns The ID of the created user
+   */
+  async editNumber(userId: string, phone: number) {
+    try {
+      await UserEntity.findByIdAndUpdate(userId, { phone })
+    } catch (error) {
+      ErrorHandling.processError("Error in createUser, userDataAccess", error)
+    }
+  }
+  
   /**
    * Retrieve user data by username
    * @param userName - The username of the user
