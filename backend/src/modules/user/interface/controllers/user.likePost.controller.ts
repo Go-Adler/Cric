@@ -5,7 +5,7 @@ import { Types } from "mongoose"
 
 import { LikePostUseCase } from "../../application/useCases/user.likePost.useCase"
 import { UserDataUseCase } from "../../application/useCases/user.data.useCase"
-import { SocketService } from "../../../../services/socketService"
+import { SocketService } from "../../../../services/socketService.service"
 import { NotificationUseCase } from "../../application/useCases/user.notification.useCase"
 
 /**

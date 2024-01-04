@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express"
 import { MessageUseCase } from "../../application/useCases/user.message.useCase"
 import { JwtPayload } from "jsonwebtoken"
 import { GetAwsUrlUseCase } from "../../application/useCases/user.getAwsUrl.useCase"
-import { SocketService } from "../../../../services/socketService"
+import { SocketService } from "../../../../services/socketService.service"
 import { GetUserDataUseCase } from "../../application/useCases/user.getData.useCase"
 
 export class UserMessageController {

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 import { JwtPayload } from "jsonwebtoken"
 
-import { SocketService } from "../../../../services/socketService"
+import { SocketService } from "../../../../services/socketService.service"
 import { UserFriendUseCase } from "../../application/useCases/user.friend.useCase"
 import { NotificationUseCase } from "../../application/useCases/user.notification.useCase"
 import { GetAwsUrlUseCase } from "../../application/useCases/user.getAwsUrl.useCase"

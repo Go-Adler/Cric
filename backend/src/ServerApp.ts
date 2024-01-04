@@ -9,7 +9,7 @@ import rateLimit from "express-rate-limit"
 import { mongo } from "./config/database"
 import { userRoutes } from "./modules/user/interface/routes/user.routes"
 import { adminRoutes } from "./modules/admin/interface/routes/admin.routes"
-import { SocketService } from "./services/socketService"
+import { SocketService } from "./services/socketService.service"
 
 export class ServerApp {
   private app: Application
