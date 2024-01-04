@@ -9,11 +9,11 @@ import { UserPostService } from '../friends/user-post/user-post.service'
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent {
-  postId: string | null
   post: any
-  postLoadingImage: string
-  userName: string = ''
   name: string = ''
+  userName: string = ''
+  postId: string | null
+  postLoadingImage: string
   profilePicture: string = ''
   
   constructor(
@@ -52,18 +52,34 @@ export class PostComponent {
           },
         })
     } else {
-        this.post.engagement.liked = true;
-        this.post.actions.likes++;
-        this.userPostService.likePost(postId).subscribe({
-          error: () => {
-            this.post.engagement.liked = false;
-            this.post.actions.likes--;
-          },
-        })
+      this.post.engagement.liked = true;
+      this.post.actions.likes++;
+      this.userPostService.likePost(postId).subscribe({
+        error: () => {
+          this.post.engagement.liked = false;
+          this.post.actions.likes--;
+        },
+      })
     }
   }
 
   handleImageError() {
     console.log('lazy loading image error')
+  }
+
+  toggleBookMark(isBookmarked: boolean, postId: string): void {
+    if (isBookmarked) {
+      this.post.engagement.bookmarked = false
+      this.post.actions.bookmarks--
+      this.userPostService.removeBookmark(this.post).subscribe({
+
+      })
+    } else {
+      this.post.engagement.bookmarked = true
+      this.post.actions.bookmarks++
+      this.userPostService.bookmark(this.post).subscribe({
+
+      })
+    }
   }
 }
