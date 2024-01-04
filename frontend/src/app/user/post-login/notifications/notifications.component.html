@@ -34,10 +34,10 @@
           </div>
   
           <div class="p-2" *ngIf="notification.type === 'like'">
-            {{ notification.userName }} liked your post
+            {{'@'}}{{ notification.userName }} liked your post
           </div>
           <div class="p-2" *ngIf="notification.type === 'comment'">
-            {{ notification.userName }} commented on your post
+            {{'@'}}{{ notification.userName }} commented on your post
           </div>
         </div>
   
@@ -64,10 +64,10 @@
           </div>
   
           <div class="p-2" *ngIf="notification.type === 'requestReceived'">
-            {{ notification.userName }} sent you a friend request
+            {{'@'}}{{ notification.userName }} sent you a friend request
           </div>
           <div class="p-2" *ngIf="notification.type === 'requestAccepted'">
-            {{ notification.userName }} accepted your friend request
+            {{'@'}}{{ notification.userName }} accepted your friend request
           </div>
         </div>
   

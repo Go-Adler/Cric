@@ -11,20 +11,20 @@
     <div class="flex gap-2">
       <span class="w-10">
         <img *ngIf="!sameUser" [src]="post.profilePicture" alt="" class="rounded-full" />
-        <img *ngIf="sameUser" [src]="profilePicture" alt="" class="rounded-full" />
+        <img *ngIf="sameUser || post.sameUser" [src]="profilePicture" alt="" class="rounded-full" />
       </span>
       <span class="">
         <span class="flex items-center gap-2">
           <span *ngIf="!sameUser" class="md:text-base">{{ post.name }}</span>
-          <span *ngIf="sameUser" class="md:text-base">{{ name }}</span>
+          <span *ngIf="sameUser || post.sameUser" class="md:text-base">{{ name }}</span>
           <span
             class="text-xs font-light md:font-normal md:text-sm text-stone-500"
             >{{ post.timestamp | timeago }}</span
           >
         </span>
         <span>
-          <span *ngIf="sameUser" class="text-sm font-light">{{'@'}}{{ userName }}</span>
-          <span *ngIf="!sameUser" class="text-sm font-light">{{'@'}}{{ post.userName }}</span>
+          <span *ngIf="sameUser || post.sameUser" class="text-sm font-light">{{'@'}}{{ userName }}</span>
+          <span *ngIf="!sameUser && !post.sameUser" class="text-sm font-light">{{'@'}}{{ post.userName }}</span>
         </span>
       </span>
     </div>

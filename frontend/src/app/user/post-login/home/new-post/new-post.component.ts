@@ -87,7 +87,7 @@ export class NewPostComponent implements OnInit {
 
     this.newPostService.newPost(formData).subscribe(
       {
-        next: (response) => {
+        next: async(response) => {
           this.isPosting = false;
     
           if (response.uploadFailed) {
@@ -110,8 +110,7 @@ export class NewPostComponent implements OnInit {
           this.postSuccess = true;
           this.postForm.reset();
           this.selectedImage = null;
-          console.log(response.post, 113);
-          response.post.sameUser = true
+          response.post.sameUser = true;
           this.newPostEvent.emit(response.post);
     
           setTimeout(() => {
