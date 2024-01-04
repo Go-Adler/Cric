@@ -85,4 +85,56 @@ export class PostLikeController {
       return next(error)
     }
   }
+
+  /**
+ * Method to handle the request for unliking a post
+ * @param req - The request object
+ * @param res - The response object
+ * @param next - The next middleware function in the stack
+ */
+  bookmark = async (req: Request, res: Response, next: NextFunction) => {
+    const { userId } = req.user as JwtPayload
+    const { postId } = req.body
+
+    // Validate inputs
+    if (!userId || !postId) {
+      return res.status(400).json({ message: "Invalid inputs" })
+    }
+
+    try {
+      await this.likePostUseCase.bookmark(userId, postId)
+
+      // Send a response back to indicate success
+      return res.status(200).json({ message: "Successfully unliked the post" })
+    } catch (error) {
+      console.error(error)
+      return next(error)
+    }
+  }
+
+  /**
+ * Method to handle the request for unliking a post
+ * @param req - The request object
+ * @param res - The response object
+ * @param next - The next middleware function in the stack
+ */
+  removeBookmark = async (req: Request, res: Response, next: NextFunction) => {
+    const { userId } = req.user as JwtPayload
+    const { postId } = req.body
+
+    // Validate inputs
+    if (!userId || !postId) {
+      return res.status(400).json({ message: "Invalid inputs" })
+    }
+
+    try {
+      await this.likePostUseCase.removeBookmark(userId, postId)
+
+      // Send a response back to indicate success
+      return res.status(200).json({ message: "Successfully unliked the post" })
+    } catch (error) {
+      console.error(error)
+      return next(error)
+    }
+  }
 }

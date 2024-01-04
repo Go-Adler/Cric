@@ -1,10 +1,10 @@
-import { Types } from 'mongoose';
+import { Types } from "mongoose"
 
-import { UserPostDataAccess } from '../../data/user.post.dataAccess';
+import { UserPostDataAccess } from "../../data/user.post.dataAccess"
 
 // Class to handle the use case of liking a post
 export class LikePostUseCase {
-  private userPostDataAccess: UserPostDataAccess;
+  private userPostDataAccess: UserPostDataAccess
 
   constructor() {
     this.userPostDataAccess = new UserPostDataAccess()
@@ -19,26 +19,59 @@ export class LikePostUseCase {
    */
   async likePost(userId: Types.ObjectId, postId: Types.ObjectId): Promise<void> {
     try {
-      await this.userPostDataAccess.likePost(userId, postId);
+      await this.userPostDataAccess.likePost(userId, postId)
     } catch (error) {
-      console.error(`Error occurred while liking the post: ${error}`);
-      throw error;
+      console.error(`Error occurred while liking the post: ${error}`)
+      throw error
     }
   }
 
-    /**
+  /**
    * Method to unlike a post.
    *
    * @param userId - The ID of the user who unlikes the post.
    * @param postId - The ID of the post to be lunliked.
    * @throws Error if there's an issue while unliking the post.
    */
-    async unlikePost(userId: Types.ObjectId, postId: Types.ObjectId): Promise<void> {
-      try {
-        await this.userPostDataAccess.unlikePost(userId, postId);
-      } catch (error) {
-        console.error(`Error occurred while unliking the post: ${error}`);
-        throw error;
-      }
+  async unlikePost(userId: Types.ObjectId, postId: Types.ObjectId): Promise<void> {
+    try {
+      await this.userPostDataAccess.unlikePost(userId, postId)
+    } catch (error) {
+      console.error(`Error occurred while unliking the post: ${error}`)
+      throw error
     }
+  }
+
+  /**
+   * Method to unlike a post.
+   *
+   * @param userId - The ID of the user who unlikes the post.
+   * @param postId - The ID of the post to be lunliked.
+   * @throws Error if there's an issue while unliking the post.
+   */
+  async bookmark(userId: Types.ObjectId, postId: Types.ObjectId): Promise<void> {
+    try {
+      await this.userPostDataAccess.bookmark(userId, postId)
+    } catch (error) {
+      console.error(`Error occurred while unliking the post: ${error}`)
+      throw error
+    }
+  }
+
+
+  /**
+   * Method to unlike a post.
+   *
+   * @param userId - The ID of the user who unlikes the post.
+   * @param postId - The ID of the post to be lunliked.
+   * @throws Error if there's an issue while unliking the post.
+   */
+  async removeBookmark(userId: Types.ObjectId, postId: Types.ObjectId): Promise<void> {
+    try {
+      await this.userPostDataAccess.removeBookmark(userId, postId)
+    } catch (error) {
+      console.error(`Error occurred while unliking the post: ${error}`)
+      throw error
+    }
+  }
 }

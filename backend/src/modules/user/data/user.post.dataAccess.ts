@@ -193,4 +193,60 @@ export class UserPostDataAccess {
       throw new Error("Error unliking post")
     }
   }
+
+  /**
+   * Unlike a post
+   * @param userId - The ID of the user who unlikes the post
+   * @param postId - The ID of the post to be unliked
+   */
+  async removeBookmark(userId: Types.ObjectId, postId: Types.ObjectId): Promise<void> {
+    try {
+      if (!Types.ObjectId.isValid(userId) || !Types.ObjectId.isValid(postId)) {
+        throw new Error("Invalid userId or postId")
+      }
+
+      const userLiked = await PostEntity.findOne({
+        _id: postId,
+        usersSaved: { $in: [userId] },
+      })
+
+      if (userLiked) {
+        await PostEntity.findByIdAndUpdate(postId, {
+          $pull: { usersSaved: userId },
+          $inc: { "actions.bookmarks": -1 },
+        })
+      }
+    } catch (error: any) {
+      console.error(`Error unliking post: ${error.message}`)
+      throw new Error("Error unliking post")
+    }
+  }
+
+  /**
+   * Like a post
+   * @param userId - The ID of the user who likes the post
+   * @param postId - The ID of the post to be liked
+   */
+  async bookmark(userId: Types.ObjectId, postId: Types.ObjectId): Promise<void> {
+    try {
+      if (!Types.ObjectId.isValid(userId) || !Types.ObjectId.isValid(postId)) {
+        throw new Error("Invalid userId or postId")
+      }
+
+      const userLiked = await PostEntity.findOne({
+        _id: postId,
+        usersSaved: { $in: [userId] },
+      })
+
+      if (!userLiked) {
+        await PostEntity.findByIdAndUpdate(postId, {
+          $addToSet: { usersSaved: userId },
+          $inc: { "actions.bookmarks": 1 },
+        })
+      }
+    } catch (error: any) {
+      console.error(`Error liking post: ${error.message}`)
+      throw new Error("Error liking post")
+    }
+  }
 }

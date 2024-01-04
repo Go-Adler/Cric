@@ -17,6 +17,7 @@ const actionsSchema = new mongoose.Schema<Actions>({
   replies: { type: Number, default: 0 },
   saved: { type: Number, default: 0 },
   quotePosts: { type: Number, default: 0 },
+  bookmarks: { type: Number, default: 0 }
 }, { _id: false })
 
 // Define a schema for the engagement status of a user on a post
@@ -26,6 +27,10 @@ const engagementSchema = new mongoose.Schema<Engagement>({
     default: false
   },
   rePosted: {
+    type: Boolean,
+    default: false
+  },
+  bookmarked: {
     type: Boolean,
     default: false
   }
@@ -58,6 +63,11 @@ export const postSchema = new mongoose.Schema<Post>({
   timestamp: { type: Date, default: Date.now, index: true },
   additionalInfo: additionalInfoSchema,
   usersLiked: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Users',
+    default: [],
+  },
+  usersSaved: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Users',
     default: [],
