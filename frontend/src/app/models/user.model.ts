@@ -4,5 +4,6 @@ export interface User {
   email: string,
   phone: string,
   gender: string,
-  password: string
+  password: string,
+  isBlocked: boolean
 }

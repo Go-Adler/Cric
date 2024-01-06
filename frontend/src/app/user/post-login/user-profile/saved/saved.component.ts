@@ -182,12 +182,6 @@ export class SavedComponent {
     }
   }
 
-  ngOnDestroy(): void {
-    // Unsubscribe all subscriptions
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
-  }
-
-
   toggleBookMark(isBookmarked: boolean, postId: string): void {
 
     const post = this.posts.find((post) => post._id === postId)
@@ -206,5 +200,10 @@ export class SavedComponent {
     }
   }
   handleImageError(event: any) {
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe all subscriptions
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
   }
 }

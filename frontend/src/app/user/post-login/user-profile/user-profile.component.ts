@@ -77,16 +77,17 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.addProfilePicture = closeStatus
   }
 
-  ngOnDestroy(): void {
-    // Unsubscribe all subscriptions
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
-  }
 
   editProfile() {
     const dialogRef = this.dialog.open(DialogContentExampleDialog)
 
     dialogRef.afterClosed().subscribe(result => {
     })
+  }
+  
+  ngOnDestroy(): void {
+    // Unsubscribe all subscriptions
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
   }
 }
 
@@ -213,5 +214,10 @@ export class DialogContentExampleDialog {
         this.errorMessage = ''
       }, 3000)
     }
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe all subscriptions
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
   }
 }
