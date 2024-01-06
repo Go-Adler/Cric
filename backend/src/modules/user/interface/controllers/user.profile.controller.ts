@@ -88,7 +88,7 @@ export class UserProfileController {
       const { userId } = req.user as JwtPayload
 
       const { userName, phone, email } = req.body
-      
+
       const emailStored = this.userDataUseCase.getEmail(userId)
       const userNameStored = this.userDataUseCase.getUserName(userId)
       const phoneStored = this.userDataUseCase.getPhone(userId)
@@ -103,11 +103,6 @@ export class UserProfileController {
         await this.createUserUseCase.editEmail(userId, email)
         await this.sendOTP_UseCase.sendOTP(email)
       }
-
-      if (userNameStored !== userData) {
-        await this.createUserUseCase.ed
-      }
-
       // Create the user
       await this.createUserUseCase.editUserName(userId, userData)
 
