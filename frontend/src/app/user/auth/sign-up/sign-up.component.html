@@ -151,7 +151,7 @@
               >
               <mat-error
                 *ngIf="(signUpForm.get('password')?.invalid && (signUpForm.get('password')?.dirty || signUpForm.get('password')?.touched)) && (signUpForm.get('password')?.errors?.['pattern'])"
-                >Please input password in the correct format</mat-error
+                >Password not strong enough </mat-error
               >
             </mat-form-field>
           </div>
