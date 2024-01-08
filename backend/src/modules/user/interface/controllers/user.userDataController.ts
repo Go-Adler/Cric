@@ -2,12 +2,12 @@ import { Request, Response, NextFunction } from "express"
 import { Types } from 'mongoose'
 
 import { JwtPayload } from "jsonwebtoken"
+import { MessageUseCase } from "../../application/useCases/user.message.useCase"
 import { GetUserDataUseCase } from "../../application/useCases/user.getData.useCase"
 import { GetAwsUrlUseCase } from "../../application/useCases/user.getAwsUrl.useCase"
 import { NotificationUseCase } from "../../application/useCases/user.notification.useCase"
 import { UserBasicInfoResponse } from "../../../../shared/interfaces/userDataResponse.interface"
 import { PersonBasicInfoResponse } from "../../../../shared/interfaces/personDataResponse.interface"
-import { MessageUseCase } from "../../application/useCases/user.message.useCase"
 
 export class UserDataController {
   private messageUseCase: MessageUseCase
